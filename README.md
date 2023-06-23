@@ -47,4 +47,7 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 - it should be able to open and close recommendations for the first week of every month (this may not be a good idea)
 - maybe you could be able to tell it that you are looking for a partner for a co-op achievement?
 - reminder to myself that t0 games must have separate announcements
+- reminder to myself that upon booting up the bot, it should go through all of the users in the server and update their information in my `info.json` file
+- also reminder to myself to fix the price to check if it's on sale right now
+- reminder to try and incorporate buttons to ask if they want to use a reroll ticket
 

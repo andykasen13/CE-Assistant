@@ -1,0 +1,48 @@
+{
+    "users" : [
+        {          
+            "name" : "andykasen13",
+            "ID" : 413427677522034727,
+            "current_rolls" : [],
+            "completed_rolls" : [
+                {
+                    "event_name" : "One Hell of a Day",
+                    "game" : "GoNNer"
+                }
+            ],
+            "reroll_tickets" : 1
+        },
+        {
+            "name" : "apollohm",
+            "ID" : 347900490668965888,
+            "current_rolls" : [],
+            "completed_rolls" : [
+                {
+                    "event_name" : "Never Lucky",
+                    "game" : "Buck Up and Drive!"
+                }
+            ],
+            "reroll_tickets" : 4
+        },
+        {
+            "name" : "loserboozer",
+            "ID" : 688037250537095296,
+            "current_rolls" : [
+                {
+                    "event_name" : "Two Week T2 Streak",
+                    "games" : [
+                        {
+                            "name" : "ELDEN RING",
+                            "completed" : false
+                        },
+                        {
+                            "name" : "Muck",
+                            "completed" : true
+                        }
+                    ],
+                    "end_time" : "2023-08-28 19:48:52.366653"
+                }
+            ]
+        }
+    ]
+}

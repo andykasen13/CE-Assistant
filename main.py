@@ -117,7 +117,7 @@ async def steam_command(interaction, game_name: str):
     await interaction.followup.send(embed=embed)
     print("Sent information on requested game " + game_name + "\n")
 
-# ---------------------------- GET APP ID FUNCTION ------------------------
+# ---------------------------- GET EMBED FUNCTION ------------------------
 def getEmbed(game_name, authorID):
 
     payload = {'term': game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
@@ -125,7 +125,7 @@ def getEmbed(game_name, authorID):
     correctAppID = BeautifulSoup(response.text, features="html.parser").a['data-ds-appid']
     
 
-# ----------------------------- DOWNLOAD JSON FILE --------------------------
+# --- DOWNLOAD JSON FILE ---
 
     # Open and save the JSON data
     payload = {'appids': correctAppID, 'cc' : 'US'}
@@ -140,7 +140,8 @@ def getEmbed(game_name, authorID):
     else: gamePrice = jsonData[correctAppID]['data']['price_overview']['final_formatted']
     gameNameWithLinkFormat = game_name.replace(" ", "_")
 
-# ------------------------------- CREATE EMBED ----------------------------------------
+# --- CREATE EMBED ---
+
     # and create the embed!
     embed = discord.Embed(title=f"{gameTitle}",
         url=f"https://store.steampowered.com/app/{correctAppID}/{gameNameWithLinkFormat}/",
@@ -151,35 +152,17 @@ def getEmbed(game_name, authorID):
     embed.add_field(name="Price", value = gamePrice, inline=True)
     embed.add_field(name="User", value = "<@" + str(authorID) + ">", inline=True)
     embed.add_field(name="Roll Requirements", value = "**you have this much time to  complete it!**" 
-            + "\ndate and time of completion\ndate and time of cooldown end" 
-            + "\n[insert link to cedb.me page]", inline=False)
+        + "\ndate and time of completion\ndate and time of cooldown end" 
+        + "\n[insert link to cedb.me page]", inline=False)
     
-
-    embed.set_author(name="[INSERT ROLL EVENT NAME HERE]",
-                 url="https://example.com")
-
+    embed.set_author(name="[INSERT ROLL EVENT NAME HERE]", url="https://example.com")
     embed.set_image(url=imageLink)
-
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
-
     embed.set_footer(text="CE Assistant",
-                 icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
+        icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
     return embed
 
-@tree.command(name="test_stupid_thing", description="i will be so mad if this works", guild=discord.Object(id=788158122907926608))
-async def tryCommand(interaction, game_name: str) :
-    print("try command on game " + game_name)
-
-    await interaction.response.defer()
-    payload = {'term': game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
-    response = requests.get('https://store.steampowered.com/search/suggest?', params=payload)
-
-    soup = BeautifulSoup(response.text, features="html.parser").a['data-ds-appid']
-
-    await interaction.followup.send("balls")
-
 # ----------------------------------- LOG IN ----------------------------
-
 @client.event
 async def on_ready():
     await tree.sync(guild=discord.Object(id=788158122907926608))
