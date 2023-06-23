@@ -17,12 +17,6 @@ steamClient = SClient()
 
 import json 
 
-
-api = WebAPI(key="21179C14D2C676F360941F545C4028CA")
-
-
-
-
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
@@ -42,10 +36,11 @@ discordToken = data['discordToken']
 # it will take some time (up to an hour) to register the command 
 # if it's for all guilds.
 
+# ------------------------- Test Commands -----------------------
+
 @tree.command(name = "commandname", description = "My first application Command", guild=discord.Object(id=788158122907926608)) 
 async def first_command(interaction):
     await interaction.response.send_message("Hello!")
-
 
 @tree.command(name = "balls", description = "more balls", guild=discord.Object(id=788158122907926608))
 async def second_command(interaction):
@@ -54,6 +49,10 @@ async def second_command(interaction):
 @tree.command(name="test_argument", description = "help", guild=discord.Object(id=788158122907926608))
 async def sub_command(interaction, argument: str) -> None:
     await interaction.response.send_message(f"Hello, you sent {argument}!")
+
+ # -------------------------------------------------------- #
+ # --------------------ROLL COMMAND ----------------------- # 
+ # -------------------------------------------------------- #
 
 @tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=788158122907926608))
 async def roll_command(interaction, argument: str) -> None:
@@ -140,6 +139,9 @@ async def roll_command(interaction, argument: str) -> None:
     # -------------- kill yourself --------------------
     else : await interaction.response.send_message(f"jfasdklfhasd")
 
+# --------------------------------------------------- #
+# ------------- STEAM TEST COMMAND ------------------ #
+# --------------------------------------------------- #
 
 @tree.command(name="steam_test", description="fhjskdla", guild=discord.Object(id=788158122907926608))
 async def steam_command(interaction, game_name: str):
@@ -204,6 +206,7 @@ async def steam_command(interaction, game_name: str):
     # Finally, send the embed
     await interaction.followup.send(embed=embed)
     
+# ----------------------------------- LOG IN ----------------------------
 
 @client.event
 async def on_ready():
