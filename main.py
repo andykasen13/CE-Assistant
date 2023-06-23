@@ -15,6 +15,8 @@ import steamctl
 from steam.client import SteamClient as SClient
 steamClient = SClient()
 
+from bs4 import BeautifulSoup
+
 import json 
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
@@ -57,8 +59,6 @@ async def sub_command(interaction, argument: str) -> None:
 @tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=788158122907926608))
 async def roll_command(interaction, argument: str) -> None:
 
-    
-
     # Open file
     tier_one_file = open("faket1list.txt", "r")
     data = tier_one_file.read()
@@ -70,63 +70,15 @@ async def roll_command(interaction, argument: str) -> None:
     if argument == "one hell of a day" :
         # Pick a random game from the list
         game = random.choice(data_into_list)
-        print("game: " + game)
+        print("Rolled game: " + game)
 
-        # Write the name of the game into the HelloWorld.txt file
-        with open('HelloWorld.txt', 'w') as f:
-            await interaction.response.defer()
-            f.write(f"{game}") 
+        await interaction.response.defer()
 
-        # Open and run jsfile.js to get the AppID       
-        p2 = subprocess.Popen(['/Program Files/nodejs/node.exe', '/Users/andre/Desktop/better-ce-bot/jsfile.js', 'andre'], stdout=subprocess.PIPE)
-        out2 = p2.stdout.read()
-
-        print(out2)
-
-        # Read the HelloWorld.txt file (will be rewritten with the appID of the game we supplied earlier)
-        with open('HelloWorld.txt', 'r') as f: 
-            correctAppID = f.read()
-
-        # Formulate the correct API link to download JSON file
-        correctURL = "https://store.steampowered.com/api/appdetails?appids=" + correctAppID
-
-        # Open and save the JSON data
-        payload = {'appids': correctAppID, 'cc' : 'US'}
-        response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload)
-        jsonData = json.loads(response.text)
-    
-        # Save important information
-        imageLink = jsonData[correctAppID]['data']['header_image']
-        gameDescription = jsonData[correctAppID]['data']['short_description']
-        gamePrice = jsonData[correctAppID]['data']['price_overview']['final_formatted']
-        gameNameWithLinkFormat = game.replace(" ", "_")
-
-        # and create the embed!
-        embed = discord.Embed(title=f"{game}",
-            url=f"https://store.steampowered.com/app/{correctAppID}/{gameNameWithLinkFormat}/",
-            description=(f"{gameDescription}"),
-            colour=0x000000,
-            timestamp=datetime.now())
-
-        embed.add_field(name="Price", value = gamePrice, inline=True)
-        embed.add_field(name="User", value = "<@" + str(interaction.user.id) + ">", inline=True)
-        embed.add_field(name="Roll Requirements", value = "**you have this much time to  complete it!**" 
-            + "\ndate and time of completion\ndate and time of cooldown end" 
-            + "\n[insert link to cedb.me page]", inline=False)
-    
-
-        embed.set_author(name="[INSERT ROLL EVENT NAME HERE]",
-                 url="https://example.com")
-
-        embed.set_image(url=imageLink)
-
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
-
-        embed.set_footer(text="CE Assistant",
-                     icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
+        embed = getEmbed(game, interaction.user.id)
 
         # Finally, send the embed
         await interaction.followup.send(embed=embed)
+        print("Sent information on rolled game " + game)
 
     # -------------- One Hell of a Week ---------------
     elif argument == "one hell of a week" :
@@ -143,15 +95,27 @@ async def roll_command(interaction, argument: str) -> None:
 # ------------- STEAM TEST COMMAND ------------------ #
 # --------------------------------------------------- #
 
-@tree.command(name="steam_test", description="fhjskdla", guild=discord.Object(id=788158122907926608))
+@tree.command(name="steam_game", description="Get information on any steam game", guild=discord.Object(id=788158122907926608))
 async def steam_command(interaction, game_name: str):
 
     # Log the command
     print("Recieved steam_game command with parameter: " + game_name + ".")
 
-    # Write the name of the game into the HelloWorld.txt file
+    # Defer the interaction
+    await interaction.response.defer()
+
+    # Get the embed
+    embed = getEmbed(game_name, interaction.user.id)
+
+    # Finally, send the embed
+    await interaction.followup.send(embed=embed)
+    print("Sent information on requested game " + game_name)
+
+# ---------------------------- GET APP ID FUNCTION ------------------------
+def getEmbed(game_name, authorID):
+    # Write the name of the game into 
+    # the HelloWorld.txt file
     with open('HelloWorld.txt', 'w') as f:
-        await interaction.response.defer()
         f.write(f"{game_name}") 
 
     # Open and run jsfile.js to get the AppID       
@@ -160,12 +124,13 @@ async def steam_command(interaction, game_name: str):
 
     print(out)
 
-    # Read the HelloWorld.txt file (will be rewritten with the appID of the game we supplied earlier)
+    # Read the HelloWorld.txt file 
+    # (will be rewritten with the appID 
+    # of the game we supplied earlier)
     with open('HelloWorld.txt', 'r') as f: 
         correctAppID = f.read()
 
-    # Formulate the correct API link to download JSON file
-    correctURL = "https://store.steampowered.com/api/appdetails?appids=" + correctAppID
+# ----------------------------- DOWNLOAD JSON FILE --------------------------
 
     # Open and save the JSON data
     payload = {'appids': correctAppID, 'cc' : 'US'}
@@ -175,10 +140,11 @@ async def steam_command(interaction, game_name: str):
     # Save important information
     imageLink = jsonData[correctAppID]['data']['header_image']
     gameDescription = jsonData[correctAppID]['data']['short_description']
-    if(jsonData[correctAppID]['data']['is_free'] == "true") : gamePrice = "Free"
-    else: gamePrice = jsonData[correctAppID]['data']['price_overview']['final_formatted']
+    #if(jsonData[correctAppID]['data']['is_free'] == "true") : gamePrice = "Free"
+    #else: gamePrice = jsonData[correctAppID]['data']['price_overview']['final_formatted']
     gameNameWithLinkFormat = game_name.replace(" ", "_")
 
+# ------------------------------- CREATE EMBED ----------------------------------------
     # and create the embed!
     embed = discord.Embed(title=f"{game_name}",
         url=f"https://store.steampowered.com/app/{correctAppID}/{gameNameWithLinkFormat}/",
@@ -186,8 +152,8 @@ async def steam_command(interaction, game_name: str):
         colour=0x000000,
         timestamp=datetime.now())
 
-    embed.add_field(name="Price", value = gamePrice, inline=True)
-    embed.add_field(name="User", value = "<@" + str(interaction.user.id) + ">", inline=True)
+    #embed.add_field(name="Price", value = gamePrice, inline=True)
+    embed.add_field(name="User", value = "<@" + str(authorID) + ">", inline=True)
     embed.add_field(name="Roll Requirements", value = "**you have this much time to  complete it!**" 
             + "\ndate and time of completion\ndate and time of cooldown end" 
             + "\n[insert link to cedb.me page]", inline=False)
@@ -202,10 +168,21 @@ async def steam_command(interaction, game_name: str):
 
     embed.set_footer(text="CE Assistant",
                  icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
+    return embed
 
-    # Finally, send the embed
-    await interaction.followup.send(embed=embed)
-    
+@tree.command(name="test_stupid_thing", description="i will be so mad if this works", guild=discord.Object(id=788158122907926608))
+async def tryCommand(interaction, game_name: str) :
+    print("try command on game " + game_name)
+
+    await interaction.response.defer()
+    payload = {'term': game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
+    response = requests.get('https://store.steampowered.com/search/suggest?', params=payload)
+
+    soup = BeautifulSoup(response.text, features="html.parser").a
+    print(soup['data-ds-appid'])
+
+    await interaction.followup.send("balls")
+
 # ----------------------------------- LOG IN ----------------------------
 
 @client.event
