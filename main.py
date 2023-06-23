@@ -161,6 +161,7 @@ async def steam_command(interaction, game_name: str):
     # Read the HelloWorld.txt file (will be rewritten with the appID of the game we supplied earlier)
     with open('HelloWorld.txt', 'r') as f: 
         correctAppID = f.read()
+        
 
     # Formulate the correct API link to download JSON file
     correctURL = "https://store.steampowered.com/api/appdetails?appids=" + correctAppID
