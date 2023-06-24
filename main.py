@@ -105,7 +105,48 @@ async def roll_command(interaction, event: str) -> None:
 # -------------------------------------------------------- #
 # ----------------MY_ROLLS COMMAND ----------------------- # 
 # -------------------------------------------------------- #
-# @tree.command(name="my_rolls", description="See your current (and previous) rolls.", guild=discord.Object(id=guildID))
+@tree.command(name="check_rolls", description="Check the active rolls of anyone on the server", guild=discord.Object(id=guildID))
+async def checkRolls(interaction, user: discord.Member) :
+    await interaction.response.defer()
+
+    #open the json file and get the data
+    with open('info.json', 'r') as f :
+        userInfo = json.load(f)
+
+    #iterate through the json file until you find the
+    #designated user
+    i = 0
+    while userInfo['users'][i]['ID'] != user.id :
+        if(i + 1 == len(userInfo['users'])) : return await interaction.followup.send("This user does not exist.")
+        else: i += 1
+
+    checkrollstr = ""
+
+    # TODO: make sure that if the roll is empty,
+    # you don't do all this or it will error a lot!
+
+    # TODO: this is much further down the line but
+    # you should debate whether or not it is worth 
+    # it to include objectives in this, and if they are, 
+    # how to show it.
+
+    #for x in userInfo['users'][i]['current_rolls'] :
+    #    checkrollstr = checkrollstr + "-" + userInfo['users'][i]['current_rolls'][x]['event_name'] + ":\n"
+    #    for y in userInfo['users'][i]['current_rolls']['games'] :
+    #        checkrollstr = checkrollstr + (i+1) + ". " 
+    #        + userInfo['users'][i]['current_rolls']['games'][y]['name'] 
+    #        + " (completed: " + userInfo['users'][i]['current_rolls']['games'][y]['completed'] + ")\n"
+
+    embed = discord.Embed(
+    colour=0x000000,
+    timestamp=datetime.now()
+    )
+
+    embed.add_field(name="Current Rolls for " + "<@" + user.id + ">", value=checkrollstr, inline=False)
+
+    await interaction.followup.send(embed=embed)
+
+
 
 
 # --------------------------------------------------- #
@@ -196,13 +237,23 @@ async def curator(interaction) :
 
     # "paged_items_paging_summary ellipsis" this is where 49 is stored
 
-    print(html)
-    await interaction.response.send_message("this command does not work right now. sorry!")
+
+    await interaction.response.send_message("this command does not work righ now. sorry!")
+
+@tree.command(name="test_command", description="test", guild=discord.Object(id=guildID))
+async def test(interaction) :
+    print(interaction.guild)
+    print(interaction.guild_id)
+    print(interaction.guild_locale)
+
+    print(interaction.guild.members.id)
+    await interaction.response.send_message("test")
+
 
 # ----------------------------------- LOG IN ----------------------------
 @client.event
 async def on_ready():
-    await tree.sync(guild=discord.Object(id=788158122907926608))
+    await tree.sync(guild=discord.Object(id=guildID))
     print("Ready!")
 
 client.run(discordToken)
