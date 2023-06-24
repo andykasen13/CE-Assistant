@@ -46,10 +46,14 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 - music implementation would be sick but this is not an ideal for now
 - it should be able to open and close recommendations for the first week of every month (this may not be a good idea)
 - maybe you could be able to tell it that you are looking for a partner for a co-op achievement?
+
+## housekeeping reminders
 - reminder to myself that t0 games must have separate announcements
 - reminder to myself that upon booting up the bot, it should go through all of the users in the server and update their information in my `info.json` file
 - also reminder to myself to fix the price to check if it's on sale right now
 - reminder to try and incorporate buttons to ask if they want to use a reroll ticket
 - once an hour, i need to parse through the website and determine if there are any new games to add to my list of rollable games - and also check to see if all info i have currently checks out, in case i need to take something off the rollable games list
 - reminder that if someone tries to roll an event that they have running already or are on cooldown for, DON'T LET THEM.
+- reminder to use beautifulsoup to check steamhunters.com for eligibility!
+- reminder to also use beautifulsoup to get the curator thing to work :)
 
