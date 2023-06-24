@@ -1,7 +1,7 @@
 # This example requires the 'message_content' intent.
 
 from asyncio import Event, wait
-from datetime import datetime
+from datetime import datetime, timedelta
 import subprocess
 import discord
 from discord import app_commands
@@ -29,9 +29,10 @@ intents.message_content = True
 
 # Grab information from json file
 with open('useful.json') as f :
-    data = json.load(f)
+    localJSONData = json.load(f)
 
-discordToken = data['discordToken']
+discordToken = localJSONData['discordToken']
+guildID = localJSONData['guildID']
 
 
 # Add the guild ids in which the slash command will appear. 
@@ -39,45 +40,72 @@ discordToken = data['discordToken']
 # it will take some time (up to an hour) to register the command 
 # if it's for all guilds.
 
- # -------------------------------------------------------- #
- # --------------------ROLL COMMAND ----------------------- # 
- # -------------------------------------------------------- #
+# -------------------------------------------------------- #
+# --------------------ROLL COMMAND ----------------------- # 
+# -------------------------------------------------------- #
 
-@tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=788158122907926608))
-async def roll_command(interaction, argument: str) -> None:
+@tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guildID))
+async def roll_command(interaction, event: str) -> None:
+
+    await interaction.response.defer()
+
 
     # Open file
     tier_one_file = open("faket1list.txt", "r")
     data = tier_one_file.read()
     data_into_list = data.split("\n")
-    print(data_into_list)
+    #print(data_into_list)
     tier_one_file.close()
 
     # -------------- One Hell of a Day ----------------
-    if argument == "one hell of a day" :
+    if event == "one hell of a day" :
         # Pick a random game from the list
-        getTier(1)
+        # getTier(1)
         game = random.choice(data_into_list)
         print("Rolled game: " + game)
 
-        await interaction.response.defer()
-
         embed = getEmbed(game, interaction.user.id)
+
+        with open('info.json', 'r') as f :
+            userInfo = json.load(f)
+        
+        i = 0
+        while userInfo['users'][i]['ID'] != interaction.user.id :
+            i += 1
+        
+        # userInfo['users'][i]['current_rolls'].append({"event_name" : "One Hell of a Day", "games" : [{"name" : game, "completed" : False}], "end_time" : "" + datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+
+        with open('info.json', 'w') as f :
+            json.dump(userInfo, f, indent=4)
+
+        embed.add_field(name="Roll Requirements", value = 
+            "You have one day to complete " + game + "."    
+            + "\nMust be completed by " + (datetime.now()+timedelta(1)).strftime("%B %d, %Y at %I:%M:%S %p.") 
+            + "\nOne Hell of a Day has two week cooldown."
+            + "\nCooldown ends on " + (datetime.now()+timedelta(14)).strftime("%B %d, %Y at %I:%M:%S %p.")
+            + "\n[insert link to cedb.me page]", inline=False)
+        embed.set_author(name="ONE HELL OF A DAY", url="https://example.com")
 
         # Finally, send the embed
         await interaction.followup.send(embed=embed)
         print("Sent information on rolled game " + game)
 
     # -------------- One Hell of a Week ---------------
-    elif argument == "one hell of a week" :
-        await interaction.response.send_message(f"you ave week")
+    elif event == "one hell of a week" :
+        await interaction.followup.send(f"you ave week")
 
     # -------------- One Hell of a Month --------------
-    elif argument == "one hell of a month" : 
-        await interaction.response.send_message(f"you have month")
+    elif event == "one hell of a month" : 
+        await interaction.followup.send(f"you have month")
 
     # -------------- kill yourself --------------------
     else : await interaction.response.send_message(f"jfasdklfhasd")
+
+
+# -------------------------------------------------------- #
+# ----------------MY_ROLLS COMMAND ----------------------- # 
+# -------------------------------------------------------- #
+# @tree.command(name="my_rolls", description="See your current (and previous) rolls.", guild=discord.Object(id=guildID))
 
 
 # --------------------------------------------------- #
@@ -101,7 +129,7 @@ def getTier(tierLevel):
 # ------------- STEAM TEST COMMAND ------------------ #
 # --------------------------------------------------- #
 
-@tree.command(name="steam_game", description="Get information on any steam game", guild=discord.Object(id=788158122907926608))
+@tree.command(name="steam_game", description="Get information on any steam game", guild=discord.Object(id=guildID))
 async def steam_command(interaction, game_name: str):
 
     # Log the command
@@ -151,9 +179,6 @@ def getEmbed(game_name, authorID):
 
     embed.add_field(name="Price", value = gamePrice, inline=True)
     embed.add_field(name="User", value = "<@" + str(authorID) + ">", inline=True)
-    embed.add_field(name="Roll Requirements", value = "**you have this much time to  complete it!**" 
-        + "\ndate and time of completion\ndate and time of cooldown end" 
-        + "\n[insert link to cedb.me page]", inline=False)
     
     embed.set_author(name="[INSERT ROLL EVENT NAME HERE]", url="https://example.com")
     embed.set_image(url=imageLink)

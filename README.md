@@ -50,4 +50,6 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 - reminder to myself that upon booting up the bot, it should go through all of the users in the server and update their information in my `info.json` file
 - also reminder to myself to fix the price to check if it's on sale right now
 - reminder to try and incorporate buttons to ask if they want to use a reroll ticket
+- once an hour, i need to parse through the website and determine if there are any new games to add to my list of rollable games - and also check to see if all info i have currently checks out, in case i need to take something off the rollable games list
+- reminder that if someone tries to roll an event that they have running already or are on cooldown for, DON'T LET THEM.
 
