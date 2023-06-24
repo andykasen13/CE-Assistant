@@ -187,6 +187,18 @@ def getEmbed(game_name, authorID):
         icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
     return embed
 
+
+@tree.command(name="curator", description="Get the latest review from the CE curator", guild=discord.Object(id=guildID))
+async def curator(interaction) :
+    payload = {'cc': 'us', 'l' : 'english'}
+    response = requests.get("https://store.steampowered.com/curator/36185934/", params=payload)
+    html = BeautifulSoup(response.text, features="html.parser")
+
+    # "paged_items_paging_summary ellipsis" this is where 49 is stored
+
+    print(html)
+    await interaction.response.send_message("this command does not work right now. sorry!")
+
 # ----------------------------------- LOG IN ----------------------------
 @client.event
 async def on_ready():
