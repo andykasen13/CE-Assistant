@@ -205,6 +205,8 @@ def getEmbed(game_name, authorID):
     #print(response.text)
     correctAppID = BeautifulSoup(response.text, features="html.parser").a['data-ds-appid']
 
+    """ # THIS IS THERONS CODE. DO NOT TOUCH ANDY
+    
     prams = {'term': game_name, 'f': 'games', 'cc': 'us'}
     noodle = requests.get('https://store.steampowered.com/search/suggest?', params=prams)
     #print(noodle.text)
@@ -219,6 +221,8 @@ def getEmbed(game_name, authorID):
         if collinder.index(x).get_text() == "Free" or "Free To Play" or "":
             collinder.pop(x)
     print(collinder)
+
+    """
         
 
     
