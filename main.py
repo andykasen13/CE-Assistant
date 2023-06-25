@@ -120,6 +120,8 @@ async def checkRolls(interaction, user: discord.Member) :
         if(i + 1 == len(userInfo['users'])) : return await interaction.followup.send("This user does not exist.")
         else: i += 1
 
+    print(i)
+
     checkrollstr = ""
 
     # TODO: make sure that if the roll is empty,
@@ -130,19 +132,26 @@ async def checkRolls(interaction, user: discord.Member) :
     # it to include objectives in this, and if they are, 
     # how to show it.
 
-    #for x in userInfo['users'][i]['current_rolls'] :
-    #    checkrollstr = checkrollstr + "-" + userInfo['users'][i]['current_rolls'][x]['event_name'] + ":\n"
-    #    for y in userInfo['users'][i]['current_rolls']['games'] :
-    #        checkrollstr = checkrollstr + (i+1) + ". " 
-    #        + userInfo['users'][i]['current_rolls']['games'][y]['name'] 
-    #        + " (completed: " + userInfo['users'][i]['current_rolls']['games'][y]['completed'] + ")\n"
+    # TODO: you forgot the end date silly
+
+    # TODO: co-op rolls :weary: 😩
+
+    stupidSpaceIndent = 0
+
+    for x in userInfo['users'][i]['current_rolls'] :
+        stupidSpaceIndent += 1
+        checkrollstr = checkrollstr + "-" + x['event_name'] + ":\n"
+        for y in x['games'] :
+            checkrollstr = checkrollstr + ("  " * (stupidSpaceIndent)) + str(i+1) + ". " + y['name'] + " (completed: " + str(y['completed']) + ")\n"
 
     embed = discord.Embed(
     colour=0x000000,
     timestamp=datetime.now()
     )
 
-    embed.add_field(name="Current Rolls for " + "<@" + user.id + ">", value=checkrollstr, inline=False)
+    embed.add_field(name="User", value = "<@" + str(user.id) + ">", inline=False)
+    embed.add_field(name="Current Rolls", value=checkrollstr, inline=False)
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
 
     await interaction.followup.send(embed=embed)
 
@@ -189,9 +198,30 @@ async def steam_command(interaction, game_name: str):
 # ---------------------------- GET EMBED FUNCTION ------------------------
 def getEmbed(game_name, authorID):
 
+    #TODO add error exceptions
+
     payload = {'term': game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
     response = requests.get('https://store.steampowered.com/search/suggest?', params=payload)
+    #print(response.text)
     correctAppID = BeautifulSoup(response.text, features="html.parser").a['data-ds-appid']
+
+    prams = {'term': game_name, 'f': 'games', 'cc': 'us'}
+    noodle = requests.get('https://store.steampowered.com/search/suggest?', params=prams)
+    #print(noodle.text)
+    soup = BeautifulSoup(noodle.text, features='html.parser')
+    print("testerooni")
+    print(soup.get_text)
+    print("testerino")
+    bowl = soup.find_all('div')
+    print(bowl)
+    collinder = list(bowl)
+    for x in range(0, collinder.len()):
+        if collinder.index(x).get_text() == "Free" or "Free To Play" or "":
+            collinder.pop(x)
+    print(collinder)
+        
+
+    
     
 
 # --- DOWNLOAD JSON FILE ---
@@ -205,7 +235,12 @@ def getEmbed(game_name, authorID):
     gameTitle = jsonData[correctAppID]['data']['name']
     imageLink = jsonData[correctAppID]['data']['header_image']
     gameDescription = jsonData[correctAppID]['data']['short_description']
-    if(jsonData[correctAppID]['data']['is_free']) : gamePrice = "Free"
+    print(jsonData[correctAppID]['data']['is_free'])
+    print(correctAppID)
+    print(jsonData)
+    if(jsonData[correctAppID]['data']['is_free']) :
+        gamePrice = "Free"
+        print("is free")
     else: gamePrice = jsonData[correctAppID]['data']['price_overview']['final_formatted']
     gameNameWithLinkFormat = game_name.replace(" ", "_")
 
