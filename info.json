@@ -13,12 +13,51 @@
                         }
                     ],
                     "end_time": "2023-06-23 20:58:09"
+                },
+                {
+                    "event_name": "Two Week T2 Streak",
+                    "games": [
+                        {
+                            "name": "Muck",
+                            "completed": true
+                        },
+                        {
+                            "name": "ELDEN RING",
+                            "completed": false
+                        }
+                    ],
+                    "end_time": "2023-06-27 20:58:09"
+                },
+                {
+                    "event_name": "One Hell of a Day",
+                    "games": [
+                        {
+                            "name": "Death's Door",
+                            "completed": false
+                        }
+                    ],
+                    "end_time": "2023-06-25 18:04:05"
+                },
+                {
+                    "event_name": "One Hell of a Day",
+                    "games": [
+                        {
+                            "name": "Cyber Hook",
+                            "completed": false
+                        }
+                    ],
+                    "end_time": "2023-06-25 18:04:38"
                 }
             ],
             "completed_rolls": [
                 {
                     "event_name": "One Hell of a Day",
-                    "game": "GoNNer"
+                    "games": [
+                        {
+                            "name": "GoNNer"
+                        }
+                    ],
+                    "completed_time": "2023-04-13 07:31:12"
                 }
             ],
             "reroll_tickets": 1
@@ -30,7 +69,12 @@
             "completed_rolls": [
                 {
                     "event_name": "Never Lucky",
-                    "game": "Buck Up and Drive!"
+                    "games": [
+                        {
+                            "name": "Buck Up and Drive!"
+                        }
+                    ],
+                    "completed_time": "2023-04-06 13:17:49"
                 }
             ],
             "reroll_tickets": 4
@@ -51,7 +95,7 @@
                             "completed": true
                         }
                     ],
-                    "end_time": "2023-08-28 19:48:52.366653"
+                    "end_time": "2023-08-28 19:48:52"
                 }
             ],
             "completed_rolls": [],
