@@ -1,11 +1,13 @@
 # This example requires the 'message_content' intent.
-
+import asyncio
 from asyncio import Event, wait
 from datetime import datetime, timedelta
+import datetime
 import time
 import subprocess
 import discord
 from discord import app_commands
+from discord.ext import tasks, commands
 
 import requests
 import random
@@ -35,11 +37,20 @@ with open('useful.json') as f :
 discordToken = localJSONData['discordToken']
 guildID = localJSONData['guildID']
 
-
 # Add the guild ids in which the slash command will appear. 
 # If it should be in all, remove the argument, but note that 
 # it will take some time (up to an hour) to register the command 
 # if it's for all guilds.
+
+# --------------help command------------------------------- #
+@tree.command(name="help", description="help", guild=discord.Object(id=guildID))
+async def help(interaction) :
+    embed = discord.Embed(
+        name="Help",
+        color=0x000000,
+    )
+    embed.add_field(name="page 1", value="pge 1")
+
 
 # -------------------------------------------------------- #
 # --------------------ROLL COMMAND ----------------------- # 
@@ -67,34 +78,6 @@ async def roll_command(interaction, event: str) -> None:
 
         embed = getEmbed(game, interaction.user.id)
 
-        with open('info.json', 'r') as f :
-            userInfo = json.load(f)
-        
-        i = 0
-        while userInfo['users'][i]['ID'] != interaction.user.id :
-            i += 1
-        
-        userInfo['users'][i]['current_rolls'].append({"event_name" : "One Hell of a Day", "games" : [{"name" : embed.title, "completed" : False}], "end_time" : "" + datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
-
-        with open('info.json', 'w') as f :
-            json.dump(userInfo, f, indent=4)
-
-        # TODO: make sure you indicate if the game is on sale
-        # TODO: think about switching the icon of 
-        # the /roll command to the user's avatar
-
-        embed.add_field(name="Roll Requirements", value = 
-            "You have one day to complete " + embed.title + "."    
-            + "\nMust be completed by <t:" + str(int(time.mktime((datetime.now()+timedelta(1)).timetuple())))
-            + ">\nOne Hell of a Day has two week cooldown."
-            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.now()+timedelta(14)).timetuple())))
-            + ">\n[insert link to cedb.me page]", inline=False)
-        embed.set_author(name="ONE HELL OF A DAY", url="https://example.com")
-
-        # Finally, send the embed
-        await interaction.followup.send(embed=embed)
-        print("Sent information on rolled game " + game)
-
     # -------------- One Hell of a Week ---------------
     elif event == "one hell of a week" :
         await interaction.followup.send(f"you ave week")
@@ -105,6 +88,58 @@ async def roll_command(interaction, event: str) -> None:
 
     # -------------- kill yourself --------------------
     else : await interaction.response.send_message(f"jfasdklfhasd")
+
+    with open('info.json', 'r') as f :
+        userInfo = json.load(f)
+        
+    i = 0
+    while userInfo['users'][i]['ID'] != interaction.user.id :
+        i += 1
+        
+    userInfo['users'][i]['current_rolls'].append({"event_name" : "One Hell of a Day", "games" : [{"name" : embed.title, "completed" : False}], "end_time" : "" + datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+
+    with open('info.json', 'w') as f :
+        json.dump(userInfo, f, indent=4)
+
+        # TODO: make sure you indicate if the game is on sale
+        # TODO: think about switching the icon of 
+        # the /roll command to the user's avatar
+
+        # --------------------------------------------- 
+        # ---------------- Events ---------------------
+        # One Hell of a Day: random T1
+        # One Hell of a Week: random T1s for each category
+        # One Hell of a Month: 5 T1s from each category,
+        #   and complete three of each five
+        # Two Week T2 Streak: 2 random T2s
+        # Two "Two Week T2 Streak" Streak: 4 random T2s
+        # Never Lucky: random T3 (no time limit)
+        # Triple Threat: three random T3s, complete
+        #   all within a month
+        # Let Fate Decide: random T4 (no time limit)
+        # Fourward Thinking: bro what
+        # Russian Roulette: pick six T5s, and randomly roll one of them
+
+        # ---------------------------------------------
+        # ------------------ Co-ops -------------------
+        # Destiny Alignment: You and another player roll games
+        #   from the other's library, and both must complete them
+        # Soul Mates: You and another player agree on a tier, 
+        #   and then a game is rolled (time limit based on tier)
+
+    embed.add_field(name="Roll Requirements", value = 
+        "You have one day to complete " + embed.title + "."    
+        + "\nMust be completed by <t:" + str(int(time.mktime((datetime.now()+timedelta(1)).timetuple())))
+        + ">\nOne Hell of a Day has two week cooldown."
+        + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.now()+timedelta(14)).timetuple())))
+        + ">\n[insert link to cedb.me page]", inline=False)
+    embed.set_author(name="ONE HELL OF A DAY", url="https://example.com")
+
+        # Finally, send the embed
+    await interaction.followup.send(embed=embed)
+    print("Sent information on rolled game " + game)
+
+    
 
 
 # -------------------------------------------------------- #
@@ -301,16 +336,67 @@ def getEmbed(game_name, authorID):
     return embed
 
 
-@tree.command(name="curator", description="Get the latest review from the CE curator", guild=discord.Object(id=guildID))
-async def curator(interaction) :
+# ---------------------------------- curator -----------------------------------
+
+async def getCuratorCount():
+    veggies = {'cc': 'us', 'l' : 'english'}
+    broth = requests.get("https://store.steampowered.com/curator/36185934/", params=veggies)
+    soup = BeautifulSoup(broth.text, features="html.parser")
+    noodle = soup.find_all("span")
+    for noodlet in noodle:
+        try:
+            if noodlet['id'] == "Recommendations_total":
+                number = noodlet.string
+        except:
+            continue
+    return number
+
+
+async def checkCuratorCount():
+    number = await getCuratorCount()
+    if number != tree.reviewCount:
+        await curator()
+        print('change')
+        return number
+    else:
+        print('same')
+        return number
+
+utc = datetime.timezone.utc
+times = [
+    datetime.time(hour=3, tzinfo=utc),
+    datetime.time(hour=6, tzinfo=utc),
+    datetime.time(hour=9, tzinfo=utc),
+    datetime.time(hour=12, tzinfo=utc),
+    datetime.time(hour=15, tzinfo=utc),
+    datetime.time(hour=18, tzinfo=utc),
+    datetime.time(hour=21, tzinfo=utc),
+    datetime.time(hour=0, tzinfo=utc),
+]
+
+
+@tasks.loop(time = times)
+async def loop():
+    tree.reviewCount = await checkCuratorCount()
+
+
+@tree.command(name="curator", description="grab the latest curator review", guild=discord.Object(id=guildID))
+async def curator(interaction, num: int) :
     payload = {'cc': 'us', 'l' : 'english'}
     response = requests.get("https://store.steampowered.com/curator/36185934/", params=payload)
     html = BeautifulSoup(response.text, features="html.parser")
 
-    # "paged_items_paging_summary ellipsis" this is where 49 is stored
+    #print(html.prettify)
+    divs = html.find_all('div')
+    for div in divs:
+        if div["class"] == "curator_review":
+            
+    print(html.div.prettify)
+    await interaction.response.send_message("oopsie")
+    
 
+#---------------------------------------------------------------------------------
 
-    await interaction.response.send_message("this command does not work righ now. sorry!")
 
 @tree.command(name="test_command", description="test", guild=discord.Object(id=guildID))
 async def test(interaction) :
@@ -321,11 +407,11 @@ async def test(interaction) :
     print(interaction.guild.members.id)
     await interaction.response.send_message("test")
 
-
 # ----------------------------------- LOG IN ----------------------------
 @client.event
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guildID))
     print("Ready!")
-
+    tree.reviewCount = await getCuratorCount()
+    await loop.start()
 client.run(discordToken)
