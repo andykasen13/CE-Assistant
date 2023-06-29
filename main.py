@@ -6,7 +6,7 @@ import datetime
 import time
 import subprocess
 import discord
-from discord import app_commands
+from discord import Button, app_commands
 from discord.ext import tasks, commands
 
 import requests
@@ -51,10 +51,14 @@ async def help(interaction) :
     embed = discord.Embed(
         name="Help",
         color=0x000000,
+        timestamp=datetime.now()
     )
+
+    hiButton = Button(style=discord.ButtonStyle.green, label="hi")
+
     embed.add_field(name="page 1", value="pge 1")
 
-    await interaction.followup.send(embed=embed)
+    await interaction.followup.send(embed=embed, components=[hiButton])
 
 
 # ------------------------------------------------------------------------------------------------------------------------------- #
