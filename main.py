@@ -19,6 +19,9 @@ from steam.client import SteamClient as SClient
 steamClient = SClient()
 
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
 
 import json 
 
@@ -40,6 +43,28 @@ guildID = localJSONData['guildID']
 # If it should be in all, remove the argument, but note that 
 # it will take some time (up to an hour) to register the command 
 # if it's for all guilds.
+
+
+# ------------------------------------------------------------------------------------------------------------------------------ #
+# ----------------------------------------------------------VIEW CLASS---------------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------------------ #
+class SimpleView(discord.ui.View) :
+    @discord.ui.button(label = "hello",
+                       style=discord.ButtonStyle.success)
+    async def hello(self, interaction, button: discord.ui.Button) :
+        await interaction.response.send_message("World")
+
+# ------------------------------------------------------------------------------------------------------------------------------ #
+# ----------------------------------------------------------NEXT CLASS---------------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------------------ #
+# class NextView(discord.ui.View) :
+#     @discord.ui.button(label="NEXT")
+
+# ------------------------------------------------------------------------------------------------------------------------------ #
+# ----------------------------------------------------------PREV CLASS---------------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------------------ #
+
+
 # ------------------------------------------------------------------------------------------------------------------------------ #
 # ---------------------------------------------------------HELP COMMAND--------------------------------------------------------- #
 # ------------------------------------------------------------------------------------------------------------------------------ #
@@ -48,17 +73,17 @@ guildID = localJSONData['guildID']
 @tree.command(name="help", description="help", guild=discord.Object(id=guildID))
 async def help(interaction) :
     await interaction.response.defer()
-    embed = discord.Embed(
-        name="Help",
-        color=0x000000,
-        timestamp=datetime.now()
-    )
+    view = SimpleView()
+    button = discord.ui.Button(label = "click me")
+    view.add_item(button)
+    #embed = discord.Embed(
+    #    title="Help",
+    #    color=0x000000,
+    #    timestamp=datetime.datetime.now()
+    #)
+   # embed.add_field(name="page 1", value="pge 1")
 
-    hiButton = Button(style=discord.ButtonStyle.green, label="hi")
-
-    embed.add_field(name="page 1", value="pge 1")
-
-    await interaction.followup.send(embed=embed, components=[hiButton])
+    await interaction.followup.send(view=view)
 
 
 # ------------------------------------------------------------------------------------------------------------------------------- #
@@ -234,19 +259,28 @@ async def checkRolls(interaction, user: discord.Member=None) :
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- GRABBING TIERS --------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
+@tree.command(name="get_tier", description="dt", guild=discord.Object(id=guildID))
+async def get_tier(interaction):
+    # payload = {'cc': 'us', 'l' : 'english'}
+    # response = requests.get('https://cedb.me/games?tier=t1', params=payload)
+    # soup = BeautifulSoup(response.text)
+    # print(soup.prettify())
 
-def getTier(tierLevel):
-    response = requests.get('https://cedb.me/games?tier=t1')
-    soup = BeautifulSoup(response.text)
-    print(soup.prettify())
+    await interaction.response.defer()
 
+    driver = webdriver.Chrome()
+    # driver.implicitly_wait(0.5)
+    #WebDriverWait(driver, timeout=10).until(document_initialised)
+    driver.get("https://cedb.me/games?tier=t1")
+    # access HTML source code with page_source method
+    
+    
+    plants = WebDriverWait(driver, timeout=3000).until(lambda d: d.find_elements(By.TAG_NAME,"h2"))#driver.find_elements(By.TAG_NAME, "h2")
+    #s = driver.page_source
+    for plant in plants:
+        print(plant.text)
 
-    # driver = webdriver.Chrome()
-    # url ='https://cedb.me/games?tier=t1'
-    # driver.get(url)
-    # html = driver.page_source
-
-    # print(html)
+    await interaction.followup.send("hj")
 
 # -------------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- STEAM TEST COMMAND --------------------------------------------------------- #
@@ -282,6 +316,7 @@ async def steam_command(interaction, game_name: str):
 def getEmbed(game_name, authorID):
 
     #TODO add error exceptions
+    #TODO turn this into a class with getters and setters for wider versatility
 
     payload = {'term': game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
     response = requests.get('https://store.steampowered.com/search/suggest?', params=payload)
@@ -400,18 +435,40 @@ async def curator(interaction, num: int) :
     html = BeautifulSoup(response.text, features="html.parser")
 
     descriptions = []
+    app_ids = []
+    links = []
 
     divs = html.find_all('div')
     for div in divs:
         try:
             if div["class"][0] == "recommendation_desc":
                 descriptions.append(div.string.replace('\t', '').replace('\r', '').replace('\n', ''))
-            else:
-                continue
+            if div["class"][0] == "recommendation_readmore":
+                links.append(div.contents[0]["href"][43:])
         except:
             continue
     del descriptions[num:]
-    await interaction.response.send_message(descriptions)
+
+    onlyAs = html.find_all('a')
+    for a in onlyAs:
+        try:
+            app_ids.append(a["data-ds-appid"])
+        except:
+            continue
+    del app_ids[num:]
+
+    print(descriptions)
+    print(app_ids)
+    print(links)
+
+    embed = discord.Embed(
+        title="Help",
+        color=0x000000,
+        timestamp=datetime.datetime.now()
+    )
+
+
+    await interaction.response.send_message(links)
     
 
 #---------------------------------------------------------------------------------
