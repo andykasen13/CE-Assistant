@@ -18,7 +18,6 @@ import steamctl
 from steam.client import SteamClient as SClient
 steamClient = SClient()
 
-from selenium import webdriver
 from bs4 import BeautifulSoup
 
 import json 
@@ -232,12 +231,12 @@ def getTier(tierLevel):
     print(soup.prettify())
 
 
-    driver = webdriver.Chrome()
-    url ='https://cedb.me/games?tier=t1'
-    driver.get(url)
-    html = driver.page_source
+    # driver = webdriver.Chrome()
+    # url ='https://cedb.me/games?tier=t1'
+    # driver.get(url)
+    # html = driver.page_source
 
-    print(html)
+    # print(html)
 
 # -------------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- STEAM TEST COMMAND --------------------------------------------------------- #
@@ -393,7 +392,7 @@ async def curator(interaction, num: int) :
     divs = html.find_all('div')
     for div in divs:
         if div["class"] == "curator_review":
-            
+            print(div.string)
     print(html.div.prettify)
     await interaction.response.send_message("oopsie")
     
