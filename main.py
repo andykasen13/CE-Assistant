@@ -388,13 +388,19 @@ async def curator(interaction, num: int) :
     response = requests.get("https://store.steampowered.com/curator/36185934/", params=payload)
     html = BeautifulSoup(response.text, features="html.parser")
 
-    #print(html.prettify)
+    descriptions = []
+
     divs = html.find_all('div')
     for div in divs:
-        if div["class"] == "curator_review":
-            print(div.string)
-    print(html.div.prettify)
-    await interaction.response.send_message("oopsie")
+        try:
+            if div["class"][0] == "recommendation_desc":
+                descriptions.append(div.string.replace('\t', '').replace('\r', '').replace('\n', ''))
+            else:
+                continue
+        except:
+            continue
+    del descriptions[num:]
+    await interaction.response.send_message(descriptions)
     
 
 #---------------------------------------------------------------------------------
