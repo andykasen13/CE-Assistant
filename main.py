@@ -321,6 +321,7 @@ def getEmbed(game_name, authorID):
     if(jsonData[correctAppID]['data']['is_free']) :
         gamePrice = "Free"
     else: gamePrice = jsonData[correctAppID]['data']['price_overview']['final_formatted']
+    # TODO: get discounts working
     gameNameWithLinkFormat = game_name.replace(" ", "_")
 
 # --- CREATE EMBED ---
