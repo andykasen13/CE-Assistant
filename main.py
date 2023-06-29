@@ -40,15 +40,21 @@ guildID = localJSONData['guildID']
 # If it should be in all, remove the argument, but note that 
 # it will take some time (up to an hour) to register the command 
 # if it's for all guilds.
+# ------------------------------------------------------------------------------------------------------------------------------ #
+# ---------------------------------------------------------HELP COMMAND--------------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------------------------------------ #
 
-# --------------help command------------------------------- #
+
 @tree.command(name="help", description="help", guild=discord.Object(id=guildID))
 async def help(interaction) :
+    await interaction.response.defer()
     embed = discord.Embed(
         name="Help",
         color=0x000000,
     )
     embed.add_field(name="page 1", value="pge 1")
+
+    await interaction.followup.send(embed=embed)
 
 
 # ------------------------------------------------------------------------------------------------------------------------------- #
@@ -315,6 +321,7 @@ def getEmbed(game_name, authorID):
     if(jsonData[correctAppID]['data']['is_free']) :
         gamePrice = "Free"
     else: gamePrice = jsonData[correctAppID]['data']['price_overview']['final_formatted']
+    # TODO: get discounts working
     gameNameWithLinkFormat = game_name.replace(" ", "_")
 
 # --- CREATE EMBED ---
