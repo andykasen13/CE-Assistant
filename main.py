@@ -22,6 +22,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
+import urllib3
 
 import json 
 
@@ -261,26 +262,34 @@ async def checkRolls(interaction, user: discord.Member=None) :
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="get_tier", description="dt", guild=discord.Object(id=guildID))
 async def get_tier(interaction):
-    # payload = {'cc': 'us', 'l' : 'english'}
-    # response = requests.get('https://cedb.me/games?tier=t1', params=payload)
-    # soup = BeautifulSoup(response.text)
-    # print(soup.prettify())
-
     await interaction.response.defer()
-
     driver = webdriver.Chrome()
-    # driver.implicitly_wait(0.5)
-    #WebDriverWait(driver, timeout=10).until(document_initialised)
     driver.get("https://cedb.me/games?tier=t1")
-    # access HTML source code with page_source method
-    
-    
-    plants = WebDriverWait(driver, timeout=3000).until(lambda d: d.find_elements(By.TAG_NAME,"h2"))#driver.find_elements(By.TAG_NAME, "h2")
-    #s = driver.page_source
-    for plant in plants:
+    final = []
+    plants = await asyncio.wait_for(tag(driver), timeout=10)#driver.find_elements(By.TAG_NAME, "h2")
+    for plant in plants[::2]:
         print(plant.text)
+        final.append(plant.text)
+    with open('database.json', 'w') as f :
+        json.dump(final, f, indent=1)
+
 
     await interaction.followup.send("hj")
+
+
+async def tag(driver):
+    please = True
+    while(please):
+        plants = driver.find_elements(By.TAG_NAME, "h2")#WebDriverWait(driver, timeout=5).until(lambda d: len(d.find_elements(By.TAG_NAME,"h2")==32))
+        if len(plants)<32:
+            continue
+        for plant in plants:
+            if not (plant.text and plant.text.strip()):
+                continue
+        please = False
+    return plants
+
+
 
 # -------------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- STEAM TEST COMMAND --------------------------------------------------------- #
