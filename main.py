@@ -370,7 +370,7 @@ def getEmbed(game_name, authorID):
         url=f"https://store.steampowered.com/app/{correctAppID}/{gameNameWithLinkFormat}/",
         description=(f"{gameDescription}"),
         colour=0x000000,
-        timestamp=datetime.now())
+        timestamp=datetime.datetime.now())
 
     embed.add_field(name="Price", value = gamePrice, inline=True)
     embed.add_field(name="User", value = "<@" + str(authorID) + ">", inline=True)
@@ -403,11 +403,9 @@ async def getCuratorCount():
 async def checkCuratorCount():
     number = await getCuratorCount()
     if number != tree.reviewCount:
-        await curator()
-        print('change')
+        await curator(int(tree.reviewCount)-int(number))
         return number
     else:
-        print('same')
         return number
 
 utc = datetime.timezone.utc
@@ -420,6 +418,7 @@ times = [
     datetime.time(hour=18, tzinfo=utc),
     datetime.time(hour=21, tzinfo=utc),
     datetime.time(hour=0, tzinfo=utc),
+    datetime.time(hour=13, minute= 40, tzinfo=utc)
 ]
 
 
@@ -428,8 +427,7 @@ async def loop():
     tree.reviewCount = await checkCuratorCount()
 
 
-@tree.command(name="curator", description="grab the latest curator review", guild=discord.Object(id=guildID))
-async def curator(interaction, num: int) :
+async def curator(num: int) :
     payload = {'cc': 'us', 'l' : 'english'}
     response = requests.get("https://store.steampowered.com/curator/36185934/", params=payload)
     html = BeautifulSoup(response.text, features="html.parser")
@@ -457,9 +455,9 @@ async def curator(interaction, num: int) :
             continue
     del app_ids[num:]
 
-    print(descriptions)
-    print(app_ids)
-    print(links)
+    # print(descriptions)
+    # print(app_ids)
+    # print(links)
 
     embed = discord.Embed(
         title="Help",
@@ -468,20 +466,53 @@ async def curator(interaction, num: int) :
     )
 
 
-    await interaction.response.send_message(links)
-    
+    x = 0
+    print(len(descriptions))
+    while x < len(descriptions):
+    #TODO: once you get multi-page embeds working get this to change pls
+        correctAppID = app_ids[x]
 
-#---------------------------------------------------------------------------------
+# Open and save the JSON data
+        payload = {'appids': correctAppID, 'cc' : 'US'}
+        response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload)
+        jsonData = json.loads(response.text)
+    
+    # Save important information
+        gameTitle = jsonData[correctAppID]['data']['name']
+        imageLink = jsonData[correctAppID]['data']['header_image']
+        gameDescription = jsonData[correctAppID]['data']['short_description']
+        if(jsonData[correctAppID]['data']['is_free']) :
+            gamePrice = "Free"
+        else: gamePrice = jsonData[correctAppID]['data']['price_overview']['final_formatted']
+        # TODO: get discounts working
+        gameNameWithLinkFormat = gameTitle.replace(" ", "_")
+        correctChannel = client.get_channel(788158122907926611)
+
+        embed = discord.Embed(
+            title = gameTitle,
+            url=f"https://store.steampowered.com/app/{correctAppID}/{gameNameWithLinkFormat}/",
+            colour = 0x000000,
+            timestamp=datetime.datetime.now()
+        )
+
+        embed.add_field(name="Review", value=descriptions[x], inline=False)
+        embed.add_field(name="Price", value=gamePrice, inline=False)
+        embed.set_image(url=imageLink)
+        embed.set_footer(text="CE Assistant",
+            icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
+        embed.set_author(name="New game added to curator!", url="https://store.steampowered.com/curator/36185934/")
+    
+        await correctChannel.send(embed=embed)
+        x+=1
+
+# --------------------------------------------------------------------------------------------------------------------------- #
+# --------------------------------------------------TEST COMMAND------------------------------------------------------------- #
+# --------------------------------------------------------------------------------------------------------------------------- #
 
 
 @tree.command(name="test_command", description="test", guild=discord.Object(id=guildID))
 async def test(interaction) :
-    print(interaction.guild)
-    print(interaction.guild_id)
-    print(interaction.guild_locale)
-
-    print(interaction.guild.members.id)
-    await interaction.response.send_message("test")
+    await interaction.response.send_message("uselsess command")
 
 # ----------------------------------- LOG IN ----------------------------
 @client.event
