@@ -321,30 +321,7 @@ def getEmbed(game_name, authorID):
     payload = {'term': game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
     response = requests.get('https://store.steampowered.com/search/suggest?', params=payload)
     #print(response.text)
-    correctAppID = BeautifulSoup(response.text, features="html.parser").a['data-ds-appid']
-
-    """ # THIS IS THERONS CODE. DO NOT TOUCH ANDY
-    
-    prams = {'term': game_name, 'f': 'games', 'cc': 'us'}
-    noodle = requests.get('https://store.steampowered.com/search/suggest?', params=prams)
-    #print(noodle.text)
-    soup = BeautifulSoup(noodle.text, features='html.parser')
-    print("testerooni")
-    print(soup.get_text)
-    print("testerino")
-    bowl = soup.find_all('div')
-    print(bowl)
-    collinder = list(bowl)
-    for x in range(0, collinder.len()):
-        if collinder.index(x).get_text() == "Free" or "Free To Play" or "":
-            collinder.pop(x)
-    print(collinder)
-
-    """
-        
-
-    
-    
+    correctAppID = BeautifulSoup(response.text, features="html.parser").a['data-ds-appid']    
 
 # --- DOWNLOAD JSON FILE ---
 
@@ -403,7 +380,7 @@ async def getCuratorCount():
 async def checkCuratorCount():
     number = await getCuratorCount()
     if number != tree.reviewCount:
-        await curator(int(tree.reviewCount)-int(number))
+        await curator(int(number)-int(tree.reviewCount))
         return number
     else:
         return number
@@ -418,7 +395,6 @@ times = [
     datetime.time(hour=18, tzinfo=utc),
     datetime.time(hour=21, tzinfo=utc),
     datetime.time(hour=0, tzinfo=utc),
-    datetime.time(hour=13, minute= 40, tzinfo=utc)
 ]
 
 
@@ -469,7 +445,7 @@ async def curator(num: int) :
     x = 0
     print(len(descriptions))
     while x < len(descriptions):
-    #TODO: once you get multi-page embeds working get this to change pls
+    #TODO: add the link to the full review
         correctAppID = app_ids[x]
 
 # Open and save the JSON data
@@ -496,7 +472,8 @@ async def curator(num: int) :
         )
 
         embed.add_field(name="Review", value=descriptions[x], inline=False)
-        embed.add_field(name="Price", value=gamePrice, inline=False)
+        embed.add_field(name="Price", value=gamePrice, inline=True)
+        embed.add_field(name="CE Link", value=f"[Click here]({links[x]})", inline=True)
         embed.set_image(url=imageLink)
         embed.set_footer(text="CE Assistant",
             icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
