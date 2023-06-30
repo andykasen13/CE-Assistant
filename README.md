@@ -56,4 +56,7 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 - reminder that if someone tries to roll an event that they have running already or are on cooldown for, DON'T LET THEM.
 - reminder to use beautifulsoup to check steamhunters.com for eligibility!
 - reminder to also use beautifulsoup to get the curator thing to work :)
+- make buttons work
+- make the gamebyappID an array
+- create JSON modules for all users in server
 
