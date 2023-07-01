@@ -50,21 +50,13 @@ guildID = localJSONData['guildID']
 # ----------------------------------------------------------VIEW CLASS---------------------------------------------------------- #
 # ------------------------------------------------------------------------------------------------------------------------------ #
 class SimpleView(discord.ui.View) :
-    @discord.ui.button(label = "hello",
-                       style=discord.ButtonStyle.success)
-    async def hello(self, interaction, button: discord.ui.Button) :
-        await interaction.response.send_message("World")
+    @discord.ui.button(label="PREVIOUS", style=discord.ButtonStyle.red)
+    async def prevButton(self, interaction, button: discord.ui.Button) :
+        await interaction.response.send_message("prev button  :(")
 
-# ------------------------------------------------------------------------------------------------------------------------------ #
-# ----------------------------------------------------------NEXT CLASS---------------------------------------------------------- #
-# ------------------------------------------------------------------------------------------------------------------------------ #
-# class NextView(discord.ui.View) :
-#     @discord.ui.button(label="NEXT")
-
-# ------------------------------------------------------------------------------------------------------------------------------ #
-# ----------------------------------------------------------PREV CLASS---------------------------------------------------------- #
-# ------------------------------------------------------------------------------------------------------------------------------ #
-
+    @discord.ui.button(label="NEXT", style=discord.ButtonStyle.success)
+    async def nextButton(self, interaction, button: discord.ui.Button) :
+        await interaction.response.send_message("next button")
 
 # ------------------------------------------------------------------------------------------------------------------------------ #
 # ---------------------------------------------------------HELP COMMAND--------------------------------------------------------- #
@@ -77,14 +69,14 @@ async def help(interaction) :
     view = SimpleView()
     button = discord.ui.Button(label = "click me")
     view.add_item(button)
-    #embed = discord.Embed(
-    #    title="Help",
-    #    color=0x000000,
-    #    timestamp=datetime.datetime.now()
-    #)
-   # embed.add_field(name="page 1", value="pge 1")
+    embed = discord.Embed(
+        title="Help",
+        color=0x000000,
+        timestamp=datetime.datetime.now()
+    )
+    embed.add_field(name="page 1", value="pge 1")
 
-    await interaction.followup.send(view=view)
+    await interaction.followup.send(embed=embed, view=view)
 
 
 # ------------------------------------------------------------------------------------------------------------------------------- #
