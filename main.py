@@ -58,6 +58,21 @@ class SimpleView(discord.ui.View) :
     async def nextButton(self, interaction, button: discord.ui.Button) :
         await interaction.response.send_message("next button")
 
+
+def createHelpEmbed(pageNum=1, inline=False) :
+    #1=rolls, 2=get_rolls, 3=steam_test, 4=curator
+    x = 0
+    helpInfo = {
+        "rolls" : "roll a random steam game",
+        "get_rolls" : "see yours and others completed and current rolls",
+        "steam_test" : "get information about any steam game",
+        "curator" : "the bot will automatically update the server if a new game has been added to the curator within three hours"
+    }
+
+    embed=discord.Embed(color=0x000000, title=helpInfo[pageNum-1], value=helpInfo[pageNum])
+    return embed
+    
+
 # ------------------------------------------------------------------------------------------------------------------------------ #
 # ---------------------------------------------------------HELP COMMAND--------------------------------------------------------- #
 # ------------------------------------------------------------------------------------------------------------------------------ #
@@ -76,7 +91,16 @@ async def help(interaction) :
     )
     embed.add_field(name="page 1", value="pge 1")
 
-    await interaction.followup.send(embed=embed, view=view)
+    currentPage = 1
+
+    async def next_callback(interaction) :
+        nonlocal currentPage, sent_message
+        currentPage += 1
+        sent_message.edit
+
+    sent_message = await interaction.followup.send(embed=createHelpEmbed(1), view=view)
+    #TODO: make it so that the next button doesn't appear on final page 
+    #and that previous button doesn't appear on first page
 
 
 # ------------------------------------------------------------------------------------------------------------------------------- #
