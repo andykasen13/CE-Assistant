@@ -16,7 +16,6 @@ from steam.webapi import WebAPI
 from steam.steamid import SteamID
 import steamctl
 from steam.client import SteamClient as SClient
-steamClient = SClient()
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -49,27 +48,19 @@ guildID = localJSONData['guildID']
 # ------------------------------------------------------------------------------------------------------------------------------ #
 # ----------------------------------------------------------VIEW CLASS---------------------------------------------------------- #
 # ------------------------------------------------------------------------------------------------------------------------------ #
-class SimpleView(discord.ui.View) :
-    @discord.ui.button(label="PREVIOUS", style=discord.ButtonStyle.red)
-    async def prevButton(self, interaction, button: discord.ui.Button) :
-        await interaction.response.send_message("prev button  :(")
-
-    @discord.ui.button(label="NEXT", style=discord.ButtonStyle.success)
-    async def nextButton(self, interaction, button: discord.ui.Button) :
-        await interaction.response.send_message("next button")
-
-
 def createHelpEmbed(pageNum=1, inline=False) :
     #1=rolls, 2=get_rolls, 3=steam_test, 4=curator
     x = 0
     helpInfo = {
-        "rolls" : "roll a random steam game",
-        "get_rolls" : "see yours and others completed and current rolls",
-        "steam_test" : "get information about any steam game",
-        "curator" : "the bot will automatically update the server if a new game has been added to the curator within three hours"
+        "Rolls" : "This bot has the ability to roll random games for any event in the Challenge Enthusiast server. P.S. andy reminder to get autofill to work!",
+        "/get_rolls" : "Use this command to see your current (and past) rolls, or the rolls of any other user in the server.",
+        "steam_test" : "Get general information about any STEAM game.",
+        "Curator" : "The bot will automatically check to see if any new entries have been added to the CE curator (within three hours)."
     }
 
-    embed=discord.Embed(color=0x000000, title=helpInfo[pageNum-1], value=helpInfo[pageNum])
+    embed=discord.Embed(color=0x000000, title=list(helpInfo)[pageNum-1], description=list(helpInfo.values())[pageNum-1])
+    embed.set_footer(text=(f"Page {pageNum} of {len(list(helpInfo))}"))
+    embed.timestamp=datetime.datetime.now()
     return embed
     
 
@@ -81,9 +72,7 @@ def createHelpEmbed(pageNum=1, inline=False) :
 @tree.command(name="help", description="help", guild=discord.Object(id=guildID))
 async def help(interaction) :
     await interaction.response.defer()
-    view = SimpleView()
-    button = discord.ui.Button(label = "click me")
-    view.add_item(button)
+    view = discord.ui.View(timeout=600)
     embed = discord.Embed(
         title="Help",
         color=0x000000,
@@ -94,9 +83,36 @@ async def help(interaction) :
     currentPage = 1
 
     async def next_callback(interaction) :
+        await interaction.response.defer()
         nonlocal currentPage, sent_message
         currentPage += 1
-        sent_message.edit
+        if(currentPage >= 4) :
+            nextButton.disabled = True
+        else : nextButton.disabled = False
+        if(currentPage <= 1) :
+            prevButton.disabled = True
+        else : prevButton.disabled = False
+        await sent_message.edit(embed=createHelpEmbed(currentPage), view=view)
+
+    async def prev_callback(interaction) : 
+        await interaction.response.defer()
+        nonlocal currentPage, sent_message
+        currentPage -= 1
+        if(currentPage >= 4) :
+            nextButton.disabled = True
+        else : nextButton.disabled = False
+        if(currentPage <= 1) :
+            prevButton.disabled = True
+        else : prevButton.disabled = False
+        await sent_message.edit(embed=createHelpEmbed(currentPage), view=view)
+
+    nextButton = discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False)
+    prevButton = discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)
+    nextButton.callback = next_callback
+    prevButton.callback = prev_callback
+    view.add_item(prevButton)
+    view.add_item(nextButton)
+    
 
     sent_message = await interaction.followup.send(embed=createHelpEmbed(1), view=view)
     #TODO: make it so that the next button doesn't appear on final page 
@@ -112,13 +128,13 @@ async def roll_command(interaction, event: str) -> None:
 
     await interaction.response.defer()
 
-
     # Open file
     tier_one_file = open("faket1list.txt", "r")
     data = tier_one_file.read()
     data_into_list = data.split("\n")
-    #print(data_into_list)
     tier_one_file.close()
+
+    view = discord.ui.View(timeout=600)
 
     # -------------- One Hell of a Day ----------------
     if event == "one hell of a day" :
@@ -128,8 +144,99 @@ async def roll_command(interaction, event: str) -> None:
         print("Rolled game: " + game)
 
         embed = getEmbed(game, interaction.user.id)
+        embed.add_field(name="Roll Requirements", value = 
+            "You have one day to complete " + embed.title + "."    
+            + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(1)).timetuple())))
+            + ">\nOne Hell of a Day has a two week cooldown."
+            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(14)).timetuple())))
+            + ">\n[insert link to cedb.me page]", inline=False)
+        embed.set_author(name="ONE HELL OF A DAY", url="https://example.com")
 
-    # -------------- One Hell of a Week ---------------
+    # ------------------------------ Two week t2 streak -----------------------------------
+
+    elif event == "two week t2 streak" :
+
+
+        
+        print("received two week t2 streak")
+        games = []
+        embeds = []
+
+        # ----- Grab two random games -----
+        i=0
+        while(i != 2) :
+            games.append(random.choice(data_into_list))
+            i += 1
+        game = games[0] + " and " + games[1]
+
+        # ----- Create opening embed -----
+        embeds.append(discord.Embed(
+            color=0x000000,
+            title="Two Week T2 Streak",
+            description="games lol"
+        ))
+        embeds[0].set_footer(text="Page 1 of 3")
+        i=1
+        for gamer in games:
+            embeds[0].description += "\n" + str(i) + ". " + gamer
+            i+=1
+
+        # ----- Create the embeds for each game -----
+        currentPage = 1
+        i=0
+        for gamer in games :
+            embeds.append(getEmbed(gamer, interaction.user.id))
+            embeds[i+1].set_footer(text=(f"Page {i+2} of 3"))
+            i+=1
+
+        # ----- Set the embed to send as the first one ------
+        embed = embeds[0]
+
+        embed.add_field(name="Roll Requirements", value =
+            "You have two weeks to complete " + embed.title + "."
+            + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(14)).timetuple())))
+            + ">\nTwo Week T2 Streak has no cooldown."
+            + "\n[insert link to cedb.me page]", inline=False)
+        embed.set_author(name = "TWO WEEK T2 STREAK", url="https://example.com")
+
+        #TODO: make sure the two games are different games
+        #TODO: add error checking
+
+       
+        # ----- Create buttons -----
+        async def next_callback(interaction, pageLimit) :
+            await interaction.response.defer()
+            nonlocal currentPage, sent_message
+            currentPage += 1
+            if(currentPage >= pageLimit) :
+                nextButton.disabled = True
+            else : nextButton.disabled = False
+            if(currentPage <= 1) :
+                prevButton.disabled = True
+            else : prevButton.disabled = False
+            await sent_message.edit(embed=embeds[currentPage-1], view=view)
+
+        async def prev_callback(interaction, pageLimit) : 
+            await interaction.response.defer()
+            nonlocal currentPage, sent_message
+            currentPage -= 1
+            if(currentPage >= pageLimit) :
+               nextButton.disabled = True
+            else : nextButton.disabled = False
+            if(currentPage <= 1) :
+                prevButton.disabled = True
+            else : prevButton.disabled = False
+            await sent_message.edit(embed=embeds[currentPage-1], view=view)
+
+        nextButton = discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False)
+        prevButton = discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)
+        nextButton.callback = next_callback
+        prevButton.callback = prev_callback
+        view.add_item(prevButton)
+        view.add_item(nextButton)
+
+
+    # ---------------------------------- One Hell of a Week -----------------------------------------------
     elif event == "one hell of a week" :
         await interaction.followup.send(f"you ave week")
 
@@ -138,7 +245,7 @@ async def roll_command(interaction, event: str) -> None:
         await interaction.followup.send(f"you have month")
 
     # -------------- kill yourself --------------------
-    else : await interaction.response.send_message(f"jfasdklfhasd")
+    else : await interaction.followup.send(f"jfasdklfhasd")
 
     with open('info.json', 'r') as f :
         userInfo = json.load(f)
@@ -147,7 +254,7 @@ async def roll_command(interaction, event: str) -> None:
     while userInfo['users'][i]['ID'] != interaction.user.id :
         i += 1
         
-    userInfo['users'][i]['current_rolls'].append({"event_name" : "One Hell of a Day", "games" : [{"name" : embed.title, "completed" : False}], "end_time" : "" + datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+    #userInfo['users'][i]['current_rolls'].append({"event_name" : "One Hell of a Day", "games" : [{"name" : embed.title, "completed" : False}], "end_time" : "" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
 
     with open('info.json', 'w') as f :
         json.dump(userInfo, f, indent=4)
@@ -178,17 +285,11 @@ async def roll_command(interaction, event: str) -> None:
         # Soul Mates: You and another player agree on a tier, 
         #   and then a game is rolled (time limit based on tier)
 
-    embed.add_field(name="Roll Requirements", value = 
-        "You have one day to complete " + embed.title + "."    
-        + "\nMust be completed by <t:" + str(int(time.mktime((datetime.now()+timedelta(1)).timetuple())))
-        + ">\nOne Hell of a Day has two week cooldown."
-        + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.now()+timedelta(14)).timetuple())))
-        + ">\n[insert link to cedb.me page]", inline=False)
-    embed.set_author(name="ONE HELL OF A DAY", url="https://example.com")
+
 
         # Finally, send the embed
-    await interaction.followup.send(embed=embed)
-    print("Sent information on rolled game " + game)
+    sent_message = await interaction.followup.send(embed=embed, view=view)
+    print("Sent information on rolled game: " + game)
 
     
 
@@ -257,7 +358,7 @@ async def checkRolls(interaction, user: discord.Member=None) :
         
     embed = discord.Embed(
     colour=0x000000,
-    timestamp=datetime.now()
+    timestamp=datetime.datetime.now()
     )
 
 
@@ -345,6 +446,7 @@ def getEmbed(game_name, authorID):
 
     payload = {'term': game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
     response = requests.get('https://store.steampowered.com/search/suggest?', params=payload)
+    #TODO: dap isn't working sorry theron
     #print(response.text)
     correctAppID = BeautifulSoup(response.text, features="html.parser").a['data-ds-appid']    
 
