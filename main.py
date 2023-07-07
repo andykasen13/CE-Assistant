@@ -124,9 +124,8 @@ events = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month
 
 @tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guildID))
 async def roll_command(interaction, event: events) -> None:
+    await interaction.response.defer()
 
-    sent_message=await interaction.response.defer()
-    print(sent_message)
     # Open file
     tier_one_file = open("faket1list.txt", "r")
     data = tier_one_file.read()
@@ -158,9 +157,6 @@ async def roll_command(interaction, event: events) -> None:
         print("received two week t2 streak")
         games = []
         embeds = []
-        sent_message
-
-        print(sent_message)
 
         # ----- Grab two random games -----
         i=0
@@ -274,7 +270,6 @@ async def roll_command(interaction, event: events) -> None:
     # Finally, send the embed
     sent_message = await interaction.followup.send(embed=embed, view=view)
     print("Sent information on rolled game: " + game)
-
   
 def get_buttons(view, currentPage, embeds, page_limit):
     buttons = []
