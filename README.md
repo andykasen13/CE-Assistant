@@ -59,4 +59,10 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 - make buttons work
 - make the gamebyappID an array
 - create JSON modules for all users in server
-
+- if the user does not exist, don't try and send them the `/check_rolls` or shit will error a lot
+- decide if you want to include objectives in the initial roll message (current me thinks no but should be included in the `/check_rolls` command)
+- co-op rolls 😩
+- indicate if the game is on sale
+- think about switching the icon of the `/roll` command to the user's avatar
+- make sure that you don't roll the same game for any multi-game rolls
+- add error checking. this will be so so annoying but will be great for preventing the bot from just shutting down

@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import datetime
 import time
 import subprocess
+from typing import Literal
 import discord
 from discord import Button, app_commands
 from discord.ext import tasks, commands
@@ -50,7 +51,6 @@ guildID = localJSONData['guildID']
 # ------------------------------------------------------------------------------------------------------------------------------ #
 def createHelpEmbed(pageNum=1, inline=False) :
     #1=rolls, 2=get_rolls, 3=steam_test, 4=curator
-    x = 0
     helpInfo = {
         "Rolls" : "This bot has the ability to roll random games for any event in the Challenge Enthusiast server. P.S. andy reminder to get autofill to work!",
         "/get_rolls" : "Use this command to see your current (and past) rolls, or the rolls of any other user in the server.",
@@ -67,21 +67,18 @@ def createHelpEmbed(pageNum=1, inline=False) :
 # ------------------------------------------------------------------------------------------------------------------------------ #
 # ---------------------------------------------------------HELP COMMAND--------------------------------------------------------- #
 # ------------------------------------------------------------------------------------------------------------------------------ #
-
-
 @tree.command(name="help", description="help", guild=discord.Object(id=guildID))
 async def help(interaction) :
+    # Defer the message
     await interaction.response.defer()
-    view = discord.ui.View(timeout=600)
-    embed = discord.Embed(
-        title="Help",
-        color=0x000000,
-        timestamp=datetime.datetime.now()
-    )
-    embed.add_field(name="page 1", value="pge 1")
 
+    # Create the view (will be used for buttons later)
+    view = discord.ui.View(timeout=600)
+
+    # and create a current_page int
     currentPage = 1
 
+    # Create the Next button function
     async def next_callback(interaction) :
         await interaction.response.defer()
         nonlocal currentPage, sent_message
@@ -94,6 +91,7 @@ async def help(interaction) :
         else : prevButton.disabled = False
         await sent_message.edit(embed=createHelpEmbed(currentPage), view=view)
 
+    # Create the Previous button function
     async def prev_callback(interaction) : 
         await interaction.response.defer()
         nonlocal currentPage, sent_message
@@ -107,7 +105,7 @@ async def help(interaction) :
         print(sent_message)
         await sent_message.edit(embed=createHelpEmbed(currentPage), view=view)
 
-
+    # Create the buttons and add them to the view
     nextButton = discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False)
     prevButton = discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)
     nextButton.callback = next_callback
@@ -115,18 +113,17 @@ async def help(interaction) :
     view.add_item(prevButton)
     view.add_item(nextButton)
     
-
+    # Send the message
     sent_message = await interaction.followup.send(embed=createHelpEmbed(1), view=view)
-    #TODO: make it so that the next button doesn't appear on final page 
-    #and that previous button doesn't appear on first page
-
-
 # ------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------ROLL COMMAND --------------------------------------------------------- # 
 # ------------------------------------------------------------------------------------------------------------------------------- #
+events = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+          "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
+          "Russian Roulette"]
 
 @tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guildID))
-async def roll_command(interaction, event: str) -> None:
+async def roll_command(interaction, event: events) -> None:
 
     sent_message=await interaction.response.defer()
     print(sent_message)
@@ -137,15 +134,15 @@ async def roll_command(interaction, event: str) -> None:
     tier_one_file.close()
 
     view = discord.ui.View(timeout=600)
+    game = "error"
 
-    # -------------- One Hell of a Day ----------------
-    if event == "one hell of a day" :
-        
+    #  -------------------------------------------- One Hell of a Day  --------------------------------------------
+    if event == "One Hell of a Day" :
         # Pick a random game from the list
-        # getTier(1)
         game = random.choice(data_into_list)
         print("Rolled game: " + game)
 
+        # Create the embed
         embed = getEmbed(game, interaction.user.id)
         embed.add_field(name="Roll Requirements", value = 
             "You have one day to complete " + embed.title + "."    
@@ -155,9 +152,9 @@ async def roll_command(interaction, event: str) -> None:
             + ">\n[insert link to cedb.me page]", inline=False)
         embed.set_author(name="ONE HELL OF A DAY", url="https://example.com")
 
-    # ------------------------------ Two week t2 streak -----------------------------------
-
-    elif event == "two week t2 streak" :
+    # -------------------------------------------- Two week t2 streak --------------------------------------------
+    elif event == "Two Week T2 Streak" :
+        # two random t2s
         print("received two week t2 streak")
         games = []
         embeds = []
@@ -176,13 +173,18 @@ async def roll_command(interaction, event: str) -> None:
         embeds.append(discord.Embed(
             color=0x000000,
             title="Two Week T2 Streak",
-            description="games lol"
-        ))
+            description="games lol"))
         embeds[0].set_footer(text="Page 1 of 3")
         i=1
         for gamer in games:
             embeds[0].description += "\n" + str(i) + ". " + gamer
             i+=1
+        embeds[0].add_field(name="Roll Requirements", value =
+            "You have two weeks to complete " + embeds[0].title + "."
+            + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(14)).timetuple())))
+            + ">\nTwo Week T2 Streak has no cooldown."
+            + "\n[insert link to cedb.me page]", inline=False)
+        embeds[0].set_author(name = "TWO WEEK T2 STREAK", url="https://example.com")
 
         # ----- Create the embeds for each game -----
         currentPage = 1
@@ -191,81 +193,85 @@ async def roll_command(interaction, event: str) -> None:
         for gamer in games :
             embeds.append(getEmbed(gamer, interaction.user.id))
             embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"))
+            embeds[i+1].set_author(name="TWO WEEK T2 STREAK")
             i+=1
 
         # ----- Set the embed to send as the first one ------
         embed = embeds[0]
-
-        embed.add_field(name="Roll Requirements", value =
-            "You have two weeks to complete " + embed.title + "."
-            + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(14)).timetuple())))
-            + ">\nTwo Week T2 Streak has no cooldown."
-            + "\n[insert link to cedb.me page]", inline=False)
-        embed.set_author(name = "TWO WEEK T2 STREAK", url="https://example.com")
-
-        #TODO: make sure the two games are different games
-        #TODO: add error checking
-
        
         # ----- Create buttons -----
         get_buttons(view, currentPage, embeds, page_limit)
 
 
 
-    # ---------------------------------- One Hell of a Week -----------------------------------------------
-    elif event == "one hell of a week" :
-        await interaction.followup.send(f"you ave week")
+    # -------------------------------------------- One Hell of a Week --------------------------------------------
+    elif event == "One Hell of a Week" :
+        # t1s from each category
+        embed = discord.Embed(title=f"you ave week")
 
-    # -------------- One Hell of a Month --------------
-    elif event == "one hell of a month" : 
-        await interaction.followup.send(f"you have month")
+    # -------------------------------------------- One Hell of a Month --------------------------------------------
+    elif event == "One Hell of a Month" : 
+        # five t1s from each category
+        embed = discord.Embed(title=f"you have month")
 
-    # -------------- kill yourself --------------------
-    else : await interaction.followup.send(f"jfasdklfhasd")
+    # -------------------------------------------- Two "Two Week T2 Streak" Streak --------------------------------------------
+    elif event == "Two 'Two Week T2 Streak' Streak" :
+        # four t2s
+        embed = discord.Embed(title=("two two week t2 streak streak"))
 
+    # -------------------------------------------- Never Lucky --------------------------------------------
+    elif event == "Never Lucky" :
+        # one t3
+        embed = discord.Embed(title=("never lucky"))
+
+    # -------------------------------------------- Triple Threat --------------------------------------------
+    elif event == "Triple Threat" :
+        # three t3s
+        embed = discord.Embed(title=("triple threat"))
+         
+    # -------------------------------------------- Let Fate Decide --------------------------------------------
+    elif event == "Let Fate Decide" :
+        # one t4
+        embed = discord.Embed(title=("let fate decide"))
+
+    # -------------------------------------------- Fourward Thinking --------------------------------------------
+    elif event == "Fourward Thinking" :
+        # idk
+        embed = discord.Embed(title=("fourward thinking"))
+
+    # -------------------------------------------- Russian Roulette --------------------------------------------
+    elif event == "Russian Roulette" :
+        # choose six t5s and get one at random
+        embed = discord.Embed(title=("russian roulette"))
+
+    # -------------------------------------------- kill yourself --------------------------------------------
+    else : embed=discord.Embed(title=(f"'{event}' is not a valid event."))
+
+    # open the json file
     with open('info.json', 'r') as f :
         userInfo = json.load(f)
-        
+    
+    # find the location of the user
     i = 0
     while userInfo['users'][i]['ID'] != interaction.user.id :
         i += 1
         
-    #userInfo['users'][i]['current_rolls'].append({"event_name" : "One Hell of a Day", "games" : [{"name" : embed.title, "completed" : False}], "end_time" : "" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+    # append the roll to the user's current rolls array
+    # userInfo['users'][i]['current_rolls'].append({"event_name" : "One Hell of a Day", 
+    #                                               "games" : [{"name" : embed.title, "completed" : False}], 
+    #                                               "end_time" : "" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
 
+    # dump the info
     with open('info.json', 'w') as f :
         json.dump(userInfo, f, indent=4)
+    # ---------------------------------------------
+    # ------------------ Co-ops -------------------
+    # Destiny Alignment: You and another player roll games
+    #   from the other's library, and both must complete them
+    # Soul Mates: You and another player agree on a tier, 
+    #   and then a game is rolled (time limit based on tier)
 
-        # TODO: make sure you indicate if the game is on sale
-        # TODO: think about switching the icon of 
-        # the /roll command to the user's avatar
-
-        # --------------------------------------------- 
-        # ---------------- Events ---------------------
-        # One Hell of a Day: random T1
-        # One Hell of a Week: random T1s for each category
-        # One Hell of a Month: 5 T1s from each category,
-        #   and complete three of each five
-        # Two Week T2 Streak: 2 random T2s
-        # Two "Two Week T2 Streak" Streak: 4 random T2s
-        # Never Lucky: random T3 (no time limit)
-        # Triple Threat: three random T3s, complete
-        #   all within a month
-        # Let Fate Decide: random T4 (no time limit)
-        # Fourward Thinking: bro what
-        # Russian Roulette: pick six T5s, and randomly roll one of them
-
-        # ---------------------------------------------
-        # ------------------ Co-ops -------------------
-        # Destiny Alignment: You and another player roll games
-        #   from the other's library, and both must complete them
-        # Soul Mates: You and another player agree on a tier, 
-        #   and then a game is rolled (time limit based on tier)
-
-
-
-        # Finally, send the embed
-
-
+    # Finally, send the embed
     sent_message = await interaction.followup.send(embed=embed, view=view)
     print("Sent information on rolled game: " + game)
 
@@ -306,8 +312,10 @@ async def callback(interaction, currentPage, view, embeds, page_limit, buttons):
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="check_rolls", description="Check the active rolls of anyone on the server", guild=discord.Object(id=guildID))
 async def checkRolls(interaction, user: discord.Member=None) :
+    # defer the message
     await interaction.response.defer()
 
+    # if no user is provided default to sender
     if user is None :
         user = interaction.user
 
@@ -322,21 +330,11 @@ async def checkRolls(interaction, user: discord.Member=None) :
         if(userNum + 1 == len(userInfo['users'])) : return await interaction.followup.send("This user does not exist.")
         else: userNum += 1
 
+    # set up this bullshit
     currentrollstr = ""
     completedrollstr = ""
 
-    # TODO: make sure that if the roll is empty,
-    # you don't do all this or it will error a lot!
-
-    # TODO: this is much further down the line but
-    # you should debate whether or not it is worth 
-    # it to include objectives in this, and if they are, 
-    # how to show it.
-
-    # (done) TODO: you forgot the end date silly
-
-    # TODO: co-op rolls :weary: 😩
-
+    # grab all current rolls
     for x in userInfo['users'][userNum]['current_rolls'] :
         end_time = time.mktime(datetime.strptime(str(x['end_time']), "%Y-%m-%d %H:%M:%S").timetuple())
         currentrollstr = currentrollstr + "- __" + x['event_name'] + "__ (complete by <t:" + str(int(end_time)) + ">):\n"
@@ -347,9 +345,11 @@ async def checkRolls(interaction, user: discord.Member=None) :
             else : currentrollstr += (" " + str(gameNum) + ". " + y['name'] + " (not completed)\n")
             gameNum += 1
     
+    # account for no current rolls
     if(currentrollstr == "") :
         currentrollstr = f"{user.name} has no current rolls."
 
+    # grab all completed rolls
     for x in userInfo['users'][userNum]['completed_rolls'] :
         end_time = time.mktime(datetime.strptime(str(x['completed_time']), "%Y-%m-%d %H:%M:%S").timetuple())
         completedrollstr += "- __" + x['event_name'] + "__ (completed on <t:" + str(int(end_time)) + ">):\n"
@@ -358,17 +358,14 @@ async def checkRolls(interaction, user: discord.Member=None) :
             completedrollstr += (" " + str(gameNum) + ". " + y['name'] + "\n")
             gameNum += 1
     
+    # account for no completed rolls
     if(completedrollstr == "") :
         completedrollstr = f"{user.global_name} has no completed rolls."
-        
-
-        
+    
+    # make the embed that you're going to send
     embed = discord.Embed(
     colour=0x000000,
-    timestamp=datetime.datetime.now()
-    )
-
-
+    timestamp=datetime.datetime.now())
     embed.add_field(name="User", value = "<@" + str(user.id) + ">", inline=False)
     embed.add_field(name="Current Rolls", value=currentrollstr, inline=False)
     embed.add_field(name="Completed Rolls", value=completedrollstr, inline=False)
@@ -376,10 +373,8 @@ async def checkRolls(interaction, user: discord.Member=None) :
     embed.set_footer(text="CE Assistant",
         icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
 
+    # send the embed
     await interaction.followup.send(embed=embed)
-
-
-
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- GRABBING TIERS --------------------------------------------------------- #
@@ -415,9 +410,9 @@ async def tag(driver):
 
 
 
-# -------------------------------------------------------------------------------------------------------------------------------------- #
-# --------------------------------------------------------- STEAM TEST COMMAND --------------------------------------------------------- #
-# -------------------------------------------------------------------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------------------------------------------------------------- #
+# --------------------------------------------------------- STEAM TEST COMMAND ------------------------------------------------------ #
+# ----------------------------------------------------------------------------------------------------------------------------------- #
 
 @tree.command(name="steam_game", description="Get information on any steam game", guild=discord.Object(id=guildID))
 async def steam_command(interaction, game_name: str):
@@ -430,31 +425,31 @@ async def steam_command(interaction, game_name: str):
 
     # Get the embed
     embed = getEmbed(game_name, interaction.user.id)
-
     embed.set_author(name="REQUESTED STEAM GAME INFO ON '" + game_name + "'")
     embed.remove_field(1)
     embed.add_field(name="Requested by", value="<@" + str(interaction.user.id) + ">", inline=True)
     embed.add_field(name="CE Status", value="Not on CE / x Points", inline=True)
     embed.add_field(name="CE Owners", value="[insert]", inline=True)
     embed.add_field(name="CE Completions", value="[insert]", inline=True)
- 
 
     # Finally, send the embed
     await interaction.followup.send(embed=embed)
+
+    # And log it
     print("Sent information on requested game " + game_name + "\n")
 
-# -------------------------------------------------------------------------------------------------------------------------------------- #
-# --------------------------------------------------------- GET EMBED FUNCTION --------------------------------------------------------- #
-# -------------------------------------------------------------------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------------------------------------------------------------- #
+# --------------------------------------------------------- GET EMBED FUNCTION ------------------------------------------------------ #
+# ----------------------------------------------------------------------------------------------------------------------------------- #
 def getEmbed(game_name, authorID):
 
     #TODO add error exceptions
     #TODO turn this into a class with getters and setters for wider versatility
 
+# ---- GET APP ID ----
     payload = {'term': game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
     response = requests.get('https://store.steampowered.com/search/suggest?', params=payload)
     #TODO: dap isn't working sorry theron
-    #print(response.text)
     correctAppID = BeautifulSoup(response.text, features="html.parser").a['data-ds-appid']    
 
 # --- DOWNLOAD JSON FILE ---
@@ -468,10 +463,9 @@ def getEmbed(game_name, authorID):
     gameTitle = jsonData[correctAppID]['data']['name']
     imageLink = jsonData[correctAppID]['data']['header_image']
     gameDescription = jsonData[correctAppID]['data']['short_description']
-    if(jsonData[correctAppID]['data']['is_free']) :
+    if(jsonData[correctAppID]['data']['is_free']) : 
         gamePrice = "Free"
     else: gamePrice = jsonData[correctAppID]['data']['price_overview']['final_formatted']
-    # TODO: get discounts working
     gameNameWithLinkFormat = game_name.replace(" ", "_")
 
 # --- CREATE EMBED ---
@@ -622,8 +616,8 @@ async def curator(num: int) :
 
 
 @tree.command(name="test_command", description="test", guild=discord.Object(id=guildID))
-async def test(interaction) :
-    await interaction.response.send_message("i love your fat rolls")
+async def test(interaction, fruits: Literal['apple', 'banana', 'orange']) :
+    await interaction.response.send_message(f"your fruit {fruits}")
 
 # ----------------------------------- LOG IN ----------------------------
 @client.event
