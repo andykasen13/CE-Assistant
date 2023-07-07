@@ -128,8 +128,8 @@ async def help(interaction) :
 @tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guildID))
 async def roll_command(interaction, event: str) -> None:
 
-    await interaction.response.defer()
-
+    sent_message=await interaction.response.defer()
+    print(sent_message)
     # Open file
     tier_one_file = open("faket1list.txt", "r")
     data = tier_one_file.read()
@@ -140,6 +140,7 @@ async def roll_command(interaction, event: str) -> None:
 
     # -------------- One Hell of a Day ----------------
     if event == "one hell of a day" :
+        
         # Pick a random game from the list
         # getTier(1)
         game = random.choice(data_into_list)
@@ -160,6 +161,9 @@ async def roll_command(interaction, event: str) -> None:
         print("received two week t2 streak")
         games = []
         embeds = []
+        sent_message
+
+        print(sent_message)
 
         # ----- Grab two random games -----
         i=0
@@ -204,19 +208,7 @@ async def roll_command(interaction, event: str) -> None:
 
        
         # ----- Create buttons -----
-        async def hehe(interaction):
-            nonlocal currentPage, sent_message, view, embeds, page_limit, buttons
-            currentPage+=1
-            await callback(interaction, currentPage, sent_message, view, embeds, page_limit, buttons)
-
-        async def haha(interaction):
-            nonlocal currentPage, sent_message, view, embeds, page_limit, buttons
-            currentPage-=1
-            await callback(interaction, currentPage, sent_message, view, embeds, page_limit, buttons)
-
-        buttons = await get_buttons(view)
-        buttons[0].callback = hehe
-        buttons[1].callback = haha
+        get_buttons(view, currentPage, embeds, page_limit)
 
 
 
@@ -275,27 +267,39 @@ async def roll_command(interaction, event: str) -> None:
 
 
     sent_message = await interaction.followup.send(embed=embed, view=view)
-    
     print("Sent information on rolled game: " + game)
 
   
-async def get_buttons(view):
+def get_buttons(view, currentPage, embeds, page_limit):
     buttons = []
     buttons.append(discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False))
     buttons.append(discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True))
     view.add_item(buttons[1])
     view.add_item(buttons[0])
+
+    async def hehe(interaction):
+        nonlocal currentPage, view, embeds, page_limit, buttons
+        currentPage+=1
+        await callback(interaction, currentPage, view, embeds, page_limit, buttons)
+
+    async def haha(interaction):
+        nonlocal currentPage, view, embeds, page_limit, buttons
+        currentPage-=1
+        await callback(interaction, currentPage, view, embeds, page_limit, buttons)
+
+    buttons[0].callback = hehe
+    buttons[1].callback = haha
     return buttons
 
-async def callback(interaction, currentPage, sent_message, view, embeds, page_limit, buttons):# nextButton, prevButton):#, nB, pB) :
-    await interaction.response.defer()
+async def callback(interaction, currentPage, view, embeds, page_limit, buttons):
+    #await interaction.response.defer()
     if(currentPage >= page_limit) :
         buttons[0].disabled = True
     else : buttons[0].disabled = False
     if(currentPage <= 1) :
         buttons[1].disabled = True
     else : buttons[1].disabled = False
-    await sent_message.edit(embed=embeds[currentPage-1], view=view)
+    await interaction.response.edit_message(embed=embeds[currentPage-1], view=view)
 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------MY_ROLLS COMMAND --------------------------------------------------------- # 
