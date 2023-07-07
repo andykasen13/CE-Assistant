@@ -104,7 +104,9 @@ async def help(interaction) :
         if(currentPage <= 1) :
             prevButton.disabled = True
         else : prevButton.disabled = False
+        print(sent_message)
         await sent_message.edit(embed=createHelpEmbed(currentPage), view=view)
+
 
     nextButton = discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False)
     prevButton = discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)
@@ -204,36 +206,44 @@ async def roll_command(interaction, event: str) -> None:
 
        
         # ----- Create buttons -----
-        async def next_callback(interaction, pageLimit) :
-            await interaction.response.defer()
-            nonlocal currentPage, sent_message
-            currentPage += 1
-            if(currentPage >= pageLimit) :
-                nextButton.disabled = True
-            else : nextButton.disabled = False
-            if(currentPage <= 1) :
-                prevButton.disabled = True
-            else : prevButton.disabled = False
-            await sent_message.edit(embed=embeds[currentPage-1], view=view)
+        # async def next_callback(interaction, pageLimit) :
+        #     await interaction.response.defer()
+        #     nonlocal currentPage, sent_message
+        #     currentPage += 1
+        #     if(currentPage >= pageLimit) :
+        #         nextButton.disabled = True
+        #     else : nextButton.disabled = False
+        #     if(currentPage <= 1) :
+        #         prevButton.disabled = True
+        #     else : prevButton.disabled = False
+        #     await sent_message.edit(embed=embeds[currentPage-1], view=view)
 
-        async def prev_callback(interaction, pageLimit) : 
-            await interaction.response.defer()
-            nonlocal currentPage, sent_message
-            currentPage -= 1
-            if(currentPage >= pageLimit) :
-               nextButton.disabled = True
-            else : nextButton.disabled = False
-            if(currentPage <= 1) :
-                prevButton.disabled = True
-            else : prevButton.disabled = False
-            await sent_message.edit(embed=embeds[currentPage-1], view=view)
+        # async def prev_callback(interaction, pageLimit) : 
+        #     await interaction.response.defer()
+        #     nonlocal currentPage, sent_message
+        #     currentPage -= 1
+        #     if(currentPage >= pageLimit) :
+        #        nextButton.disabled = True
+        #     else : nextButton.disabled = False
+        #     if(currentPage <= 1) :
+        #         prevButton.disabled = True
+        #     else : prevButton.disabled = False
+        #     await sent_message.edit(embed=embeds[currentPage-1], view=view)
 
+        # nextButton = discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False)
+        # prevButton = discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)
+        
+
+        # nextButton.callback = next_callback(currentPage, sent_message, view)
+        # prevButton.callback = prev_callback(currentPage, sent_message, view)
+        sent_message=0    
         nextButton = discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False)
         prevButton = discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)
-        nextButton.callback = next_callback
-        prevButton.callback = prev_callback
+        nextButton.callback = next_callback(interaction, currentPage, sent_message, view, nextButton, prevButton)
+        prevButton.callback = prev_callback(interaction, currentPage, sent_message, view, nextButton, prevButton)
         view.add_item(prevButton)
         view.add_item(nextButton)
+
 
 
     # ---------------------------------- One Hell of a Week -----------------------------------------------
@@ -288,11 +298,38 @@ async def roll_command(interaction, event: str) -> None:
 
 
         # Finally, send the embed
+
+
     sent_message = await interaction.followup.send(embed=embed, view=view)
+    
     print("Sent information on rolled game: " + game)
 
-    
+  
 
+
+async def next_callback(interaction, currentPage, sent_message, view, nB, pB) :
+    await interaction.response.defer()
+    # nonlocal currentPage, sent_message
+    currentPage += 1
+    if(currentPage >= 4) :
+        nB.disabled = True
+    else : nB.disabled = False
+    if(currentPage <= 1) :
+        pB.disabled = True
+    else : pB.disabled = False
+    await sent_message.edit(embed=createHelpEmbed(currentPage), view=view)
+
+async def prev_callback(interaction, currentPage, sent_message, view, nB, pB) : 
+    await interaction.response.defer()
+    # nonlocal currentPage, sent_message
+    currentPage -= 1
+    if(currentPage >= 4) :
+        nB.disabled = True
+    else : nB.disabled = False
+    if(currentPage <= 1) :
+        pB.disabled = True
+    else : pB.disabled = False
+    await sent_message.edit(embed=createHelpEmbed(currentPage), view=view)
 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------MY_ROLLS COMMAND --------------------------------------------------------- # 
