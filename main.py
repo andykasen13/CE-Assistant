@@ -204,31 +204,6 @@ async def roll_command(interaction, event: str) -> None:
 
        
         # ----- Create buttons -----
-        # async def next_callback(interaction, pageLimit) :
-        #     await interaction.response.defer()
-        #     nonlocal currentPage, sent_message
-        #     currentPage += 1
-        #     if(currentPage >= pageLimit) :
-        #         nextButton.disabled = True
-        #     else : nextButton.disabled = False
-        #     if(currentPage <= 1) :
-        #         prevButton.disabled = True
-        #     else : prevButton.disabled = False
-        #     await sent_message.edit(embed=embeds[currentPage-1], view=view)
-
-        # async def prev_callback(interaction, pageLimit) : 
-        #     await interaction.response.defer()
-        #     nonlocal currentPage, sent_message
-        #     currentPage -= 1
-        #     if(currentPage >= pageLimit) :
-        #        nextButton.disabled = True
-        #     else : nextButton.disabled = False
-        #     if(currentPage <= 1) :
-        #         prevButton.disabled = True
-        #     else : prevButton.disabled = False
-        #     await sent_message.edit(embed=embeds[currentPage-1], view=view)
-
-        
         async def hehe(interaction):
             nonlocal currentPage, sent_message, view, embeds, page_limit, buttons
             currentPage+=1
