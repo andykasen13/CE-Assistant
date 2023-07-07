@@ -497,8 +497,9 @@ async def getCuratorCount():
 
 async def checkCuratorCount():
     number = await getCuratorCount()
-    if number != tree.reviewCount:
-        await curator(int(number)-int(tree.reviewCount))
+    current_count = json.loads(open("extra.json").read())['Current Reviews']
+    if number != current_count:
+        await curator(int(number)-int(current_count))
         return number
     else:
         return number
@@ -513,12 +514,13 @@ times = [
     datetime.time(hour=18, tzinfo=utc),
     datetime.time(hour=21, tzinfo=utc),
     datetime.time(hour=0, tzinfo=utc),
+    datetime.time(hour=19, minute=24)
 ]
 
 
 @tasks.loop(time = times)
 async def loop():
-    tree.reviewCount = await checkCuratorCount()
+    json.loads(open("extra.json").write(await checkCuratorCount()))['Current Reviews']
 
 
 async def curator(num: int) :
@@ -549,9 +551,6 @@ async def curator(num: int) :
             continue
     del app_ids[num:]
 
-    # print(descriptions)
-    # print(app_ids)
-    # print(links)
 
     embed = discord.Embed(
         title="Help",
@@ -561,7 +560,6 @@ async def curator(num: int) :
 
 
     x = 0
-    print(len(descriptions))
     while x < len(descriptions):
     #TODO: add the link to the full review
         correctAppID = app_ids[x]
@@ -614,7 +612,5 @@ async def test(interaction, fruits: Literal['apple', 'banana', 'orange']) :
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guildID))
     print("Ready!")
-    data = json.loads(open("extra.json").read())
-    tree.reviewCount = await getCuratorCount()
     await loop.start()
 client.run(discordToken)
