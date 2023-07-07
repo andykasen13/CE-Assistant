@@ -269,39 +269,34 @@ async def roll_command(interaction, event: events) -> None:
     #   and then a game is rolled (time limit based on tier)
 
     # Finally, send the embed
-    sent_message = await interaction.followup.send(embed=embed, view=view)
+    await interaction.followup.send(embed=embed, view=view)
     print("Sent information on rolled game: " + game)
   
 def get_buttons(view, currentPage, embeds, page_limit):
-    buttons = []
-    buttons.append(discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False))
-    buttons.append(discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True))
+    buttons = [discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False), discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)]
     view.add_item(buttons[1])
     view.add_item(buttons[0])
 
     async def hehe(interaction):
-        nonlocal currentPage, view, embeds, page_limit, buttons
-        currentPage+=1
-        await callback(interaction, currentPage, view, embeds, page_limit, buttons)
+        return await callback(interaction, num=1)
 
     async def haha(interaction):
+        return await callback(interaction, num=-1)
+
+    async def callback(interaction, num):
         nonlocal currentPage, view, embeds, page_limit, buttons
-        currentPage-=1
-        await callback(interaction, currentPage, view, embeds, page_limit, buttons)
+        currentPage+=num
+        if(currentPage >= page_limit) :
+            buttons[0].disabled = True
+        else : buttons[0].disabled = False
+        if(currentPage <= 1) :
+            buttons[1].disabled = True
+        else : buttons[1].disabled = False
+        await interaction.response.edit_message(embed=embeds[currentPage-1], view=view)
 
     buttons[0].callback = hehe
     buttons[1].callback = haha
     return buttons
-
-async def callback(interaction, currentPage, view, embeds, page_limit, buttons):
-    #await interaction.response.defer()
-    if(currentPage >= page_limit) :
-        buttons[0].disabled = True
-    else : buttons[0].disabled = False
-    if(currentPage <= 1) :
-        buttons[1].disabled = True
-    else : buttons[1].disabled = False
-    await interaction.response.edit_message(embed=embeds[currentPage-1], view=view)
 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------MY_ROLLS COMMAND --------------------------------------------------------- # 
@@ -620,6 +615,7 @@ async def test(interaction, fruits: Literal['apple', 'banana', 'orange']) :
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guildID))
     print("Ready!")
+    data = json.loads(open("extra.json").read())
     tree.reviewCount = await getCuratorCount()
     await loop.start()
 client.run(discordToken)
