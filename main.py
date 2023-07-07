@@ -157,9 +157,6 @@ async def roll_command(interaction, event: str) -> None:
     # ------------------------------ Two week t2 streak -----------------------------------
 
     elif event == "two week t2 streak" :
-
-
-        
         print("received two week t2 streak")
         games = []
         embeds = []
@@ -185,10 +182,11 @@ async def roll_command(interaction, event: str) -> None:
 
         # ----- Create the embeds for each game -----
         currentPage = 1
+        page_limit = 3
         i=0
         for gamer in games :
             embeds.append(getEmbed(gamer, interaction.user.id))
-            embeds[i+1].set_footer(text=(f"Page {i+2} of 3"))
+            embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"))
             i+=1
 
         # ----- Set the embed to send as the first one ------
@@ -230,19 +228,20 @@ async def roll_command(interaction, event: str) -> None:
         #     else : prevButton.disabled = False
         #     await sent_message.edit(embed=embeds[currentPage-1], view=view)
 
-        # nextButton = discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False)
-        # prevButton = discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)
         
+        async def hehe(interaction):
+            nonlocal currentPage, sent_message, view, embeds, page_limit, buttons
+            currentPage+=1
+            await callback(interaction, currentPage, sent_message, view, embeds, page_limit, buttons)
 
-        # nextButton.callback = next_callback(currentPage, sent_message, view)
-        # prevButton.callback = prev_callback(currentPage, sent_message, view)
-        sent_message=0    
-        nextButton = discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False)
-        prevButton = discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)
-        nextButton.callback = next_callback(interaction, currentPage, sent_message, view, nextButton, prevButton)
-        prevButton.callback = prev_callback(interaction, currentPage, sent_message, view, nextButton, prevButton)
-        view.add_item(prevButton)
-        view.add_item(nextButton)
+        async def haha(interaction):
+            nonlocal currentPage, sent_message, view, embeds, page_limit, buttons
+            currentPage-=1
+            await callback(interaction, currentPage, sent_message, view, embeds, page_limit, buttons)
+
+        buttons = await get_buttons(view)
+        buttons[0].callback = hehe
+        buttons[1].callback = haha
 
 
 
@@ -305,31 +304,23 @@ async def roll_command(interaction, event: str) -> None:
     print("Sent information on rolled game: " + game)
 
   
+async def get_buttons(view):
+    buttons = []
+    buttons.append(discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False))
+    buttons.append(discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True))
+    view.add_item(buttons[1])
+    view.add_item(buttons[0])
+    return buttons
 
-
-async def next_callback(interaction, currentPage, sent_message, view, nB, pB) :
+async def callback(interaction, currentPage, sent_message, view, embeds, page_limit, buttons):# nextButton, prevButton):#, nB, pB) :
     await interaction.response.defer()
-    # nonlocal currentPage, sent_message
-    currentPage += 1
-    if(currentPage >= 4) :
-        nB.disabled = True
-    else : nB.disabled = False
+    if(currentPage >= page_limit) :
+        buttons[0].disabled = True
+    else : buttons[0].disabled = False
     if(currentPage <= 1) :
-        pB.disabled = True
-    else : pB.disabled = False
-    await sent_message.edit(embed=createHelpEmbed(currentPage), view=view)
-
-async def prev_callback(interaction, currentPage, sent_message, view, nB, pB) : 
-    await interaction.response.defer()
-    # nonlocal currentPage, sent_message
-    currentPage -= 1
-    if(currentPage >= 4) :
-        nB.disabled = True
-    else : nB.disabled = False
-    if(currentPage <= 1) :
-        pB.disabled = True
-    else : pB.disabled = False
-    await sent_message.edit(embed=createHelpEmbed(currentPage), view=view)
+        buttons[1].disabled = True
+    else : buttons[1].disabled = False
+    await sent_message.edit(embed=embeds[currentPage-1], view=view)
 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------MY_ROLLS COMMAND --------------------------------------------------------- # 
@@ -653,7 +644,7 @@ async def curator(num: int) :
 
 @tree.command(name="test_command", description="test", guild=discord.Object(id=guildID))
 async def test(interaction) :
-    await interaction.response.send_message("uselsess command")
+    await interaction.response.send_message("i love your fat rolls")
 
 # ----------------------------------- LOG IN ----------------------------
 @client.event
