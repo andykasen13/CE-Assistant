@@ -1,6 +1,3 @@
-# ---------- asyncio imports -----------
-import asyncio
-
 # ---------- time imports -----------
 from datetime import datetime, timedelta
 import datetime
@@ -21,9 +18,9 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-# --------- curator imports ---------
+# --------- other file imports ---------
 from curator import loop
-
+from scraping import get_games
 
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
@@ -77,6 +74,8 @@ async def help(interaction) :
     await get_buttons(view, embeds)
 
     await interaction.followup.send(embed=embeds[0], view=view)
+
+
 # ------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------ROLL COMMAND --------------------------------------------------------- # 
 # ------------------------------------------------------------------------------------------------------------------------------- #
@@ -265,6 +264,7 @@ async def get_buttons(view, embeds):
     buttons[0].callback = hehe
     buttons[1].callback = haha
 
+
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------- MY_ROLLS COMMAND --------------------------------------------------------- # 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
@@ -334,38 +334,15 @@ async def checkRolls(interaction, user: discord.Member=None) :
     # send the embed
     await interaction.followup.send(embed=embed)
 
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- GRABBING TIERS --------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-@tree.command(name="get_tier", description="dt", guild=discord.Object(id=guildID))
-async def get_tier(interaction):
+@tree.command(name="scrape", description="dt", guild=discord.Object(id=guildID))
+async def scrape(interaction):
     await interaction.response.defer()
-    driver = webdriver.Chrome()
-    driver.get("https://cedb.me/games?tier=t1")
-    final = []
-    plants = await asyncio.wait_for(tag(driver), timeout=10)#driver.find_elements(By.TAG_NAME, "h2")
-    for plant in plants[::2]:
-        print(plant.text)
-        final.append(plant.text)
-    with open('database.json', 'w') as f :
-        json.dump(final, f, indent=1)
-
-
-    await interaction.followup.send("hj")
-
-
-async def tag(driver):
-    please = True
-    while(please):
-        plants = driver.find_elements(By.TAG_NAME, "h2")#WebDriverWait(driver, timeout=5).until(lambda d: len(d.find_elements(By.TAG_NAME,"h2")==32))
-        if len(plants)<32:
-            continue
-        for plant in plants:
-            if not (plant.text and plant.text.strip()):
-                continue
-        please = False
-    return plants
-
+    await get_games()
+    await interaction.followup.send("scraped")
 
 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
@@ -395,6 +372,7 @@ async def steam_command(interaction, game_name: str):
 
     # And log it
     print("Sent information on requested game " + game_name + "\n")
+
 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- GET EMBED FUNCTION ------------------------------------------------------ #
@@ -450,7 +428,6 @@ def getEmbed(game_name, authorID):
 # --------------------------------------------------TEST COMMAND------------------------------------------------------------- #
 # --------------------------------------------------------------------------------------------------------------------------- #
 
-
 @tree.command(name="test_command", description="test", guild=discord.Object(id=guildID))
 async def test(interaction, fruits: Literal['apple', 'banana', 'orange']) :
     await interaction.response.send_message(f"your fruit {fruits}")
@@ -462,4 +439,5 @@ async def on_ready():
     print("Ready!")
     #await loop(client)
     await loop.start(client)
+
 client.run(discordToken)

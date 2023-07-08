@@ -1,18 +1,50 @@
-[
- "-KLAUS-",
- "-SPROUT-",
- "#Snake2 DX: Reawakening",
- "10 Second Ninja X",
- "1001 Spikes",
- "140",
- "9 Years of Shadows",
- "A Bastard's Tale",
- "A Healer Only Lives Twice",
- "A Hole New World",
- "A Most Extraordinary Gnome",
- "A Story About My Uncle",
- "Aaero",
- "Aerial Platforms",
- "Aggelos",
- "Akane"
-]
+{
+ "- Challenge Enthusiasts -": {
+  "CE ID": "76574ec1-42df-4488-a511-b9f2d9290e5d"
+ },
+ "- Puzzle Games -": {
+  "CE ID": "27578157-10b2-4f29-acee-452c2dc59477"
+ },
+ "-KLAUS-": {
+  "CE ID": "1e8565aa-b9f2-4b41-9578-22e4c2a5436b"
+ },
+ "-SPROUT-": {
+  "CE ID": "d9512a9b-e89b-417c-9fa2-cc22396a5f72"
+ },
+ "[NINJA GAIDEN: Master Collection] NINJA GAIDEN \u03a3": {
+  "CE ID": "f722baf5-4c1a-4fa3-9482-5ce6db203c73"
+ },
+ "#Snake2 DX: Reawakening": {
+  "CE ID": "8176c6f4-0560-4fb8-a1e0-7f90057a62de"
+ },
+ "\u2200kashicverse -Malicious Wake-": {
+  "CE ID": "3879e3c7-8467-466e-9037-c1f524c336b2"
+ },
+ "10 Second Ninja X": {
+  "CE ID": "2e0a208c-fc31-447b-a96e-e01c3c4bf6fa"
+ },
+ "1001 Spikes": {
+  "CE ID": "c04662d6-fdcc-4b55-918b-f1d1eb0d25de"
+ },
+ "140": {
+  "CE ID": "50f3310d-04b0-4619-9c43-d0aa689f1303"
+ },
+ "4X4": {
+  "CE ID": "d4f6a3ac-c123-4ee4-a409-e0e1d44a137f"
+ },
+ "64.0": {
+  "CE ID": "4408b00f-eac4-4a5f-98f3-0ed3897e73a4"
+ },
+ "9 Years of Shadows": {
+  "CE ID": "b8d32f16-c5f9-4cc7-a902-2adab70b65ec"
+ },
+ "A Bastard's Tale": {
+  "CE ID": "48c7eaee-1b2d-47f7-8dc9-00f449b13500"
+ },
+ "A Dance of Fire and Ice": {
+  "CE ID": "22177e06-2002-488a-8c90-fe3ff3849647"
+ },
+ "A Hat in Time": {
+  "CE ID": "21144d8d-c943-4130-8349-6e768220cfc9"
+ }
+}
