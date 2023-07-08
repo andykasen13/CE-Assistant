@@ -1,5 +1,3 @@
-import asyncio
-from asyncio import Event, wait
 from discord.ext import tasks
 import datetime
 import json
@@ -22,11 +20,11 @@ async def getCuratorCount():
     return number
 
 
-async def checkCuratorCount():
+async def checkCuratorCount(client):
     number = await getCuratorCount()
     current_count = json.loads(open("extra.json").read())['Current Reviews']
     if number != current_count:
-        await curatorUpdate(int(number)-int(current_count))
+        await curatorUpdate(int(number)-int(current_count), client)
         return number
     else:
         return number
@@ -42,22 +40,21 @@ times = [
     datetime.time(hour=18, tzinfo=utc),
     datetime.time(hour=21, tzinfo=utc),
     datetime.time(hour=0, tzinfo=utc),
+    datetime.time(hour=18, minute=55)
 ]
 
 
 @tasks.loop(time = times)
-async def loop():
-    await helper()
-    
-async def helper():
+async def loop(client):
     with open("extra.json", "r+") as jsonFile:
         data = json.load(jsonFile)
-    data['Current Reviews'] = await checkCuratorCount()
+    data['Current Reviews'] = await checkCuratorCount(client)
     print(data)
     with open("extra.json", "w") as jsonFile:
         json.dump(data, jsonFile)
 
-async def curatorUpdate(num: int) :
+
+async def curatorUpdate(num: int, client) :
     payload = {'cc': 'us', 'l' : 'english'}
     response = requests.get("https://store.steampowered.com/curator/36185934/", params=payload)
     html = BeautifulSoup(response.text, features="html.parser")
@@ -129,6 +126,8 @@ async def curatorUpdate(num: int) :
             icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
         embed.set_author(name="New game added to curator!", url="https://store.steampowered.com/curator/36185934/")
     
-        from main import curate
-        await curate(embed)
+        correctChannel = client.get_channel(788158122907926611)
+        await correctChannel.send(embed=embed)
         x+=1
+
+    
