@@ -14,6 +14,7 @@ from typing import Literal
 
 # ----------- json imports ------------
 import json
+import psutil
 
 # --------- web imports ---------
 import requests
@@ -358,11 +359,30 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 def scrape_thread_call():
     get_games()
 
-@tree.command(name="scrape", description="dt", guild=discord.Object(id=guildID))
+@tree.command(name="scrape", description="run through each game in the CE database and grab the corresponding data", guild=discord.Object(id=guildID))
 async def scrape(interaction):
     await interaction.response.defer()
-    await scrape_thread_call()
+    await resource_testing(scrape_thread_call(), 5)
     await interaction.followup.send("scraped")
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------- COMMAND RESOURCE TESTING ---------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+
+async def resource_testing(function):
+    ram_usage = []
+    time = []
+    ram_before = psutil.virtual_memory()[3]/1000000000
+    time_before = datetime.datetime.now()
+    await function
+    ram_after = psutil.virtual_memory()[3]/1000000000
+    time_after = datetime.datetime.now()
+    ram_usage.append(ram_after-ram_before)
+    time.append((time_after-time_before).total_seconds())
+
+    print('ram usage (GB): ' + str(sum(ram_usage)/len(ram_usage)))
+    print('time taken (s):' + str(sum(time)/len(time)))
 
 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
