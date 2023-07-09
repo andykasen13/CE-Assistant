@@ -1,8 +1,5 @@
-import asyncio
-import functools
 import json
 from datetime import datetime
-import typing
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import psutil
@@ -11,18 +8,16 @@ import psutil
 
 
 def get_games():
-    # print('RAM Used (GB):', psutil.virtual_memory()[3]/1000000000)
-    # now = datetime.now()
-    # current_time = now.strftime("%H:%M:%S")
-    # print(current_time)
     driver = webdriver.Chrome()
     driver.get("https://cedb.me/games")
-    tag(driver)
+    #game_list(driver)
+    get_objectives('c04662d6-fdcc-4b55-918b-f1d1eb0d25de', driver)
 
 
 
 
-def tag(driver):
+
+def game_list(driver):
     button_enabled = True
     games = {}
 
@@ -42,6 +37,7 @@ def tag(driver):
         tier_and_genre=None
 
         for i in range(0, len(names)):
+            #objectives = get_objectives(ids[i].text, driver)
             games[names[i].text] = {
                 "CE ID" : ids[i].get_attribute("href")[21::],
                 "tier" : tiers[i].text,
@@ -55,11 +51,22 @@ def tag(driver):
         else:
             button.click()
 
-    # print('RAM Used (GB):', psutil.virtual_memory()[3]/1000000000)
-    # now = datetime.now()
-    # current_time = now.strftime("%H:%M:%S")
-    # print(current_time)
+
     with open('database.json', 'w') as f :
         json.dump(games, f, indent=4)
-    games=None
+
+    games = None
     
+
+
+def get_objectives(id, driver):
+    url = "https://cedb.me/game/" + id
+    driver.get(url)
+    title = None
+    while(title == None):
+        try:
+            title = driver.find_element(By.CLASS_NAME, "fl-gap-2")
+        except:
+            continue
+
+    print(title.text + "huh")
