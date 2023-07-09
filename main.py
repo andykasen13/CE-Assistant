@@ -1,7 +1,10 @@
 # ---------- time imports -----------
+import asyncio
 from datetime import datetime, timedelta
 import datetime
+import functools
 import time
+import typing
 
 # ----------- discord imports ---------
 import discord
@@ -335,13 +338,30 @@ async def checkRolls(interaction, user: discord.Member=None) :
     await interaction.followup.send(embed=embed)
 
 
+
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ----------------------------------------------------------- THREADING ------------------------------------------------------------ #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+
+def to_thread(func: typing.Callable) -> typing.Coroutine:
+    @functools.wraps(func)
+    async def wrapper(*args, **kwargs):
+        return await asyncio.to_thread(func, *args, **kwargs)
+    return wrapper
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- GRABBING TIERS --------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
+
+@to_thread
+def scrape_thread_call():
+    get_games()
+
 @tree.command(name="scrape", description="dt", guild=discord.Object(id=guildID))
 async def scrape(interaction):
     await interaction.response.defer()
-    await get_games()
+    await scrape_thread_call()
     await interaction.followup.send("scraped")
 
 
