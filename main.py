@@ -38,8 +38,8 @@ intents.message_content = True
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-discordToken = localJSONData['discordToken']
-guildID = localJSONData['guildID']
+discord_token = localJSONData['discord_token']
+guild_ID = localJSONData['guild_id']
 
 # Add the guild ids in which the slash command will appear. 
 # If it should be in all, remove the argument, but note that 
@@ -50,7 +50,7 @@ guildID = localJSONData['guildID']
 # ------------------------------------------------------------------------------------------------------------------------------ #
 # ---------------------------------------------------------HELP COMMAND--------------------------------------------------------- #
 # ------------------------------------------------------------------------------------------------------------------------------ #
-@tree.command(name="help", description="help", guild=discord.Object(id=guildID))
+@tree.command(name="help", description="help", guild=discord.Object(id=guild_ID))
 async def help(interaction) :
     # Defer the message
     await interaction.response.defer()
@@ -87,7 +87,7 @@ events = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
           "Russian Roulette"]
 
-@tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guildID))
+@tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guild_ID))
 async def roll_command(interaction, event: events) -> None:
     await interaction.response.defer()
 
@@ -272,7 +272,7 @@ async def get_buttons(view, embeds):
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------- MY_ROLLS COMMAND --------------------------------------------------------- # 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
-@tree.command(name="check_rolls", description="Check the active rolls of anyone on the server", guild=discord.Object(id=guildID))
+@tree.command(name="check_rolls", description="Check the active rolls of anyone on the server", guild=discord.Object(id=guild_ID))
 async def checkRolls(interaction, user: discord.Member=None) :
     # defer the message
     await interaction.response.defer()
@@ -359,7 +359,7 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 def scrape_thread_call():
     get_games()
 
-@tree.command(name="scrape", description="run through each game in the CE database and grab the corresponding data", guild=discord.Object(id=guildID))
+@tree.command(name="scrape", description="run through each game in the CE database and grab the corresponding data", guild=discord.Object(id=guild_ID))
 async def scrape(interaction):
     await interaction.response.defer()
     await scrape_thread_call()
@@ -389,7 +389,7 @@ async def resource_testing(function):
 # --------------------------------------------------------- STEAM TEST COMMAND ------------------------------------------------------ #
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 
-@tree.command(name="steam_game", description="Get information on any steam game", guild=discord.Object(id=guildID))
+@tree.command(name="steam_game", description="Get information on any steam game", guild=discord.Object(id=guild_ID))
 async def steam_command(interaction, game_name: str):
 
     # Log the command
@@ -468,7 +468,7 @@ def getEmbed(game_name, authorID):
 # --------------------------------------------------TEST COMMAND------------------------------------------------------------- #
 # --------------------------------------------------------------------------------------------------------------------------- #
 
-@tree.command(name="test_command", description="test", guild=discord.Object(id=guildID))
+@tree.command(name="test_command", description="test", guild=discord.Object(id=guild_ID))
 async def test(interaction) :
     await interaction.response.defer()
     print(get_achievements("-SPROUT-"))
@@ -477,8 +477,8 @@ async def test(interaction) :
 # ----------------------------------- LOG IN ----------------------------
 @client.event
 async def on_ready():
-    await tree.sync(guild=discord.Object(id=guildID))
+    await tree.sync(guild=discord.Object(id=guild_ID))
     print("Ready!")
     await loop.start(client)
 
-client.run(discordToken)
+client.run(discord_token)

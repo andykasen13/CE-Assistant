@@ -3,52 +3,7 @@
         {
             "name": "andykasen13",
             "ID": 413427677522034727,
-            "current_rolls": [
-                {
-                    "event_name": "One Hell of a Day",
-                    "games": [
-                        {
-                            "name": "Momodora: Reverie Under the Moonlight",
-                            "completed": false
-                        }
-                    ],
-                    "end_time": "2023-06-23 20:58:09"
-                },
-                {
-                    "event_name": "Two Week T2 Streak",
-                    "games": [
-                        {
-                            "name": "Muck",
-                            "completed": true
-                        },
-                        {
-                            "name": "ELDEN RING",
-                            "completed": false
-                        }
-                    ],
-                    "end_time": "2023-06-27 20:58:09"
-                },
-                {
-                    "event_name": "One Hell of a Day",
-                    "games": [
-                        {
-                            "name": "Death's Door",
-                            "completed": false
-                        }
-                    ],
-                    "end_time": "2023-06-25 18:04:05"
-                },
-                {
-                    "event_name": "One Hell of a Day",
-                    "games": [
-                        {
-                            "name": "Cyber Hook",
-                            "completed": false
-                        }
-                    ],
-                    "end_time": "2023-06-25 18:04:38"
-                }
-            ],
+            "current_rolls": [],
             "completed_rolls": [
                 {
                     "event_name": "One Hell of a Day",

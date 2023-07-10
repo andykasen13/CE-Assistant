@@ -10,7 +10,7 @@ import psutil
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-steam_api_key = localJSONData['steamAPIKey']
+steam_api_key = localJSONData['steam_API_key']
 
 
 def get_games():
