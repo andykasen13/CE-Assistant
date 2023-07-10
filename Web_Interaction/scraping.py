@@ -7,17 +7,21 @@ from selenium.webdriver.common.by import By
 import psutil
 
 # Grab information from json file
-with open('useful.json') as f :
+with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 steam_api_key = localJSONData['steamAPIKey']
 
 
 def get_games():
-    driver = webdriver.Chrome()
+    options = webdriver.ChromeOptions() 
+    options.add_argument("--ignore-certificate-errors")
+    driver = webdriver.Chrome(options=options)
+
+    #driver = webdriver.Chrome()
     driver.get("https://cedb.me/games")
     # game_list(driver)
-    # game_data(driver)
+    game_data(driver)
     print(get_objectives("[NINJA GAIDEN: Master Collection] NINJA GAIDEN Σ", 'f722baf5-4c1a-4fa3-9482-5ce6db203c73', driver))
 
 
@@ -37,9 +41,9 @@ def game_list(driver):
         button = driver.find_elements(By.TAG_NAME, "button")[30]
 
 
-        tiers = tier_and_genre[14::5]
-        genres = tier_and_genre[15::5]
-        tier_and_genre=None
+        # tiers = tier_and_genre[14::5]
+        # genres = tier_and_genre[15::5]
+        # tier_and_genre=None
 
         ignore = [
             "- Challenge Enthusiasts -",
@@ -64,7 +68,7 @@ def game_list(driver):
             button.click()
 
 
-    with open('database.json', 'w') as f :
+    with open('./Jasons/database_name.json', 'w') as f :
         json.dump(games, f, indent=4)
 
     games = None
@@ -72,13 +76,14 @@ def game_list(driver):
 
 
 def game_data(driver):
-    games = json.loads(open("database.json").read())
+    games = json.loads(open("./Jasons/database_name.json").read())
+    print(games)
     for game in games:
         data = get_objectives(game, games[game]["CE ID"], driver)
         for dat in data:
             games[game][dat] = data[dat]
 
-    with open('database.json', 'w') as f :
+    with open('./Jasons/database_name.json', 'w') as f :
         json.dump(games, f, indent=4)
 
 

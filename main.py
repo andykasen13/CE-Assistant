@@ -23,8 +23,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 # --------- other file imports ---------
-from curator import loop
-from scraping import get_achievements, get_games
+from Web_Interaction.curator import loop
+from Web_Interaction.scraping import get_achievements, get_games
 
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
@@ -35,7 +35,7 @@ tree = app_commands.CommandTree(client)
 intents.message_content = True
 
 # Grab information from json file
-with open('useful.json') as f :
+with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 discordToken = localJSONData['discordToken']
@@ -209,7 +209,7 @@ async def roll_command(interaction, event: events) -> None:
     else : embed=discord.Embed(title=(f"'{event}' is not a valid event."))
 
     # open the json file
-    with open('info.json', 'r') as f :
+    with open('Jasons/users.json', 'r') as f :
         userInfo = json.load(f)
     
     # find the location of the user
@@ -223,7 +223,7 @@ async def roll_command(interaction, event: events) -> None:
     #                                               "end_time" : "" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
 
     # dump the info
-    with open('info.json', 'w') as f :
+    with open('Jasosns/users.json', 'w') as f :
         json.dump(userInfo, f, indent=4)
     # ---------------------------------------------
     # ------------------ Co-ops -------------------
@@ -282,7 +282,7 @@ async def checkRolls(interaction, user: discord.Member=None) :
         user = interaction.user
 
     #open the json file and get the data
-    with open('info.json', 'r') as f :
+    with open('Jasons/users.json', 'r') as f :
         userInfo = json.load(f)
 
     #iterate through the json file until you find the

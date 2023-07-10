@@ -22,7 +22,7 @@ async def getCuratorCount():
 
 async def checkCuratorCount(client):
     number = await getCuratorCount()
-    current_count = json.loads(open("extra.json").read())['Current Reviews']
+    current_count = json.loads(open("./Jasons/curator_count.json").read())['Current Reviews']
     if number != current_count:
         await curatorUpdate(int(number)-int(current_count), client)
         return number
@@ -46,11 +46,11 @@ times = [
 
 @tasks.loop(time = times)
 async def loop(client):
-    with open("extra.json", "r+") as jsonFile:
+    with open("./Jasons/curator_count.json", "r+") as jsonFile:
         data = json.load(jsonFile)
     data['Current Reviews'] = await checkCuratorCount(client)
     print(data)
-    with open("extra.json", "w") as jsonFile:
+    with open("./Jasons/curator_count.json", "w") as jsonFile:
         json.dump(data, jsonFile)
 
 
