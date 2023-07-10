@@ -46,6 +46,7 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 - music implementation would be sick but this is not an ideal for now
 - it should be able to open and close recommendations for the first week of every month (this may not be a good idea)
 - maybe you could be able to tell it that you are looking for a partner for a co-op achievement?
+- should be able to change color to any color you've already unlocked. this is already possible manually but should be automated. this 
 
 ## housekeeping reminders
 - reminder to myself that t0 games must have separate announcements

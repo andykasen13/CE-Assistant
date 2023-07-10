@@ -24,7 +24,7 @@ from selenium.webdriver.common.by import By
 
 # --------- other file imports ---------
 from curator import loop
-from scraping import get_games
+from scraping import get_achievements, get_games
 
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
@@ -352,7 +352,7 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-# --------------------------------------------------------- GRABBING TIERS --------------------------------------------------------- #
+# --------------------------------------------------------- SCRAPING --------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 
 @to_thread
@@ -469,15 +469,16 @@ def getEmbed(game_name, authorID):
 # --------------------------------------------------------------------------------------------------------------------------- #
 
 @tree.command(name="test_command", description="test", guild=discord.Object(id=guildID))
-async def test(interaction, fruits: Literal['apple', 'banana', 'orange']) :
-    await interaction.response.send_message(f"your fruit {fruits}")
+async def test(interaction) :
+    await interaction.response.defer()
+    print(get_achievements("-SPROUT-"))
+    await interaction.followup.send("achievements achieved")
 
 # ----------------------------------- LOG IN ----------------------------
 @client.event
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guildID))
     print("Ready!")
-    #await loop(client)
     await loop.start(client)
 
 client.run(discordToken)
