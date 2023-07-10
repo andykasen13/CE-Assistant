@@ -16,9 +16,9 @@ steam_api_key = localJSONData['steamAPIKey']
 def get_games():
     driver = webdriver.Chrome()
     driver.get("https://cedb.me/games")
-    game_list(driver)
-    game_data(driver)
-    #print(get_objectives("-SPROUT-", 'd9512a9b-e89b-417c-9fa2-cc22396a5f72', driver))
+    # game_list(driver)
+    # game_data(driver)
+    print(get_objectives("[NINJA GAIDEN: Master Collection] NINJA GAIDEN Σ", 'f722baf5-4c1a-4fa3-9482-5ce6db203c73', driver))
 
 
 
@@ -100,6 +100,8 @@ def get_objectives(name, id, driver):
     objectives_lst = objectives_string.split("\n")
     primary_objectives = {}
     all_achievements = get_achievements(name)
+
+    print(objectives_lst)
     while(len(objectives_lst) > 0):
         achievements = []
         intermediate = {}
@@ -109,7 +111,9 @@ def get_objectives(name, id, driver):
         if(len(objectives_lst) > 0 and objectives_lst[0] == "Achievements:"):
             objectives_lst.pop(0)
             while(len(objectives_lst) > 0 and all_achievements.count(objectives_lst[0]) > 0):
-                achievements.append(objectives_lst.pop(0))
+                if not(len(objectives_lst) > 3 and objectives_lst[2] == "Achievements:" or "Requirements:"):
+                    achievements.append(objectives_lst.pop(0))
+
             intermediate["Achievements"] = achievements
         if(len(objectives_lst) > 0 and objectives_lst[0] == "Requirements:"):
             objectives_lst.pop(0)
@@ -154,11 +158,9 @@ def get_achievements(game_name) :
 
     for i in range(0, len(options)):
         if game_name == options[i]:
-            print("equal!")
             correct_app_id = ass[i]['data-ds-appid']
 
     #TODO: dap isn't working sorry theron
-    print(correct_app_id)
 
     # --- DOWNLOAD JSON FILE ---
 
