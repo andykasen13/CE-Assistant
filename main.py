@@ -274,7 +274,7 @@ async def get_buttons(view, embeds):
 
 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
-# -------------------------------------------------------- MY_ROLLS COMMAND --------------------------------------------------------- # 
+# -------------------------------------------------------- CHECK_ROLLS COMMAND ------------------------------------------------------ # 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="check_rolls", description="Check the active rolls of anyone on the server", guild=discord.Object(id=guild_ID))
 async def checkRolls(interaction, user: discord.Member=None) :
@@ -283,59 +283,78 @@ async def checkRolls(interaction, user: discord.Member=None) :
 
     # if no user is provided default to sender
     if user is None :
-        user = interaction.user
+        target_user = interaction.user
 
     #open the json file and get the data
-    with open('Jasons/users.json', 'r') as f :
+    with open('Jasons/users2.json', 'r') as f :
         userInfo = json.load(f)
+
+    with open('Jasons/database_name.json', 'r') as g :
+        database_name_info = json.load(g)
 
     #iterate through the json file until you find the
     #designated user
-    userNum = 0
-    while userInfo['users'][userNum]['ID'] != user.id :
-        if(userNum + 1 == len(userInfo['users'])) : return await interaction.followup.send("This user does not exist.")
-        else: userNum += 1
+    steam_user_name = ""
+    print(list(userInfo))
+    print(userInfo.values())
+    for user_name in list(userInfo) :
+        if(userInfo[user_name]["discord_ID"] == target_user.id) :
+            steam_user_name = user_name
+            break
+    
+    if(steam_user_name == "") : return await interaction.response.followup("This user does not exist.")
+    print(steam_user_name)
 
     # set up this bullshit
-    currentrollstr = ""
-    completedrollstr = ""
+    current_roll_str = ""
+    completed_roll_str = ""
 
     # grab all current rolls
-    for x in userInfo['users'][userNum]['current_rolls'] :
-        end_time = time.mktime(datetime.strptime(str(x['end_time']), "%Y-%m-%d %H:%M:%S").timetuple())
-        currentrollstr = currentrollstr + "- __" + x['event_name'] + "__ (complete by <t:" + str(int(end_time)) + ">):\n"
+    for x in userInfo[steam_user_name]['current_rolls'] :
+        end_time = time.mktime(datetime.datetime.strptime(str(x['end_time']), "%Y-%m-%d %H:%M:%S").timetuple())
+        current_roll_str = current_roll_str + "- __" + x['event_name'] + "__ (complete by <t:" + str(int(end_time)) + ">):\n"
         gameNum = 1
-        for y in x['games'] :
-            if(y['completed']) :
-                currentrollstr += (" " + str(gameNum) + ". " + y['name'] + " (completed)\n")
-            else : currentrollstr += (" " + str(gameNum) + ". " + y['name'] + " (not completed)\n")
+        print(x)
+        for game in x['games'] :
+            game_info = database_name_info[game]
+            game_title = game
+            current_roll_str += "  " + str(gameNum) + str(game_title) + "\n"
+            print(game_info)
+            print("\n\n\n")
+            print(game_info["Primary Objectives"])
+            print("\n\n\n")
+            for objective_title in game_info["Primary Objectives"] :
+                objective_info = (game_info["Primary Objectives"][objective_title])
+                print("\n\n\n")
+                objective_point_value = objective_info["Point Value"]
+                current_roll_str += "    - " + str(objective_title) + " (" + str(objective_point_value) + ")\n"
             gameNum += 1
     
     # account for no current rolls
-    if(currentrollstr == "") :
-        currentrollstr = f"{user.name} has no current rolls."
+    if(current_roll_str == "") :
+        current_roll_str = f"{target_user.name} has no current rolls."
 
     # grab all completed rolls
-    for x in userInfo['users'][userNum]['completed_rolls'] :
+    """for x in userInfo['users'][userNum]['completed_rolls'] :
         end_time = time.mktime(datetime.strptime(str(x['completed_time']), "%Y-%m-%d %H:%M:%S").timetuple())
-        completedrollstr += "- __" + x['event_name'] + "__ (completed on <t:" + str(int(end_time)) + ">):\n"
+        completed_roll_str += "- __" + x['event_name'] + "__ (completed on <t:" + str(int(end_time)) + ">):\n"
         gameNum = 0
         for y in x['games'] :
-            completedrollstr += (" " + str(gameNum) + ". " + y['name'] + "\n")
-            gameNum += 1
+            completed_roll_str += (" " + str(gameNum) + ". " + y['name'] + "\n")
+            gameNum += 1"""
     
     # account for no completed rolls
-    if(completedrollstr == "") :
-        completedrollstr = f"{user.global_name} has no completed rolls."
+    if(completed_roll_str == "") :
+        completed_roll_str = f"{target_user.name} has no completed rolls."
     
     # make the embed that you're going to send
     embed = discord.Embed(
     colour=0x000000,
     timestamp=datetime.datetime.now())
-    embed.add_field(name="User", value = "<@" + str(user.id) + ">", inline=False)
-    embed.add_field(name="Current Rolls", value=currentrollstr, inline=False)
-    embed.add_field(name="Completed Rolls", value=completedrollstr, inline=False)
-    embed.set_thumbnail(url=user.avatar.url)
+    embed.add_field(name="User", value = "<@" + str(target_user.id) + ">", inline=False)
+    embed.add_field(name="Current Rolls", value=current_roll_str, inline=False)
+    embed.add_field(name="Completed Rolls", value=completed_roll_str, inline=False)
+    embed.set_thumbnail(url=target_user.avatar.url)
     embed.set_footer(text="CE Assistant",
         icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
 

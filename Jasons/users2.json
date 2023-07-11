@@ -41,12 +41,12 @@
         "current_rolls" : [
             {
                 "event_name" : "One Hell of a Day",
-                "end_time" : "",
+                "end_time" : "2023-07-12 11:31:52",
                 "games" : ["ELDEN RING"]
             }, 
             {
                 "event_name" : "Two Week T2 Streak",
-                "end_time" : "",
+                "end_time" : "2023-07-24 07:01:12",
                 "games" : ["MagiCat", "Super Multitasking"]
             }
         ],
