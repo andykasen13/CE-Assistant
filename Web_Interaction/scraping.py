@@ -23,7 +23,7 @@ def get_games():
     # game_list(driver)
     game_data(driver)
     # print(get_achievements("999990"))
-    # print(get_objectives("021b06b7-a5b5-4a54-bf45-36ed9037ee1d", driver))
+    # print(get_data("06af14b9-161b-4d47-bf84-f028fe2a39ca", driver))
     ram_after = psutil.virtual_memory()[3]/1000000000
     time_after = datetime.now()
     print('ram usage (GB): ' + str(ram_after-ram_before))
@@ -45,15 +45,8 @@ def game_list(driver):
         ids = driver.find_elements(By.CSS_SELECTOR, ":link")[7::2]
         button = driver.find_elements(By.TAG_NAME, "button")[30]
 
-        ignore = [
-            "- Challenge Enthusiasts -",
-            "- Puzzle Games -",
-            "clown town 1443"
-        ]
 
         for i in range(0, len(names)):
-            if ignore.count(names[i].text) > 0:
-                continue
             games[names[i].text] = {
                 "CE ID" : ids[i].get_attribute("href")[21::],
             }
@@ -77,59 +70,91 @@ def game_data(driver):
     games = json.loads(open("./Jasons/database_name.json").read())
     for game in games:
         print(game)
-        data = get_objectives(games[game]["CE ID"], driver)
-        for dat in data:
-            games[game][dat] = data[dat]
+        games[game] = get_data(games[game]["CE ID"], driver)
 
     with open('./Jasons/database_name.json', 'w') as f :
         json.dump(games, f, indent=4)
 
 
-def get_objectives(id, driver):
+def get_data(id, driver):
     url = "https://cedb.me/game/" + id
     driver.get(url)
     
-    objectives_string = None
-    while(objectives_string == None):
-        try:
-            objectives_string = driver.find_element(By.CLASS_NAME, "bp4-html-table").text
-        except:
-            continue
+    table_list = []
+    while(len(table_list) < 1 or not table_list[0].is_displayed()):
+        table_list = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+
+    primary_objectives_string = table_list[0].text
+    community_objectives_string = table_list[1].text
+    # while(objectives_string == None):
+    #     try:
+    #         objectives_string = driver.find_element(By.CLASS_NAME, "bp4-html-table").text
+    #     except:
+    #         continue
+
     tier_and_genre = driver.find_elements(By.CLASS_NAME, "bp4-fill")
     app_id = driver.find_element(By.CLASS_NAME, 'no-decoration').get_attribute("href")[34::]
     tier = tier_and_genre[0].text
     genre = tier_and_genre[1].text
 
-
-    objectives_lst = objectives_string.split("\n")
+    primary_objectives_list = primary_objectives_string.split("\n")
+    community_objectives_list = community_objectives_string.split("\n")
     primary_objectives = {}
+    community_objectives = {}
     all_achievements = get_achievements(app_id)
-    while(len(objectives_lst) > 0):
+
+
+    while(len(primary_objectives_list) > 0):
         achievements = []
         intermediate = {}
-
-        title = objectives_lst.pop(0)
-        intermediate["Point Value"] = objectives_lst.pop(0)
-        intermediate["Description"] = objectives_lst.pop(0)
-        if(len(objectives_lst) > 0 and objectives_lst[0] == "Achievements:"):
-            objectives_lst.pop(0)
-            while(len(objectives_lst) > 0 and all_achievements.count(objectives_lst[0].strip()) > 0):
-                if (not (len(objectives_lst) > 3 and (objectives_lst[3] == "Achievements:" or objectives_lst[3] == "Requirements:"))):
-                    achievements.append(objectives_lst.pop(0))
+        title = primary_objectives_list.pop(0)
+        intermediate["Point Value"] = primary_objectives_list.pop(0)
+        intermediate["Description"] = primary_objectives_list.pop(0)
+        if(len(primary_objectives_list) > 0 and primary_objectives_list[0] == "Achievements:"):
+            primary_objectives_list.pop(0)
+            while(len(primary_objectives_list) > 0 and all_achievements.count(primary_objectives_list[0].strip()) > 0):
+                if (not (len(primary_objectives_list) > 3 and (primary_objectives_list[3] == "Achievements:" or primary_objectives_list[3] == "Requirements:"))):
+                    achievements.append(primary_objectives_list.pop(0))
                 else:
                     break
             intermediate["Achievements"] = achievements
-        if(len(objectives_lst) > 0 and objectives_lst[0] == "Requirements:"):
-            objectives_lst.pop(0)
+        if(len(primary_objectives_list) > 0 and primary_objectives_list[0] == "Requirements:"):
+            primary_objectives_list.pop(0)
 
-            intermediate["Requirements"] = objectives_lst.pop(0)
+            intermediate["Requirements"] = primary_objectives_list.pop(0)
         primary_objectives[title] = intermediate
 
+    exceptions = [
+        "Nonviolentist"
+    ]
+
+    while(len(community_objectives_list) > 0 and len(table_list) > 1):
+        achievements = []
+        intermediate = {}
+        title = community_objectives_list.pop(0)
+        intermediate["Description"] = community_objectives_list.pop(0)
+        if(len(community_objectives_list) > 0 and community_objectives_list[0] == "Achievements:"):
+            community_objectives_list.pop(0)
+            while(len(community_objectives_list) > 0 and (all_achievements.count(community_objectives_list[0].strip()) > 0 or exceptions.count(community_objectives_list[0]) > 0)):
+                if (not (len(community_objectives_list) > 2 and (community_objectives_list[2] == "Achievements:" or community_objectives_list[2] == "Requirements:"))):
+                    achievements.append(community_objectives_list.pop(0))
+                else:
+                    break
+            intermediate["Achievements"] = achievements
+        if(len(community_objectives_list) > 0 and community_objectives_list[0] == "Requirements:"):
+            community_objectives_list.pop(0)
+
+            intermediate["Requirements"] = community_objectives_list.pop(0)
+        community_objectives[title] = intermediate
+
+
     full_game_info = {
+        "CE ID" : id,
         "Steam ID" : app_id,
         "Tier" : tier,
         "Genre" : genre,
-        "Objectives" : primary_objectives
+        "Primary Objectives" : primary_objectives,
+        "Community Objectives" : community_objectives
     }
 
     return full_game_info

@@ -20,9 +20,9 @@ import psutil
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from PIL import Image
+#from PIL import Image
 import io
-from Screenshot import Screenshot
+#from Screenshot import Screenshot
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
@@ -511,11 +511,11 @@ async def test(interaction) :
     for header in header_elements:
         print(header.text)
 
-    ob = Screenshot.Screenshot()
+    #ob = Screenshot.Screenshot()
     driver.get(url)
-    img_url = ob.full_screenshot(driver, save_path=r'.', image_name="ss.png", is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
+    #img_url = ob.full_screenshot(driver, save_path=r'.', image_name="ss.png", is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
 
-    print(img_url)
+    #print(img_url)
 
     await interaction.followup.send(file=discord.File('ss.png'))
 
