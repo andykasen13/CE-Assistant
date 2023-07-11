@@ -365,9 +365,9 @@ def scrape_thread_call():
 
 @tree.command(name="scrape", description="run through each game in the CE database and grab the corresponding data", guild=discord.Object(id=guild_ID))
 async def scrape(interaction):
-    await interaction.response.defer()
+    await interaction.response.send_message("scraping...")
     await scrape_thread_call()
-    await interaction.followup.send("scraped")
+    await interaction.channel.send("scraped")
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
@@ -526,8 +526,7 @@ async def members(interaction) :
 # ----------------------------------- LOG IN ----------------------------
 @client.event
 async def on_ready():
-    await tree.sync(guild
-                    =discord.Object(id=guild_ID))
+    await tree.sync(guild=discord.Object(id=guild_ID))
     print("Ready!")
     await loop.start(client)
 
