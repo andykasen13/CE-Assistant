@@ -1,0 +1,47 @@
+{
+    "andykasen13" : {
+        "CE_ID" : "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "discord_ID" : 413427677522034727,
+        "reroll_tickets" : "1",
+        "owned_games" : {
+            "Celeste" : {
+                "Strawberry Lunatic" : 0,
+                "Strawberry Enthusiast" : 0,
+                "Mountain Climber" : 20
+            },
+            "Hollow Knight" : {
+                "Champion of Hallownest" : 0,
+                "The Ascended" : 0,
+                "Void Given Focus" : 30,
+                "Cloak and Nail" : 20
+            },
+            "Untitled Goose Game" : {
+                "Agent of Chaos" : 5
+            }
+        },
+        "current_rolls" : [{
+                "event_name" : "One Hell of a Day",
+                "end_time" : "",
+                "games" : ["ELDEN RING"]
+            }, {
+                "event_name" : "Two Week T2 Streak",
+                "end_time" : "",
+                "games" : ["MagiCat", "Super Multitasking"]
+            }
+        ],
+        "completed_rolls" : [
+            {
+                "event_name" : "One Hell of a Day",
+                "end_time" : "",
+                "games" : ["GoNNER"]
+            }
+        ]
+    },
+    "Folkius" : {
+        "CE_ID" : "67bce20e-3306-4b83-8027-d6894d474740",
+        "discord_ID" : 1001,
+        "reroll_tickets" : "0",
+        "current_rolls" : [],
+        "completed_rolls" : []
+    }
+}

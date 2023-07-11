@@ -67,3 +67,4 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 - think about switching the icon of the `/roll` command to the user's avatar
 - make sure that you don't roll the same game for any multi-game rolls
 - add error checking. this will be so so annoying but will be great for preventing the bot from just shutting down
+- currently the bot keeps track of if someone has completed a game in the `users.json` file but will eventually do that on its own in an 'owned_games' section in the same file. make sure that when that happens you switch it.

@@ -519,6 +519,10 @@ async def test(interaction) :
 
     await interaction.followup.send(file=discord.File('ss.png'))
 
+@tree.command(name="members", description="make jasons for all ppl", guild=discord.Object(id=guild_ID))
+async def members(interaction) :
+    await interaction.response.defer()
+
 # ----------------------------------- LOG IN ----------------------------
 @client.event
 async def on_ready():
