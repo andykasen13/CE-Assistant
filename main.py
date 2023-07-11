@@ -374,6 +374,7 @@ async def scrape(interaction):
 # ---------------------------------------------------- COMMAND RESOURCE TESTING ---------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 
+@tree.command(name="resource_testing", description="runs function while recording ram and time", guild=discord.Object(id=guild_ID))
 async def resource_testing(function):
     ram_usage = []
     time = []
@@ -426,33 +427,55 @@ def getEmbed(game_name, authorID):
     #TODO add error exceptions
     #TODO turn this into a class with getters and setters for wider versatility
 
-# ---- GET APP ID ----
-    payload = {'term': game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
+    game_word_lst = game_name.split(" ")
+    for name in game_word_lst:
+        if len(name) != len(name.encode()):
+            game_word_lst.pop(game_word_lst.index(name))
+
+
+    searchable_game_name = " ".join(game_word_lst)
+
+    payload = {'term': searchable_game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
     response = requests.get('https://store.steampowered.com/search/suggest?', params=payload)
-    #TODO: dap isn't working sorry theron
-    correctAppID = BeautifulSoup(response.text, features="html.parser").a['data-ds-appid']    
+
+    divs = BeautifulSoup(response.text, features="html.parser").find_all('div')
+    ass = BeautifulSoup(response.text, features="html.parser").find_all('a')
+    options = []
+    for div in divs:
+        try:
+            if div["class"][0] == "match_name":
+                options.append(div.text)
+        except:
+            continue
+    
+
+        correct_app_id = ass[0]['data-ds-appid']
+
+    for i in range(0, len(options)):
+        if game_name == options[i]:
+            correct_app_id = ass[i]['data-ds-appid']
 
 # --- DOWNLOAD JSON FILE ---
 
     # Open and save the JSON data
-    payload = {'appids': correctAppID, 'cc' : 'US'}
+    payload = {'appids': correct_app_id, 'cc' : 'US'}
     response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload)
     jsonData = json.loads(response.text)
     
     # Save important information
-    gameTitle = jsonData[correctAppID]['data']['name']
-    imageLink = jsonData[correctAppID]['data']['header_image']
-    gameDescription = jsonData[correctAppID]['data']['short_description']
-    if(jsonData[correctAppID]['data']['is_free']) : 
+    gameTitle = jsonData[correct_app_id]['data']['name']
+    imageLink = jsonData[correct_app_id]['data']['header_image']
+    gameDescription = jsonData[correct_app_id]['data']['short_description']
+    if(jsonData[correct_app_id]['data']['is_free']) : 
         gamePrice = "Free"
-    else: gamePrice = jsonData[correctAppID]['data']['price_overview']['final_formatted']
+    else: gamePrice = jsonData[correct_app_id]['data']['price_overview']['final_formatted']
     gameNameWithLinkFormat = game_name.replace(" ", "_")
 
 # --- CREATE EMBED ---
 
     # and create the embed!
     embed = discord.Embed(title=f"{gameTitle}",
-        url=f"https://store.steampowered.com/app/{correctAppID}/{gameNameWithLinkFormat}/",
+        url=f"https://store.steampowered.com/app/{correct_app_id}/{gameNameWithLinkFormat}/",
         description=(f"{gameDescription}"),
         colour=0x000000,
         timestamp=datetime.datetime.now())
