@@ -20,7 +20,11 @@ import psutil
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from PIL import Image
+import io
+from Screenshot import Screenshot
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 
 # --------- other file imports ---------
 from Web_Interaction.curator import loop
@@ -39,7 +43,7 @@ with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 discord_token = localJSONData['discord_token']
-guild_ID = localJSONData['guild_id']
+guild_ID = localJSONData['guild_ID']
 
 # Add the guild ids in which the slash command will appear. 
 # If it should be in all, remove the argument, but note that 
@@ -468,11 +472,29 @@ def getEmbed(game_name, authorID):
 # --------------------------------------------------TEST COMMAND------------------------------------------------------------- #
 # --------------------------------------------------------------------------------------------------------------------------- #
 
-@tree.command(name="test_command", description="test", guild=discord.Object(id=guild_ID))
+@tree.command(name="open", description="test", guild=discord.Object(id=guild_ID))
 async def test(interaction) :
     await interaction.response.defer()
-    print(get_achievements("-SPROUT-"))
-    await interaction.followup.send("achievements achieved")
+
+    driver = webdriver.Chrome()
+    driver.set_window_size(width=1280, height=2000)
+    url = 'https://cedb.me/game/1e866995-6fec-452e-81ba-1e8f8594f4ea'
+    driver.get(url)
+
+    driver.save_screenshot('ss.png')
+
+    #bp4-navbar bp4-fixed-top bp4-elevation-4
+    header_elements = [driver.find_element(By.CLASS_NAME, "bp4-navbar"), driver.find_element(By.CLASS_NAME, "bp4-fixed-top"), driver.find_element(By.CLASS_NAME, "bp4-elevation-4")]
+    for header in header_elements:
+        print(header.text)
+
+    ob = Screenshot.Screenshot()
+    driver.get(url)
+    img_url = ob.full_screenshot(driver, save_path=r'.', image_name="ss.png", is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
+
+    print(img_url)
+
+    await interaction.followup.send(file=discord.File('ss.png'))
 
 # ----------------------------------- LOG IN ----------------------------
 @client.event
