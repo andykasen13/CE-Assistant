@@ -95,6 +95,9 @@ def get_data(id, driver):
     app_id = driver.find_element(By.CLASS_NAME, 'no-decoration').get_attribute("href")[34::]
     tier = tier_and_genre[0].text
     genre = tier_and_genre[1].text
+    headings = driver.find_elements(By.TAG_NAME, "h2")
+    community_objectives_exist = headings[1].text == "Community Objectives"
+
 
     primary_objectives_list = primary_objectives_string.split("\n")
     community_objectives_list = community_objectives_string.split("\n")
@@ -127,7 +130,9 @@ def get_data(id, driver):
         "Nonviolentist"
     ]
 
-    while(len(community_objectives_list) > 0 and len(table_list) > 1):
+
+
+    while(len(community_objectives_list) > 0 and community_objectives_exist):
         achievements = []
         intermediate = {}
         title = community_objectives_list.pop(0)
