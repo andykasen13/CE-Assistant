@@ -305,34 +305,8 @@ async def checkRolls(interaction, user: discord.Member=None) :
     if(steam_user_name == "") : return await interaction.response.followup("This user does not exist.")
     print(steam_user_name)
 
-    # set up this bullshit
-    current_roll_str = ""
-    completed_roll_str = ""
-
-    # grab all current rolls
-    for x in userInfo[steam_user_name]['current_rolls'] :
-        end_time = time.mktime(datetime.datetime.strptime(str(x['end_time']), "%Y-%m-%d %H:%M:%S").timetuple())
-        current_roll_str = current_roll_str + "- __" + x['event_name'] + "__ (complete by <t:" + str(int(end_time)) + ">):\n"
-        gameNum = 1
-        print(x)
-        for game in x['games'] :
-            game_info = database_name_info[game]
-            game_title = game
-            current_roll_str += "  " + str(gameNum) + ". "+ str(game_title) + "\n"
-            print(game_info)
-            print("\n\n\n")
-            print(game_info["Primary Objectives"])
-            print("\n\n\n")
-            for objective_title in game_info["Primary Objectives"] :
-                objective_info = (game_info["Primary Objectives"][objective_title])
-                print("\n\n\n")
-                objective_point_value = objective_info["Point Value"]
-                current_roll_str += "    - " + str(objective_title) + " (" + str(objective_point_value) + ")\n"
-            gameNum += 1
-    
-    # account for no current rolls
-    if(current_roll_str == "") :
-        current_roll_str = f"{target_user.name} has no current rolls."
+    current_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 'current_rolls')
+    completed_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 'completed_rolls')
 
     # grab all completed rolls
     """for x in userInfo['users'][userNum]['completed_rolls'] :
@@ -361,7 +335,39 @@ async def checkRolls(interaction, user: discord.Member=None) :
     # send the embed
     await interaction.followup.send(embed=embed)
 
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ----------------------------------------------------------- ROLL STRING ---------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+def get_roll_string(userInfo, steam_user_name, database_name_info, target_user, x) :
+    # set up this bullshit
+    roll_string = ""
 
+    # grab all current rolls
+    for x in userInfo[steam_user_name][x] :
+        end_time = time.mktime(datetime.datetime.strptime(str(x['end_time']), "%Y-%m-%d %H:%M:%S").timetuple())
+        roll_string = roll_string + "- __" + x['event_name'] + "__ (complete by <t:" + str(int(end_time)) + ">):\n"
+        gameNum = 1
+        print(x)
+        for game in x['games'] :
+            game_info = database_name_info[game]
+            game_title = game
+            roll_string += "  " + str(gameNum) + ". "+ str(game_title) + "\n"
+            print(game_info)
+            print("\n\n\n")
+            print(game_info["Primary Objectives"])
+            print("\n\n\n")
+            for objective_title in game_info["Primary Objectives"] :
+                objective_info = (game_info["Primary Objectives"][objective_title])
+                print("\n\n\n")
+                objective_point_value = objective_info["Point Value"]
+                roll_string += "    - " + str(objective_title) + " (" + str(objective_point_value) + ")\n"
+            gameNum += 1
+    
+    # account for no current rolls
+    if(roll_string == "") :
+        roll_string = f"{target_user.name} has no current rolls."
+
+    return roll_string
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------------------- THREADING ------------------------------------------------------------ #
