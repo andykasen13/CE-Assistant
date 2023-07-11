@@ -318,7 +318,7 @@ async def checkRolls(interaction, user: discord.Member=None) :
         for game in x['games'] :
             game_info = database_name_info[game]
             game_title = game
-            current_roll_str += "  " + str(gameNum) + str(game_title) + "\n"
+            current_roll_str += "  " + str(gameNum) + ". "+ str(game_title) + "\n"
             print(game_info)
             print("\n\n\n")
             print(game_info["Primary Objectives"])
