@@ -5,7 +5,6 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import psutil
-import ftfy
 
 # Grab information from json file
 with open('Jasons/secret_info.json') as f :
