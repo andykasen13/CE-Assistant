@@ -526,7 +526,8 @@ async def members(interaction) :
 # ----------------------------------- LOG IN ----------------------------
 @client.event
 async def on_ready():
-    await tree.sync(guild=discord.Object(id=guild_ID))
+    await tree.sync(guild
+                    =discord.Object(id=guild_ID))
     print("Ready!")
     await loop.start(client)
 
