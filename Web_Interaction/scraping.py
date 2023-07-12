@@ -1,10 +1,15 @@
 import json
 from datetime import datetime
+import Screenshot
 from bs4 import BeautifulSoup
+import discord
 import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import psutil
+from selenium.webdriver.chrome.options import Options
+from PIL import Image
+
 
 # Grab information from json file
 with open('Jasons/secret_info.json') as f :
@@ -164,8 +169,6 @@ def get_data(id, driver):
     return full_game_info
 
 
-
-
 def get_achievements(steam_id) :
 
     # Open and save the JSON data
@@ -179,3 +182,37 @@ def get_achievements(steam_id) :
             all_achievements.append(achievement['displayName'].strip())
     
     return all_achievements
+
+
+
+def get_image():
+    options = Options()
+    options.add_argument('headless')
+    driver = webdriver.Chrome(options=options)
+    driver.set_window_size(width=1440, height=2000)
+    url = 'https://cedb.me/game/1e866995-6fec-452e-81ba-1e8f8594f4ea'
+    driver.get(url)
+
+    objective_lst = []
+    while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
+        objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+
+    top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
+    bottom_right = objective_lst[len(objective_lst)-2].location
+    size = objective_lst[len(objective_lst)-2].size
+
+    header_elements = [
+        'bp4-navbar',
+        'tr-fadein'
+    ]
+
+    ob = Screenshot.Screenshot()
+    driver.get(url)
+    ob.full_screenshot(driver, save_path=r'.', image_name="ss.png", is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
+
+    border_width = 15
+    im = Image.open('ss.png')
+    im = im.crop((top_left['x']-border_width, top_left['y']-border_width, bottom_right['x']+size['width']+border_width, bottom_right['y']+size['height']+border_width)) # defines crop points
+    im.save('ss.png')
+
+    return(discord.file('ss.png'))
