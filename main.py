@@ -20,9 +20,9 @@ import psutil
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
-#from PIL import Image
+from PIL import Image
 import io
-#from Screenshot import Screenshot
+from Screenshot import Screenshot
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
@@ -499,25 +499,56 @@ def getEmbed(game_name, authorID):
 async def test(interaction) :
     await interaction.response.defer()
 
-    driver = webdriver.Chrome()
-    driver.set_window_size(width=1280, height=2000)
-    url = 'https://cedb.me/game/1e866995-6fec-452e-81ba-1e8f8594f4ea'
+    # driver = webdriver.Chrome()
+    options = Options()
+    # options.add_argument('headless')
+    driver = webdriver.Chrome(options=options)
+    driver.set_window_size(width=1440, height=2000)
+    url = 'https://cedb.me/game/21144d8d-c943-4130-8349-6e768220cfc9'
     driver.get(url)
 
-    driver.save_screenshot('ss.png')
+    # png = driver.save_screenshot('ss.png')
+
+    objective_lst = []
+    while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
+        objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+    
+    top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
+    bottom_right = objective_lst[len(objective_lst)-2].location
+    size = objective_lst[len(objective_lst)-2].size
 
     #bp4-navbar bp4-fixed-top bp4-elevation-4
-    header_elements = [driver.find_element(By.CLASS_NAME, "bp4-navbar"), driver.find_element(By.CLASS_NAME, "bp4-fixed-top"), driver.find_element(By.CLASS_NAME, "bp4-elevation-4")]
+    # header_elements = [driver.find_elements(By.CLASS_NAME, "bp4-navbar"), driver.find_elements(By.CLASS_NAME, "bp4-fixed-top"), driver.find_elements(By.CLASS_NAME, "bp4-elevation-4")]
+
+        
+
+    # js_script = '''\
+    #     element1 = document.getElementsByClassName('bp4-navbar');
+    #     element1[0].style.display = 'none';
+    #     element2 = document.getElementsByClassName('bp4-fixed-top');
+    #     element2[0].style.display = 'none';
+    #     element3 = document.getElementsByClassName('bp4-elevation-4');
+    #     element3[0].style.display = 'none';
+    #     '''
+    # driver.execute_script(js_script)
+
+
+    header_elements = [
+        '''//button[@class='bp4-button bp4-minimal']'''
+    ]
+
     for header in header_elements:
-        print(header.text)
-
-    #ob = Screenshot.Screenshot()
+        driver.execute_script('''document.getElementById('{}').setAttribute('style', 'display:none !important;')'''.format(header))
+    driver.save_screenshot('test.png')
+    ob = Screenshot.Screenshot()
     driver.get(url)
-    #img_url = ob.full_screenshot(driver, save_path=r'.', image_name="ss.png", is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
+    ob.full_screenshot(driver, save_path=r'.', image_name="ss.png", is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
 
-    #print(img_url)
-
-    await interaction.followup.send(file=discord.File('ss.png'))
+    border_width = 15
+    im = Image.open('ss.png')
+    im = im.crop((top_left['x']-border_width, top_left['y']-border_width, bottom_right['x']+size['width']+border_width, bottom_right['y']+size['height']+border_width)) # defines crop points
+    im.save('screenshot.png')
+    await interaction.followup.send(file=discord.File('screenshot.png'))
 
 @tree.command(name="members", description="make jasons for all ppl", guild=discord.Object(id=guild_ID))
 async def members(interaction) :
