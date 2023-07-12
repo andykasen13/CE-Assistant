@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 # import screenshot
-from .screenshot import Screenshot
+from .Screenshot import Screenshot
 from bs4 import BeautifulSoup
 import discord
 import requests
@@ -25,7 +25,7 @@ def get_games(client):
     # game_data(driver)
     # get_completion_data('504230')
     # get_by_tier()
-    # all_game_data(driver, client)
+    all_game_data(driver, client)
     
 
 
@@ -71,7 +71,7 @@ async def all_game_data(client):
             "Tier": "Tier 4",
             "Genre": "Action",
             "Primary Objectives": {
-                "Page Description": {
+                "Page": {
                     "Point Value": "0",
                     "Description": "This is the current page for Site-listed achievements. To be eligible for these achievements, please download the associated game \"A CHALLENGE\", run it for a few minutes (you might need to download Steam 360 Video Player, it's already in your library under \"Tools\" section), close the game, and then update your profile. You should then show up in the full completions after a while and can post your proof."
                 }
@@ -83,7 +83,7 @@ async def all_game_data(client):
             to_send = update(games[game]["CE ID"], game, games[game], data)
             games[game] = data
             correctChannel = client.get_channel(1128742486416834570)
-            await correctChannel.send(file=to_send[0], embed=to_send[1])
+            await correctChannel.send(file=to_send[1], embed=to_send[0])
         else:
             data = None
 
@@ -94,7 +94,7 @@ async def all_game_data(client):
 
 def update(CE_ID, name, old_data, new_data):
     get_image(CE_ID)
-    file = discord.File("ss.png", filename="image.png")
+    file = discord.File("./ss.png", filename="image.png")
     embed = discord.Embed(
         title=name,
         url=f"https://store.steampowered.com/app/{new_data['Steam ID']}/{list(new_data.keys())[0].replace(' ', '_')}/",
@@ -102,8 +102,22 @@ def update(CE_ID, name, old_data, new_data):
         timestamp=datetime.now()
         )
     embed.set_image(url='attachment://image.png')
-    if old_data['Tier'] != new_data['Tier']:
-        embed.add_field(name=f"Tier Change", value="{} ➡ {}".format(old_data['Tier'], new_data['Tier']))
+
+    # if old_data['Tier'] != new_data['Tier']:
+    #     embed.add_field(name=f"Tier Change", value="{} ➡ {}".format(old_data['Tier'], new_data['Tier']))
+    # if old_data['Genre'] != new_data['Genre']:
+    #     embed.add_field(name=f"Genre Change", value="{} ➡ {}".format(old_data['Genre'], new_data['Genre']))
+    # for objective in new_data['Primary Objectives']:
+    #     if(list(old_data['Primary Objectives'].keys()).count(objective) < 1):
+    #         for old in old_data['Primary Objectives']:
+    #             print(new_data['Primary Objectives'][objective])                                                   USE DEEPDIFF!!!! https://zepworks.com/deepdiff/current/diff.html
+    #             print(old_data['Primary Objectives'][old])
+    #             if(new_data['Primary Objectives'][objective] == old_data['Primary Objectives'][old]):
+    #                 print('equal')
+    #                 embed.add_field(name="Objective Name Change", value="{} ➡ {}".format(old, objective))
+    #     else:
+    #         embed.add_field(name="New Objective", value=objective)
+
     return [embed, file]
 
 
