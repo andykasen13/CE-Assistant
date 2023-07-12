@@ -2,11 +2,9 @@ import json
 from datetime import datetime
 from Screenshot import Screenshot
 from bs4 import BeautifulSoup
-import discord
 import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import psutil
 from selenium.webdriver.chrome.options import Options
 from PIL import Image
 
@@ -20,10 +18,11 @@ steam_api_key = localJSONData['steam_API_key']
 
 def get_games():
 
-    driver = webdriver.Chrome()
+    # driver = webdriver.Chrome()
     # game_list(driver)
     # game_data(driver)
-    get_image('21144d8d-c943-4130-8349-6e768220cfc9')
+    # get_image('21144d8d-c943-4130-8349-6e768220cfc9')
+    get_by_tier()
     
 
 
@@ -80,11 +79,6 @@ def get_data(id, driver):
 
     primary_objectives_string = table_list[0].text
     community_objectives_string = table_list[1].text
-    # while(objectives_string == None):
-    #     try:
-    #         objectives_string = driver.find_element(By.CLASS_NAME, "bp4-html-table").text
-    #     except:
-    #         continue
 
     tier_and_genre = driver.find_elements(By.CLASS_NAME, "bp4-fill")
     app_id = driver.find_element(By.CLASS_NAME, 'no-decoration').get_attribute("href")[34::]
@@ -125,8 +119,6 @@ def get_data(id, driver):
         primary_objectives[title] = intermediate
 
 
-
-
     while(len(community_objectives_list) > 0 and community_objectives_exist):
         achievements = []
         intermediate = {}
@@ -157,6 +149,76 @@ def get_data(id, driver):
     }
 
     return full_game_info
+
+
+def get_by_tier():
+    games = json.loads(open("./Jasons/database_name.json").read())
+    tier_based_data = {
+        'Tier 0' : {
+            'Action' : [],
+            'Arcade' : [],
+            'Bullet Hell' : [],
+            'First-Person' : [],
+            'Platformer' : [],
+            'Strategy' : []
+        },
+        'Tier 1' : {
+            'Action' : [],
+            'Arcade' : [],
+            'Bullet Hell' : [],
+            'First-Person' : [],
+            'Platformer' : [],
+            'Strategy' : []
+        },
+        'Tier 2' : {
+            'Action' : [],
+            'Arcade' : [],
+            'Bullet Hell' : [],
+            'First-Person' : [],
+            'Platformer' : [],
+            'Strategy' : []
+        },
+        'Tier 3' : {
+            'Action' : [],
+            'Arcade' : [],
+            'Bullet Hell' : [],
+            'First-Person' : [],
+            'Platformer' : [],
+            'Strategy' : []
+        },
+        'Tier 4' : {
+            'Action' : [],
+            'Arcade' : [],
+            'Bullet Hell' : [],
+            'First-Person' : [],
+            'Platformer' : [],
+            'Strategy' : []
+        },
+        'Tier 5' : {
+            'Action' : [],
+            'Arcade' : [],
+            'Bullet Hell' : [],
+            'First-Person' : [],
+            'Platformer' : [],
+            'Strategy' : []
+        }
+    }
+    
+    for game in games:
+            tier_based_data[games[game]["Tier"]][games[game]["Genre"]].append(game)
+
+    with open('./Jasons/database_tier.json', 'w') as f :
+        json.dump(tier_based_data, f, indent=4)
+
+
+
+
+
+
+
+
+
+
 
 
 def get_achievements(steam_id) :
@@ -197,7 +259,6 @@ def get_image(CE_ID):
     ]
 
     ob = Screenshot.Screenshot()
-    #driver.get(url)
     ob.full_screenshot(driver, save_path=r'.', image_name="ss.png", is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
 
     border_width = 15
