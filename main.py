@@ -292,11 +292,9 @@ async def checkRolls(interaction, user: discord.Member=None) :
     with open('Jasons/database_name.json', 'r') as g :
         database_name_info = json.load(g)
 
-    #iterate through the json file until you find the
-    #designated user
+    # iterate through the json file until you find the
+    # designated user
     steam_user_name = ""
-    print(list(userInfo))
-    print(userInfo.values())
     for user_name in list(userInfo) :
         if(userInfo[user_name]["discord_ID"] == target_user.id) :
             steam_user_name = user_name
@@ -307,24 +305,9 @@ async def checkRolls(interaction, user: discord.Member=None) :
 
     current_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 'current_rolls')
     completed_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 'completed_rolls')
-
-    # grab all completed rolls
-    """for x in userInfo['users'][userNum]['completed_rolls'] :
-        end_time = time.mktime(datetime.strptime(str(x['completed_time']), "%Y-%m-%d %H:%M:%S").timetuple())
-        completed_roll_str += "- __" + x['event_name'] + "__ (completed on <t:" + str(int(end_time)) + ">):\n"
-        gameNum = 0
-        for y in x['games'] :
-            completed_roll_str += (" " + str(gameNum) + ". " + y['name'] + "\n")
-            gameNum += 1"""
-    
-    # account for no completed rolls
-    if(completed_roll_str == "") :
-        completed_roll_str = f"{target_user.name} has no completed rolls."
     
     # make the embed that you're going to send
-    embed = discord.Embed(
-    colour=0x000000,
-    timestamp=datetime.datetime.now())
+    embed = discord.Embed(colour=0x000000, timestamp=datetime.datetime.now())
     embed.add_field(name="User", value = "<@" + str(target_user.id) + ">", inline=False)
     embed.add_field(name="Current Rolls", value=current_roll_str, inline=False)
     embed.add_field(name="Completed Rolls", value=completed_roll_str, inline=False)
@@ -347,25 +330,20 @@ def get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 
         end_time = time.mktime(datetime.datetime.strptime(str(x['end_time']), "%Y-%m-%d %H:%M:%S").timetuple())
         roll_string = roll_string + "- __" + x['event_name'] + "__ (complete by <t:" + str(int(end_time)) + ">):\n"
         gameNum = 1
-        print(x)
-        for game in x['games'] :
-            game_info = database_name_info[game]
-            game_title = game
-            roll_string += "  " + str(gameNum) + ". "+ str(game_title) + "\n"
-            print(game_info)
-            print("\n\n\n")
-            print(game_info["Primary Objectives"])
-            print("\n\n\n")
-            for objective_title in game_info["Primary Objectives"] :
-                objective_info = (game_info["Primary Objectives"][objective_title])
-                print("\n\n\n")
-                objective_point_value = objective_info["Point Value"]
-                roll_string += "    - " + str(objective_title) + " (" + str(objective_point_value) + ")\n"
-            gameNum += 1
+        for game in x['games'] : # Iterate through all games in the roll event
+            game_info = database_name_info[game] # Grab the dictionary containing all info about that game
+            game_title = game # Set the game title
+            roll_string += "  " + str(gameNum) + ". "+ str(game_title) + "\n" # Add the game number and the game title to the string
+            for objective_title in game_info["Primary Objectives"] : # Iterate through all of the games' objectives
+                objective_info = (game_info["Primary Objectives"][objective_title]) # Grab the dictionary containing all info about that objective
+                objective_point_value = objective_info["Point Value"] # Set the point value
+                roll_string += "    - " + str(objective_title) + " (" + str(objective_point_value) + ")\n" # Update the roll string
+            gameNum += 1 # Add to the gameNum
     
     # account for no current rolls
     if(roll_string == "") :
-        roll_string = f"{target_user.name} has no current rolls."
+        if(x == 'current_rolls') : roll_string = f"{target_user.name} has no current rolls."
+        elif(x == 'completed_rolls') : roll_string = f"{target_user.name} has no completed rolls."
 
     return roll_string
 
@@ -514,6 +492,27 @@ def getEmbed(game_name, authorID):
     embed.set_footer(text="CE Assistant",
         icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
     return embed
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# --------------------------------------------------------- COLORS ----------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+@tree.command(name="set_color", description="Set your name color to any color you've unlocked!", guild=discord.Object(id=guild_ID))
+async def color(interaction) :
+    await interaction.response.defer()
+    SS_RANK_ROLE = discord.utils.get(1128494242633887777)
+    S_RANK_ROLE = discord.utils.get(1128492990600593443)
+    A_RANK_ROLE = discord.utils.get(1128495832602259486)
+    B_RANK_ROLE = discord.utils.get(1128494365229203527)
+    C_RANK_ROLE = discord.utils.get(1128494391774937188)
+    D_RANK_ROLE = discord.utils.get(1128494386544640031)
+
+    YELLOW_ROLE = discord.utils.get(1128495258045521921)
+    ORANGE_ROLE = discord.utils.get(1128495341113704468)
+    PURPLE_ROLE = discord.utils.get(1128495350416683131)
+    BLUE_ROLE = discord.utils.get(1128495352002130032)
+    GREEN_ROLE = discord.utils.get(1128495354250268783)
+    BROWN_ROLE = discord.utils.get(1128495337846354010)
 
 
 # --------------------------------------------------------------------------------------------------------------------------- #
