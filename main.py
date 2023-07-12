@@ -497,6 +497,9 @@ def getEmbed(game_name, authorID):
 @tree.command(name="set_color", description="Set your name color to any color you've unlocked!", guild=discord.Object(id=guild_ID))
 async def color(interaction) :
     await interaction.response.defer()
+
+    ex_rank_role = discord.utils.get(interaction.guild.roles, name = "EX RANK")
+    sss_rank_role = discord.utils.get(interaction.guild.roles, name = "SSS RANK")
     ss_rank_role = discord.utils.get(interaction.guild.roles, name = "SS RANK")
     s_rank_role = discord.utils.get(interaction.guild.roles, name = "S RANK")
     a_rank_role = discord.utils.get(interaction.guild.roles, name = "A RANK")
@@ -504,6 +507,8 @@ async def color(interaction) :
     c_rank_role = discord.utils.get(interaction.guild.roles, name = "C RANK")
     d_rank_role = discord.utils.get(interaction.guild.roles, name = "D RANK")
 
+    black_role = discord.utils.get(interaction.guild.roles, name = "Black")
+    red_role = discord.utils.get(interaction.guild.roles, name = "Red")
     yellow_role = discord.utils.get(interaction.guild.roles, name = "Yellow")
     orange_role = discord.utils.get(interaction.guild.roles, name = "Orange")
     purple_role = discord.utils.get(interaction.guild.roles, name = "Purple")
@@ -512,33 +517,97 @@ async def color(interaction) :
     brown_role = discord.utils.get(interaction.guild.roles, name = "Brown")  
 
 
-    view = discord.ui.View(timeout=10)
+    view = discord.ui.View(timeout=60)
 
-    yellow_button = (discord.ui.Button(label="Yellow", style=discord.ButtonStyle.gray, disabled=(not ss_rank_role in interaction.user.roles)))  
-    orange_button = (discord.ui.Button(label="Orange", style=discord.ButtonStyle.gray, disabled=(not s_rank_role in interaction.user.roles
-                                                                                              and not ss_rank_role in interaction.user.roles)))
-    purple_button = (discord.ui.Button(label="Purple", style=discord.ButtonStyle.gray, disabled=(not a_rank_role in interaction.user.roles
+    black_button = (discord.ui.Button(label="⚫", disabled=(not ex_rank_role in interaction.user.roles)))
+    red_button = discord.ui.Button(label = "🔴", disabled = (not sss_rank_role in interaction.user.roles
+                                                             and not ex_rank_role in interaction.user.roles))
+    yellow_button = (discord.ui.Button(label="🟡", style=discord.ButtonStyle.gray, disabled=(not ss_rank_role in interaction.user.roles
+                                                                                              and not sss_rank_role in interaction.user.roles
+                                                                                              and not ex_rank_role in interaction.user.roles)))  
+    orange_button = (discord.ui.Button(label="🟠", style=discord.ButtonStyle.gray, disabled=(not s_rank_role in interaction.user.roles
+                                                                                              and not ss_rank_role in interaction.user.roles
+                                                                                              and not sss_rank_role in interaction.user.roles
+                                                                                              and not ex_rank_role in interaction.user.roles)))
+    purple_button = (discord.ui.Button(label="🟣", style=discord.ButtonStyle.gray, disabled=(not a_rank_role in interaction.user.roles
                                                                                               and not s_rank_role in interaction.user.roles
-                                                                                              and not ss_rank_role in interaction.user.roles)))
-    blue_button = (discord.ui.Button(label="Blue", style=discord.ButtonStyle.blurple, disabled=(not b_rank_role in interaction.user.roles
+                                                                                              and not ss_rank_role in interaction.user.roles
+                                                                                              and not sss_rank_role in interaction.user.roles
+                                                                                              and not ex_rank_role in interaction.user.roles)))
+    blue_button = (discord.ui.Button(label="🔵", style=discord.ButtonStyle.gray, disabled=(not b_rank_role in interaction.user.roles
                                                                                                and not a_rank_role in interaction.user.roles
                                                                                                and not s_rank_role in interaction.user.roles
-                                                                                               and not ss_rank_role in interaction.user.roles)))
-    green_button = (discord.ui.Button(label="Green", style=discord.ButtonStyle.green, disabled=(not c_rank_role in interaction.user.roles
+                                                                                               and not ss_rank_role in interaction.user.roles
+                                                                                               and not sss_rank_role in interaction.user.roles
+                                                                                               and not ex_rank_role in interaction.user.roles)))
+    green_button = (discord.ui.Button(label="🟢", style=discord.ButtonStyle.gray, disabled=(not c_rank_role in interaction.user.roles
                                                                                               and not b_rank_role in interaction.user.roles
                                                                                               and not a_rank_role in interaction.user.roles
                                                                                               and not s_rank_role in interaction.user.roles
-                                                                                              and not ss_rank_role in interaction.user.roles)))
-    brown_button = (discord.ui.Button(label="Brown", style=discord.ButtonStyle.gray, disabled=(not d_rank_role in interaction.user.roles
+                                                                                              and not ss_rank_role in interaction.user.roles
+                                                                                              and not sss_rank_role in interaction.user.roles
+                                                                                              and not ex_rank_role in interaction.user.roles)))
+    brown_button = (discord.ui.Button(label="🟤", style=discord.ButtonStyle.gray, disabled=(not d_rank_role in interaction.user.roles
                                                                                              and not c_rank_role in interaction.user.roles
                                                                                              and not b_rank_role in interaction.user.roles
                                                                                              and not a_rank_role in interaction.user.roles
                                                                                              and not s_rank_role in interaction.user.roles
-                                                                                             and not ss_rank_role in interaction.user.roles)))
+                                                                                             and not ss_rank_role in interaction.user.roles
+                                                                                             and not sss_rank_role in interaction.user.roles
+                                                                                             and not ex_rank_role in interaction.user.roles)))
+
+    
+    async def black_callback(interaction) : return await assign_role(interaction, black_role)
+    async def red_callback(interaction) : return await assign_role(interaction, red_role)
+    async def yellow_callback(interaction) : return await assign_role(interaction, yellow_role)
+    async def orange_callback(interaction) : return await assign_role(interaction, orange_role)
+    async def purple_callback(interaction) : return await assign_role(interaction, purple_role)
+    async def blue_callback(interaction) : return await assign_role(interaction, blue_role)
+    async def green_callback(interaction) : return await assign_role(interaction, green_role)
+    async def brown_callback(interaction) : return await assign_role(interaction, brown_role)
+
+    black_button.callback = black_callback
+    red_button.callback = red_callback
+    yellow_button.callback = yellow_callback
+    orange_button.callback = orange_callback
+    purple_button.callback = purple_callback
+    blue_button.callback = blue_callback
+    green_button.callback = green_callback
+    brown_button.callback = brown_callback
+
+    view.add_item(black_button)
+    view.add_item(red_button)
+    view.add_item(yellow_button)
+    view.add_item(orange_button)
+    view.add_item(purple_button)
+    view.add_item(blue_button)
+    view.add_item(green_button)
+    view.add_item(brown_button)
+
+    async def assign_role(interaction, role) :
+        if(role in interaction.user.roles) : return await interaction.response.edit_message(embed=discord.Embed(title = f"You already have the {role.name} role!", color = role.color))
+        
+        await (interaction.user.add_roles(role))
+
+        if(black_role in interaction.user.roles and not(role == black_role)) : await interaction.user.remove_roles(black_role)
+        if(red_role in interaction.user.roles and not(role == red_role)) : await interaction.user.remove_roles(red_role)
+        if(yellow_role in interaction.user.roles and not(role == yellow_role)) : await interaction.user.remove_roles(yellow_role)
+        if(orange_role in interaction.user.roles and not(role == orange_role)) : await interaction.user.remove_roles(orange_role)
+        if(purple_role in interaction.user.roles and not(role == purple_role)) : await interaction.user.remove_roles(purple_role)
+        if(blue_role in interaction.user.roles and not(role == blue_role)) : await interaction.user.remove_roles(blue_role)
+        if(green_role in interaction.user.roles and not(role == green_role)) : await interaction.user.remove_roles(green_role)
+        if(brown_role in interaction.user.roles and not(role == brown_button)) : await interaction.user.remove_roles(brown_role)
+
+
+        return await interaction.response.edit_message(embed=discord.Embed(title = f"You have recieved the {role.name} role!", color=role.color))
+        
+    
 
     embed = discord.Embed(title="COLORS", description="choose your colors wisely.")
 
     await interaction.followup.send(embed=embed, view=view)
+
+# --------------------------------------------------- ASSIGN ROLE COMMAND -------------------------------------------------- #
 
 
 
