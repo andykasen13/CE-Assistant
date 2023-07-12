@@ -27,7 +27,6 @@ from selenium.webdriver.chrome.options import Options
 # --------- other file imports ---------
 from Web_Interaction.curator import loop
 from Web_Interaction.scraping import get_achievements, get_games
-from Web_Interaction import Screenshot
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
 intents = discord.Intents.default()
