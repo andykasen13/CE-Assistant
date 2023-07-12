@@ -26,7 +26,7 @@ from selenium.webdriver.chrome.options import Options
 
 # --------- other file imports ---------
 from Web_Interaction.curator import loop
-from Web_Interaction.scraping import get_achievements, get_games
+from Web_Interaction.scraping import all_game_data, get_achievements, get_games, get_completion_data
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
 intents = discord.Intents.default()
@@ -92,23 +92,72 @@ events = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month
 async def roll_command(interaction, event: events) -> None:
     await interaction.response.defer()
 
-    # Open file
-    tier_one_file = open("faket1list.txt", "r")
-    data = tier_one_file.read()
-    data_into_list = data.split("\n")
-    tier_one_file.close()
-
     view = discord.ui.View(timeout=600)
-    game = "error"
+    games = ["error"]
+    embeds = []
+    genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
+    rollable = False
+
+    with open('Jasons/database_tier.json', 'r') as dB :
+        database_tier = json.load(dB)
+    
+    with open('Jasons/database_name.json', 'r') as dBN :
+        database_name = json.load(dBN)
+
+    def get_random_game(avg_completion_time_limit) :
+        c=1
 
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
         # Pick a random game from the list
-        game = random.choice(data_into_list)
-        print("Rolled game: " + game)
+        while not rollable :
+            # ----- Pick a randum number -----
+            random_num = -1
+            for genre in genres :
+                random_num += len(database_tier["Tier 1"][genre]) 
+            random_num = random.randint(0, random_num)
+
+            # ----- Determine genre based on number -----
+            for genre in genres :
+                if(random_num < len(database_tier["Tier 1"][genre])) :
+                    # ----- Pick the game -----
+                    games[0] = database_tier["Tier 1"][genre][random_num]
+                    print("Chosen genre: " + genre)
+                    break
+                # ----- Move to the next genre -----
+                else : random_num -= len(database_tier["Tier 1"][genre])
+            # ----- Log it in the console -----
+            print(f"Seeing if {games[0]} is rollable...")
+            gameID = int(database_name[games[0]]["Steam ID"])
+
+            # ----- Grab Steam JSON file -----
+            payload = {'appids': gameID, 'cc' : 'US'}
+            response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload)
+            jsonData = json.loads(response.text)
+
+            # ----- Determine game price -----
+            if(jsonData[str(gameID)]['data']['is_free']) : 
+                gamePrice = 0
+            else: 
+                gamePrice = float(str(jsonData[str(gameID)]['data']['price_overview']['final_formatted'])[1::])
+            
+            # ----- Grab SteamHunters completion time -----
+            completion_time = get_completion_data(gameID)
+            if(completion_time == "none") : continue
+            else : completion_time = int(completion_time)
+
+            print(f"Game price is {gamePrice}... {gamePrice < 10}")
+            print(f"Game completion time is {completion_time}... {completion_time < 5}")
+
+            # ----- Check to see if rollable -----
+            if(gamePrice < 10 and completion_time < 10) :
+                rollable = True
+            print("\n")
+
+        print("Rolled game: " + games[0])
 
         # Create the embed
-        embed = getEmbed(game, interaction.user.id)
+        embed = getEmbed(games[0], interaction.user.id)
         embed.add_field(name="Roll Requirements", value = 
             "You have one day to complete " + embed.title + "."    
             + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(1)).timetuple())))
@@ -117,46 +166,48 @@ async def roll_command(interaction, event: events) -> None:
             + ">\n[insert link to cedb.me page]", inline=False)
         embed.set_author(name="ONE HELL OF A DAY", url="https://example.com")
 
-    # -------------------------------------------- Two week t2 streak --------------------------------------------
+    # -------------------------------------------- Two Week T2 Streak --------------------------------------------
     elif event == "Two Week T2 Streak" :
         # two random t2s
         print("received two week t2 streak")
-        games = []
-        embeds = []
 
         # ----- Grab two random games -----
         i=0
         while(i != 2) :
-            games.append(random.choice(data_into_list))
+            # games.append(random.choice(data_into_list))
             i += 1
         game = games[0] + " and " + games[1]
 
         # ----- Create opening embed -----
         embeds.append(discord.Embed(
-            color=0x000000,
+            color=0x000000, # Set the color to black
             title="Two Week T2 Streak",
             description="games lol"))
         embeds[0].set_footer(text="Page 1 of 3")
+        embeds[0].set_author(name = "TWO WEEK T2 STREAK", url="https://example.com")
+
+        # ----- Add all games to the embed -----
         i=1
-        for gamer in games:
-            embeds[0].description += "\n" + str(i) + ". " + gamer
+        for selected_game in games:
+            embeds[0].description += "\n" + str(i) + ". " + selected_game
             i+=1
+        
+        # ----- Display Roll Requirements -----
         embeds[0].add_field(name="Roll Requirements", value =
             "You have two weeks to complete " + embeds[0].title + "."
             + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(14)).timetuple())))
             + ">\nTwo Week T2 Streak has no cooldown."
             + "\n[insert link to cedb.me page]", inline=False)
-        embeds[0].set_author(name = "TWO WEEK T2 STREAK", url="https://example.com")
-
+        
         # ----- Create the embeds for each game -----
-        #currentPage = 1
         page_limit = 3
         i=0
-        for gamer in games :
-            embeds.append(getEmbed(gamer, interaction.user.id))
+        for selected_game in games :
+            embeds.append(getEmbed(selected_game, interaction.user.id))
             embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"))
             embeds[i+1].set_author(name="TWO WEEK T2 STREAK")
             i+=1
+
 
         # ----- Set the embed to send as the first one ------
         embed = embeds[0]
@@ -210,21 +261,28 @@ async def roll_command(interaction, event: events) -> None:
     else : embed=discord.Embed(title=(f"'{event}' is not a valid event."))
 
     # open the json file
-    with open('Jasons/users.json', 'r') as f :
+    with open('Jasons/users2.json', 'r') as f :
         userInfo = json.load(f)
-    
+
     # find the location of the user
     i = 0
-    while userInfo['users'][i]['ID'] != interaction.user.id :
-        i += 1
-        
+    target_user = ""
+    for current_user in userInfo :
+        print(current_user)
+        if(userInfo[current_user]["discord_ID"] == interaction.user.id) :
+            target_user = current_user
+            break
+    
+    if(target_user == "") :
+        return await interaction.followup.send("You are not registered in the CE Assistant database. Please contact Andy for support.")
+
     # append the roll to the user's current rolls array
-    # userInfo['users'][i]['current_rolls'].append({"event_name" : "One Hell of a Day", 
-    #                                               "games" : [{"name" : embed.title, "completed" : False}], 
-    #                                               "end_time" : "" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
+    userInfo[target_user]["current_rolls"].append({"event_name" : "One Hell of a Day", 
+                                                  "end_time" : "" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                                  "games" : games})
 
     # dump the info
-    with open('Jasosns/users.json', 'w') as f :
+    with open('Jasons/users2.json', 'w') as f :
         json.dump(userInfo, f, indent=4)
     # ---------------------------------------------
     # ------------------ Co-ops -------------------
@@ -235,7 +293,7 @@ async def roll_command(interaction, event: events) -> None:
 
     # Finally, send the embed
     await interaction.followup.send(embed=embed, view=view)
-    print("Sent information on rolled game: " + game)
+    print("Sent information on rolled game: " + str(games) + "\n")
 
 
 # -------------------------------------------------------------------------------------------------- #
@@ -360,13 +418,13 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 
 @to_thread
-def scrape_thread_call():
-    get_games()
+def scrape_thread_call(client):
+    get_games(client)
 
 @tree.command(name="scrape", description="run through each game in the CE database and grab the corresponding data", guild=discord.Object(id=guild_ID))
 async def scrape(interaction):
     await interaction.response.send_message("scraping...")
-    await scrape_thread_call()
+    await all_game_data(client)#scrape_thread_call(client)
     await interaction.channel.send("scraped")
 
 
@@ -427,33 +485,39 @@ def getEmbed(game_name, authorID):
     #TODO add error exceptions
     #TODO turn this into a class with getters and setters for wider versatility
 
-    game_word_lst = game_name.split(" ")
-    for name in game_word_lst:
-        if len(name) != len(name.encode()):
-            game_word_lst.pop(game_word_lst.index(name))
-
-
-    searchable_game_name = " ".join(game_word_lst)
-
-    payload = {'term': searchable_game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
-    response = requests.get('https://store.steampowered.com/search/suggest?', params=payload)
-
-    divs = BeautifulSoup(response.text, features="html.parser").find_all('div')
-    ass = BeautifulSoup(response.text, features="html.parser").find_all('a')
-    options = []
-    for div in divs:
-        try:
-            if div["class"][0] == "match_name":
-                options.append(div.text)
-        except:
-            continue
+    with open('Jasons/database_name.json', 'r') as dB :
+        database_name = json.load(dB)
     
+    if(game_name in list(database_name)) : 
+        correct_app_id = database_name[game_name]["Steam ID"]
+        print(f"found {game_name} with app id {correct_app_id} in local json file :)")
+    else :
+        print(f"couldn't find {game_name} in local json file, searching steam :(")
+        game_word_lst = game_name.split(" ")
+        for name in game_word_lst:
+            if len(name) != len(name.encode()):
+                game_word_lst.pop(game_word_lst.index(name))
 
-        correct_app_id = ass[0]['data-ds-appid']
+        searchable_game_name = " ".join(game_word_lst)
 
-    for i in range(0, len(options)):
-        if game_name == options[i]:
-            correct_app_id = ass[i]['data-ds-appid']
+        payload = {'term': searchable_game_name, 'f': 'games', 'cc' : 'us', 'l' : 'english'}
+        response = requests.get('https://store.steampowered.com/search/suggest?', params=payload)
+
+        divs = BeautifulSoup(response.text, features="html.parser").find_all('div')
+        ass = BeautifulSoup(response.text, features="html.parser").find_all('a')
+        options = []
+        for div in divs:
+            try:
+                if div["class"][0] == "match_name":
+                    options.append(div.text)
+            except:
+                continue
+
+            correct_app_id = ass[0]['data-ds-appid']
+
+        for i in range(0, len(options)):
+            if game_name == options[i]:
+                correct_app_id = ass[i]['data-ds-appid']
 
 # --- DOWNLOAD JSON FILE ---
 

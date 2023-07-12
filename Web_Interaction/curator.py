@@ -84,7 +84,7 @@ async def curatorUpdate(num: int, client) :
 
 
     embed = discord.Embed(
-        title="Help",
+        title="CE Curator",
         color=0x000000,
         timestamp=datetime.datetime.now()
     )
@@ -103,7 +103,6 @@ async def curatorUpdate(num: int, client) :
     # Save important information
         gameTitle = jsonData[correctAppID]['data']['name']
         imageLink = jsonData[correctAppID]['data']['header_image']
-        gameDescription = jsonData[correctAppID]['data']['short_description']
         if(jsonData[correctAppID]['data']['is_free']) :
             gamePrice = "Free"
         else: gamePrice = jsonData[correctAppID]['data']['price_overview']['final_formatted']
@@ -126,7 +125,7 @@ async def curatorUpdate(num: int, client) :
             icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
         embed.set_author(name="New game added to curator!", url="https://store.steampowered.com/curator/36185934/")
     
-        correctChannel = client.get_channel(788158122907926611)
+        correctChannel = client.get_channel(1128742486416834570)
         await correctChannel.send(embed=embed)
         x+=1
 

@@ -1,7 +1,9 @@
 import json
 from datetime import datetime
-from Screenshot import Screenshot
+# import screenshot
+from .screenshot import Screenshot
 from bs4 import BeautifulSoup
+import discord
 import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -16,13 +18,14 @@ with open('Jasons/secret_info.json') as f :
 steam_api_key = localJSONData['steam_API_key']
 
 
-def get_games():
+def get_games(client):
 
-    # driver = webdriver.Chrome()
+    driver = webdriver.Chrome()
     # game_list(driver)
     # game_data(driver)
-    # get_image('21144d8d-c943-4130-8349-6e768220cfc9')
-    get_by_tier()
+    # get_completion_data('504230')
+    # get_by_tier()
+    # all_game_data(driver, client)
     
 
 
@@ -59,14 +62,50 @@ def game_list(driver):
     
 
 
-def game_data(driver):
-    games = json.loads(open("./Jasons/database_name.json").read())
+async def all_game_data(client):
+    driver = webdriver.Chrome()
+    games = {#json.loads(open("./Jasons/database_name.json").read())
+        "- Challenge Enthusiasts -": {
+            "CE ID": "76574ec1-42df-4488-a511-b9f2d9290e5d",
+            "Steam ID": "613920",
+            "Tier": "Tier 4",
+            "Genre": "Action",
+            "Primary Objectives": {
+                "Page Description": {
+                    "Point Value": "0",
+                    "Description": "This is the current page for Site-listed achievements. To be eligible for these achievements, please download the associated game \"A CHALLENGE\", run it for a few minutes (you might need to download Steam 360 Video Player, it's already in your library under \"Tools\" section), close the game, and then update your profile. You should then show up in the full completions after a while and can post your proof."
+                }
+        }}
+    }
     for game in games:
-        print(game)
-        games[game] = get_data(games[game]["CE ID"], driver)
+        data = get_data(games[game]["CE ID"], driver)
+        if (games[game] != data):
+            to_send = update(games[game]["CE ID"], game, games[game], data)
+            games[game] = data
+            correctChannel = client.get_channel(1128742486416834570)
+            await correctChannel.send(file=to_send[0], embed=to_send[1])
+        else:
+            data = None
 
-    with open('./Jasons/database_name.json', 'w') as f :
-        json.dump(games, f, indent=4)
+    
+
+    # with open('./Jasons/database_name.json', 'w') as f :
+    #     json.dump(games, f, indent=4)
+
+def update(CE_ID, name, old_data, new_data):
+    get_image(CE_ID)
+    file = discord.File("ss.png", filename="image.png")
+    embed = discord.Embed(
+        title=name,
+        url=f"https://store.steampowered.com/app/{new_data['Steam ID']}/{list(new_data.keys())[0].replace(' ', '_')}/",
+        colour=0x000000,
+        timestamp=datetime.now()
+        )
+    embed.set_image(url='attachment://image.png')
+    if old_data['Tier'] != new_data['Tier']:
+        embed.add_field(name=f"Tier Change", value="{} ➡ {}".format(old_data['Tier'], new_data['Tier']))
+    return [embed, file]
+
 
 
 def get_data(id, driver):
@@ -212,7 +251,23 @@ def get_by_tier():
 
 
 
+def get_completion_data(steam_id):
+    #payload = {'cc' : 'US'}
+    response = requests.get("https://steamhunters.com/apps/{}/achievements".format(steam_id))
+    site = BeautifulSoup(response.text, features='html.parser')
+    # print(soup.prettify())
+    ass = site.find_all('i')
+    time = "none"
+    for a in ass:
+        try:
+            if(a['class'][2] == "fa-clock-o"):
+                end = str(a.parent)[1::].find('h')+1
+                time = str(a.parent)[56:end:]
+        except:
+            continue
+    print(time)
 
+    return time
 
 
 
@@ -239,7 +294,7 @@ def get_achievements(steam_id) :
 
 def get_image(CE_ID):
     options = Options()
-    options.add_argument('headless')
+    #options.add_argument('headless')
     driver = webdriver.Chrome(options=options)
     driver.set_window_size(width=1440, height=2000)
     url = 'https://cedb.me/game/' + CE_ID
@@ -258,7 +313,7 @@ def get_image(CE_ID):
         'tr-fadein'
     ]
 
-    ob = Screenshot.Screenshot()
+    ob = Screenshot()
     ob.full_screenshot(driver, save_path=r'.', image_name="ss.png", is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
 
     border_width = 15
