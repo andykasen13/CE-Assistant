@@ -19,7 +19,7 @@ def get_games():
     time_before = datetime.now()
     driver = webdriver.Chrome()
     driver.get("https://cedb.me/games")
-    # game_list(driver)
+    game_list(driver)
     game_data(driver)
     # print(get_achievements("999990"))
     # print(get_data("06af14b9-161b-4d47-bf84-f028fe2a39ca", driver))
@@ -105,6 +105,9 @@ def get_data(id, driver):
     community_objectives = {}
     all_achievements = get_achievements(app_id)
 
+    exceptions = [
+        "Nonviolentist", "TOUGH RERUN"
+    ] #Cosmodreamer, The Next Penelope
 
     while(len(primary_objectives_list) > 0):
         achievements = []
@@ -114,7 +117,7 @@ def get_data(id, driver):
         intermediate["Description"] = primary_objectives_list.pop(0)
         if(len(primary_objectives_list) > 0 and primary_objectives_list[0] == "Achievements:"):
             primary_objectives_list.pop(0)
-            while(len(primary_objectives_list) > 0 and all_achievements.count(primary_objectives_list[0].strip()) > 0):
+            while(len(primary_objectives_list) > 0 and ((all_achievements.count(primary_objectives_list[0].strip()) > 0) or (exceptions.count(primary_objectives_list[0]) > 0))):
                 if (not (len(primary_objectives_list) > 3 and (primary_objectives_list[3] == "Achievements:" or primary_objectives_list[3] == "Requirements:"))):
                     achievements.append(primary_objectives_list.pop(0))
                 else:
@@ -126,9 +129,6 @@ def get_data(id, driver):
             intermediate["Requirements"] = primary_objectives_list.pop(0)
         primary_objectives[title] = intermediate
 
-    exceptions = [
-        "Nonviolentist"
-    ]
 
 
 

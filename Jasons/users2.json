@@ -5,34 +5,55 @@
         "reroll_tickets" : "1",
         "owned_games" : {
             "Celeste" : {
-                "Strawberry Lunatic" : 0,
-                "Strawberry Enthusiast" : 0,
-                "Mountain Climber" : 20
+                "POs" : {
+                    "Strawberry Lunatic" : 0,
+                    "Strawberry Enthusiast" : 0,
+                    "Mountain Climber" : 20
+                },
+                "COs" : {
+                    "Above and Beyond" : false,
+                    "Double Golden" : false,
+                    "Intrepid Explorer" : false,
+                    "Lunar Inconvenience" : false,
+                    "Olympic Stargazer" : false,
+                    "Over the Top" : false,
+                    "Solid Gold" : false,
+                    "Space Jam" : false
+                }
             },
             "Hollow Knight" : {
-                "Champion of Hallownest" : 0,
-                "The Ascended" : 0,
-                "Void Given Focus" : 30,
-                "Cloak and Nail" : 20
+                "POs" : {
+                    "Champion of Hallownest" : 0,
+                    "The Ascended" : 0,
+                    "Void Given Focus" : 30,
+                    "Cloak and Nail" : 20
+                },
+                "COs" : {
+                    "Joni's Curse" : false,
+                    "Pantheonic Titan" : false,
+                    "Subtle Radiance" : false
+                }
             },
             "Untitled Goose Game" : {
                 "Agent of Chaos" : 5
             }
         },
-        "current_rolls" : [{
+        "current_rolls" : [
+            {
                 "event_name" : "One Hell of a Day",
-                "end_time" : "",
+                "end_time" : "2023-07-12 11:31:52",
                 "games" : ["ELDEN RING"]
-            }, {
+            }, 
+            {
                 "event_name" : "Two Week T2 Streak",
-                "end_time" : "",
+                "end_time" : "2023-07-24 07:01:12",
                 "games" : ["MagiCat", "Super Multitasking"]
             }
         ],
         "completed_rolls" : [
             {
                 "event_name" : "One Hell of a Day",
-                "end_time" : "",
+                "end_time" : "2023-04-03 21:28:08",
                 "games" : ["GoNNER"]
             }
         ]
