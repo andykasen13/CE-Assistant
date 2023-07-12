@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-import Screenshot
+from Screenshot import Screenshot
 from bs4 import BeautifulSoup
 import discord
 import requests
@@ -20,18 +20,10 @@ steam_api_key = localJSONData['steam_API_key']
 
 def get_games():
 
-    ram_before = psutil.virtual_memory()[3]/1000000000
-    time_before = datetime.now()
     driver = webdriver.Chrome()
-    driver.get("https://cedb.me/games")
-    game_list(driver)
-    game_data(driver)
-    # print(get_achievements("999990"))
-    # print(get_data("06af14b9-161b-4d47-bf84-f028fe2a39ca", driver))
-    ram_after = psutil.virtual_memory()[3]/1000000000
-    time_after = datetime.now()
-    print('ram usage (GB): ' + str(ram_after-ram_before))
-    print('time taken (s):' + str(time_after-time_before))
+    # game_list(driver)
+    # game_data(driver)
+    get_image('21144d8d-c943-4130-8349-6e768220cfc9')
     
 
 
@@ -40,7 +32,6 @@ def game_list(driver):
     button_enabled = True
     games = {}
 
-    
     while(button_enabled):
         names = driver.find_elements(By.TAG_NAME, "h2")[::2]
         while(len(names) < 1 or not names[0].is_displayed()):
@@ -48,7 +39,6 @@ def game_list(driver):
 
         ids = driver.find_elements(By.CSS_SELECTOR, ":link")[7::2]
         button = driver.find_elements(By.TAG_NAME, "button")[30]
-
 
         for i in range(0, len(names)):
             games[names[i].text] = {
@@ -185,12 +175,12 @@ def get_achievements(steam_id) :
 
 
 
-def get_image():
+def get_image(CE_ID):
     options = Options()
     options.add_argument('headless')
     driver = webdriver.Chrome(options=options)
     driver.set_window_size(width=1440, height=2000)
-    url = 'https://cedb.me/game/1e866995-6fec-452e-81ba-1e8f8594f4ea'
+    url = 'https://cedb.me/game/' + CE_ID
     driver.get(url)
 
     objective_lst = []
@@ -207,12 +197,12 @@ def get_image():
     ]
 
     ob = Screenshot.Screenshot()
-    driver.get(url)
+    #driver.get(url)
     ob.full_screenshot(driver, save_path=r'.', image_name="ss.png", is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
 
     border_width = 15
     im = Image.open('ss.png')
     im = im.crop((top_left['x']-border_width, top_left['y']-border_width, bottom_right['x']+size['width']+border_width, bottom_right['y']+size['height']+border_width)) # defines crop points
-    im.save('ss.png')
+    im.save('Web_Interaction/ss.png')
 
-    return(discord.file('ss.png'))
+    # return(discord.file('ss.png'))
