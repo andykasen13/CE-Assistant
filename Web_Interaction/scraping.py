@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+import re
 # import screenshot
 from .Screenshot import Screenshot
 from bs4 import BeautifulSoup
@@ -9,6 +10,12 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from PIL import Image
+from deepdiff import DeepDiff
+from pprint import pprint
+from selenium.webdriver.support.color import Color
+from selenium.webdriver.support.wait import WebDriverWait
+
+
 
 
 # Grab information from json file
@@ -65,21 +72,32 @@ def game_list(driver):
 async def all_game_data(client):
     driver = webdriver.Chrome()
     games = {#json.loads(open("./Jasons/database_name.json").read())
-        "- Challenge Enthusiasts -": {
-            "CE ID": "76574ec1-42df-4488-a511-b9f2d9290e5d",
-            "Steam ID": "613920",
-            "Tier": "Tier 4",
-            "Genre": "Action",
+        "A Hat in Time": {
+            "CE ID": "21144d8d-c943-4130-8349-6e768220cfc9",
+            "Steam ID": "253230",
+            "Tier": "Tier 2",
+            "Genre": "Bullet Hell",
             "Primary Objectives": {
-                "Page": {
-                    "Point Value": "0",
-                    "Description": "This is the current page for Site-listed achievements. To be eligible for these achievements, please download the associated game \"A CHALLENGE\", run it for a few minutes (you might need to download Steam 360 Video Player, it's already in your library under \"Tools\" section), close the game, and then update your profile. You should then show up in the full completions after a while and can post your proof."
+                "Timeless End": {
+                    "Point Value": "50",
+                    "Description": "Obtain all Life Wish stamps without using \"Peace and Tranquility\" mode or any mods.",
+                    "Achievements": [
+                        "I Refuse To Die!", "Turtle Hat!"
+                    ],
+                    "Requirements": "Screenshot of the Death Wish map (no Peace and Tranquility stamps; \"Unlimited Possibilities\" achievements can't be unlocked prior to \"I Refuse To Die!\"), OR video of \"Seal the Deal\"."
                 }
-        }}
+            },
+            "Community Objectives": {
+                "get that hat" : {
+                    "Description": "make a hat for a turtle",
+                    "Requirements" : "turtle hat!"
+                }
+            }
+        }
     }
     for game in games:
         data = get_data(games[game]["CE ID"], driver)
-        if (games[game] != data):
+        if (games[game] != data[0]):
             to_send = update(games[game]["CE ID"], game, games[game], data)
             games[game] = data
             correctChannel = client.get_channel(1128742486416834570)
@@ -93,15 +111,51 @@ async def all_game_data(client):
     #     json.dump(games, f, indent=4)
 
 def update(CE_ID, name, old_data, new_data):
-    get_image(CE_ID)
-    file = discord.File("./ss.png", filename="image.png")
+    # get_image(CE_ID)
+    file = discord.File("Web_Interaction/ss.png", filename="image.png")
+    print(type(new_data[1]))
     embed = discord.Embed(
         title=name,
-        url=f"https://store.steampowered.com/app/{new_data['Steam ID']}/{list(new_data.keys())[0].replace(' ', '_')}/",
-        colour=0x000000,
+        url=f"https://store.steampowered.com/app/{new_data[0]['Steam ID']}/{name.replace(' ', '_')}/",
+        colour= int(new_data[1][1::]),
         timestamp=datetime.now()
         )
-    embed.set_image(url='attachment://image.png')
+    # embed.set_image(url='attachment://image.png')
+
+    tier_icons = {
+        "Tier 0" : ':zero:',
+        "Tier 1" : ':one:',
+        "Tier 2" : ':two:',
+        "Tier 3" : ':three:',
+        "Tier 4" : ':four:',
+        "Tier 5" : ':five:'
+    }
+    ddiff = DeepDiff(old_data, new_data[0], verbose_level=2)
+
+    try:
+        for value in ddiff['values_changed']:
+            embed.add_field(name=value[value.rfind('[')+2:value.rfind('\''):], value="{} ➡ {}".format(ddiff['values_changed'][value]['old_value'], ddiff['values_changed'][value]['new_value']))
+        print('Values Updated')
+    except:
+        print('No Values Changed')
+    
+    try:
+        for value in ddiff['dictionary_item_added']:
+            try:
+                for other_value in ddiff['dictionary_item_removed']:
+                    if(ddiff['dictionary_item_added'][value]==ddiff['dictionary_item_removed'][other_value]):
+                        embed.add_field(name="Objective Name Change", value="{} ➡ {}".format(other_value[other_value.rfind('[')+2:other_value.rfind('\''):], value[value.rfind('[')+2:value.rfind('\''):]))
+                        break
+                    else:
+                        embed.add_field(name='Objective Removed', value=other_value[other_value.rfind('[')+2:other_value.rfind('\''):])
+            except:
+                print('No Objective Name Changes or Removals')
+            embed.add_field(name='New Objective', value=value[value.rfind('[')+2:value.rfind('\''):])
+        print('Objective Names Updated', )
+    except:
+        print('No Objective Changes')
+    
+
 
     # if old_data['Tier'] != new_data['Tier']:
     #     embed.add_field(name=f"Tier Change", value="{} ➡ {}".format(old_data['Tier'], new_data['Tier']))
@@ -139,8 +193,13 @@ def get_data(id, driver):
     genre = tier_and_genre[1].text
     headings = driver.find_elements(By.TAG_NAME, "h2")
     community_objectives_exist = headings[1].text == "Community Objectives"
+    head = driver.find_element(By.CLASS_NAME, 'bp4-navbar')
+    print(head)
 
-
+    rgb = head.value_of_css_property('background-color')
+    print(rgb)
+    color = int((Color.from_string(rgb).hex)[0])
+    print(color)
     primary_objectives_list = primary_objectives_string.split("\n")
     community_objectives_list = community_objectives_string.split("\n")
     primary_objectives = {}
@@ -201,7 +260,7 @@ def get_data(id, driver):
         "Community Objectives" : community_objectives
     }
 
-    return full_game_info
+    return [full_game_info, color]
 
 
 def get_by_tier():
@@ -326,11 +385,11 @@ def get_image(CE_ID):
         'bp4-navbar',
         'tr-fadein'
     ]
-
-    ob = Screenshot()
+    border_width = 15
+    ob = Screenshot(bottom_right['y']+size['height']+border_width)
     ob.full_screenshot(driver, save_path=r'.', image_name="ss.png", is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
 
-    border_width = 15
+    
     im = Image.open('ss.png')
     im = im.crop((top_left['x']-border_width, top_left['y']-border_width, bottom_right['x']+size['width']+border_width, bottom_right['y']+size['height']+border_width)) # defines crop points
     im.save('Web_Interaction/ss.png')

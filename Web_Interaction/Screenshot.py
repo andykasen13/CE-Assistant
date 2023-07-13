@@ -16,8 +16,8 @@ class Screenshot:
        #                                    b) Capture element screenshots                                              #
        #================================================================================================================#
     """
-
-    def __init__(self):
+    
+    def __init__(self, final_page_height):
         """
         Usage:
             N/A
@@ -28,6 +28,7 @@ class Screenshot:
         Raises:
             N/A
         """
+        self.fph = final_page_height
         pass
 
     def full_screenshot(self, driver: WebDriver, save_path: str = '', image_name: str = 'selenium_full_screenshot.png',
@@ -47,24 +48,25 @@ class Screenshot:
         """
         image_name = os.path.abspath(save_path + '/' + image_name)
 
-        final_page_height = 0
+        # final_page_height = 0
         original_size = driver.get_window_size()
 
-        if is_load_at_runtime:
-            while True:
-                page_height = driver.execute_script("return document.body.scrollHeight")
-                if page_height != final_page_height and final_page_height <= 10000:
-                    driver.execute_script("window.scrollTo(0, {})".format(page_height))
-                    time.sleep(load_wait_time)
-                    final_page_height = page_height
-                else:
-                    break
+        # if is_load_at_runtime:
+        #     while True:
+        #         page_height = driver.execute_script("return document.body.scrollHeight")
+        #         print(page_height)
+        #         if page_height != final_page_height and final_page_height <= 10000:
+        #             driver.execute_script("window.scrollTo(0, {})".format(page_height))
+        #             time.sleep(load_wait_time)
+        #             final_page_height = page_height
+        #         else:
+        #             break
 
         self.hide_elements(driver, hide_elements)
 
         if isinstance(driver, webdriver.Ie):
             required_width = driver.execute_script('return document.body.parentNode.scrollWidth')
-            driver.set_window_size(required_width, final_page_height)
+            driver.set_window_size(required_width, self.fph)
             driver.save_screenshot(image_name)
             driver.set_window_size(original_size['width'], original_size['height'])
             return image_name
