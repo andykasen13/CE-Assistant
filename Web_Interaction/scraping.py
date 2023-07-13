@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 import re
 # import screenshot
-from .screenshot import Screenshot
+from .Screenshot import Screenshot
 from bs4 import BeautifulSoup
 import discord
 import requests
@@ -14,6 +14,7 @@ from deepdiff import DeepDiff
 from pprint import pprint
 from selenium.webdriver.support.color import Color
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 
@@ -117,12 +118,12 @@ def update(CE_ID, name, old_data, new_data):
     embed = discord.Embed(
         title=name,
         url=f"https://store.steampowered.com/app/{new_data[0]['Steam ID']}/{name.replace(' ', '_')}/",
-        colour= int(new_data[1][1::]),
+        colour= new_data[1],
         timestamp=datetime.now()
         )
     # embed.set_image(url='attachment://image.png')
 
-    tier_icons = {
+    icons = {
         "Tier 0" : ':zero:',
         "Tier 1" : ':one:',
         "Tier 2" : ':two:',
@@ -134,6 +135,10 @@ def update(CE_ID, name, old_data, new_data):
 
     try:
         for value in ddiff['values_changed']:
+            if(list(icons.keys()).count(ddiff['values_changed'][value]['new_value']) > 0):
+                ddiff['values_changed'][value]['new_value'] = icons[ddiff['values_changed'][value]['new_value']]
+            if(list(icons.keys()).count(ddiff['values_changed'][value]['old_value']) > 0):
+                ddiff['values_changed'][value]['old_value'] = icons[ddiff['values_changed'][value]['old_value']]
             embed.add_field(name=value[value.rfind('[')+2:value.rfind('\''):], value="{} ➡ {}".format(ddiff['values_changed'][value]['old_value'], ddiff['values_changed'][value]['new_value']))
         print('Values Updated')
     except:
@@ -176,13 +181,37 @@ def update(CE_ID, name, old_data, new_data):
 
 
 
+
+
+
+
+def get_color(id):
+    driver = webdriver.Edge()
+    url = "https://cedb.me/game/" + id
+    driver.get(url)
+    head = 0
+    while(lambda d : 
+          d.find_element(By.CLASS_NAME, 'bp4-navbar').value_of_css_property('background-color') != 'rgba(0, 0, 0, 0)' and d.find_element(By.CLASS_NAME, 'bp4-navbar').value_of_css_property('background-color') != 'rgba(0, 0, 0, 0)'):
+        head = driver.find_element(By.CLASS_NAME, 'bp4-navbar')
+    print(head)
+
+    rgb = head.value_of_css_property('background-color')
+    print(rgb)
+    color = int((Color.from_string(rgb).hex)[1])
+    print(color)
+    return color
+
+
 def get_data(id, driver):
     url = "https://cedb.me/game/" + id
     driver.get(url)
+    head = WebDriverWait(driver, 10).until(lambda d :
+        d.find_element(By.CLASS_NAME, 'bp4-navbar').value_of_css_property('background-color') != 'rgba(0, 0, 0, 0)' and d.find_element(By.CLASS_NAME, 'bp4-navbar').value_of_css_property('background-color') != 'rgba(0, 0, 0, 0)')
     
     table_list = []
     while(len(table_list) < 1 or not table_list[0].is_displayed()):
         table_list = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+        # head = driver.find_element(By.CLASS_NAME, 'bp4-navbar')
 
     primary_objectives_string = table_list[0].text
     community_objectives_string = table_list[1].text
@@ -193,13 +222,9 @@ def get_data(id, driver):
     genre = tier_and_genre[1].text
     headings = driver.find_elements(By.TAG_NAME, "h2")
     community_objectives_exist = headings[1].text == "Community Objectives"
-    head = driver.find_element(By.CLASS_NAME, 'bp4-navbar')
-    print(head)
+    
+    color = get_color(id)
 
-    rgb = head.value_of_css_property('background-color')
-    print(rgb)
-    color = int((Color.from_string(rgb).hex)[0])
-    print(color)
     primary_objectives_list = primary_objectives_string.split("\n")
     community_objectives_list = community_objectives_string.split("\n")
     primary_objectives = {}

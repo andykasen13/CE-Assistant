@@ -28,6 +28,11 @@ from selenium.webdriver.chrome.options import Options
 from Web_Interaction.curator import loop
 from Web_Interaction.scraping import all_game_data, get_achievements, get_games, get_completion_data
 
+# -------------------------------------
+import js2py
+import temp
+from temp import *
+
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
@@ -754,9 +759,10 @@ async def color(interaction) :
 # --------------------------------------------------TEST COMMAND------------------------------------------------------------- #
 # --------------------------------------------------------------------------------------------------------------------------- #
 
-@tree.command(name="open", description="test", guild=discord.Object(id=guild_ID))
+@tree.command(name="test", description="test", guild=discord.Object(id=guild_ID))
 async def test(interaction) :
-    return
+    eval_res, tempfile = js2py.run_file("test.js")
+    tempfile.wish()
 
 # ----------------------------------- LOG IN ----------------------------
 @client.event
