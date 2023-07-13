@@ -208,6 +208,16 @@ async def roll_command(interaction, event: events) -> None:
         print("\n")
         return returned_game
 
+    def create_multi_embed(event_name, time_limit, game_list) :
+        embeds = []
+        embeds.append(discord.Embed(
+            color = 0x000000,
+            title=event_name
+        ))
+        embeds[0].set_footer(text=f"Page 1 of {str(len(game_list) + 1)}")
+        embeds[0].set_author(name="Challenge Enthusiasts")
+
+
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
         # Get one random (rollable) game in Tier 1, non-genre specific
