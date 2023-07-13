@@ -114,11 +114,10 @@ async def all_game_data(client):
 def update(CE_ID, name, old_data, new_data):
     # get_image(CE_ID)
     file = discord.File("Web_Interaction/ss.png", filename="image.png")
-    print(type(new_data[1]))
     embed = discord.Embed(
         title=name,
-        url=f"https://store.steampowered.com/app/{new_data[0]['Steam ID']}/{name.replace(' ', '_')}/",
-        colour= new_data[1],
+        url=f"https://store.steampowered.com/app/{new_data['Steam ID']}/{name.replace(' ', '_')}/",
+        colour= 0xefd839,
         timestamp=datetime.now()
         )
     # embed.set_image(url='attachment://image.png')
@@ -131,7 +130,7 @@ def update(CE_ID, name, old_data, new_data):
         "Tier 4" : ':four:',
         "Tier 5" : ':five:'
     }
-    ddiff = DeepDiff(old_data, new_data[0], verbose_level=2)
+    ddiff = DeepDiff(old_data, new_data, verbose_level=2)
 
     try:
         for value in ddiff['values_changed']:
@@ -183,30 +182,9 @@ def update(CE_ID, name, old_data, new_data):
 
 
 
-
-
-def get_color(id):
-    driver = webdriver.Edge()
-    url = "https://cedb.me/game/" + id
-    driver.get(url)
-    head = 0
-    while(lambda d : 
-          d.find_element(By.CLASS_NAME, 'bp4-navbar').value_of_css_property('background-color') != 'rgba(0, 0, 0, 0)' and d.find_element(By.CLASS_NAME, 'bp4-navbar').value_of_css_property('background-color') != 'rgba(0, 0, 0, 0)'):
-        head = driver.find_element(By.CLASS_NAME, 'bp4-navbar')
-    print(head)
-
-    rgb = head.value_of_css_property('background-color')
-    print(rgb)
-    color = int((Color.from_string(rgb).hex)[1])
-    print(color)
-    return color
-
-
 def get_data(id, driver):
     url = "https://cedb.me/game/" + id
     driver.get(url)
-    head = WebDriverWait(driver, 10).until(lambda d :
-        d.find_element(By.CLASS_NAME, 'bp4-navbar').value_of_css_property('background-color') != 'rgba(0, 0, 0, 0)' and d.find_element(By.CLASS_NAME, 'bp4-navbar').value_of_css_property('background-color') != 'rgba(0, 0, 0, 0)')
     
     table_list = []
     while(len(table_list) < 1 or not table_list[0].is_displayed()):
@@ -223,7 +201,6 @@ def get_data(id, driver):
     headings = driver.find_elements(By.TAG_NAME, "h2")
     community_objectives_exist = headings[1].text == "Community Objectives"
     
-    color = get_color(id)
 
     primary_objectives_list = primary_objectives_string.split("\n")
     community_objectives_list = community_objectives_string.split("\n")
@@ -285,7 +262,7 @@ def get_data(id, driver):
         "Community Objectives" : community_objectives
     }
 
-    return [full_game_info, color]
+    return full_game_info
 
 
 def get_by_tier():
