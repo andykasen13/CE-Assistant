@@ -40,13 +40,6 @@
         },
         "current_rolls": [
             {
-                "event_name": "One Hell of a Day",
-                "end_time": "2023-07-12 11:31:52",
-                "games": [
-                    "ELDEN RING"
-                ]
-            },
-            {
                 "event_name": "Two Week T2 Streak",
                 "end_time": "2023-07-24 07:01:12",
                 "games": [
@@ -55,17 +48,21 @@
                 ]
             },
             {
-                "event_name": "One Hell of a Day",
-                "end_time": "2023-07-12 13:11:42",
+                "event_name": "One Hell of a Week",
+                "end_time": "2023-07-12 21:11:23",
                 "games": [
-                    "Dizzy Rogues"
+                    "RITE",
+                    "sunny-place",
+                    "Apple Slash",
+                    "GUNBIRD",
+                    "Lovely Planet Arcade"
                 ]
             },
             {
                 "event_name": "One Hell of a Day",
-                "end_time": "2023-07-12 13:14:34",
+                "end_time": "2023-07-12 22:42:29",
                 "games": [
-                    "Shipped"
+                    "Flem"
                 ]
             }
         ],
