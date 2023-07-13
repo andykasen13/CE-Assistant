@@ -93,10 +93,9 @@ async def roll_command(interaction, event: events) -> None:
     await interaction.response.defer()
 
     view = discord.ui.View(timeout=600)
-    games = ["error"]
+    games = []
     embeds = []
     genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
-    rollable = False
 
     with open('Jasons/database_tier.json', 'r') as dB :
         database_tier = json.load(dB)
@@ -104,31 +103,36 @@ async def roll_command(interaction, event: events) -> None:
     with open('Jasons/database_name.json', 'r') as dBN :
         database_name = json.load(dBN)
 
-    def get_random_game(avg_completion_time_limit) :
-        c=1
-
-    #  -------------------------------------------- One Hell of a Day  --------------------------------------------
-    if event == "One Hell of a Day" :
-        # Pick a random game from the list
+    def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, specific_genre = "any") :
+        returned_game = ""
+        rollable = False
         while not rollable :
-            # ----- Pick a randum number -----
-            random_num = -1
-            for genre in genres :
-                random_num += len(database_tier["Tier 1"][genre]) 
-            random_num = random.randint(0, random_num)
+            # (Genre not given)
+            if(specific_genre == "any") :
+                print("No genre specified.")
+                # ----- Pick a random number -----
+                random_num = -1
+                for genre in genres :
+                    random_num += len(database_tier[tier_number][genre]) 
+                random_num = random.randint(0, random_num)
 
-            # ----- Determine genre based on number -----
-            for genre in genres :
-                if(random_num < len(database_tier["Tier 1"][genre])) :
-                    # ----- Pick the game -----
-                    games[0] = database_tier["Tier 1"][genre][random_num]
-                    print("Chosen genre: " + genre)
-                    break
-                # ----- Move to the next genre -----
-                else : random_num -= len(database_tier["Tier 1"][genre])
+                # ----- Determine genre based on number -----
+                for genre in genres :
+                    if(random_num < len(database_tier[tier_number][genre])) :
+                        # ----- Pick the game -----
+                        returned_game = database_tier[tier_number][genre][random_num]
+                        print("Chosen genre: " + genre)
+                        break
+                    # ----- Move to the next genre -----
+                    else : random_num -= len(database_tier[tier_number][genre])
+            # (Genre given)
+            else:
+                random_num = random.randint(0,len(database_tier[tier_number][specific_genre]))
+                returned_game = database_tier[tier_number][specific_genre][random_num]
+
             # ----- Log it in the console -----
-            print(f"Seeing if {games[0]} is rollable...")
-            gameID = int(database_name[games[0]]["Steam ID"])
+            print(f"Seeing if {returned_game} is rollable...")
+            gameID = int(database_name[returned_game]["Steam ID"])
 
             # ----- Grab Steam JSON file -----
             payload = {'appids': gameID, 'cc' : 'US'}
@@ -146,15 +150,22 @@ async def roll_command(interaction, event: events) -> None:
             if(completion_time == "none") : continue
             else : completion_time = int(completion_time)
 
-            print(f"Game price is {gamePrice}... {gamePrice < 10}")
-            print(f"Game completion time is {completion_time}... {completion_time < 5}")
+            print(f"Game price is {gamePrice}... {gamePrice < price_limit}")
+            print(f"Game completion time is {completion_time}... {completion_time < avg_completion_time_limit}")
 
             # ----- Check to see if rollable -----
-            if(gamePrice < 10 and completion_time < 10) :
+            if(gamePrice < price_limit and completion_time < avg_completion_time_limit) :
                 rollable = True
             print("\n")
 
-        print("Rolled game: " + games[0])
+        print(f"{returned_game} is rollable.")
+        print("\n")
+        return returned_game
+
+    #  -------------------------------------------- One Hell of a Day  --------------------------------------------
+    if event == "One Hell of a Day" :
+        # Get one random (rollable) game in Tier 1, non-genre specific
+        games.append(get_rollable_game(10, 10, "Tier 1"))
 
         # Create the embed
         embed = getEmbed(games[0], interaction.user.id)
@@ -170,13 +181,13 @@ async def roll_command(interaction, event: events) -> None:
     elif event == "Two Week T2 Streak" :
         # two random t2s
         print("received two week t2 streak")
+        
 
         # ----- Grab two random games -----
         i=0
-        while(i != 2) :
-            # games.append(random.choice(data_into_list))
+        while(i < 2) :
+            games.append(get_rollable_game(40, 20, "Tier 2"))
             i += 1
-        game = games[0] + " and " + games[1]
 
         # ----- Create opening embed -----
         embeds.append(discord.Embed(
@@ -268,7 +279,6 @@ async def roll_command(interaction, event: events) -> None:
     i = 0
     target_user = ""
     for current_user in userInfo :
-        print(current_user)
         if(userInfo[current_user]["discord_ID"] == interaction.user.id) :
             target_user = current_user
             break

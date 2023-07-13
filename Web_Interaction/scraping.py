@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 # import screenshot
-from .Screenshot import Screenshot
+from .screenshot import Screenshot
 from bs4 import BeautifulSoup
 import discord
 import requests
