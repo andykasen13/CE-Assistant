@@ -518,7 +518,7 @@ def scrape_thread_call(client):
 @tree.command(name="scrape", description="run through each game in the CE database and grab the corresponding data", guild=discord.Object(id=guild_ID))
 async def scrape(interaction):
     await interaction.response.send_message("scraping...")
-    await all_game_data(client)#scrape_thread_call(client)
+    await scrape_thread_call(client) #all_game_data(client)
     await interaction.channel.send("scraped")
 
 

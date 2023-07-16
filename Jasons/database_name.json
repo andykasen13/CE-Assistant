@@ -1,321 +1,4 @@
 {
-    "- Challenge Enthusiasts -": {
-        "CE ID": "76574ec1-42df-4488-a511-b9f2d9290e5d",
-        "Steam ID": "613920",
-        "Tier": "Tier 0",
-        "Genre": "Action",
-        "Primary Objectives": {
-            "Page Description": {
-                "Point Value": "0",
-                "Description": "This is the current page for Site-listed achievements. To be eligible for these achievements, please download the associated game \"A CHALLENGE\", run it for a few minutes (you might need to download Steam 360 Video Player, it's already in your library under \"Tools\" section), close the game, and then update your profile. You should then show up in the full completions after a while and can post your proof."
-            }
-        },
-        "Community Objectives": {
-            "\"I'll add it to the backlog.\"": {
-                "Description": "Own 365 or more site-listed games.",
-                "Requirements": "Link to CE profile."
-            },
-            "Appraised for Days": {
-                "Description": "Obtain \"P\" Rank.",
-                "Requirements": "Awarded automatically by the mods."
-            },
-            "As God Intended": {
-                "Description": "Obtain 5 or more community objectives with \"Made of\" in their title.",
-                "Requirements": "Link to CE profile. Awards the \"Made of Everything\" role."
-            },
-            "Big Game Hunter": {
-                "Description": "Obtain 50 or more Bounty Points.",
-                "Requirements": "Tag the mod who handles bounties in the Discord server. Awards the black variant of \"Bounty Hunter\"."
-            },
-            "Chase the Rainbow": {
-                "Description": "Obtain a role of every possible color (not including custom Patreon colors).",
-                "Requirements": "Screenshot of roles on discord. The tier enthusiast roles do not count towards completion. The required roles are one of Green, Blue, Orange, Yellow, Red, and Black. Nitro Booster, Mod, Rank, Bounty Hunter, and Patreon colors are not required."
-            },
-            "Conspiracy Theory": {
-                "Description": "Obtain any black role on the same day another member obtains any black role (excluding Patreon roles).",
-                "Requirements": "The mods will know when this happens."
-            },
-            "Destiny Alignment": {
-                "Description": "You and another player of the same rank ask Scarlet to roll a random game the other person has completed. Both players must go on to complete all primary objectives in each game.",
-                "Requirements": "Cooldown is 1 month. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "Female Empowerment": {
-                "Description": "Complete all primary objectives in 15 different site listed games where the main character is a woman.",
-                "Requirements": "A running list will be kept over time. Tag an admin with your candidate games to be checked. Awards \"Girl Boss\". You can find the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
-            },
-            "Flash of Nostalgia": {
-                "Description": "Complete all primary objectives in 10 different site listed games that were originally a flash game, or derived from one.",
-                "Requirements": "Tag an admin with your candidate games. More games will be added to the list over time. You can find the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
-            },
-            "Follow the Masses": {
-                "Description": "Complete all primary objectives for all games on CE that have been completed by 100 or more people.",
-                "Requirements": "Link to CE profile. You can find the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
-            },
-            "Fourward Thinking": {
-                "Description": "Requires \"Let Fate Decide\": Ask Scarlet to attempt this achievement. See proof submission for full details of rules and requirements.",
-                "Requirements": "Cooldown is dynamic. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "Free Advertising": {
-                "Description": "Complete all primary objectives in a game from each background video loop on the front page of CE.",
-                "Requirements": "Link to CE profile. You can find the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
-            },
-            "Game Theory": {
-                "Description": "You and another player agree to a \"duel\". Once agreed, each player will secretly DM Scarlet a category in which a T3 game will be randomly rolled for the other person. The first person to complete their game wins this achievement.",
-                "Requirements": "The player who loses has a cooldown of 1 month. If both players choose the same category, it's a draw and the cooldown is 1 week. Post your completions in the roll channel, proof submission, or DM Scarlet."
-            },
-            "Happy Anniversary": {
-                "Description": "Be a continuous member of the discord for over a year.",
-                "Requirements": "Screenshot of Discord server stats."
-            },
-            "High Roller": {
-                "Description": "Obtain five different random roll achievements.",
-                "Requirements": "Link to CE profile. Awards the \"High Roller\" role."
-            },
-            "I Can See Clearly Now": {
-                "Description": "Clear a primary objective on the site that is listed as (UNCLEARED).",
-                "Requirements": "Make a forum post about the cleared objective proposing a point value or for removal. You can't claim this achievement for an objective you proposed without the objective going at least one full month without being cleared."
-            },
-            "Insert Tired Old Meme Here": {
-                "Description": "Send over 9000 total messages in the discord.",
-                "Requirements": "Screenshot of search results from Discord."
-            },
-            "Intro Quest": {
-                "Description": "Own the game linked to this page.",
-                "Requirements": "Download and play the game to earn this achievement."
-            },
-            "Legend of Legends": {
-                "Description": "Have a combined CR rank across all categories of 25 or less.",
-                "Requirements": "Link to CE profile. Awards the \"Supreme Legendary Challenger\" role."
-            },
-            "Let Fate Decide": {
-                "Description": "Ask Scarlet to roll a random T4 game in a category of your choosing, and then complete all primary objectives for it.",
-                "Requirements": "Cooldown is 3 months. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "Never Lucky": {
-                "Description": "Ask Scarlet to roll a random T3 for you on the site, and then finish all primary objectives for it.",
-                "Requirements": "Cooldown is 1 month. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "Number One Fan": {
-                "Description": "Obtain three separate \"Franchise Objectives\".",
-                "Requirements": "Link to CE profile. A List of Current Franchises is kept here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
-            },
-            "Objectively Cracked": {
-                "Description": "Fill your objective showcase with all objectives worth 10 or more points.",
-                "Requirements": "Link to CE profile."
-            },
-            "One Hell of a Day": {
-                "Description": "Ask Scarlet to roll a random T1 game, and then complete all primary objectives for it within 24 hours.",
-                "Requirements": "Cooldown is 2 weeks. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "One Hell of a Month": {
-                "Description": "Requires \"One Hell of a Week\": Ask Scarlet to roll 5 T1 games from EACH of 5 different categories, then complete all primary objectives for 3 of 5 from each category within a month.",
-                "Requirements": "Cooldown is 3 months. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "One Hell of a Week": {
-                "Description": "Requires \"One Hell of a Day\": Ask Scarlet to roll a random T1 game for each category, and within a week have all primary objectives for each completed.",
-                "Requirements": "Cooldown is 1 month. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "Overwhelmingly Dedicated": {
-                "Description": "Fulfill the requirements of any non-game specific black role twice.",
-                "Requirements": "Depends on how you approached it. Post in proof submission whatever you think is adequate. Awards the \"Overpowered\" role."
-            },
-            "Puzzle Grandmaster": {
-                "Description": "Complete 10 separate objectives from the \"Puzzle Games\" list.",
-                "Requirements": "Link to CE profile. List found here: https://cedb.me/game/27578157-10b2-4f29-acee-452c2dc59477"
-            },
-            "Reading Rainbow": {
-                "Description": "Complete all primary objectives for games whose name start with each letter of the English alphabet (A-Z).",
-                "Requirements": "Link to CE profile, a mod can check. Awards \"The Literate\""
-            },
-            "Retro Fitted": {
-                "Description": "Complete all primary objectives in 10 separate site listed games that were originally released before Steam (2003). Remasters count.",
-                "Requirements": "Tag an admin for your candidate games. More may be added to the list over time. You can see the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=264244730"
-            },
-            "Russian Roulette": {
-                "Description": "Requires \"Let Fate Decide\": Pick a T5 from all 6 categories, ask Scarlet to roll one of them randomly, then complete all primary objectives in that game.",
-                "Requirements": "Cooldown is 6 months. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "Soul Mates": {
-                "Description": "You and another person must agree on a tier, then ask Scarlet to roll a random game for that tier. Both players must then go on to complete all primary objectives in that game within a time limit relative to that tier.",
-                "Requirements": "Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "Super Super Super Super Super Super Super Super Super Super Super Super Super Super Super Star": {
-                "Description": "Obtain all primary objectives in 15 separate site listed games with \"super\" in their name.",
-                "Requirements": "Link to CE profile. Awards the \"Super\" role."
-            },
-            "Supporter": {
-                "Description": "Have one of the Patreon Supporter roles or the Nitro Booster role.",
-                "Requirements": "Screenshot of Discord roles."
-            },
-            "Teamwork Makes the Dream Work": {
-                "Description": "You and another player ask Scarlet to roll 4 random T3 games. Then between the two of you, have all primary objectives complete within a month.",
-                "Requirements": "Cooldown is 3 months for both players. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "That Belongs In A Museum!": {
-                "Description": "Be placed on the Hall of Fame.",
-                "Requirements": "Link to potentials sheet."
-            },
-            "Triple Threat": {
-                "Description": "Requires \"Never Lucky\": Pick a category, then ask Scarlet to roll 3 random T3 games in that category. Then complete all primary objectives for each within a month.",
-                "Requirements": "Cooldown is 3 months. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "Two \"Two Week T2 Streak\" Streak": {
-                "Description": "Requires \"Two Week T2 Streak\": Ask Scarlet to roll a random T2 game, then complete all primary objectives for it within a week. Then repeat this process 3 more times for different categories.",
-                "Requirements": "Cooldown is 1 week. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "Two Week T2 Streak": {
-                "Description": "Ask Scarlet to roll a random T2 game, then complete all primary objectives for it within a week. Then repeat this process for a different category.",
-                "Requirements": "Cooldown is 1 week. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "Veteran": {
-                "Description": "Be a member of the discord for over 3 years.",
-                "Requirements": "Reply to or link your Discord join message and tag a mod (breaks allowed)."
-            },
-            "Visions of the Apocalypse": {
-                "Description": "Fill the game completion showcase on your profile entirely with games that award a black role in the Discord server. In other words, fill out your entire game showcase with Tier 5 games worth at least 500 points.",
-                "Requirements": "Link to CE profile. Awards the \"Total Eclipse\" role."
-            },
-            "War and Peace": {
-                "Description": "Obtain all 5 other Co-op and PvP random roll achievements.",
-                "Requirements": "Link to CE profile."
-            },
-            "What A Long Strange Trip It's Been": {
-                "Description": "Obtain all other single player random roll achievements.",
-                "Requirements": "Post a link to your CE profile in the roll channel, proof submission, or DM Scarlet. Awards the black variant of \"High Roller\""
-            },
-            "Winner Takes All": {
-                "Description": "You and another player choose a category and tier, then ask Scarlet to roll random game with those conditions. The first person to obtain all primary objectives in that game earns this achievement.",
-                "Requirements": "The loser has a cooldown of 3 months. The rolled game cannot be completed or have progress made by either player. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
-            },
-            "Word From the Wise": {
-                "Description": "Complete all primary objectives in 5 games of each category on the Steam curator.",
-                "Requirements": "Link to CE profile."
-            },
-            "Zookeeper": {
-                "Description": "Complete all primary objectives in 15 different site listed games where the main character is a non-human animal.",
-                "Requirements": "A running list will be kept over time. Tag an admin with your candidate games to be checked. Awards \"Zookeeper\". You can find the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
-            }
-        }
-    },
-    "- Puzzle Games -": {
-        "CE ID": "27578157-10b2-4f29-acee-452c2dc59477",
-        "Steam ID": "1485250",
-        "Tier": "Tier 0",
-        "Genre": "Strategy",
-        "Primary Objectives": {
-            "Page Description": {
-                "Point Value": "0",
-                "Description": "This page serves as a list of puzzle games on Steam curated by CE. Each game listed will require you to either complete all or specific achievements within the game, or complete all in-game puzzles offered. The difficulty of these objectives are gauged on a three-tier system, ranging from Moderate (\ud83d\udfe8), to Challenging (\ud83d\udfe5), to Extreme (\u2b1b). A specialized potentials list for puzzle games can be found here: <https://tinyurl.com/Puzzle-Games>. Games are added to this list through a voting system within the CE Discord server\u2014if you wish to participate in the voting system, ask any of the Discord mods for the \"@Puzzle Enthusiast\" role.",
-                "Requirements": "How to submit proof for each game: Steam profile link for achievements, screenshot/video for everything else."
-            }
-        },
-        "Community Objectives": {
-            "7 Billion Humans": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/792100/7_Billion_Humans/"
-            },
-            "A Monster's Expedition": {
-                "Description": "\u2b1b Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/1052990/A_Monsters_Expedition/"
-            },
-            "Antichamber": {
-                "Description": "\ud83d\udfe8 Find all map locations and signs.",
-                "Requirements": "https://store.steampowered.com/app/219890/Antichamber/"
-            },
-            "Baba Is You": {
-                "Description": "\u2b1b Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/736260/Baba_Is_You/"
-            },
-            "Cats Organized Neatly + Dogs Organized Neatly": {
-                "Description": "\ud83d\udfe8 Earn all achievements in both games.",
-                "Requirements": "https://store.steampowered.com/app/1369340/Cats_Organized_Neatly/ https://store.steampowered.com/app/1597730/Dogs_Organized_Neatly/"
-            },
-            "Cosmic Express": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/583270/Cosmic_Express/"
-            },
-            "Cypher": {
-                "Description": "\ud83d\udfe5 Complete all in-game puzzles.",
-                "Requirements": "https://store.steampowered.com/app/746710/Cypher/"
-            },
-            "Divide By Sheep": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/252130/Divide_By_Sheep/"
-            },
-            "EXAPUNKS": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/716490/EXAPUNKS/"
-            },
-            "FEZ": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/224760/FEZ/"
-            },
-            "Human Resource Machine": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/375820/Human_Resource_Machine/"
-            },
-            "Infinifactory": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/300570/Infinifactory/"
-            },
-            "KAMI": {
-                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
-                "Requirements": "https://store.steampowered.com/app/272040/KAMI/"
-            },
-            "Opus Magnum": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/558990/Opus_Magnum/"
-            },
-            "Patrick's Parabox": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/1260520/Patricks_Parabox/"
-            },
-            "Portal 2": {
-                "Description": "\ud83d\udfe8 Earn the achievements related to completing all single-player and co-op campaign levels.",
-                "Requirements": "https://store.steampowered.com/app/620/Portal_2/"
-            },
-            "SHENZHEN I/O": {
-                "Description": "\u2b1b Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/504210/SHENZHEN_IO/"
-            },
-            "Snakebird": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/357300/Snakebird/"
-            },
-            "SpaceChem": {
-                "Description": "\u2b1b Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/92800/SpaceChem/"
-            },
-            "Stephen's Sausage Roll": {
-                "Description": "\u2b1b Complete all in-game puzzles.",
-                "Requirements": "https://store.steampowered.com/app/353540/Stephens_Sausage_Roll/"
-            },
-            "Taiji": {
-                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
-                "Requirements": "https://store.steampowered.com/app/1141580/Taiji/"
-            },
-            "Tametsi": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/709920/Tametsi/"
-            },
-            "The Case of the Golden Idol": {
-                "Description": "\ud83d\udfe8 Earn all achievements. For an optimal experience, minimize usage of in-game hints.",
-                "Requirements": "https://store.steampowered.com/app/1677770/The_Case_of_the_Golden_Idol/"
-            },
-            "The Cat Machine": {
-                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
-                "Requirements": "https://store.steampowered.com/app/386900/The_Cat_Machine/"
-            },
-            "The Talos Principle": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/257510/The_Talos_Principle/"
-            },
-            "TIS-100": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/370360/TIS100/"
-            }
-        }
-    },
     "-KLAUS-": {
         "CE ID": "1e8565aa-b9f2-4b41-9578-22e4c2a5436b",
         "Steam ID": "729370",
@@ -1143,16 +826,14 @@
                 "Point Value": "40",
                 "Description": "Do 1 Credit Clears under special circumstances.",
                 "Achievements": [
-                    "1 credit cleared at Normal or higher difficulty with return shot mode on"
+                    "1 credit cleared at Normal or higher difficulty with return shot mode on",
+                    "1 credit cleared with Type-B Craft"
                 ]
             },
-            "1 credit cleared with Type-B Craft": {
-                "Point Value": "Outside Calculations",
-                "Description": "15"
-            },
-            "Do a 1 Credit Clear on Hard.": {
-                "Point Value": "Requirements:",
-                "Description": "Screenshot of leaderboard."
+            "Outside Calculations": {
+                "Point Value": "15",
+                "Description": "Do a 1 Credit Clear on Hard.",
+                "Requirements": "Screenshot of leaderboard."
             }
         },
         "Community Objectives": {}
@@ -1292,7 +973,7 @@
                 "Requirements": "Video of file select and showing perfect ranks on every level in each game."
             },
             "Lord of the Nerds (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat all 3 games on One Credit Champ mode.",
                 "Requirements": "Video of the run. Quit to menu is disallowed."
             }
@@ -1502,7 +1183,7 @@
                 ]
             },
             "Neo Roland Turmoil (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the game on Insane with a maximum of 5 hits taken.",
                 "Achievements": [
                     "Gold Dragon Emblem"
@@ -1569,7 +1250,7 @@
                 ]
             },
             "Duracell Delver (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete Infinity Drive Mode.",
                 "Requirements": "Screenshot of the leaderboard or results screen."
             }
@@ -1660,7 +1341,7 @@
                 "Requirements": "Screenshots/video of level select."
             },
             "Heavenly Hexahedron (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Obtain the \"No death\" badge for the Supernova dimension in Speedrun Mode.",
                 "Requirements": "Screenshot of results/leaderboard."
             }
@@ -1996,8 +1677,8 @@
                     "Danmaku master"
                 ]
             },
-            "Blazing Musician (UNCLEARED)": {
-                "Point Value": "0",
+            "Blazing Musician (PARTIALLY UNCLEARED)": {
+                "Point Value": "6",
                 "Description": "Clear the game on Ultra difficulty without continues.",
                 "Achievements": [
                     "Human?!"
@@ -2507,16 +2188,14 @@
                 "Description": "Loop twice. / Complete the game with the Egg. / Complete the game without collecting any artefacts.",
                 "Achievements": [
                     "Hard Shell",
-                    "Loop the Loop"
+                    "Loop the Loop",
+                    "The Right Way Is the Hard Way"
                 ]
             },
-            "The Right Way Is the Hard Way": {
-                "Point Value": "Bloody Beaks",
-                "Description": "10"
-            },
-            "Complete all challenges with any character.": {
-                "Point Value": "Requirements:",
-                "Description": "Screenshots of the challenge pages."
+            "Bloody Beaks": {
+                "Point Value": "10",
+                "Description": "Complete all challenges with any character.",
+                "Requirements": "Screenshots of the challenge pages."
             }
         },
         "Community Objectives": {}
@@ -2690,12 +2369,11 @@
                 "Description": "Complete all \"Hard\" difficulty chapters without dying or restarting (separately).",
                 "Achievements": [
                     "The Astronaut",
-                    "The Lumberjack"
-                ]
-            },
-            "The Pirate": {
-                "Point Value": "The Polar Bob",
-                "Description": "The Spelunker",
+                    "The Lumberjack",
+                    "The Pirate",
+                    "The Polar Bob",
+                    "The Spelunker"
+                ],
                 "Requirements": "Video of each Hard chapter deathless (separately)."
             },
             "First Course": {
@@ -2703,12 +2381,11 @@
                 "Description": "Complete all \"Normal\" difficulty chapters without dying or restarting (separately).",
                 "Achievements": [
                     "The Astronomer",
-                    "The Cave Dweller"
-                ]
-            },
-            "The Hiker": {
-                "Point Value": "The Penguin",
-                "Description": "The Vacationer",
+                    "The Cave Dweller",
+                    "The Hiker",
+                    "The Penguin",
+                    "The Vacationer"
+                ],
                 "Requirements": "Video of at least Ocean and Space deathless (separately)."
             },
             "Eat Your Hard Out": {
@@ -3142,11 +2819,11 @@
             "Mad Sprint": {
                 "Point Value": "100",
                 "Description": "Beat the gold time on all extreme maps.",
-                "Achievements": []
-            },
-            "Faster than light": {
-                "Point Value": "High Priest of the Great Old Ones",
-                "Description": "Pikarin would be proud",
+                "Achievements": [
+                    "Faster than light",
+                    "High Priest of the Great Old Ones",
+                    "Pikarin would be proud"
+                ],
                 "Requirements": "Video(s) of each run."
             },
             "Moderate Run": {
@@ -3258,11 +2935,10 @@
                     "Stoned",
                     "Storage storage storaggeeeee!",
                     "Super Easy",
-                    "Super generic"
-                ]
-            },
-            "The Cobbler": {
-                "Description": "There's a second one?",
+                    "Super generic",
+                    "The Cobbler",
+                    "There's a second one?"
+                ],
                 "Requirements": "Screenshot/Video of 'Welkin Blue' and 'Fast' Clears"
             }
         }
@@ -3359,7 +3035,7 @@
                 ]
             },
             "Just Another Day at the Office (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete the Full Challenge in Arcade Mode on \"Veteran\" difficulty.",
                 "Requirements": "Video of the run"
             }
@@ -3444,7 +3120,7 @@
                 ]
             },
             "EVO Survivor (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear the EVO! DLC on Very Hard.",
                 "Achievements": [
                     "EVO! : No Continues: Very Hard"
@@ -3599,12 +3275,11 @@
                 "Description": "Prove yourself.",
                 "Achievements": [
                     "1UP!",
-                    "Impress Your Friends"
-                ]
-            },
-            "Real Gamer": {
-                "Point Value": "Thanks For Playing",
-                "Description": "Wow",
+                    "Impress Your Friends",
+                    "Real Gamer",
+                    "Thanks For Playing",
+                    "Wow"
+                ],
                 "Requirements": "Video of 6, 7, and 8 C sides; OR any golden berry; OR having unlocked any of the other Primary Objectives."
             }
         },
@@ -3715,11 +3390,11 @@
             "Stockfish": {
                 "Point Value": "20",
                 "Description": "In Dungeon Mode: Defeat the True Last Boss, have a 25 minute speedrun, and clear Difficulty 5.",
-                "Achievements": []
-            },
-            "How to Checkmate With Two Bishops": {
-                "Point Value": "Queen Mate",
-                "Description": "Rook Mate",
+                "Achievements": [
+                    "How to Checkmate With Two Bishops",
+                    "Queen Mate",
+                    "Rook Mate"
+                ],
                 "Requirements": "Video of \"Difficulty 5\" clear. Assist mode must be shown disabled in pause menu at the start. Quit to menu is disallowed."
             },
             "Deep Blue": {
@@ -3730,7 +3405,7 @@
                 ]
             },
             "AlphaZero (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Kill the True Last Boss and collect the rainbow crown in Dungeon Mode on Difficulty 10. / Clear the EX Boss Rush.",
                 "Requirements": "Videos of both runs. Assist mode must be shown disabled in pause menu at the start. Quit to menu is disallowed."
             }
@@ -3780,12 +3455,12 @@
                 ]
             },
             "Creeping Disaster (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Obtain a gold medal on the Nightmare Crusade and Nightmare Invasion Speedruns.",
                 "Requirements": "Screenshot of Speedrun select screen."
             },
             "Pixel Breaker (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Obtain a gold medal on the Nightmare Gauntlet.",
                 "Requirements": "Video of the run."
             }
@@ -3874,7 +3549,7 @@
                 ]
             },
             "Master Infultaker (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Collect every gem in each marathon without dying.",
                 "Requirements": "Video of each Hard Mode marathon or video of leaderboards if done on version 0.4.10 or earlier."
             }
@@ -3936,7 +3611,15 @@
                 ]
             }
         },
-        "Community Objectives": {}
+        "Community Objectives": {
+            "Tower Escape (POTENTIAL PO)": {
+                "Description": "Reach the top of the tower within 6 minutes. / Collect all 7 keys within 50 seconds.",
+                "Achievements": [
+                    "Climbing Specialist",
+                    "Keymaster"
+                ]
+            }
+        }
     },
     "Cloudberry Kingdom": {
         "CE ID": "95dc81da-a00b-48f0-9d44-a6298fd22d4d",
@@ -4186,12 +3869,11 @@
                     "Beast",
                     "I'm good, thanks",
                     "Shadow Walker",
-                    "Speedrun"
-                ]
-            },
-            "The Specialist": {
-                "Point Value": "Too Lazy",
-                "Description": "Why Make It Easy?",
+                    "Speedrun",
+                    "The Specialist",
+                    "Too Lazy",
+                    "Why Make It Easy?"
+                ],
                 "Requirements": "Video of run where you rescue your partner without having any upgrades applied, or achievement timestamps before permadeath could be toggled off (August 24, 2022)."
             }
         },
@@ -4245,7 +3927,7 @@
                 ]
             },
             "Falling Star (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat Arcade on Very Hard (including the TLB) with an overall S rank.",
                 "Requirements": "Screenshot of results screen."
             }
@@ -4373,15 +4055,16 @@
             "Your Own Nightmare": {
                 "Point Value": "80",
                 "Description": "Beat a Trial on Nightmare including the TLB.",
-                "Achievements": []
+                "Achievements": [
+                    "Dream God of destruction"
+                ]
             },
-            "Dream God of destruction": {
-                "Point Value": "Dream Adventurer",
-                "Description": "15"
-            },
-            "Beat a Trial on Expert.": {
-                "Point Value": "Achievements:",
-                "Description": "Dream Adventurer"
+            "Dream Adventurer": {
+                "Point Value": "15",
+                "Description": "Beat a Trial on Expert.",
+                "Achievements": [
+                    "Dream Adventurer"
+                ]
             },
             "Dream Explorer": {
                 "Point Value": "5",
@@ -4700,12 +4383,11 @@
                 "Point Value": "10",
                 "Description": "Get all 40 stars in the game. *Partial points are awarded as a progress milestone.",
                 "Achievements": [
-                    "All done"
-                ]
-            },
-            "Main stars": {
-                "Point Value": "Optional stars",
-                "Description": "Sky full of stars",
+                    "All done",
+                    "Main stars",
+                    "Optional stars",
+                    "Sky full of stars"
+                ],
                 "Requirements": "Screenshot of level select."
             }
         },
@@ -5425,12 +5107,11 @@
                     "Do you need... A hand?? Bahaha!",
                     "Flawless victory.",
                     "Green thumbs",
-                    "Nothing left to... collect."
-                ]
-            },
-            "Steam rolled.": {
-                "Point Value": "Take that, sucker!",
-                "Description": "The Dance",
+                    "Nothing left to... collect.",
+                    "Steam rolled.",
+                    "Take that, sucker!",
+                    "The Dance"
+                ],
                 "Requirements": "Videos of the \"The Collector\", \"The Lighthouse\", and \"The Scarecrow\" without being hit, OR achievement timestamps from before June, 2022."
             },
             "Radiant Triumph": {
@@ -5579,7 +5260,7 @@
                 ]
             },
             "Spirited Away (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the game on Fatal mode.",
                 "Achievements": [
                     "God like"
@@ -5637,7 +5318,7 @@
                 ]
             },
             "Smiles at Death (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Defeat Bloody Jitterbug (Mega Black Label only).",
                 "Achievements": [
                     "The True Tyrant"
@@ -5678,7 +5359,7 @@
                 ]
             },
             "Melodies Worth A Thousand Memories (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Obtain an \"All Charming\" rank on all Hard charts.",
                 "Requirements": "Video/GIF of level select + videos of [insert hardest songs here]."
             }
@@ -5743,7 +5424,7 @@
             }
         },
         "Community Objectives": {
-            "One Coin (UNCLEARED / UNKNOWN)": {
+            "One Coin (POTENTIAL PO)": {
                 "Description": "The unlock condition for this objective is currently unknown, but suspected to be challenge-based. It will be shifted to PO once cleared.",
                 "Achievements": [
                     "One Coin"
@@ -5887,12 +5568,12 @@
                 ]
             },
             "Blood, Sweat and Badges (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Obtain every badge in every dungeon (including the Vicious Token).",
                 "Requirements": "Video of dungeon select screen."
             },
             "Master of All Trades (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete every dungeon with every class.",
                 "Requirements": "Video of dungeon select screen."
             }
@@ -6103,9 +5784,17 @@
     "Devil May Cry HD Collection": {
         "CE ID": "656aaa64-33bb-43f2-a9f6-cdadb678249a",
         "Steam ID": "631510",
-        "Tier": "Tier 1",
+        "Tier": "Tier 3",
         "Genre": "Action",
         "Primary Objectives": {
+            "Bloody Hell": {
+                "Point Value": "15",
+                "Description": "DMC2: Finish the game on \"Must Die\" Mode with any character. / Pass 9000 floors in Bloody Palace Mode.",
+                "Achievements": [
+                    "Every Tongue Will Confess",
+                    "Over 9000!"
+                ]
+            },
             "This is Sparda": {
                 "Point Value": "15",
                 "Description": "DMC1: Finish the game on \"Dante Must Die\" Mode.",
@@ -6113,16 +5802,8 @@
                     "Combustible!!!"
                 ]
             },
-            "Bloody Hell (UNCLEARED)": {
-                "Point Value": "0",
-                "Description": "DMC2: Finish the game on \"Must Die\" Mode with any character. / Pass 9000 floors in Bloody Palace Mode.",
-                "Achievements": [
-                    "Every Tongue Will Confess",
-                    "Over 9000!"
-                ]
-            },
-            "Twin Devils (UNCLEARED)": {
-                "Point Value": "0",
+            "Twin Devils": {
+                "Point Value": "15",
                 "Description": "DMC3: Finish the game on \"Heaven or Hell\" Mode with any character. / Achieve an S Rank on all missions.",
                 "Achievements": [
                     "Heaven Can Wait",
@@ -6355,12 +6036,12 @@
                 ]
             },
             "Speed Racer (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Obtain a diamond medal on all official Sprint and Challenge tracks in Arcade mode.",
                 "Requirements": "Video/GIF scrolling through all official tracks using Advanced search."
             },
             "Stunt Driver (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Obtain a diamond medal on all official Stunt tracks in Arcade mode.",
                 "Requirements": "Screenshots/GIF of Stunt track select."
             }
@@ -6421,12 +6102,11 @@
                 "Point Value": "80",
                 "Description": "Defeat Hibachi in BL with Bomb and Power and score 300bil with Bomb and 600bil with Power in BL (continues allowed). Can all be achieved in individual runs.",
                 "Achievements": [
-                    "Black BOMB"
-                ]
-            },
-            "Black POWER": {
-                "Point Value": "Bomb user",
-                "Description": "Power user",
+                    "Black BOMB",
+                    "Black POWER",
+                    "Bomb user",
+                    "Power user"
+                ],
                 "Requirements": "Video of the replays."
             },
             "1.5 2-All": {
@@ -6587,7 +6267,7 @@
                 "Requirements": "Screenshot of score attack leaderboard or video of the run (must use default lives setting)."
             },
             "Dragonlord (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear both loops of the score attack mode.",
                 "Requirements": "Video of the run."
             }
@@ -7133,7 +6813,7 @@
                 ]
             },
             "Hot Helmet Hero (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Reach a total time of 1 hour with bonus helmets.",
                 "Achievements": [
                     "Best of the best"
@@ -7149,6 +6829,14 @@
         "Tier": "Tier 5",
         "Genre": "Arcade",
         "Primary Objectives": {
+            "Elma Grandmaster": {
+                "Point Value": "600",
+                "Description": "Get a total time of 40 minutes or less across all original levels.",
+                "Achievements": [
+                    "Impossible is nothing"
+                ],
+                "Requirements": "Screenshot of total time on elmastats, or video of all replays."
+            },
             "Elma Master": {
                 "Point Value": "200",
                 "Description": "Get a total time of 45 minutes or less across all original levels.",
@@ -7194,14 +6882,6 @@
                 "Achievements": [
                     "Easy Ridin'"
                 ]
-            },
-            "Elma Grandmaster (UNCLEARED)": {
-                "Point Value": "0",
-                "Description": "Get a total time of 40 minutes or less across all original levels.",
-                "Achievements": [
-                    "Impossible is nothing"
-                ],
-                "Requirements": "Screenshot of total time on elmastats, or video of all replays."
             }
         },
         "Community Objectives": {
@@ -7539,12 +7219,12 @@
                 "Requirements": "Screenshot of leaderboard."
             },
             "One-Ship Army (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear Original mode on Hardest difficulty with no continues.",
                 "Requirements": "Video of the run."
             },
             "Purple Eraser (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear Advanced mode on Hardest difficulty with no continues.",
                 "Requirements": "Video of the run."
             }
@@ -7947,12 +7627,11 @@
                     "Bitter Eyes",
                     "Chloroflyp",
                     "Flying Colors",
-                    "Gears of Grit"
-                ]
-            },
-            "Red-tapism": {
-                "Point Value": "Royal Pain",
-                "Description": "Wave of Light",
+                    "Gears of Grit",
+                    "Red-tapism",
+                    "Royal Pain",
+                    "Wave of Light"
+                ],
                 "Requirements": "Screenshot of progress page."
             }
         },
@@ -7989,7 +7668,7 @@
                 ]
             },
             "Red Dreams (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Get Ending 18 (or meet its conditions) on Hard difficulty.",
                 "Requirements": "Video of the replay."
             }
@@ -8255,8 +7934,8 @@
                     "Super Mechano Cat"
                 ]
             },
-            "As Long as It Isn't on a Monday... (UNCLEARED)": {
-                "Point Value": "0",
+            "As Long As It Isn't On A Monday... (UNCLEARED)": {
+                "Point Value": "1",
                 "Description": "Reach the platinum medal on all time trials.",
                 "Requirements": "Video scrolling through all records."
             }
@@ -8323,16 +8002,16 @@
             "Gauntlet Crusher": {
                 "Point Value": "50",
                 "Description": "Complete all Gauntlets.",
-                "Requirements": "Video/GIF of main menu (to confirm profile name) and gauntlet select screen."
+                "Requirements": "Video of profile page and Gauntlet select screen."
             },
             "Demon Dasher": {
                 "Point Value": "40",
-                "Description": "Collect 130 golden coins and unlock the icon tied to it.",
-                "Requirements": "Screenshot of in-game achievement (with user profile visible) OR icon select screen showing the icon unlocked and coin count showing 130 or higher."
+                "Description": "Collect 130 Secret Coins and unlock the icon tied to it.",
+                "Requirements": "Screenshot of in-game achievement (with user profile visible)."
             },
             "The Impossible Game": {
                 "Point Value": "30",
-                "Description": "Complete all official levels in Normal mode. *Partial points are awarded as a progress milestone.",
+                "Description": "Complete all official levels in Normal Mode. *Partial points are awarded as a progress milestone.",
                 "Achievements": [
                     "Back On Track!",
                     "Base After Base!",
@@ -8348,26 +8027,25 @@
                     "Polargeist!",
                     "SteamStep!",
                     "Stereo Madness!",
-                    "Theory of Everything 2!"
-                ]
-            },
-            "Theory of Everything!": {
-                "Point Value": "Time Machine!",
-                "Description": "xStep!",
+                    "Theory of Everything 2!",
+                    "Theory of Everything!",
+                    "Time Machine!",
+                    "xStep!"
+                ],
                 "Requirements": "Screenshots of in-game achievements (with user profile visible) or level statistics for \"Geometrical Dominator\", \"Deadlocked\" and \"Fingerdash\"."
             }
         },
         "Community Objectives": {
             "Geometric Domination": {
-                "Description": "Beat every official level in level order in Normal mode without dying, restarting or quitting. Alternatively, beat \"RobTop Travel\" by Atomic in Normal mode.",
+                "Description": "Beat every official level in level order in Normal Mode without dying, restarting or quitting. Alternatively, beat \"RobTop Travel\" by Atomic in Normal Mode.",
                 "Requirements": "Video of the run."
             },
             "Numismatist": {
-                "Description": "Collect all 149 golden coins.",
-                "Requirements": "Screenshot of in game user stats."
+                "Description": "Collect all 149 Secret Coins.",
+                "Requirements": "Screenshot of user profile."
             },
             "Pushed to the Extreme": {
-                "Description": "Complete \"Bloodbath\" by Riot in Normal mode.",
+                "Description": "Complete \"Bloodbath\" by Riot in Normal Mode.",
                 "Requirements": "Video of the run."
             }
         }
@@ -8660,7 +8338,7 @@
                 ]
             },
             "Golf Mafia (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Get S+ on every course.",
                 "Requirements": "Screenshots or GIF/video of all course ranks."
             }
@@ -8773,7 +8451,7 @@
                 ]
             },
             "Unstoppable Murder Machine (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Obtain S+ rank on all Score Attack stages.",
                 "Requirements": "Video/GIF of level select screen for each planet."
             }
@@ -9021,12 +8699,11 @@
                     "tiny tales king",
                     "TRIPLE King",
                     "VEGAS King",
-                    "Wacky King"
-                ]
-            },
-            "Wandering King": {
-                "Point Value": "Warrior King",
-                "Description": "ZAWAWA King",
+                    "Wacky King",
+                    "Wandering King",
+                    "Warrior King",
+                    "ZAWAWA King"
+                ],
                 "Requirements": "Videos of all 14+ difficulty songs (\"BUCHiGiRE Berserker\", \"ADRENA\", \"Black MInD\", \"Future Coaster\", \"Scarlet Lance\", \"Solar Storm\", \"Warrior\")"
             },
             "Groove Knight": {
@@ -9498,7 +9175,7 @@
                 "Requirements": "Screenshot of score attack leaderboard or video of the run (must use default lives setting)."
             },
             "Wish Overlord (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear both loops of the score attack mode.",
                 "Requirements": "Video of the run."
             }
@@ -9520,7 +9197,7 @@
                 "Requirements": "Screenshot of score attack leaderboard OR video of the run (must use default lives setting)."
             },
             "Medicine Melancholy (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear both loops of the score attack mode.",
                 "Requirements": "Video of the run."
             }
@@ -9620,7 +9297,7 @@
                 ]
             },
             "Check Them Out (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete all requirements on all missions.",
                 "Requirements": "Screenshot of missions screen."
             }
@@ -10072,7 +9749,7 @@
                 ]
             },
             "Bullet Heck (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat real time mode as all characters without deaths.",
                 "Requirements": "Steam screenshot of main menu showing all character stickers purple with a halo."
             }
@@ -10902,7 +10579,7 @@
                 ]
             },
             "Platinum Fish (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete the game in Iron Fish mode with Bossa Style controls.",
                 "Achievements": [
                     "You Thought This Game Was Easy?"
@@ -11550,7 +11227,7 @@
                 ]
             },
             "YOLOH (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "100% the game with less than 100 Deaths.",
                 "Achievements": [
                     "100 under 100"
@@ -11606,21 +11283,21 @@
             "Jump Prince": {
                 "Point Value": "75",
                 "Description": "Complete Ghost of the Babe with Giant Boots. / Complete Ghost of the Babe with Snake Ring. / Complete Ghost of the Babe with only 2 falls.",
-                "Achievements": []
-            },
-            "Absolute Will Ghost": {
-                "Point Value": "Giant Leaps Ghost",
-                "Description": "Nobody's Perfect",
+                "Achievements": [
+                    "Absolute Will Ghost",
+                    "Giant Leaps Ghost",
+                    "Nobody's Perfect"
+                ],
                 "Requirements": "Video of the 2 fall run."
             },
             "Jump Duke": {
                 "Point Value": "65",
                 "Description": "Complete New Babe+ with Giant Boots. / Complete New Babe+ with Snake Ring. / Complete New Babe+ without falling.",
-                "Achievements": []
-            },
-            "Absolute Will+": {
-                "Point Value": "Giant Leaps+",
-                "Description": "Mad King",
+                "Achievements": [
+                    "Absolute Will+",
+                    "Giant Leaps+",
+                    "Mad King"
+                ],
                 "Requirements": "Video of the 0 fall run."
             },
             "Jump Knight": {
@@ -12074,12 +11751,11 @@
                 "Description": "Set a pro time on every Killrun map. *Partial points are awarded as a progress milestone.",
                 "Achievements": [
                     "|=][/\\/@|_ I3()$$",
-                    "All In The Wrist"
-                ]
-            },
-            "Constellation Prize": {
-                "Point Value": "Rise and Grind",
-                "Description": "Star Killer",
+                    "All In The Wrist",
+                    "Constellation Prize",
+                    "Rise and Grind",
+                    "Star Killer"
+                ],
                 "Requirements": "Screenshots of level select."
             },
             "Jump Around": {
@@ -12148,7 +11824,7 @@
                     "Absolute lunacy!",
                     "Nocturnal Conquerer"
                 ],
-                "Requirements": "Separate SINGLE SEGMENT videos of \"Absolute lunacy! \" and \"Nocturnal Conquerer\"."
+                "Requirements": "Separate SINGLE SEGMENT videos of \"Absolute lunacy! \" and \"Nocturnal Conquerer\""
             },
             "Movement Amateur": {
                 "Point Value": "120",
@@ -12161,37 +11837,54 @@
                     "Outstanding Agent",
                     "Reliquary Rambler",
                     "Strafing Master",
-                    "The Area 64 Conspiracy, Part 1 (Elite)"
-                ]
-            },
-            "The Area 64 Conspiracy, Part 2 (Elite)": {
-                "Point Value": "The Eastern Connection",
-                "Description": "With the Royal's Thanks",
+                    "The Area 64 Conspiracy, Part 1 (Elite)",
+                    "The Area 64 Conspiracy, Part 2 (Elite)",
+                    "The Eastern Connection",
+                    "With the Royal's Thanks"
+                ],
                 "Requirements": "Separate SINGLE SEGMENT videos of \"A Hallowed Performance\", \"The Eastern Connection\" and \"Outstanding Agent\""
             },
-            "Surf Extraordinaire": {
+            "Spring in your Step": {
+                "Point Value": "100",
+                "Description": "Complete all advanced KZ and BHOP maps, more information can be found in the kreedz sheet.",
+                "Requirements": "Videos of \u201ckz_bhop_minimalism\u201d and \u201ckz_bhop_angkor[crypt]\". Screenshots of map completion of the other maps listed on the Kreedz sheet (Pinned in the KZ thread in #first-person)"
+            },
+            "Shred the Gnar": {
+                "Point Value": "90",
+                "Description": "Complete all advanced surfing maps.",
+                "Requirements": "Videos of \u201ckz_surf_exile\u201d and \u201ckz_surf_forbiddentomb4\u201d. Screenshots of \u201ckz_surf_forbiddentomb1\u201d, \u201ckz_surf_forbiddentomb3\u201d, \u201ckz_surf_calamity\u201d, \u201ckz_surf_calamity2\u201d, and \u201ckz_surf_misc\u201d completion"
+            },
+            "Longjumper": {
+                "Point Value": "60",
+                "Description": "Complete all Longjump Maps.",
+                "Requirements": "Continuous single segment video of \u201ckz_longjumps[lj_race_4]\u201d showing a full console readout beneath \u201cconnected to [map name]\u201d at the start of the video, as well as screenshots of \u201ckz_date2[longjumps]\u201d and \u201ckz_crate_delights[sf_longjumps]\u201d completion"
+            },
+            "Boarding School": {
                 "Point Value": "50",
                 "Description": "Obtain all surf map achievements.",
                 "Achievements": [
                     "Do The Wave!",
                     "Surfing Talent Discovered",
-                    "The Average Surf"
-                ]
-            },
-            "The Easy Surf": {
-                "Point Value": "The Expert Surf",
-                "Description": "The Hard Surf",
+                    "The Average Surf",
+                    "The Easy Surf",
+                    "The Expert Surf",
+                    "The Hard Surf"
+                ],
                 "Requirements": "Video of \"Surfing Talent Discovered\""
             },
             "Bungee Boss": {
-                "Point Value": "10",
+                "Point Value": "5",
                 "Description": "Obtain all bungee map achievements.",
-                "Achievements": []
+                "Achievements": [
+                    "Bungee Launch Expert",
+                    "Bungee Swing Master",
+                    "Bungee Verticality Expert"
+                ]
             },
-            "Bungee Launch Expert": {
-                "Point Value": "Bungee Swing Master",
-                "Description": "Bungee Verticality Expert",
-                "Requirements": "Video of \"Bungee Swing Master\""
+            "Powerjump Pumper": {
+                "Point Value": "5",
+                "Description": "Complete both listed powerjump maps",
+                "Requirements": "Screenshot of \u201ckz_powerjump[truthseeker]\u201d and \u201ckz_powerjump\u201d completion"
             }
         },
         "Community Objectives": {
@@ -12599,7 +12292,7 @@
                 "Requirements": "Screen of the Adventurer's log."
             },
             "Archaelogical Navigator (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear the \"VERY HARD++\" mode.",
                 "Requirements": "Screenshot of the Adventurer's log."
             }
@@ -13175,12 +12868,11 @@
                 "Achievements": [
                     "Carried by the Wind",
                     "Faster Than Light",
-                    "Floor is Actual Lava"
-                ]
-            },
-            "It's over 9000": {
-                "Point Value": "Olympic Champion",
-                "Description": "Paleontologist",
+                    "Floor is Actual Lava",
+                    "It's over 9000",
+                    "Olympic Champion",
+                    "Paleontologist"
+                ],
                 "Requirements": "Screenshot of hidden world \"progress\" page showing 10 gold border deathless badges earned."
             }
         },
@@ -13198,12 +12890,12 @@
                 "Requirements": "Screenshot of final results. / Video of level select."
             },
             "Stealth Master (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete each individual mission with a Master rank on Operative mode or above (level select is allowed).",
                 "Requirements": "Video(s) of each mission. If using level select: you must beat each mission in level order in a row without getting caught and with your sum of times satisfying the \"A+\" speed grade (1:30 for Mission 1, 8:00 otherwise)."
             },
             "Undercover Virtuoso (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete the game on Master mode or above.",
                 "Requirements": "Screenshot of final results."
             }
@@ -13951,7 +13643,7 @@
                 ]
             },
             "King of Muck (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "In a single run and on at least \u201cNormal\u201d difficulty, beat the game using only a rock as your tool and weapon, without picking up any power-ups and without taking damage.",
                 "Achievements": [
                     "Muck"
@@ -14180,7 +13872,7 @@
                 ]
             },
             "Run Optimizer Plane (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Gain 25000 points in one run. / Clear 50 waves in a row.",
                 "Achievements": [
                     "Annihilator Plane",
@@ -14486,12 +14178,12 @@
                 ]
             },
             "Feat Fetish (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Separately: Save all humans and beat the speedrun times on Hero Mode, 1cc veteran or higher without deaths, 1cc veteran or higher saving all humans, get all arena gold medals",
                 "Requirements": "GIF/Video showing all relevant feats completed."
             },
             "Verum Finis Estne (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Defeat the TLB (Nex Machina) on Hero Mode.",
                 "Requirements": "Video of the run."
             }
@@ -14596,7 +14288,7 @@
                 ]
             },
             "Path of Most Resistance (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Earn all hitless and speedrun titles.",
                 "Requirements": "Video/screenshots of Title List showing all \"Traveler\", \"Quick Conqueror\", and \"Crusher\" Agyo and Ungyo titles earned (except Living Weapon Crusher)."
             }
@@ -14628,11 +14320,11 @@
             "Void Vanquisher": {
                 "Point Value": "180",
                 "Description": "Master the re:||VERSE DLC.",
-                "Achievements": []
-            },
-            "Another Possibility (1) (1)": {
-                "Point Value": "Immortal",
-                "Description": "Ultimate reV Master",
+                "Achievements": [
+                    "Another Possibility (1) (1)",
+                    "Immortal",
+                    "Ultimate reV Master"
+                ],
                 "Requirements": "Screenshot of results for re:||VERSE, re:||BIRTH and al fine on hard."
             },
             "Sound Dodger": {
@@ -14645,7 +14337,7 @@
                 ]
             },
             "Overlord (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Get SS rank on ALL songs on Overload.",
                 "Requirements": "GIF scrolling through all songs on song select AND video of at least one of the lvl 13 songs."
             }
@@ -14804,7 +14496,7 @@
                 ]
             },
             "Dodecadeeznuts (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete the game on \"Extra Rogue\" difficulty.",
                 "Requirements": "Video of the run."
             }
@@ -15144,11 +14836,11 @@
             "Shapeshifter": {
                 "Point Value": "170",
                 "Description": "Complete all levels at the highest difficulty multiplier.",
-                "Achievements": []
-            },
-            "Cube God": {
-                "Point Value": "Hypercube God",
-                "Description": "Maniac",
+                "Achievements": [
+                    "Cube God",
+                    "Hypercube God",
+                    "Maniac"
+                ],
                 "Requirements": "Video(s) or replays of every level."
             },
             "Multidimensional": {
@@ -15377,9 +15069,14 @@
     "Overcooked! 2": {
         "CE ID": "535d2f2f-ed84-4d60-92e6-1059440eee17",
         "Steam ID": "728880",
-        "Tier": "Tier 1",
+        "Tier": "Tier 2",
         "Genre": "Arcade",
         "Primary Objectives": {
+            "Nightmare Kitchen": {
+                "Point Value": "15",
+                "Description": "Obtain 4 Stars on all \"Extra\" and \"DLC\" stages.",
+                "Requirements": "Video showing stars on file select of each DLC. (60, 72, 60, 126, 52)"
+            },
             "Master Chef": {
                 "Point Value": "10",
                 "Description": "Obtain 4 stars on every base game stage (180 total stars).",
@@ -15396,11 +15093,6 @@
                     "The Secret Ingredient",
                     "You Shallot Pass!"
                 ]
-            },
-            "Nightmare Kitchen (UNVALUED)": {
-                "Point Value": "0",
-                "Description": "Obtain 4 Stars on all \"Extra\" and \"DLC\" stages.",
-                "Requirements": "Screenshot/s"
             }
         },
         "Community Objectives": {}
@@ -15453,12 +15145,11 @@
                 "Point Value": "40",
                 "Description": "Complete the game with every class archetype.",
                 "Achievements": [
-                    "Victorious Mage"
-                ]
-            },
-            "Victorious Rogue": {
-                "Point Value": "Victorious Shaman",
-                "Description": "Victorious Warrior",
+                    "Victorious Mage",
+                    "Victorious Rogue",
+                    "Victorious Shaman",
+                    "Victorious Warrior"
+                ],
                 "Requirements": "Video of a successful run + class select screen showing the level of the winning class. Boss location cheats are not allowed."
             }
         },
@@ -15623,27 +15314,26 @@
             "Paperball Rocket": {
                 "Point Value": "25",
                 "Description": "Get All Platinum Medals in Medal Mode.",
-                "Achievements": []
-            },
-            "Paperball Cat": {
-                "Point Value": "Paperball Fanatic",
-                "Description": "Paperball Wizard",
+                "Achievements": [
+                    "Paperball Cat",
+                    "Paperball Fanatic",
+                    "Paperball Wizard"
+                ],
                 "Requirements": "\"Paperball Wizard\" unlocked before \"Everybody Cheat\", or video of all Platinum Medals in World 11 and World B."
             },
             "Paperpaw (PARTIALLY UNCLEARED)": {
-                "Point Value": "5",
+                "Point Value": "6",
                 "Description": "Clear all encores.",
                 "Achievements": [
                     "Champion Secrets",
                     "Cherry Sky Secrets",
                     "Deep Sea Secrets",
                     "Expert Secrets",
-                    "Intermediate Secrets"
-                ]
-            },
-            "Novice Secrets": {
-                "Point Value": "Secret Spy... Secrets",
-                "Description": "Sunflower Secrets",
+                    "Intermediate Secrets",
+                    "Novice Secrets",
+                    "Secret Spy... Secrets",
+                    "Sunflower Secrets"
+                ],
                 "Requirements": "Video of Expert or Champion arcade mode clear without q2m."
             }
         },
@@ -15737,11 +15427,32 @@
     "PAYDAY 2": {
         "CE ID": "557c467d-243c-4179-9fc9-6256f3cc071a",
         "Steam ID": "218620",
-        "Tier": "Tier 3",
+        "Tier": "Tier 4",
         "Genre": "First-Person",
         "Primary Objectives": {
+            "One Down Wonder": {
+                "Point Value": "60",
+                "Description": "Complete the following heists on the Death Sentence difficulty with the One Down mechanic activated.",
+                "Achievements": [
+                    "A Horrible Seventh Nightmare",
+                    "Dr. Strangevlad",
+                    "Every Heister Has His Day",
+                    "Heisting on the Salt Flats",
+                    "Highly Mother-Fucking-Dangerous",
+                    "Hills Street Blues",
+                    "I Survived Lab Rats with One Down And All I Got Was This Achievement",
+                    "Keep Your Feet on the Ground",
+                    "Making it Rain",
+                    "Slaughterfest",
+                    "Still Got That Lucky Dollar?",
+                    "Treason in Alaskan",
+                    "Valkyries",
+                    "What Is It Good For?",
+                    "You Goat to be Kidding Me..."
+                ]
+            },
             "Master Robber": {
-                "Point Value": "0",
+                "Point Value": "40",
                 "Description": "Prove yourself.",
                 "Achievements": [
                     "A Long Night of Horrors",
@@ -15750,7 +15461,6 @@
                     "Cleaning out the House",
                     "Commando Crew",
                     "Done in 60 Seconds",
-                    "Dr. Strangevlad",
                     "Full Throttle",
                     "Goat In 60 Seconds",
                     "Gone in 240 Seconds",
@@ -15766,34 +15476,11 @@
                     "Wasteful",
                     "What? You Want Me to Dance?"
                 ]
-            },
-            "One Down Wonder": {
-                "Point Value": "0",
-                "Description": "Complete the following heists on the Death Sentence difficulty with the One Down mechanic activated.",
-                "Achievements": [
-                    "A Horrible Seventh Nightmare",
-                    "Dr. Strangevlad",
-                    "Every Heister Has His Day",
-                    "Heisting on the Salt Flats",
-                    "Highly Mother-Fucking-Dangerous",
-                    "Hills Street Blues",
-                    "I Survived Lab Rats with One Down And All I Got Was This Achievement",
-                    "Keep Your Feet on the Ground",
-                    "Making it Rain",
-                    "Slaughterfest",
-                    "Still Got That Lucky Dollar?",
-                    "Treason in Alaskan"
-                ]
-            },
-            "Valkyries": {
-                "Point Value": "What Is It Good For?",
-                "Description": "You Goat to be Kidding Me...",
-                "Requirements": "Video of any heist from start to finish&&&work in progress"
             }
         },
         "Community Objectives": {
             "I NEED A MEDIC BAG!": {
-                "Description": "Complete all contracts on the Death Sentence difficulty with the One Down mechanic activated.",
+                "Description": "Complete all other contracts on the Death Sentence difficulty with the One Down mechanic activated.",
                 "Achievements": [
                     ";)",
                     "A Good Old Fashioned Train Robbery",
@@ -15887,6 +15574,7 @@
                 "Achievements": [
                     "Black Tie Event",
                     "Crazy Ivan",
+                    "Doctor Miserable",
                     "Euro Bag Simulator",
                     "Expert Landing",
                     "Farmer Miserable",
@@ -15994,18 +15682,13 @@
             },
             "Peggle Ace": {
                 "Point Value": "25",
-                "Description": "Earn the trophy for beating the Ace score on every level.",
+                "Description": "Earn the trophy for beating the Ace score on every level (including Spring levels).",
                 "Requirements": "Video/GIF of main menu and Adventure statistics."
             },
             "Peggle Vanquisher": {
                 "Point Value": "25",
-                "Description": "Earn the trophy for clearing all of the pegs in every level.",
+                "Description": "Earn the trophy for clearing all of the pegs in every level (including Spring levels).",
                 "Requirements": "Video/GIF of main menu and Adventure statistics."
-            },
-            "peggle day (UNVALUED)": {
-                "Point Value": "0",
-                "Description": "beat the spring levels",
-                "Requirements": "uhhhhhh screenshot prob"
             }
         },
         "Community Objectives": {}
@@ -16018,7 +15701,7 @@
         "Primary Objectives": {
             "Optimal Mechanism": {
                 "Point Value": "15",
-                "Description": "Get 83 out of all 84 gold medals. *Partial points are awarded as a progress milestone.",
+                "Description": "Get a gold medal on all 70 main stages and all \"Gold Run\" levels. *Partial points are awarded as a progress milestone.",
                 "Achievements": [
                     "50 Golds",
                     "Area Ten"
@@ -16352,7 +16035,7 @@
                 ]
             },
             "Stick the Landing (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete Survival Mode.",
                 "Requirements": "Video of the run/replay."
             }
@@ -16496,7 +16179,7 @@
                 ]
             },
             "Clean the Table (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Get all Gold medals on hard mode.",
                 "Requirements": "Video of the world map."
             }
@@ -17016,12 +16699,11 @@
                     "Fission",
                     "Flow 5",
                     "Fusion",
-                    "Hurricane"
-                ]
-            },
-            "Paradox": {
-                "Point Value": "Rupture",
-                "Description": "Stiletto",
+                    "Hurricane",
+                    "Paradox",
+                    "Rupture",
+                    "Stiletto"
+                ],
                 "Requirements": "Video(s) of each level."
             },
             "Diameter Deluge": {
@@ -17225,7 +16907,7 @@
                 ]
             },
             "Noblest Sacrifice (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the game as the Hunter with all 14 passages and all main objectives complete.",
                 "Requirements": "Video of the run and your Remix settings at any point during it. Those settings must abide by the rules found here: https://tinyurl.com/s67b748t."
             }
@@ -17316,36 +16998,36 @@
         "Primary Objectives": {
             "Freedom's Cry": {
                 "Point Value": "5",
-                "Description": "Beat Campaign Mode on Brutal difficulty. /Beat the first five maps with every governor on Brutal difficulty.",
+                "Description": "Beat the first five maps with every governor on Brutal difficulty. / Beat Campaign Mode on Brutal difficulty.",
                 "Achievements": [
                     "Glorious Genius",
                     "Mission Improbable"
                 ]
             },
-            "Vive la r\u00e9sistance! (Uncleared)": {
-                "Point Value": "0",
-                "Description": "Beat Campaign Mode on Mega Brutal difficulty",
+            "Vive La R\u00e9sistance! (UNCLEARED)": {
+                "Point Value": "1",
+                "Description": "Beat Campaign Mode on Mega-Brutal difficulty.",
                 "Achievements": [
                     "Mission Impossible"
                 ]
             },
-            "Unyielding Conquest (Uncleared)": {
-                "Point Value": "0",
-                "Description": "Win in Mega Brutal all the Official Scenarios",
-                "Requirements": "Video of the Scenario menu showing the mega brutal badges."
+            "Unyielding Conquest (UNCLEARED)": {
+                "Point Value": "1",
+                "Description": "Complete every Official Scenario on Mega-Brutal difficulty.",
+                "Requirements": "Video of scenario select showing the mega-brutal badges."
             }
         },
         "Community Objectives": {
-            "Synergistic Commanders (Uncleared - Potential PO)": {
-                "Description": "Complete level 9 in a coop campaign. /Win a coop multiplayer match on Mega Brutal difficulty.",
+            "Synergistic Commanders (POTENTIAL PO)": {
+                "Description": "Win a co-op multiplayer match on Mega-Brutal difficulty. / Complete level 9 in a co-op campaign.",
                 "Achievements": [
                     "Marriage Material",
                     "The Longest War"
                 ]
             },
-            "Unyielding Dominance (Uncleared - Potential PO)": {
-                "Description": "Win in Mega Brutal on every map with every governor",
-                "Requirements": "Video of going through the maps showing the mega brutal badges."
+            "Unyielding Dominance (POTENTIAL PO)": {
+                "Description": "Beat every map with every governor in Mega-Brutal difficulty.",
+                "Requirements": "Video showing the mega-brutal badges on each map."
             }
         }
     },
@@ -17581,12 +17263,17 @@
                 ]
             },
             "Reverse Engineering (UNVALUED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Get an SS rank on every level.",
                 "Requirements": "Video/Gif scrolling through debug report."
             }
         },
-        "Community Objectives": {}
+        "Community Objectives": {
+            "Two Heads Are Better Than One (POTENTIAL PO)": {
+                "Description": "Get a GOD rank on every possible level.",
+                "Requirements": "Screenshots/video of w/e."
+            }
+        }
     },
     "REVOLVER360 RE:ACTOR": {
         "CE ID": "9e9d3cd1-d0e1-4ac8-8067-8c0cf596791d",
@@ -17621,12 +17308,11 @@
                 "Description": "Beat all levels on Drunk mode.",
                 "Achievements": [
                     "*passes out*",
-                    "I'll just have one."
-                ]
-            },
-            "iss okay, I can dRIVE!": {
-                "Point Value": "Just a bit tipsy.",
-                "Description": "One more couldn't hurt.",
+                    "I'll just have one.",
+                    "iss okay, I can dRIVE!",
+                    "Just a bit tipsy.",
+                    "One more couldn't hurt."
+                ],
                 "Requirements": "Video of Drunk Deathwish. Window cheese is disallowed."
             }
         },
@@ -17792,7 +17478,12 @@
                 ]
             }
         },
-        "Community Objectives": {}
+        "Community Objectives": {
+            "Speed of Synthwave (POTENTIAL PO)": {
+                "Description": "Obtain S rank on every possible level.",
+                "Requirements": "Screenshots of level results."
+            }
+        }
     },
     "Ring of Pain": {
         "CE ID": "9f270605-375b-4f31-a3fd-6fa7d5c4cb98",
@@ -18343,7 +18034,7 @@
         "Primary Objectives": {
             "In the Flow": {
                 "Point Value": "10",
-                "Description": "Obtain a 3-star rank on every challenge.",
+                "Description": "Obtain a 3-star rank on every challenge except Danger Zone.",
                 "Requirements": "Screenshots of each challenge page."
             },
             "Run for Your Life": {
@@ -18355,7 +18046,12 @@
                 ]
             }
         },
-        "Community Objectives": {}
+        "Community Objectives": {
+            "Stranger Danger": {
+                "Description": "Obtain a 3-star rank on Danger Zone.",
+                "Requirements": "Screenshot of challenge select. Requires an older version of the game, accessible via depot."
+            }
+        }
     },
     "Run Turn Die": {
         "CE ID": "c431414e-c92b-462a-880b-0de3b52df26e",
@@ -18409,7 +18105,7 @@
                 ]
             },
             "Immortal Runner (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete the game without dying.",
                 "Achievements": [
                     "Immortal"
@@ -18461,11 +18157,11 @@
             "Shake Off the Rust": {
                 "Point Value": "20",
                 "Description": "Separately; 100% the game, defeat the TLB. and beat all climb challenges.",
-                "Achievements": []
-            },
-            "Long Live the Queen": {
-                "Point Value": "Master Climber",
-                "Description": "Rusted Platinum",
+                "Achievements": [
+                    "Long Live the Queen",
+                    "Master Climber",
+                    "Rusted Platinum"
+                ],
                 "Requirements": "Screenshot of end screen displaying Flexible mode was not used."
             },
             "Mossed in the Sauce": {
@@ -18564,7 +18260,7 @@
                 "Requirements": "Screenshot of score attack leaderboard or video of the run (must use the default lives setting)."
             },
             "Unsung Hero (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear both loops of the Score Attack mode.",
                 "Requirements": "Video of the run."
             }
@@ -18806,7 +18502,7 @@
                 ]
             },
             "Night Owl Detective (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the game on Nightmare mode.",
                 "Achievements": [
                     "God Gamer"
@@ -18995,11 +18691,11 @@
             "Mental": {
                 "Point Value": "15",
                 "Description": "Beat Mental. / Beat Iteration V3 with 9 active moods. / Beat Iteration V2 with the Sadistic Mood. / Complete the \"Frazzled\" and \"Death from Above\" quests.",
-                "Achievements": []
-            },
-            "Mental Breakdown": {
-                "Point Value": "Moody",
-                "Description": "Sadist",
+                "Achievements": [
+                    "Mental Breakdown",
+                    "Moody",
+                    "Sadist"
+                ],
                 "Requirements": "Video/GIF of leaderboard position and challenges page."
             },
             "Hypnic Jerk": {
@@ -19330,11 +19026,11 @@
             "The King": {
                 "Point Value": "10",
                 "Description": "Achieve 100% completion in the \"King of Cards\" campaign. *Partial points are rewarded as a progress milestone.",
-                "Achievements": []
-            },
-            "Again!": {
-                "Point Value": "Hurry Up!",
-                "Description": "Naked Specter",
+                "Achievements": [
+                    "Again!",
+                    "Hurry Up!",
+                    "Naked King"
+                ],
                 "Requirements": "Screenshot of main menu."
             },
             "The Plague": {
@@ -19342,12 +19038,11 @@
                 "Description": "Achieve 100% completion in the \"Plague of Shadows\" campaign. *Partial points are rewarded as a progress milestone.",
                 "Achievements": [
                     "Again!",
-                    "Hurry Up!"
-                ]
-            },
-            "Naked Plague": {
-                "Point Value": "Penny Pincher",
-                "Description": "Teetotaler",
+                    "Hurry Up!",
+                    "Naked Plague",
+                    "Penny Pincher",
+                    "Teetotaler"
+                ],
                 "Requirements": "Screenshot of main menu."
             },
             "The Shovel": {
@@ -19355,28 +19050,32 @@
                 "Description": "Achieve 100% completion in the \"Shovel of Hope\" campaign. *Partial points are rewarded as a progress milestone.",
                 "Achievements": [
                     "Again!",
-                    "HurryUp!"
-                ]
-            },
-            "Impossible!": {
-                "Point Value": "Penny Pincher",
-                "Description": "True Shovelry",
+                    "HurryUp!",
+                    "Impossible!",
+                    "Penny Pincher",
+                    "True Shovelry"
+                ],
                 "Requirements": "Screenshot of main menu."
             },
             "The Showdown": {
                 "Point Value": "10",
                 "Description": "Achieve 100% completion in the \"Showdown\" campaign. *Partial points are rewarded as a progress milestone.",
-                "Achievements": []
-            },
-            "Done In One": {
-                "Point Value": "Percy's Pal",
-                "Description": "Shatterer",
+                "Achievements": [
+                    "Done In One",
+                    "Percy's Pal",
+                    "Shatterer"
+                ],
                 "Requirements": "Screenshot of main menu."
             },
             "The Specter": {
                 "Point Value": "10",
                 "Description": "Achieve 100% completion in the \"Specter of Torment\" campaign. *Partial points are rewarded as a progress milestone.",
-                "Achievements": []
+                "Achievements": [
+                    "Again!",
+                    "Hurry Up!",
+                    "Naked Specter"
+                ],
+                "Requirements": "Screenshot of main menu."
             }
         },
         "Community Objectives": {}
@@ -19631,12 +19330,11 @@
                 "Description": "Complete the Ending with every character. / Complete Ascension Level 20.",
                 "Achievements": [
                     "Amethyst+",
-                    "Ascend 20"
-                ]
-            },
-            "Emerald+": {
-                "Point Value": "Ruby+",
-                "Description": "Sapphire+",
+                    "Ascend 20",
+                    "Emerald+",
+                    "Ruby+",
+                    "Sapphire+"
+                ],
                 "Requirements": "Any of the following: Achievement timestamps (or screenshot of Ascension 20 clear) from before March 24, 2019. / Screenshots of A20 run end results and records. / Gif or video of A20 records screen, hovering over every floor icon. / Video of A20 run."
             },
             "Heart Breaker": {
@@ -19754,7 +19452,7 @@
                 ]
             },
             "Anaconda (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Achieve 10,000 points in a single Endless Mode run.",
                 "Achievements": [
                     "SnOut Master!"
@@ -19779,12 +19477,11 @@
                     "Invincible",
                     "Invincible",
                     "Invincible",
+                    "Invincible",
+                    "Invincible",
+                    "Invincible",
                     "Invincible"
-                ]
-            },
-            "Invincible": {
-                "Point Value": "Invincible",
-                "Description": "Invincible",
+                ],
                 "Requirements": "Video of chapter 7 and Dark World 3 deathless."
             }
         },
@@ -20072,7 +19769,7 @@
                 ]
             },
             "Galactic Spudator (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat \"Danger V\" difficulty with all Hard characters. / Separately, escape Tartarus without using any abilities and picking up any items.",
                 "Achievements": [
                     "Acid Rains",
@@ -20201,7 +19898,7 @@
                 ]
             },
             "Unbreakable (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Individually, complete the levels Sunstone, Moonstone, and Spectrolite without respawning.",
                 "Achievements": [
                     "Unbreakable"
@@ -20229,7 +19926,7 @@
                 ]
             },
             "Thunder and Lightning (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Get all + ranks and all S ranks.",
                 "Requirements": "Screenshots of level select."
             }
@@ -20385,19 +20082,19 @@
                 ]
             },
             "Accelarachnid (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the dev time on every parkour level.",
                 "Requirements": "Screenshot of parkour level select."
             },
             "Eight-legged Leaper (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Reach wave 70.",
                 "Achievements": [
                     "Please stop..."
                 ]
             },
             "Survival of the Fittest (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat wave 30 on Pain level 7.",
                 "Requirements": "Screenshot of your PB being 30+ on Pain level 7."
             }
@@ -20705,12 +20402,11 @@
                 "Description": "Obtain S rank on every song in the \"20XX\" tab on Master difficulty. *Partial points are awarded as a progress milestone.",
                 "Achievements": [
                     "Break the Mold Master",
-                    "Children of the Moon Master"
-                ]
-            },
-            "Enter Ozwald Master": {
-                "Point Value": "Inside These Walls Master",
-                "Description": "One Small Step Master",
+                    "Children of the Moon Master",
+                    "Enter Ozwald Master",
+                    "Inside These Walls Master",
+                    "One Small Step Master"
+                ],
                 "Requirements": "Video/GIF of high scores."
             },
             "Chord Strummer": {
@@ -20782,7 +20478,7 @@
                 ]
             },
             "Stayed Safe (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Finish all levels in a row (in any order) without dying.",
                 "Achievements": [
                     "Staying Safe"
@@ -20852,7 +20548,7 @@
                 "Requirements": "Screenshot of ingame leaderboard."
             },
             "Steel Messiah (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "1CC the game on MHN Hard.",
                 "Requirements": "Video of the run."
             }
@@ -21084,12 +20780,11 @@
                     "Chapter 4 Flawless",
                     "Chapter 4 Hard Mode Flawless",
                     "Chapter 5 Flawless",
-                    "Chapter 5 Hard Mode Flawless"
-                ]
-            },
-            "Chapter 6 Flawless": {
-                "Point Value": "Chapter 6 Hard Mode Flawless",
-                "Description": "The Lost Levels Sub 10",
+                    "Chapter 5 Hard Mode Flawless",
+                    "Chapter 6 Flawless",
+                    "Chapter 6 Hard Mode Flawless",
+                    "The Lost Levels Sub 10"
+                ],
                 "Requirements": "Videos of chapters 3, 4, 5 and 6 flawless."
             },
             "Sunburnt": {
@@ -21178,12 +20873,12 @@
                 ]
             },
             "Astronomical Performance (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Finish all levels with the \"Legendary\" rank on Crazy difficulty.",
                 "Requirements": "Video/Gif of the level select menu."
             },
             "Marksman Against the Empire (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Obtain all then weapons on Crazy difficulty.",
                 "Requirements": "Screenshot of the file select."
             }
@@ -21274,12 +20969,12 @@
                 ]
             },
             "Godspeed (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Obtain an S rank in all modes for all levels.",
                 "Requirements": "Video of level select."
             },
             "Immortal (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the Full Game + Defiance Rush Mode without dying or restarting.",
                 "Requirements": "Video of the run."
             }
@@ -21307,7 +21002,7 @@
                 ]
             },
             "Spectacular+ (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Achieve S+ rank on all levels.",
                 "Requirements": "Gif/video scrolling through all stages showing the score and S+ rank icon"
             }
@@ -21489,7 +21184,7 @@
                 ]
             },
             "Not So Impossible Now, Huh? (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Score 1000 points or more in Survival Mode.",
                 "Achievements": [
                     "Surival: Apex Predator"
@@ -21637,12 +21332,11 @@
                 "Achievements": [
                     "Development Boy",
                     "Heat Death Girl",
-                    "Lock Jaw Girl"
-                ]
-            },
-            "Page Fault": {
-                "Point Value": "Psychopharmacology Boy",
-                "Description": "Teak Girl",
+                    "Lock Jaw Girl",
+                    "Page Fault",
+                    "Psychopharmacology Boy",
+                    "Teak Girl"
+                ],
                 "Requirements": "Videos of each Dark World deathless."
             },
             "Til Death Do Us Part": {
@@ -21746,7 +21440,7 @@
                 ]
             },
             "Infinite Void (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear Infinite mode.",
                 "Achievements": [
                     "Infinite Void"
@@ -21855,7 +21549,7 @@
                 ]
             },
             "We Hate Katamari (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete all \"Rolling Hell\" stages in Challenge Mode.",
                 "Achievements": [
                     "Hell Challenger! World 1",
@@ -22212,7 +21906,7 @@
                 ]
             },
             "Guardians of the Sewers (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Complete all level challenges.",
                 "Requirements": "Video/GIF of all levels stats in the menu."
             }
@@ -23265,8 +22959,8 @@
                 "Requirements": "Screenshot of level select."
             },
             "Toast Titan (UNCLEARED)": {
-                "Point Value": "0",
-                "Description": "Complete mode.",
+                "Point Value": "1",
+                "Description": "Complete Survival Mode.",
                 "Achievements": [
                     "Iron TERRY"
                 ],
@@ -23512,7 +23206,7 @@
                 "Requirements": "Screenshot of stage end screen/leaderboard."
             },
             "Brilliant Pristine Madness (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the game on Legacy Lunatic without dying.",
                 "Requirements": "Video of the replay."
             }
@@ -23577,7 +23271,7 @@
                 "Requirements": "Screenshot of leaderboards or final score in runs. Unlocking other primary objectives count towards this one."
             },
             "God of Destruction (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the game on Lunatic without dying. / Beat the Extra mode without dying.",
                 "Requirements": "Video of both runs."
             }
@@ -23629,9 +23323,14 @@
     "Touhou Kouryudou ~ Unconnected Marketeers.": {
         "CE ID": "7d0aae8e-6d89-490d-9ef4-ae9ad428cc4a",
         "Steam ID": "1566410",
-        "Tier": "Tier 2",
+        "Tier": "Tier 3",
         "Genre": "Bullet Hell",
         "Primary Objectives": {
+            "Black Monday": {
+                "Point Value": "40",
+                "Description": "Beat the game on Lunatic without deaths.",
+                "Requirements": "Video of the replay."
+            },
             "Market Crash": {
                 "Point Value": "15",
                 "Description": "Beat the game on Lunatic without continues.",
@@ -23646,11 +23345,6 @@
                 "Point Value": "5",
                 "Description": "Beat the game on Normal or higher without continues.",
                 "Requirements": "Screenshot of replay or leaderboard screen."
-            },
-            "Black Monday (UNCLEARED)": {
-                "Point Value": "0",
-                "Description": "Beat the game on Lunatic without deaths.",
-                "Requirements": "Video of the replay."
             }
         },
         "Community Objectives": {
@@ -23926,7 +23620,7 @@
                 "Requirements": "Screenshot of Campaign track select."
             },
             "Super Turbo Monogaming (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Get all 200 Super Trackmaster medals.",
                 "Requirements": "Screenshot of Super Campaign track select."
             }
@@ -24911,12 +24605,11 @@
                     "Sinner's Paradise - I+30",
                     "Spell Roulette - I+30",
                     "Taste the Rainbow - I+30",
-                    "Test of Resolve - I+30"
-                ]
-            },
-            "Untrustworthy Fishhook - I+30": {
-                "Point Value": "Wild Talent - I+30",
-                "Description": "Worksite Accident - I+30",
+                    "Test of Resolve - I+30",
+                    "Untrustworthy Fishhook - I+30",
+                    "Wild Talent - I+30",
+                    "Worksite Accident - I+30"
+                ],
                 "Requirements": "Single-segment video of any of the following Challenge Coins on I+30: Perfection, Bare Bones, Untrustworthy Fishhook, Fortune Teller or Bad Trip. Quit to menu is not allowed."
             },
             "Maximum Instability": {
@@ -25096,6 +24789,44 @@
         },
         "Community Objectives": {}
     },
+    "Voidigo": {
+        "CE ID": "7c564583-401b-418e-85d7-705696a1d29d",
+        "Steam ID": "1304680",
+        "Tier": "Tier 3",
+        "Genre": "Action",
+        "Primary Objectives": {
+            "Darkness Looming": {
+                "Point Value": "30",
+                "Description": "Complete a run on \"Impossible\" difficulty.",
+                "Achievements": [
+                    "Champion of the Antivoid"
+                ]
+            },
+            "Corruption Begins": {
+                "Point Value": "10",
+                "Description": "Complete a run on \"Brutal\" difficulty.",
+                "Achievements": [
+                    "Conqueror"
+                ]
+            },
+            "Champion of the Antivoid (UNCLEARED)": {
+                "Point Value": "1",
+                "Description": "Complete the Final Run on \"Impossible\" difficulty.",
+                "Achievements": [
+                    "An Impossible End"
+                ],
+                "Requirements": "Video of the run."
+            },
+            "D\u00e9j\u00e0 Void (UNCLEARED)": {
+                "Point Value": "1",
+                "Description": "Complete Loop 3 on \"Impossible\" difficulty.",
+                "Achievements": [
+                    "Void Loop"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
     "Volgarr the Viking": {
         "CE ID": "bb0b4d8b-803e-418b-9ed3-6d33c5e189fd",
         "Steam ID": "247240",
@@ -25126,20 +24857,20 @@
                 ]
             },
             "Can't Stop, Won't Stop (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the game in one hour or less.",
                 "Achievements": [
                     "Super Fast"
                 ],
-                "Requirements": "Video of the run."
+                "Requirements": "Video of the run. Assist mode is disallowed."
             },
             "The Last of the Naqqs (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the game without dying.",
                 "Achievements": [
                     "Invincible"
                 ],
-                "Requirements": "Video of the run."
+                "Requirements": "Video of the run. Assist mode is disallowed."
             }
         },
         "Community Objectives": {}
@@ -25207,6 +24938,41 @@
                 "Achievements": [
                     "S Tier",
                     "Sacrifice"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "Wee Tanks!": {
+        "CE ID": "67572fba-5a2b-45fe-ad40-2a8ff2dd7f26",
+        "Steam ID": "1797680",
+        "Tier": "Tier 4",
+        "Genre": "Action",
+        "Primary Objectives": {
+            "One Last Weep": {
+                "Point Value": "125",
+                "Description": "Finish the full campaign on any difficulty without getting killed once. / Complete the True Run challenge solo on grandpa difficulty.",
+                "Achievements": [
+                    "Dodger King",
+                    "The lone wolf"
+                ],
+                "Requirements": "Video showing in-game achievements along with the player's name."
+            },
+            "Lucky Cadet": {
+                "Point Value": "20",
+                "Description": "Finish the full campaign on at least kid difficulty. / Defeat the King Tank on adult difficulty without any armor.",
+                "Achievements": [
+                    "Marathon",
+                    "No protection required"
+                ]
+            },
+            "Crisis Core": {
+                "Point Value": "15",
+                "Description": "Obtain all achievements in survival mode.",
+                "Achievements": [
+                    "Minimalist",
+                    "Still waiting for rescue",
+                    "You explosion? Me explosion!"
                 ]
             }
         },
@@ -25366,7 +25132,7 @@
                 "Requirements": "Screenshot of character select or replay of the run."
             },
             "Medal Enthusiast (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Separately, earn all six Gold Medals on any character on Harder difficulty.",
                 "Achievements": [
                     "Medal Master"
@@ -25414,16 +25180,17 @@
                 ]
             },
             "A Sight For Sore Eyes (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear both the Boss Rush and Miniboss Rush modes on Severe difficulty.",
                 "Requirements": "Video of each run."
             },
             "Rapid Eye Movement (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear Speedrun mode on Severe difficulty within 90 minutes.",
                 "Achievements": [
                     "Be Quick or Be Dead"
-                ]
+                ],
+                "Requirements": "Video of the run"
             }
         },
         "Community Objectives": {}
@@ -25560,20 +25327,19 @@
                 ]
             },
             "Devourer of Worlds (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat each world in level order without dying and without quitting/skipping a single level.",
                 "Achievements": [
                     "Bodysuit",
-                    "Hi-vis jacket"
-                ]
-            },
-            "Lab coat": {
-                "Point Value": "That thing astronauts wear",
-                "Description": "Tuxedo",
+                    "Hi-vis jacket",
+                    "Lab coat",
+                    "That thing astronauts wear",
+                    "Tuxedo"
+                ],
                 "Requirements": "Video of each run."
             },
             "Prime Parasite (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Obtain the par time/moves badge on every level.",
                 "Achievements": [
                     "Efficient",
@@ -25582,7 +25348,7 @@
                 "Requirements": "Screenshots of each remix chapter."
             },
             "Slither Hither (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat every normal and bonus level in the game.",
                 "Achievements": [
                     "Sufficient"
@@ -25590,7 +25356,7 @@
                 "Requirements": "Screenshots of each remix chapter."
             },
             "Wormholin' (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the game with an in-game total time of under 2 hours.",
                 "Achievements": [
                     "Speedrun"
@@ -25783,7 +25549,7 @@
                 "Requirements": "Video of the run without using cheats."
             },
             "In the Midst of the Catastrophe (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Get an overall S rank and the best ending on hard mode.",
                 "Requirements": "Video of the run without using cheats."
             }
@@ -25869,7 +25635,7 @@
                 ]
             },
             "God of Dance (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Get a gold medal on the Boss Rush of both scenarios on Lunatic.",
                 "Requirements": "Video of each run."
             }
@@ -26196,11 +25962,11 @@
             "Mazetermind": {
                 "Point Value": "15",
                 "Description": "Prove yourself.",
-                "Achievements": []
-            },
-            "Agoraphobic": {
-                "Point Value": "Foolhardy",
-                "Description": "The Pumpkin Army"
+                "Achievements": [
+                    "Agoraphobic",
+                    "Foolhardy",
+                    "The Pumpkin Army"
+                ]
             },
             "Maizetermind": {
                 "Point Value": "5",
@@ -26248,11 +26014,12 @@
                 ]
             },
             "Zenopunishment (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Clear ZOR mode. (Continues allowed)",
                 "Achievements": [
                     "Restart Syndrome"
-                ]
+                ],
+                "Requirements": "?"
             }
         },
         "Community Objectives": {}
@@ -26369,7 +26136,7 @@
                 ]
             },
             "Trascending Time and Space (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "On Lunatic, reach and beat the TLB of Stage INF without using continues. (Get the Unexpected Ending)",
                 "Requirements": "Video of the replay."
             }
@@ -26431,12 +26198,12 @@
                 "Requirements": "Screenshots of ending screens or leaderboard."
             },
             "Anomaly (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the game on Overdrive without continues.",
                 "Requirements": "Video of the replay."
             },
             "Logic Shaper (UNCLEARED)": {
-                "Point Value": "0",
+                "Point Value": "1",
                 "Description": "Beat the game on Lunatic or higher without continues. / Beat the Elite Extra mode.",
                 "Requirements": "Video of both replays."
             }
