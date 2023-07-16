@@ -482,14 +482,19 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 
 @to_thread
-def scrape_thread_call(client):
-    get_games(client)
+def scrape_thread_call():
+    return get_games()
 
 @tree.command(name="scrape", description="run through each game in the CE database and grab the corresponding data", guild=discord.Object(id=guild_ID))
 async def scrape(interaction):
     await interaction.response.send_message("scraping...")
-    await scrape_thread_call(client) #all_game_data(client)
+    updates = await scrape_thread_call() #all_game_data(client)
     await interaction.channel.send("scraped")
+
+
+    correctChannel = client.get_channel(1128742486416834570)
+    for game in updates:  
+        await correctChannel.send(file=game[1], embed=game[0])
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #

@@ -1,0 +1,313 @@
+{
+    "-KLAUS-": {
+        "CE ID": "1e8565aa-b9f2-4b41-9578-22e4c2a5436b",
+        "Steam ID": "729370",
+        "Tier": "Tier 1",
+        "Genre": "Platformer",
+        "Primary Objectives": {
+            "CEO of Awesome": {
+                "Point Value": "15",
+                "Description": "Obtain all achievements.",
+                "Achievements": [
+                    "I'm Klaus"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "-SPROUT-": {
+        "CE ID": "d9512a9b-e89b-417c-9fa2-cc22396a5f72",
+        "Steam ID": "1336340",
+        "Tier": "Tier 1",
+        "Genre": "Platformer",
+        "Primary Objectives": {
+            "Microdasher": {
+                "Point Value": "10",
+                "Description": "Complete each world in under 2 minutes. / Complete each world without dying.",
+                "Achievements": [
+                    "Completed The Abyss In Under 2 Minutes",
+                    "Completed The Abyss Without Dying",
+                    "Completed The Aether In Under 2 Minutes",
+                    "Completed The Aether Without Dying",
+                    "Completed The Depths In Under 2 Minutes",
+                    "Completed The Depths Without Dying",
+                    "Completed The Grove In Under 2 Minutes",
+                    "Completed The Grove Without Dying",
+                    "Completed The Hearth In Under 2 Minutes",
+                    "Completed The Hearth Without Dying"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "[NINJA GAIDEN: Master Collection] NINJA GAIDEN \u03a3": {
+        "CE ID": "f722baf5-4c1a-4fa3-9482-5ce6db203c73",
+        "Steam ID": "1580780",
+        "Tier": "Tier 4",
+        "Genre": "Action",
+        "Primary Objectives": {
+            "Platinum Savant": {
+                "Point Value": "90",
+                "Description": "Get platinum coins in all Ninja Trials.",
+                "Achievements": [
+                    "Coin Master"
+                ]
+            },
+            "The Long Journey to Master Ninja": {
+                "Point Value": "60",
+                "Description": "Get Master on all chapters on Master Ninja.",
+                "Achievements": [
+                    "Thanks for playing! -from Team NINJA"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "#Snake2 DX: Reawakening": {
+        "CE ID": "8176c6f4-0560-4fb8-a1e0-7f90057a62de",
+        "Steam ID": "1530070",
+        "Tier": "Tier 1",
+        "Genre": "Bullet Hell",
+        "Primary Objectives": {
+            "Long-Awaited Sequel": {
+                "Point Value": "5",
+                "Description": "Prove Yourself.",
+                "Achievements": [
+                    "Ass Master",
+                    "Beast",
+                    "Classy",
+                    "Idiot",
+                    "Ron Jeremy",
+                    "Savant",
+                    "Slippery",
+                    "Stump"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "\u2200kashicverse -Malicious Wake-": {
+        "CE ID": "3879e3c7-8467-466e-9037-c1f524c336b2",
+        "Steam ID": "1225610",
+        "Tier": "Tier 4",
+        "Genre": "Bullet Hell",
+        "Primary Objectives": {
+            "\u2200MAZING": {
+                "Point Value": "120",
+                "Description": "Clear all modes (separately) with no mistakes.",
+                "Achievements": [
+                    "\u2200DVENTED",
+                    "\u2200NOTHER ONE",
+                    "Standing in front of the gate of \u2200KASHIC"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "10 Second Ninja X": {
+        "CE ID": "2e0a208c-fc31-447b-a96e-e01c3c4bf6fa",
+        "Steam ID": "435790",
+        "Tier": "Tier 1",
+        "Genre": "Platformer",
+        "Primary Objectives": {
+            "Routing Ninja": {
+                "Point Value": "15",
+                "Description": "Earn 300 stars. / Get an X rank on all marathon modes.",
+                "Achievements": [
+                    "Wooooooooooooooah - Livin' on a prayer"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "1001 Spikes": {
+        "CE ID": "c04662d6-fdcc-4b55-918b-f1d1eb0d25de",
+        "Steam ID": "260790",
+        "Tier": "Tier 1",
+        "Genre": "Platformer",
+        "Primary Objectives": {
+            "1001 Yikes": {
+                "Point Value": "10",
+                "Description": "Prove yourself.",
+                "Achievements": [
+                    "Headhunter",
+                    "Lost and Found",
+                    "Speed Runner",
+                    "Stone Cold",
+                    "Towerful"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "140": {
+        "CE ID": "50f3310d-04b0-4619-9c43-d0aa689f1303",
+        "Steam ID": "242820",
+        "Tier": "Tier 1",
+        "Genre": "Platformer",
+        "Primary Objectives": {
+            "041": {
+                "Point Value": "15",
+                "Description": "Complete all the mirror stages.",
+                "Achievements": [
+                    "001-00110001",
+                    "01-00110001",
+                    "10-00110001",
+                    "11-00110001"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "4X4": {
+        "CE ID": "d4f6a3ac-c123-4ee4-a409-e0e1d44a137f",
+        "Steam ID": "2099900",
+        "Tier": "Tier 2",
+        "Genre": "Arcade",
+        "Primary Objectives": {
+            "Where we're going, we don't need snow": {
+                "Point Value": "25",
+                "Description": "Record a score of 1080 seconds in Infinite mode",
+                "Achievements": [
+                    "1080!!!"
+                ]
+            },
+            "Gridlocked": {
+                "Point Value": "10",
+                "Description": "Clear all stages with one life.",
+                "Achievements": [
+                    "100%_Red",
+                    "200%_Red",
+                    "300%_Red",
+                    "400%_Red",
+                    "500%_Red",
+                    "600%_Red"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "64.0": {
+        "CE ID": "4408b00f-eac4-4a5f-98f3-0ed3897e73a4",
+        "Steam ID": "578850",
+        "Tier": "Tier 2",
+        "Genre": "Arcade",
+        "Primary Objectives": {
+            "Beyond Beyond Godlike": {
+                "Point Value": "20",
+                "Description": "Prove yourself.",
+                "Achievements": [
+                    "Beyond Godlike",
+                    "Mind-Twisted",
+                    "Polkka Dancer",
+                    "Superpowered!",
+                    "To infinity and beyond"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "9 Years of Shadows": {
+        "CE ID": "b8d32f16-c5f9-4cc7-a902-2adab70b65ec",
+        "Steam ID": "1402120",
+        "Tier": "Tier 1",
+        "Genre": "Action",
+        "Primary Objectives": {
+            "9 Hours of Quality": {
+                "Point Value": "5",
+                "Description": "Complete the bestiary and beat the game.",
+                "Achievements": [
+                    "Gotta Kill Them All",
+                    "Saviour"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "A Bastard's Tale": {
+        "CE ID": "48c7eaee-1b2d-47f7-8dc9-00f449b13500",
+        "Steam ID": "371550",
+        "Tier": "Tier 1",
+        "Genre": "Action",
+        "Primary Objectives": {
+            "Oddly Specific": {
+                "Point Value": "10",
+                "Description": "Defeat 107 enemies in Endless Fighter Mode.",
+                "Achievements": [
+                    "Impossible"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "A Dance of Fire and Ice": {
+        "CE ID": "22177e06-2002-488a-8c90-fe3ff3849647",
+        "Steam ID": "977950",
+        "Tier": "Tier 5",
+        "Genre": "Arcade",
+        "Primary Objectives": {
+            "Melody Master": {
+                "Point Value": "130",
+                "Description": "Complete every world with a Pure Perfect rating.",
+                "Requirements": "Video/GIF showing 100% X-Accuracy for every world + videos of XO, XT, XI and MO Pure Perfects on 1.0x speed with Hit Error Meter enabled."
+            },
+            "Tempo Artisan": {
+                "Point Value": "70",
+                "Description": "Complete every world in the Neo Cosmos DLC with a Pure Perfect rating.",
+                "Requirements": "Video/GIF showing 100% X-Accuracy for every world + videos of T5 and all EX Pure Perfects on 1.0x speed with Hit Error Meter enabled."
+            },
+            "A Dance of Trial and Error": {
+                "Point Value": "40",
+                "Description": "Obtain the speed trial lantern for every world in the Xtra, Crown and Muse Dash islands.",
+                "Requirements": "Screenshots/GIF of each island."
+            },
+            "High Guardian": {
+                "Point Value": "20",
+                "Description": "Obtain the speed trial lantern for every world in the Neo Cosmos DLC.",
+                "Requirements": "Screenshots/GIF of each world."
+            },
+            "Orbitals on the Double": {
+                "Point Value": "10",
+                "Description": "Obtain the speed trial lantern for Worlds 1 through 12 and beat World B.",
+                "Achievements": [
+                    "Bonus Level Complete",
+                    "World 1 Speed Trial Complete",
+                    "World 10 Speed Trial",
+                    "World 11 Trial",
+                    "World 12 Trial",
+                    "World 2 Speed Trial Complete",
+                    "World 3 Speed Trial Complete",
+                    "World 4 Speed Trial Complete",
+                    "World 5 Speed Trial Complete",
+                    "World 6 Speed Trial Complete",
+                    "World 7 Speed Trial",
+                    "World 8 Speed Trial",
+                    "World 9 Speed Trial"
+                ]
+            }
+        },
+        "Community Objectives": {}
+    },
+    "A Hat in Time": {
+        "CE ID": "21144d8d-c943-4130-8349-6e768220cfc9",
+        "Steam ID": "253230",
+        "Tier": "Tier 3",
+        "Genre": "Platformer",
+        "Primary Objectives": {
+            "Timeless End": {
+                "Point Value": "55",
+                "Description": "Obtain all Death Wish stamps without using \"Peace and Tranquility\" mode or any mods.",
+                "Achievements": [
+                    "I Refuse To Die!"
+                ],
+                "Requirements": "Screenshot of the Death Wish map (no Peace and Tranquility stamps; \"Unlimited Possibilities\" achievements can't be unlocked prior to \"I Refuse To Die!\"), OR video of \"Seal the Deal\"."
+            }
+        },
+        "Community Objectives": {
+            "Your Contract Has Expired": {
+                "Description": "Beat \"Seal the Deal\" with the One-Hit Hero badge equipped or without taking damage.",
+                "Requirements": "Video of the run."
+            }
+        }
+    }
+}
