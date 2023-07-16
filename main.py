@@ -204,15 +204,41 @@ async def roll_command(interaction, event: events) -> None:
         print("\n")
         return returned_game
 
-    def create_multi_embed(event_name, time_limit, game_list) :
+    def create_multi_embed(event_name, time_limit, game_list, cooldown_time) :
+        # ----- Set up initial embed -----
         embeds = []
         embeds.append(discord.Embed(
             color = 0x000000,
-            title=event_name
+            title=event_name,
+            timestamp=datetime.datetime.now()
         ))
         embeds[0].set_footer(text=f"Page 1 of {str(len(game_list) + 1)}")
         embeds[0].set_author(name="Challenge Enthusiasts")
 
+        # ----- Add all games to the embed -----
+        games_value = ""
+        i = 1
+        for selected_game in games:
+            games_value += "\n" + str(i) + ". " + selected_game
+            i+=1
+        embeds[0].add_field(name="Rolled Games", value = games_value)
+
+        # ----- Display Roll Requirements -----
+        embeds[0].add_field(name="Roll Requirements", value =
+            f"You have two weeks to complete " + embeds[0].title + "."
+            + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple())))
+            + f">\n{event_name} has a cooldown time of {cooldown_time} days.", inline=False)
+        
+        # ----- Create the embeds for each game -----
+        page_limit = len(game_list) + 1
+        i=0
+        for selected_game in games :
+            embeds.append(getEmbed(selected_game, interaction.user.id))
+            embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"))
+            embeds[i+1].set_author(name="Challenge Enthusiasts")
+            i+=1
+        
+        return embeds # Set the embed to send as the first one
 
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
@@ -238,38 +264,11 @@ async def roll_command(interaction, event: events) -> None:
         games.append(get_rollable_game(40, 20, "Tier 2"))
         genres.remove(database_name[games[0]]["Genre"])
         games.append(get_rollable_game(40, 20, "Tier 2", genres))
+        
+        # ----- Get all the embeds -----s
+        embeds = create_multi_embed("Two Week T2 Streak", 14, games, 0)
+        embed = embeds[0]
 
-        # ----- Create opening embed -----
-        embeds.append(discord.Embed(
-            color=0x000000, # Set the color to black
-            title="Two Week T2 Streak",
-            description="games lol"))
-        embeds[0].set_footer(text="Page 1 of 3")
-        embeds[0].set_author(name = "TWO WEEK T2 STREAK", url="https://example.com")
-
-        # ----- Add all games to the embed -----
-        i=1
-        for selected_game in games:
-            embeds[0].description += "\n" + str(i) + ". " + selected_game
-            i+=1
-        
-        # ----- Display Roll Requirements -----
-        embeds[0].add_field(name="Roll Requirements", value =
-            "You have two weeks to complete " + embeds[0].title + "."
-            + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(14)).timetuple())))
-            + ">\nTwo Week T2 Streak has no cooldown."
-            + "\n[insert link to cedb.me page]", inline=False)
-        
-        # ----- Create the embeds for each game -----
-        page_limit = 3
-        i=0
-        for selected_game in games :
-            embeds.append(getEmbed(selected_game, interaction.user.id))
-            embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"))
-            embeds[i+1].set_author(name="Challenge Enthusiasts")
-            i+=1
-        
-        embed = embeds[0] # Set the embed to send as the first one
         await get_buttons(view, embeds) # Create buttons
 
     # -------------------------------------------- One Hell of a Week --------------------------------------------

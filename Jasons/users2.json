@@ -40,14 +40,6 @@
         },
         "current_rolls": [
             {
-                "event_name": "Two Week T2 Streak",
-                "end_time": "2023-07-24 07:01:12",
-                "games": [
-                    "MagiCat",
-                    "Super Multitasking"
-                ]
-            },
-            {
                 "event_name": "One Hell of a Week",
                 "end_time": "2023-07-12 21:11:23",
                 "games": [
@@ -63,6 +55,14 @@
                 "end_time": "2023-07-12 22:42:29",
                 "games": [
                     "Flem"
+                ]
+            },
+            {
+                "event_name": "Two Week T2 Streak",
+                "end_time": "2023-07-14 21:30:58",
+                "games": [
+                    "Tricky Towers",
+                    "Supercharged Robot VULKAISER"
                 ]
             }
         ],
