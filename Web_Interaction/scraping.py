@@ -337,6 +337,11 @@ def get_completion_data(steam_id):
             if(a['class'][2] == "fa-clock-o"):
                 end = str(a.parent)[1::].find('m')+1
                 time = str(a.parent)[56:end:]
+                if len(time) <= 2 :
+                    time = 0
+                else :
+                    end = str(a.parent)[1::].find('h')+1
+                    time = str(a.parent)[56:end:]
         except:
             continue
     print(time)

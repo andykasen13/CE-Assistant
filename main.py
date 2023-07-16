@@ -228,14 +228,25 @@ async def roll_command(interaction, event: events) -> None:
             f"You have two weeks to complete " + embeds[0].title + "."
             + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple())))
             + f">\n{event_name} has a cooldown time of {cooldown_time} days.", inline=False)
+        embeds[0].timestamp = datetime.datetime.now()
+        embeds[0].set_thumbnail(url = interaction.user.avatar)
         
         # ----- Create the embeds for each game -----
         page_limit = len(game_list) + 1
         i=0
         for selected_game in games :
+            total_points = 0
             embeds.append(getEmbed(selected_game, interaction.user.id))
-            embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"))
+            embeds[i+1].add_field(name="Rolled by", value = "<@" + str(interaction.user.id) + ">", inline=True)
+            embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"),
+                                   icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
             embeds[i+1].set_author(name="Challenge Enthusiasts")
+            embeds[i+1].set_thumbnail(url=interaction.user.avatar)
+            for objective in database_name[selected_game]["Primary Objectives"] :
+                total_points += int(database_name[selected_game]["Primary Objectives"][objective]["Point Value"])
+            embeds[i+1].add_field(name="CE Status", value=f"{total_points} Points", inline=True)
+            embeds[i+1].add_field(name="CE Owners", value="[insert]", inline=True)
+            embeds[i+1].add_field(name="CE Completions", value="[insert]", inline=True)
             i+=1
         
         return embeds # Set the embed to send as the first one
@@ -284,49 +295,8 @@ async def roll_command(interaction, event: events) -> None:
             genres.remove(database_name[games[i]]["Genre"])
             i+=1
 
-        # ----- Create opening embed -----
-        embeds.append(discord.Embed(
-            color=0x000000, # Set the color to black
-            title="One Hell of a Week",
-            description="**Games**", timestamp=datetime.datetime.now()))
-        embeds[0].set_footer(text="Page 1 of 6")
-        embeds[0].set_author(name = "Challenge Enthusiasts", url="https://example.com")
-        
-
-        # ----- Add all games to the embed -----
-        i=1
-        for selected_game in games:
-            embeds[0].description += "\n" + str(i) + ". " + selected_game
-            i+=1
-
-        # ----- Display Roll Requirements -----
-        embeds[0].add_field(name="Roll Requirements", value =
-            "You have one week to complete " + embeds[0].title + "."
-            + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(7)).timetuple())))
-            + ">\nOne Hell of a Month has a *one month* cooldown."
-            + "\n[insert link to cedb.me page]", inline=False)
-        embeds[0].timestamp = datetime.datetime.now()
-        embeds[0].set_thumbnail(url = interaction.user.avatar)
-
-        # ----- Create the embeds for each game -----
-        page_limit = 6
-        i=0
-        for selected_game in games :
-            total_points = 0
-            embeds.append(getEmbed(selected_game, interaction.user.id))
-            embeds[i+1].add_field(name="Rolled by", value = "<@" + str(interaction.user.id) + ">", inline=True)
-            embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"),
-                                         icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
-            embeds[i+1].set_author(name="Challenge Enthusiasts",
-                                   icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
-            embeds[i+1].set_thumbnail(url=interaction.user.avatar)
-            for objective in database_name[selected_game]["Primary Objectives"] :
-                total_points += int(database_name[selected_game]["Primary Objectives"][objective]["Point Value"])
-            embeds[i+1].add_field(name="CE Status", value=f"{total_points} Points", inline=True)
-            embeds[i+1].add_field(name="CE Owners", value="[insert]", inline=True)
-            embeds[i+1].add_field(name="CE Completions", value="[insert]", inline=True)
-            i+=1
-        
+        # ----- Get all the embeds -----
+        embeds = create_multi_embed("One Hell of a Week", 7, games, 28)       
         embed = embeds[0] # Set the embed to send as the first one
         await get_buttons(view, embeds) # Create buttons
 
