@@ -53,6 +53,34 @@
                     "Tricky Towers",
                     "Supercharged Robot VULKAISER"
                 ]
+            },
+            {
+                "event_name": "Two 'Two Week T2 Streak' Streak",
+                "end_time": "2023-07-16 17:18:05",
+                "games": [
+                    "Welcome to the Game",
+                    "Yars: Recharged",
+                    "Rotund Zero",
+                    "RAYZE"
+                ]
+            },
+            {
+                "event_name": "One Hell of a Week",
+                "end_time": "2023-07-16 17:26:11",
+                "games": [
+                    "Eat Colors",
+                    "Geballer",
+                    "KILLBUG",
+                    "Golfing Over It with Alva Majo",
+                    "Laserboy"
+                ]
+            },
+            {
+                "event_name": "Never Lucky",
+                "end_time": "2023-07-16 17:30:30",
+                "games": [
+                    "Going Under"
+                ]
             }
         ],
         "completed_rolls": [
