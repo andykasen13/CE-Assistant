@@ -308,12 +308,34 @@ async def roll_command(interaction, event: events) -> None:
     # -------------------------------------------- Two "Two Week T2 Streak" Streak --------------------------------------------
     elif event == "Two 'Two Week T2 Streak' Streak" :
         # four t2s
-        embed = discord.Embed(title=("two two week t2 streak streak"))
+        print("Recieved request for Two 'Two Week T2 Streak' Streak")
+
+        # ----- Grab all the games -----
+        genres.remove("Strategy")
+        i=0
+        while i < 4:
+            games.append(get_rollable_game(40, 20, "Tier 2", genres))
+            genres.remove(database_name[games[i]]["Genre"])
+            i+=1
+        
+        # ----- Get all the embeds -----
+        embeds = create_multi_embed("Two 'Two Week T2 Streak' Streak", 28, games, 7)
+        embed = embeds[0]
+        await get_buttons(view, embeds)
 
     # -------------------------------------------- Never Lucky --------------------------------------------
     elif event == "Never Lucky" :
         # one t3
-        embed = discord.Embed(title=("never lucky"))
+        games.append(get_rollable_game(40, 20, "Tier 3"))
+
+        # Create the embed
+        embed = getEmbed(games[0], interaction.user.id)
+        embed.add_field(name="Roll Requirements", value = 
+            "There is no time limit on " + embed.title + "."
+            + "\nNever Lucky has a one week cooldown."
+            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(7)).timetuple())))
+            + f">\nhttps://cedb.me/game/{database_name[embed.title]['CE ID']}/", inline=False)
+        embed.set_author(name="Never Lucky", url="https://example.com")
 
     # -------------------------------------------- Triple Threat --------------------------------------------
     elif event == "Triple Threat" :
@@ -532,6 +554,7 @@ async def steam_command(interaction, game_name: str):
     embed.add_field(name="CE Status", value="Not on CE / x Points", inline=True)
     embed.add_field(name="CE Owners", value="[insert]", inline=True)
     embed.add_field(name="CE Completions", value="[insert]", inline=True)
+    
 
     # Finally, send the embed
     await interaction.followup.send(embed=embed)
