@@ -47,6 +47,7 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 - it should be able to open and close recommendations for the first week of every month (this may not be a good idea)
 - maybe you could be able to tell it that you are looking for a partner for a co-op achievement?
 - should be able to change color to any color you've already unlocked. this is already possible manually but should be automated. should also change tier role based on current tier.
+- check on female empowerment or zookeeper status
 
 ## housekeeping reminders
 - reminder to myself that t0 games must have separate announcements
