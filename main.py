@@ -5,6 +5,7 @@ import datetime
 import functools
 import time
 import typing
+from monthdelta import monthdelta
 
 # ----------- discord imports ---------
 import discord
@@ -329,17 +330,29 @@ async def roll_command(interaction, event: events) -> None:
         games.append(get_rollable_game(40, 20, "Tier 3"))
 
         # Create the embed
+        total_points = 0
         embed = getEmbed(games[0], interaction.user.id)
+        embed.set_author(name="Never Lucky", url="https://example.com")
+        embed.add_field(name="Rolled by", value = "<@" + str(interaction.user.id) + ">", inline=True)
+        embed.set_thumbnail(url=interaction.user.avatar)
+        for objective in database_name[games[0]]["Primary Objectives"] :
+            total_points += int(database_name[games[0]]["Primary Objectives"][objective]["Point Value"])
+        embed.add_field(name="CE Status", value=f"{total_points} Points", inline=True)
+        embed.add_field(name="CE Owners", value="[insert]", inline=True)
+        embed.add_field(name="CE Completions", value="[insert]", inline=True)
         embed.add_field(name="Roll Requirements", value = 
             "There is no time limit on " + embed.title + "."
             + "\nNever Lucky has a one week cooldown."
-            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(7)).timetuple())))
+            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+monthdelta(1)).timetuple())))
             + f">\nhttps://cedb.me/game/{database_name[embed.title]['CE ID']}/", inline=False)
-        embed.set_author(name="Never Lucky", url="https://example.com")
 
     # -------------------------------------------- Triple Threat --------------------------------------------
     elif event == "Triple Threat" :
         # three t3s
+        print("Recieved request for Triple Threat")
+
+        # ----- Grab all the games -----
+        
         embed = discord.Embed(title=("triple threat"))
          
     # -------------------------------------------- Let Fate Decide --------------------------------------------

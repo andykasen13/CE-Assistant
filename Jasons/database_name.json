@@ -1,4 +1,321 @@
 {
+    "- Challenge Enthusiasts -": {
+        "CE ID": "76574ec1-42df-4488-a511-b9f2d9290e5d",
+        "Steam ID": "613920",
+        "Tier": "Tier 0",
+        "Genre": "Action",
+        "Primary Objectives": {
+            "Page Description": {
+                "Point Value": "0",
+                "Description": "This is the current page for Site-listed achievements. To be eligible for these achievements, please download the associated game \"A CHALLENGE\", run it for a few minutes (you might need to download Steam 360 Video Player, it's already in your library under \"Tools\" section), close the game, and then update your profile. You should then show up in the full completions after a while and can post your proof."
+            }
+        },
+        "Community Objectives": {
+            "\"I'll add it to the backlog.\"": {
+                "Description": "Own 365 or more site-listed games.",
+                "Requirements": "Link to CE profile."
+            },
+            "Appraised for Days": {
+                "Description": "Obtain \"P\" Rank.",
+                "Requirements": "Awarded automatically by the mods."
+            },
+            "As God Intended": {
+                "Description": "Obtain 5 or more community objectives with \"Made of\" in their title.",
+                "Requirements": "Link to CE profile. Awards the \"Made of Everything\" role."
+            },
+            "Big Game Hunter": {
+                "Description": "Obtain 50 or more Bounty Points.",
+                "Requirements": "Tag the mod who handles bounties in the Discord server. Awards the black variant of \"Bounty Hunter\"."
+            },
+            "Chase the Rainbow": {
+                "Description": "Obtain a role of every possible color (not including custom Patreon colors).",
+                "Requirements": "Screenshot of roles on discord. The tier enthusiast roles do not count towards completion. The required roles are one of Green, Blue, Orange, Yellow, Red, and Black. Nitro Booster, Mod, Rank, Bounty Hunter, and Patreon colors are not required."
+            },
+            "Conspiracy Theory": {
+                "Description": "Obtain any black role on the same day another member obtains any black role (excluding Patreon roles).",
+                "Requirements": "The mods will know when this happens."
+            },
+            "Destiny Alignment": {
+                "Description": "You and another player of the same rank ask Scarlet to roll a random game the other person has completed. Both players must go on to complete all primary objectives in each game.",
+                "Requirements": "Cooldown is 1 month. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "Female Empowerment": {
+                "Description": "Complete all primary objectives in 15 different site listed games where the main character is a woman.",
+                "Requirements": "A running list will be kept over time. Tag an admin with your candidate games to be checked. Awards \"Girl Boss\". You can find the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
+            },
+            "Flash of Nostalgia": {
+                "Description": "Complete all primary objectives in 10 different site listed games that were originally a flash game, or derived from one.",
+                "Requirements": "Tag an admin with your candidate games. More games will be added to the list over time. You can find the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
+            },
+            "Follow the Masses": {
+                "Description": "Complete all primary objectives for all games on CE that have been completed by 100 or more people.",
+                "Requirements": "Link to CE profile. You can find the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
+            },
+            "Fourward Thinking": {
+                "Description": "Requires \"Let Fate Decide\": Ask Scarlet to attempt this achievement. See proof submission for full details of rules and requirements.",
+                "Requirements": "Cooldown is dynamic. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "Free Advertising": {
+                "Description": "Complete all primary objectives in a game from each background video loop on the front page of CE.",
+                "Requirements": "Link to CE profile. You can find the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
+            },
+            "Game Theory": {
+                "Description": "You and another player agree to a \"duel\". Once agreed, each player will secretly DM Scarlet a category in which a T3 game will be randomly rolled for the other person. The first person to complete their game wins this achievement.",
+                "Requirements": "The player who loses has a cooldown of 1 month. If both players choose the same category, it's a draw and the cooldown is 1 week. Post your completions in the roll channel, proof submission, or DM Scarlet."
+            },
+            "Happy Anniversary": {
+                "Description": "Be a continuous member of the discord for over a year.",
+                "Requirements": "Screenshot of Discord server stats."
+            },
+            "High Roller": {
+                "Description": "Obtain five different random roll achievements.",
+                "Requirements": "Link to CE profile. Awards the \"High Roller\" role."
+            },
+            "I Can See Clearly Now": {
+                "Description": "Clear a primary objective on the site that is listed as (UNCLEARED).",
+                "Requirements": "Make a forum post about the cleared objective proposing a point value or for removal. You can't claim this achievement for an objective you proposed without the objective going at least one full month without being cleared."
+            },
+            "Insert Tired Old Meme Here": {
+                "Description": "Send over 9000 total messages in the discord.",
+                "Requirements": "Screenshot of search results from Discord."
+            },
+            "Intro Quest": {
+                "Description": "Own the game linked to this page.",
+                "Requirements": "Download and play the game to earn this achievement."
+            },
+            "Legend of Legends": {
+                "Description": "Have a combined CR rank across all categories of 25 or less.",
+                "Requirements": "Link to CE profile. Awards the \"Supreme Legendary Challenger\" role."
+            },
+            "Let Fate Decide": {
+                "Description": "Ask Scarlet to roll a random T4 game in a category of your choosing, and then complete all primary objectives for it.",
+                "Requirements": "Cooldown is 3 months. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "Never Lucky": {
+                "Description": "Ask Scarlet to roll a random T3 for you on the site, and then finish all primary objectives for it.",
+                "Requirements": "Cooldown is 1 month. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "Number One Fan": {
+                "Description": "Obtain three separate \"Franchise Objectives\".",
+                "Requirements": "Link to CE profile. A List of Current Franchises is kept here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
+            },
+            "Objectively Cracked": {
+                "Description": "Fill your objective showcase with all objectives worth 10 or more points.",
+                "Requirements": "Link to CE profile."
+            },
+            "One Hell of a Day": {
+                "Description": "Ask Scarlet to roll a random T1 game, and then complete all primary objectives for it within 24 hours.",
+                "Requirements": "Cooldown is 2 weeks. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "One Hell of a Month": {
+                "Description": "Requires \"One Hell of a Week\": Ask Scarlet to roll 5 T1 games from EACH of 5 different categories, then complete all primary objectives for 3 of 5 from each category within a month.",
+                "Requirements": "Cooldown is 3 months. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "One Hell of a Week": {
+                "Description": "Requires \"One Hell of a Day\": Ask Scarlet to roll a random T1 game for each category, and within a week have all primary objectives for each completed.",
+                "Requirements": "Cooldown is 1 month. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "Overwhelmingly Dedicated": {
+                "Description": "Fulfill the requirements of any non-game specific black role twice.",
+                "Requirements": "Depends on how you approached it. Post in proof submission whatever you think is adequate. Awards the \"Overpowered\" role."
+            },
+            "Puzzle Grandmaster": {
+                "Description": "Complete 10 separate objectives from the \"Puzzle Games\" list.",
+                "Requirements": "Link to CE profile. List found here: https://cedb.me/game/27578157-10b2-4f29-acee-452c2dc59477"
+            },
+            "Reading Rainbow": {
+                "Description": "Complete all primary objectives for games whose name start with each letter of the English alphabet (A-Z).",
+                "Requirements": "Link to CE profile, a mod can check. Awards \"The Literate\""
+            },
+            "Retro Fitted": {
+                "Description": "Complete all primary objectives in 10 separate site listed games that were originally released before Steam (2003). Remasters count.",
+                "Requirements": "Tag an admin for your candidate games. More may be added to the list over time. You can see the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=264244730"
+            },
+            "Russian Roulette": {
+                "Description": "Requires \"Let Fate Decide\": Pick a T5 from all 6 categories, ask Scarlet to roll one of them randomly, then complete all primary objectives in that game.",
+                "Requirements": "Cooldown is 6 months. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "Soul Mates": {
+                "Description": "You and another person must agree on a tier, then ask Scarlet to roll a random game for that tier. Both players must then go on to complete all primary objectives in that game within a time limit relative to that tier.",
+                "Requirements": "Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "Super Super Super Super Super Super Super Super Super Super Super Super Super Super Super Star": {
+                "Description": "Obtain all primary objectives in 15 separate site listed games with \"super\" in their name.",
+                "Requirements": "Link to CE profile. Awards the \"Super\" role."
+            },
+            "Supporter": {
+                "Description": "Have one of the Patreon Supporter roles or the Nitro Booster role.",
+                "Requirements": "Screenshot of Discord roles."
+            },
+            "Teamwork Makes the Dream Work": {
+                "Description": "You and another player ask Scarlet to roll 4 random T3 games. Then between the two of you, have all primary objectives complete within a month.",
+                "Requirements": "Cooldown is 3 months for both players. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "That Belongs In A Museum!": {
+                "Description": "Be placed on the Hall of Fame.",
+                "Requirements": "Link to potentials sheet."
+            },
+            "Triple Threat": {
+                "Description": "Requires \"Never Lucky\": Pick a category, then ask Scarlet to roll 3 random T3 games in that category. Then complete all primary objectives for each within a month.",
+                "Requirements": "Cooldown is 3 months. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "Two \"Two Week T2 Streak\" Streak": {
+                "Description": "Requires \"Two Week T2 Streak\": Ask Scarlet to roll a random T2 game, then complete all primary objectives for it within a week. Then repeat this process 3 more times for different categories.",
+                "Requirements": "Cooldown is 1 week. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "Two Week T2 Streak": {
+                "Description": "Ask Scarlet to roll a random T2 game, then complete all primary objectives for it within a week. Then repeat this process for a different category.",
+                "Requirements": "Cooldown is 1 week. Post your completions in the roll channel, proof submission, or DM Scarlet. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "Veteran": {
+                "Description": "Be a member of the discord for over 3 years.",
+                "Requirements": "Reply to or link your Discord join message and tag a mod (breaks allowed)."
+            },
+            "Visions of the Apocalypse": {
+                "Description": "Fill the game completion showcase on your profile entirely with games that award a black role in the Discord server. In other words, fill out your entire game showcase with Tier 5 games worth at least 500 points.",
+                "Requirements": "Link to CE profile. Awards the \"Total Eclipse\" role."
+            },
+            "War and Peace": {
+                "Description": "Obtain all 5 other Co-op and PvP random roll achievements.",
+                "Requirements": "Link to CE profile."
+            },
+            "What A Long Strange Trip It's Been": {
+                "Description": "Obtain all other single player random roll achievements.",
+                "Requirements": "Post a link to your CE profile in the roll channel, proof submission, or DM Scarlet. Awards the black variant of \"High Roller\""
+            },
+            "Winner Takes All": {
+                "Description": "You and another player choose a category and tier, then ask Scarlet to roll random game with those conditions. The first person to obtain all primary objectives in that game earns this achievement.",
+                "Requirements": "The loser has a cooldown of 3 months. The rolled game cannot be completed or have progress made by either player. See this link for full set of rules: https://docs.google.com/spreadsheets/d/1VKwGKevsMxAAXxT8Vg2ixcYTXIvJmqEv6k2q3P8JunE/edit?usp=sharing"
+            },
+            "Word From the Wise": {
+                "Description": "Complete all primary objectives in 5 games of each category on the Steam curator.",
+                "Requirements": "Link to CE profile."
+            },
+            "Zookeeper": {
+                "Description": "Complete all primary objectives in 15 different site listed games where the main character is a non-human animal.",
+                "Requirements": "A running list will be kept over time. Tag an admin with your candidate games to be checked. Awards \"Zookeeper\". You can find the current list here: https://docs.google.com/spreadsheets/d/1H7yXaUUck_qqAg5ZkMOhKHfaLHSLKdivl9bHVTl1Tyc/edit#gid=0"
+            }
+        }
+    },
+    "- Puzzle Games -": {
+        "CE ID": "27578157-10b2-4f29-acee-452c2dc59477",
+        "Steam ID": "1485250",
+        "Tier": "Tier 0",
+        "Genre": "Strategy",
+        "Primary Objectives": {
+            "Page Description": {
+                "Point Value": "0",
+                "Description": "This page serves as a list of puzzle games on Steam curated by CE. Each game listed will require you to either complete all or specific achievements within the game, or complete all in-game puzzles offered. The difficulty of these objectives are gauged on a three-tier system, ranging from Moderate (\ud83d\udfe8), to Challenging (\ud83d\udfe5), to Extreme (\u2b1b). A specialized potentials list for puzzle games can be found here: <https://tinyurl.com/Puzzle-Games>. Games are added to this list through a voting system within the CE Discord server\u2014if you wish to participate in the voting system, ask any of the Discord mods for the \"@Puzzle Enthusiast\" role.",
+                "Requirements": "How to submit proof for each game: Steam profile link for achievements, screenshot/video for everything else."
+            }
+        },
+        "Community Objectives": {
+            "7 Billion Humans": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/792100/7_Billion_Humans/"
+            },
+            "A Monster's Expedition": {
+                "Description": "\u2b1b Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/1052990/A_Monsters_Expedition/"
+            },
+            "Antichamber": {
+                "Description": "\ud83d\udfe8 Find all map locations and signs.",
+                "Requirements": "https://store.steampowered.com/app/219890/Antichamber/"
+            },
+            "Baba Is You": {
+                "Description": "\u2b1b Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/736260/Baba_Is_You/"
+            },
+            "Cats Organized Neatly + Dogs Organized Neatly": {
+                "Description": "\ud83d\udfe8 Earn all achievements in both games.",
+                "Requirements": "https://store.steampowered.com/app/1369340/Cats_Organized_Neatly/ https://store.steampowered.com/app/1597730/Dogs_Organized_Neatly/"
+            },
+            "Cosmic Express": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/583270/Cosmic_Express/"
+            },
+            "Cypher": {
+                "Description": "\ud83d\udfe5 Complete all in-game puzzles.",
+                "Requirements": "https://store.steampowered.com/app/746710/Cypher/"
+            },
+            "Divide By Sheep": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/252130/Divide_By_Sheep/"
+            },
+            "EXAPUNKS": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/716490/EXAPUNKS/"
+            },
+            "FEZ": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/224760/FEZ/"
+            },
+            "Human Resource Machine": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/375820/Human_Resource_Machine/"
+            },
+            "Infinifactory": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/300570/Infinifactory/"
+            },
+            "KAMI": {
+                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
+                "Requirements": "https://store.steampowered.com/app/272040/KAMI/"
+            },
+            "Opus Magnum": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/558990/Opus_Magnum/"
+            },
+            "Patrick's Parabox": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/1260520/Patricks_Parabox/"
+            },
+            "Portal 2": {
+                "Description": "\ud83d\udfe8 Earn the achievements related to completing all single-player and co-op campaign levels.",
+                "Requirements": "https://store.steampowered.com/app/620/Portal_2/"
+            },
+            "SHENZHEN I/O": {
+                "Description": "\u2b1b Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/504210/SHENZHEN_IO/"
+            },
+            "Snakebird": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/357300/Snakebird/"
+            },
+            "SpaceChem": {
+                "Description": "\u2b1b Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/92800/SpaceChem/"
+            },
+            "Stephen's Sausage Roll": {
+                "Description": "\u2b1b Complete all in-game puzzles.",
+                "Requirements": "https://store.steampowered.com/app/353540/Stephens_Sausage_Roll/"
+            },
+            "Taiji": {
+                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
+                "Requirements": "https://store.steampowered.com/app/1141580/Taiji/"
+            },
+            "Tametsi": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/709920/Tametsi/"
+            },
+            "The Case of the Golden Idol": {
+                "Description": "\ud83d\udfe8 Earn all achievements. For an optimal experience, minimize usage of in-game hints.",
+                "Requirements": "https://store.steampowered.com/app/1677770/The_Case_of_the_Golden_Idol/"
+            },
+            "The Cat Machine": {
+                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
+                "Requirements": "https://store.steampowered.com/app/386900/The_Cat_Machine/"
+            },
+            "The Talos Principle": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/257510/The_Talos_Principle/"
+            },
+            "TIS-100": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/370360/TIS100/"
+            }
+        }
+    },
     "-KLAUS-": {
         "CE ID": "1e8565aa-b9f2-4b41-9578-22e4c2a5436b",
         "Steam ID": "729370",
