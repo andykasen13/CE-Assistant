@@ -306,7 +306,7 @@ async def roll_command(interaction, event: events) -> None:
         # five t1s from each category
         embed = discord.Embed(title=f"you have month")
 
-    # -------------------------------------------- Two "Two Week T2 Streak" Streak --------------------------------------------
+    # -------------------------------------------- Two "Two Week T2 Streak" Streak ---------------------------------------------
     elif event == "Two 'Two Week T2 Streak' Streak" :
         # four t2s
         print("Recieved request for Two 'Two Week T2 Streak' Streak")
