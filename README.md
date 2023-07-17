@@ -1,4 +1,4 @@
-# Correct-CE-Bot
+# CE-Assistant
 i'm gonna try and make a discord bot for challenge enthusiasts
 this is version two, using discord.py
 
