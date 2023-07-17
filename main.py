@@ -90,45 +90,18 @@ events = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
           "Russian Roulette"]
 
-@tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guild_ID))
-async def roll_command(interaction, event: events) -> None:
-    await interaction.response.defer()
 
-    view = discord.ui.View(timeout=600)
-    games = []
-    embeds = []
-    genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
-
-    # find the location of the user
-    with open('Jasons/users2.json', 'r') as u2:
-        userInfo = json.load(u2)
-    i = 0
-    target_user = ""
-    for current_user in userInfo :
-        if(userInfo[current_user]["discord_ID"] == interaction.user.id) :
-            target_user = current_user
-            break
-    
-    if(target_user == "") :
-        return await interaction.followup.send("You are not registered in the CE Assistant database. Please contact Andy for support.")
-
-    with open('Jasons/database_tier.json', 'r') as dB :
-        database_tier = json.load(dB)
-    
-    with open('Jasons/database_name.json', 'r') as dBN :
-        database_name = json.load(dBN)
-    
-    # if(event in list(users[target_user]['cooldowns'])) :
-    #     return await interaction.response.followup(embed=discord.Embed(title="you are on cooldown"))
-
-    for eventInfo in userInfo[target_user]['current_rolls'] :
-        if(eventInfo['event_name'] == event) : return await interaction.followup.send(embed=discord.Embed(title="You are already participating in this event!"))
-    
-
-
-    def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, specific_genre = "any") :
+def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, specific_genre = "any") :
         returned_game = ""
         rollable = False
+        genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
+        
+        with open('Jasons/database_tier.json', 'r') as dB :
+            database_tier = json.load(dB)
+        
+        with open('Jasons/database_name.json', 'r') as dBN :
+            database_name = json.load(dBN)
+    
         while not rollable :
             # ----- Grab random game -----
             # (Genre not given)
@@ -205,53 +178,97 @@ async def roll_command(interaction, event: events) -> None:
         print("\n")
         return returned_game
 
-    def create_multi_embed(event_name, time_limit, game_list, cooldown_time) :
-        # ----- Set up initial embed -----
-        embeds = []
-        embeds.append(discord.Embed(
-            color = 0x000000,
-            title=event_name,
-            timestamp=datetime.datetime.now()
-        ))
-        embeds[0].set_footer(text=f"Page 1 of {str(len(game_list) + 1)}")
-        embeds[0].set_author(name="Challenge Enthusiasts")
 
-        # ----- Add all games to the embed -----
-        games_value = ""
-        i = 1
-        for selected_game in games:
-            games_value += "\n" + str(i) + ". " + selected_game
-            i+=1
-        embeds[0].add_field(name="Rolled Games", value = games_value)
-
-        # ----- Display Roll Requirements -----
-        embeds[0].add_field(name="Roll Requirements", value =
-            f"You have two weeks to complete " + embeds[0].title + "."
-            + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple())))
-            + f">\n{event_name} has a cooldown time of {cooldown_time} days.", inline=False)
-        embeds[0].timestamp = datetime.datetime.now()
-        embeds[0].set_thumbnail(url = interaction.user.avatar)
+def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interaction) :
+    with open('Jasons/database_tier.json', 'r') as dB :
+        database_tier = json.load(dB)
         
-        # ----- Create the embeds for each game -----
-        page_limit = len(game_list) + 1
-        i=0
-        for selected_game in games :
-            total_points = 0
-            embeds.append(getEmbed(selected_game, interaction.user.id))
-            embeds[i+1].add_field(name="Rolled by", value = "<@" + str(interaction.user.id) + ">", inline=True)
-            embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"),
-                                   icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
-            embeds[i+1].set_author(name="Challenge Enthusiasts")
-            embeds[i+1].set_thumbnail(url=interaction.user.avatar)
-            for objective in database_name[selected_game]["Primary Objectives"] :
-                total_points += int(database_name[selected_game]["Primary Objectives"][objective]["Point Value"])
-            embeds[i+1].add_field(name="CE Status", value=f"{total_points} Points", inline=True)
-            embeds[i+1].add_field(name="CE Owners", value="[insert]", inline=True)
-            embeds[i+1].add_field(name="CE Completions", value="[insert]", inline=True)
-            i+=1
-        
-        return embeds # Set the embed to send as the first one
+    with open('Jasons/database_name.json', 'r') as dBN :
+        database_name = json.load(dBN)
+    # ----- Set up initial embed -----
+    embeds = []
+    embeds.append(discord.Embed(
+        color = 0x000000,
+        title=event_name,
+        timestamp=datetime.datetime.now()
+    ))
+    embeds[0].set_footer(text=f"Page 1 of {str(len(game_list) + 1)}")
+    embeds[0].set_author(name="Challenge Enthusiasts")
 
+    # ----- Add all games to the embed -----
+    games_value = ""
+    i = 1
+    for selected_game in game_list:
+        games_value += "\n" + str(i) + ". " + selected_game
+        i+=1
+    embeds[0].add_field(name="Rolled Games", value = games_value)
+
+    # ----- Display Roll Requirements -----
+    embeds[0].add_field(name="Roll Requirements", value =
+        f"You have two weeks to complete " + embeds[0].title + "."
+        + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple())))
+        + f">\n{event_name} has a cooldown time of {cooldown_time} days.", inline=False)
+    embeds[0].timestamp = datetime.datetime.now()
+    embeds[0].set_thumbnail(url = interaction.user.avatar)
+    
+    # ----- Create the embeds for each game -----
+    page_limit = len(game_list) + 1
+    i=0
+    for selected_game in game_list :
+        total_points = 0
+        embeds.append(getEmbed(selected_game, interaction.user.id))
+        embeds[i+1].add_field(name="Rolled by", value = "<@" + str(interaction.user.id) + ">", inline=True)
+        embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"),
+                                icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
+        embeds[i+1].set_author(name="Challenge Enthusiasts")
+        embeds[i+1].set_thumbnail(url=interaction.user.avatar)
+        for objective in database_name[selected_game]["Primary Objectives"] :
+            total_points += int(database_name[selected_game]["Primary Objectives"][objective]["Point Value"])
+        embeds[i+1].add_field(name="CE Status", value=f"{total_points} Points", inline=True)
+        embeds[i+1].add_field(name="CE Owners", value="[insert]", inline=True)
+        embeds[i+1].add_field(name="CE Completions", value="[insert]", inline=True)
+        i+=1
+    
+    return embeds # Set the embed to send as the first one
+
+
+
+@tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guild_ID))
+async def roll_command(interaction, event: events) -> None:
+    await interaction.response.defer()
+
+    view = discord.ui.View(timeout=600)
+    games = []
+    embeds = []
+    genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
+
+    # find the location of the user
+    with open('Jasons/users2.json', 'r') as u2:
+        userInfo = json.load(u2)
+    i = 0
+    target_user = ""
+    for current_user in userInfo :
+        if(userInfo[current_user]["discord_ID"] == interaction.user.id) :
+            target_user = current_user
+            break
+    
+    if(target_user == "") :
+        return await interaction.followup.send("You are not registered in the CE Assistant database. Please contact Andy for support.")
+
+
+    # if(event in list(users[target_user]['cooldowns'])) :
+    #     return await interaction.response.followup(embed=discord.Embed(title="you are on cooldown"))
+
+    for eventInfo in userInfo[target_user]['current_rolls'] :
+        if(eventInfo['event_name'] == event) : return await interaction.followup.send(embed=discord.Embed(title="You are already participating in this event!"))
+    
+
+    with open('Jasons/database_tier.json', 'r') as dB : 
+        database_tier = json.load(dB)
+    
+    with open('Jasons/database_name.json', 'r') as dBN :
+        database_name = json.load(dBN)
+  
 
 
 
@@ -281,7 +298,7 @@ async def roll_command(interaction, event: events) -> None:
         games.append(get_rollable_game(40, 20, "Tier 2", genres))
         
         # ----- Get all the embeds -----s
-        embeds = create_multi_embed("Two Week T2 Streak", 14, games, 0)
+        embeds = create_multi_embed("Two Week T2 Streak", 14, games, 0, interaction,)
         embed = embeds[0]
 
         await get_buttons(view, embeds) # Create buttons
@@ -300,7 +317,7 @@ async def roll_command(interaction, event: events) -> None:
             i+=1
 
         # ----- Get all the embeds -----
-        embeds = create_multi_embed("One Hell of a Week", 7, games, 28)       
+        embeds = create_multi_embed("One Hell of a Week", 7, games, 28, interaction)       
         embed = embeds[0] # Set the embed to send as the first one
         await get_buttons(view, embeds) # Create buttons
 
@@ -323,7 +340,7 @@ async def roll_command(interaction, event: events) -> None:
             i+=1
         
         # ----- Get all the embeds -----
-        embeds = create_multi_embed("Two 'Two Week T2 Streak' Streak", 28, games, 7)
+        embeds = create_multi_embed("Two 'Two Week T2 Streak' Streak", 28, games, 7, interaction)
         embed = embeds[0]
         await get_buttons(view, embeds)
 
@@ -430,36 +447,36 @@ async def get_buttons(view, embeds):
     buttons[0].callback = hehe
     buttons[1].callback = haha
 
-    async def get_genre_buttons(view, completion_time, price_limit, tier_number, event_name, time_limit, cooldown_time, num_of_games) :
-        games = []
-        genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
-        buttons = []
+async def get_genre_buttons(view, completion_time, price_limit, tier_number, event_name, time_limit, cooldown_time, num_of_games) :
+    games = []
+    genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
+    buttons = []
+    i=0
+    for genre in genres :
+        print(genre)
+        buttons.append(discord.ui.Button(label=genre, style=discord.ButtonStyle.gray))
+        view.add_item(buttons[i])
+        i+=1
+    async def AC_callback(interaction) : return await callback(interaction, "Action")
+    async def AR_callback(interaction) : return await callback(interaction, "Arcade")
+    async def BH_callback(interaction) : return await callback(interaction, "Bullet Hell")
+    async def FP_callback(interaction) : return await callback(interaction, "First-Person")
+    async def PF_callback(interaction) : return await callback(interaction, "Platformer")
+    async def ST_callback(interaction) : return await callback(interaction, "Strategy")
+    async def callback(interaction, genre_name):
         i=0
-        for genre in genres :
-            print(genre)
-            buttons.append(discord.ui.Button(label=genre, style=discord.ButtonStyle.gray))
-            view.add_item(buttons[i])
+        while i < num_of_games :
+            games.append(get_rollable_game(completion_time, price_limit, tier_number, genre_name))
             i+=1
-        async def AC_callback(interaction) : return await callback(interaction, "Action")
-        async def AR_callback(interaction) : return await callback(interaction, "Arcade")
-        async def BH_callback(interaction) : return await callback(interaction, "Bullet Hell")
-        async def FP_callback(interaction) : return await callback(interaction, "First-Person")
-        async def PF_callback(interaction) : return await callback(interaction, "Platformer")
-        async def ST_callback(interaction) : return await callback(interaction, "Strategy")
-        async def callback(interaction, genre_name):
-            i=0
-            while i < num_of_games :
-                games.append(get_rollable_game(completion_time, price_limit, tier_number, genre_name))
-                i+=1
-            view.clear_items()
-            embeds = create_multi_embed(event_name, time_limit, games, cooldown_time)
-            await interaction.response.edit_message(embed=embeds[0], view=view)
-        buttons[0].callback = AC_callback
-        buttons[1].callback = AR_callback
-        buttons[2].callback = BH_callback
-        buttons[3].callback = FP_callback
-        buttons[4].callback = PF_callback
-        buttons[5].callback = ST_callback
+        view.clear_items()
+        embeds = create_multi_embed(event_name, time_limit, games, cooldown_time, interaction)
+        await interaction.response.edit_message(embed=embeds[0], view=view)
+    buttons[0].callback = AC_callback
+    buttons[1].callback = AR_callback
+    buttons[2].callback = BH_callback
+    buttons[3].callback = FP_callback
+    buttons[4].callback = PF_callback
+    buttons[5].callback = ST_callback
 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------- CHECK_ROLLS COMMAND ------------------------------------------------------ # 

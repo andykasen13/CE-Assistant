@@ -41,21 +41,14 @@
         "current_rolls": [
             {
                 "event_name": "One Hell of a Day",
-                "end_time": "2023-07-12 22:42:29",
+                "end_time": "2023-07-17 19:06:55",
                 "games": [
-                    "Flem"
-                ]
-            },
-            {
-                "event_name": "Never Lucky",
-                "end_time": "2023-07-16 18:18:11",
-                "games": [
-                    "Mute Crimson+"
+                    "LIMBO"
                 ]
             },
             {
                 "event_name": "Triple Threat",
-                "end_time": "2023-07-17 18:41:06",
+                "end_time": "2023-07-17 19:07:09",
                 "games": []
             }
         ],
