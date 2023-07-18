@@ -84,11 +84,17 @@ def objectives(CE_ID):
         
         for requirement in objective['objectiveRequirements']:
             if requirement['type'] == 'achievement':
-                achievements.append()
+                achievements.append(requirement['id'])
+            elif requirement['type'] == 'custom':
+                requirements = requirement['data']
+
+        # for id in achievements:
+
 
         objectives[index][objective['name']] = {
             'Description' : objective['description'],
-
+            'Achievements' : achievements,
+            'Requirements' : requirements
         }
 
 
