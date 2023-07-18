@@ -45,36 +45,51 @@ def get_games():
 
 
 def game_list(driver):
-    driver.get('https://cedb.me/games')
-    button_enabled = True
-    games = {}
+    api_response = requests.get('https://cedb.me/api/games')
+    json_response = json.loads(api_response.text)
 
-    while(button_enabled):
-        names = driver.find_elements(By.TAG_NAME, "h2")[::2]
-        while(len(names) < 1 or not names[0].is_displayed()):
-            names = driver.find_elements(By.TAG_NAME, "h2")[::2]
+    new_data = {}
 
-        ids = driver.find_elements(By.CSS_SELECTOR, ":link")[7::2]
-        button = driver.find_elements(By.TAG_NAME, "button")[30]
+    objectives = objectives(game['id'])
 
-        for i in range(0, len(names)):
-            games[names[i].text] = {
-                "CE ID" : ids[i].get_attribute("href")[21::],
-            }
-
-        # button_enabled=False
-        if(not button.is_enabled()):
-            print("done")
-            button_enabled=False
-        else:
-            button.click()
-
+    for game in json_response:
+        new_data[game['name']] = {
+            "CE ID" : game['id'],
+            'Steam ID' : game['platformId'],
+            'Tier' : 'Tier' + game['tier'],
+            'Genre' : game['genre']['name'],
+            'Full Completions' : game['completion']['completed'],
+            'Total Owners' : game['completion']['total'],
+            'Primary Objectives' : objectives[0],
+            'Community Objectives' : objectives[1]
+        }
 
     with open('./Jasons/database_name.json', 'w') as f :
         json.dump(games, f, indent=4)
 
     games = None
     
+
+def objectives(CE_ID):
+    api_response = requests.get('https://cedb.me/api/game/{}'.format(CE_ID))
+    json_response = json.loads(api_response.text)
+
+    objectives = [{}, {}]
+    index = 0
+    achievements = []
+
+    for objective in json_response['objectives']:
+        if objective['community']:
+            index = 1
+        
+        for requirement in objective['objectiveRequirements']:
+            if requirement['type'] == 'achievement':
+                achievements.append()
+
+        objectives[index][objective['name']] = {
+            'Description' : objective['description'],
+
+        }
 
 
 def all_game_data(driver):
