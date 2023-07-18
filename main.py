@@ -872,18 +872,26 @@ async def color(interaction) :
 
 @tree.command(name="test", description="test", guild=discord.Object(id=guild_ID))
 async def test(interaction) :
-    return
+    await interaction.response.defer()
+    driver = webdriver.Chrome()
+    driver.get('https://cedb.me/user/835afaad-0059-4e39-b24f-24b2c76b1d08/games')
+
+    game_names = []
+    while (len(game_names) < 8) or (not game_names[7].is_displayed()):
+        game_names = driver.find_elements(By.TAG_NAME, 'h2')
+    for game in game_names :
+        print(game.text)
+    return await interaction.followup.send("hfajsdk")
 
 @tree.command(name="ce_register", description="Register yourself in the CE Assistant database to unlock rolls.", guild=discord.Object(id=guild_ID))
 async def register(interaction, ce_id: str) :
     await interaction.response.defer() # defer the message
     
     #Open the user database
-    with open('Web_Interaction/users2.json', 'r') as dbU :
+    with open('Jasons/users2.json', 'r') as dbU :
         database_user = json.load(dbU)
 
-   
-    
+   # Make sure the input is a valid CE-ID
     print(f"Input = {ce_id}")
     if(ce_id[:5:] == "https" and len(ce_id) >= 29 and (ce_id[29] == '-')) :
         if(ce_id[(len(ce_id)-5)::] == "games") : ce_id = ce_id[21:(len(ce_id)-6):]
@@ -891,10 +899,12 @@ async def register(interaction, ce_id: str) :
     else: return await interaction.followup.send(f"'{ce_id}' is not a valid user link. Please try again or contact <@413427677522034727> for assistance.")
     print(f"Working ID = {ce_id}")
 
-     # Make sure user isn't already registered
+    # Make sure user isn't already registered
     for user in database_user :
-        if(user["CE_ID"] == ce_id) : return await interaction.followup.send("You are already registered, silly!")
+        if(database_user[user]["CE ID"] == ce_id) : return await interaction.followup.send(f"This CE-ID is already registered to <@{database_user[user]['Discord ID']}>, silly!")
+        elif(database_user[user]["Discord ID"] == interaction.user.id) : return await interaction.followup.send("You are already registered in the database!")
     
+    # Set up the user's JSON file
     user_dict = {
         "User XYZ" : {
             "CE ID" : ce_id,
@@ -907,6 +917,14 @@ async def register(interaction, ce_id: str) :
         }
     }
 
+    # Add the user file to the database
+    database_user.update(user_dict)
+
+    # Dump the data
+    with open('Jasons/users2.json', 'w') as f :
+        json.dump(database_user, f, indent=4)
+
+    # Send a confirmation message
     await interaction.followup.send("thanks man")
 
 

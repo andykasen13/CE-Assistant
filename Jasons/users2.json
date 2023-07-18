@@ -2,7 +2,7 @@
     "andykasen13": {
         "CE ID": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
         "Discord ID": 413427677522034727,
-        "Reroll Tickets": "1",
+        "Reroll Tickets": 1,
         "Owned Games": {
             "Celeste": {
                 "POs": {
@@ -38,9 +38,7 @@
                 "Agent of Chaos": 5
             }
         },
-        "Current Rolls": [
-
-        ],
+        "Current Rolls": [],
         "Completed Rolls": [
             {
                 "event_name": "One Hell of a Day",
@@ -50,15 +48,24 @@
                 ]
             }
         ],
-        "Cooldowns" : {}
+        "Cooldowns": {}
     },
     "Folkius": {
         "CE ID": "67bce20e-3306-4b83-8027-d6894d474740",
         "Discord ID": 269468866256699392,
-        "Reroll Tickets": "0",
-        "Owned Games" : {},
+        "Reroll Tickets": 0,
+        "Owned Games": {},
         "Current Rolls": [],
         "Completed Rolls": [],
         "Cooldowns": {}
+    },
+    "User XYZ": {
+        "CE ID": "835afaad-0059-4e39-b24f-24b2c76b1d08",
+        "Discord ID": 413427677522034727,
+        "Reroll Tickets": 0,
+        "Owned Games": {},
+        "Cooldowns": {},
+        "Current Rolls": [],
+        "Completed Rolls": []
     }
 }
