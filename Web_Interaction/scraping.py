@@ -111,6 +111,7 @@ def update(CE_ID, name, old_data, new_data, number):
         )
     embed.set_image(url='attachment://image.png')
 
+
     icons = {
         "Tier 0" : ':zero:',
         "Tier 1" : ':one:',
@@ -121,35 +122,41 @@ def update(CE_ID, name, old_data, new_data, number):
     }
     ddiff = DeepDiff(old_data, new_data, verbose_level=2)
 
-    try:
+
+    if list(ddiff.keys()).count('values_changed'):
         for value in ddiff['values_changed']:
             if(list(icons.keys()).count(ddiff['values_changed'][value]['new_value']) > 0):
                 ddiff['values_changed'][value]['new_value'] = icons[ddiff['values_changed'][value]['new_value']]
             if(list(icons.keys()).count(ddiff['values_changed'][value]['old_value']) > 0):
                 ddiff['values_changed'][value]['old_value'] = icons[ddiff['values_changed'][value]['old_value']]
             embed.add_field(name=value[value.rfind('[')+2:value.rfind('\''):], value="{} ➡ {}".format(ddiff['values_changed'][value]['old_value'], ddiff['values_changed'][value]['new_value']))
-        print('Values Updated')
-    except:
-        print('No Values Changed')
+
     
-    try:
+    if list(ddiff.keys()).count('dictionary_item_added'):
         for value in ddiff['dictionary_item_added']:
-            try:
+            name_change = False
+            if list(ddiff.keys()).count('dictionary_item_removed'):
                 for other_value in ddiff['dictionary_item_removed']:
                     if(ddiff['dictionary_item_added'][value]==ddiff['dictionary_item_removed'][other_value]):
                         embed.add_field(name="Objective Name Change", value="{} ➡ {}".format(other_value[other_value.rfind('[')+2:other_value.rfind('\''):], value[value.rfind('[')+2:value.rfind('\''):]))
-                        break
+                        name_change = True
                     else:
                         embed.add_field(name='Objective Removed', value=other_value[other_value.rfind('[')+2:other_value.rfind('\''):])
-            except:
-                print('No Objective Name Changes or Removals')
-            embed.add_field(name='New Objective', value=value[value.rfind('[')+2:value.rfind('\''):])
-        print('Objective Names Updated', )
-    except:
-        print('No Objective Changes')
+            if not name_change:
+                embed.add_field(name='New Objective', value=value[value.rfind('[')+2:value.rfind('\''):])
+
+
+    if old_data.count('Achievements') > 0 and new_data.count('Achievements') > 0 and old_data['Achievements'] != new_data['Achievements']:
+        achievement_change = DeepDiff(old_data['Achievements'], new_data['Achievements'])
+        if achievement_change.count('dictionary_item_added') > 0:
+            for addition in achievement_change['dictionary_item_added']:
+                embed.add_field(name="Achievement Added", value=addition)
+        if achievement_change.count('dictionary_item_removed') > 0:
+            for addition in achievement_change['dictionary_item_removed']:
+                embed.add_field(name="Achievement Removed", value=addition)
+
     
     return [embed, file]
-
 
 
 def get_name_data(driver):
@@ -292,7 +299,6 @@ def get_by_tier():
         json.dump(tier_based_data, f, indent=4)
 
 
-
 def get_completion_data(steam_id):
     response = requests.get("https://steamhunters.com/apps/{}/achievements".format(steam_id))
     site = BeautifulSoup(response.text, features='html.parser')
@@ -312,28 +318,6 @@ def get_completion_data(steam_id):
             continue
 
     return time
-
-
-
-
-
-
-
-
-def get_achievements(steam_id) :
-
-    # Open and save the JSON data
-    payload = {'key' : steam_api_key, 'appid': steam_id, 'cc' : 'US'}
-    response = requests.get("https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?", params = payload)
-    jsonData = json.loads(response.text)
-
-    all_achievements = []
-    if 'availableGameStats' in jsonData['game'].keys() and 'achievements' in jsonData['game']['availableGameStats'].keys():
-        for achievement in jsonData['game']['availableGameStats']['achievements'] :
-            all_achievements.append(achievement['displayName'].strip())
-    
-    return all_achievements
-
 
 
 def get_image(CE_ID, number):
