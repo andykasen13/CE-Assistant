@@ -47,8 +47,24 @@
                 ]
             },
             {
+                "event_name": "One Hell of a Week",
+                "end_time": "2023-07-17 19:42:39",
+                "games": [
+                    "Shipped",
+                    "LIMBO",
+                    "Savant - Ascent",
+                    "PuPaiPo Space Deluxe",
+                    "God Damn The Garden"
+                ]
+            },
+            {
                 "event_name": "Triple Threat",
-                "end_time": "2023-07-17 19:07:09",
+                "end_time": "2023-07-17 20:09:02",
+                "games": []
+            },
+            {
+                "event_name": "Let Fate Decide",
+                "end_time": "2023-07-17 20:15:52",
                 "games": []
             }
         ],

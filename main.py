@@ -92,6 +92,37 @@ events = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month
 
 
 def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, specific_genre = "any") :
+        banned_games = ["Serious Sam HD: The Second Encounter", 
+                        "Infinite Air with Mark McMorris", 
+                        "A Bastard's Tale",
+                        "A Most Extraordinary Gnome",
+                        "Bot Vice",
+                        "Curvatron",
+                        "Dark Souls III",
+                        "Destructivator 2",
+                        "DSY",
+                        "Geballer",
+                        "Gravity Den",
+                        "Gridform",
+                        "Heck Deck",
+                        "ITTA",
+                        "Just Arms",
+                        "LaserBoy",
+                        "Little Nightmares",
+                        "MO:Astray",
+                        "MOONPONG",
+                        "Mortal Shell",
+                        "Overture",
+                        "Project Rhombus",
+                        "Satryn Deluxe",
+                        "SEUM",
+                        "Squidlit",
+                        "Super Cable Boy",
+                        "The King's Bird",
+                        "you have to win the game",
+                        "Heavy Bullets",
+                        "Barrier X"]
+
         returned_game = ""
         rollable = False
         genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
@@ -125,7 +156,7 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, speci
             # (Genre given)
             elif type(specific_genre) == str:
                 print(f"Specified genre: {specific_genre}.")
-                random_num = random.randint(0,len(database_tier[tier_number][specific_genre]))
+                random_num = random.randint(0,len(database_tier[tier_number][specific_genre])-1)
                 returned_game = database_tier[tier_number][specific_genre][random_num]
             # (Genres given)
             elif type(specific_genre) == list :
@@ -148,6 +179,10 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, speci
 
             # ----- Log it in the console -----
             print(f"Seeing if {returned_game} is rollable...")
+            if returned_game in banned_games :
+                print(f"{returned_game} is banned.")
+                continue
+
             gameID = int(database_name[returned_game]["Steam ID"])
 
             # ----- Grab Steam JSON file -----
@@ -379,7 +414,10 @@ async def roll_command(interaction, event: events) -> None:
     # -------------------------------------------- Let Fate Decide --------------------------------------------
     elif event == "Let Fate Decide" :
         # one t4
+        print("Recieved request for Let Fate Decide")
+
         embed = discord.Embed(title=("let fate decide"))
+        await get_genre_buttons(view, 40, 20, "Tier 4", event, 1, 84, 1)
 
     # -------------------------------------------- Fourward Thinking --------------------------------------------
     elif event == "Fourward Thinking" :
@@ -463,14 +501,19 @@ async def get_genre_buttons(view, completion_time, price_limit, tier_number, eve
     async def FP_callback(interaction) : return await callback(interaction, "First-Person")
     async def PF_callback(interaction) : return await callback(interaction, "Platformer")
     async def ST_callback(interaction) : return await callback(interaction, "Strategy")
+
     async def callback(interaction, genre_name):
+        await interaction.response.defer()
+        print(interaction)
         i=0
         while i < num_of_games :
             games.append(get_rollable_game(completion_time, price_limit, tier_number, genre_name))
             i+=1
         view.clear_items()
         embeds = create_multi_embed(event_name, time_limit, games, cooldown_time, interaction)
-        await interaction.response.edit_message(embed=embeds[0], view=view)
+        await get_buttons(view, embeds)
+        await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
+
     buttons[0].callback = AC_callback
     buttons[1].callback = AR_callback
     buttons[2].callback = BH_callback
@@ -678,7 +721,7 @@ def getEmbed(game_name, authorID):
 
     # Open and save the JSON data
     payload = {'appids': correct_app_id, 'cc' : 'US'}
-    response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload)
+    response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload) #TODO: possible error here
     jsonData = json.loads(response.text)
     
     # Save important information
