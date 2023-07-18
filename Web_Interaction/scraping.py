@@ -1,6 +1,8 @@
+from asyncio import to_thread
 import json
 from datetime import datetime
 import re
+import time
 # import screenshot
 from .Screenshot import Screenshot
 from bs4 import BeautifulSoup
@@ -93,8 +95,8 @@ def all_game_data(driver):
         else:
             data = None
 
-    with open('./Jasons/test_database.json', 'w') as f :
-        json.dump(games, f, indent=4)
+    # with open('./Jasons/test_database.json', 'w') as f :
+    #     json.dump(games, f, indent=4)
 
     return game_updates
 
@@ -118,10 +120,17 @@ def update(CE_ID, name, old_data, new_data, number):
         "Tier 2" : ':two:',
         "Tier 3" : ':three:',
         "Tier 4" : ':four:',
-        "Tier 5" : ':five:'
-    }
-    ddiff = DeepDiff(old_data, new_data, verbose_level=2)
+        "Tier 5" : ':five:',
 
+        "Action" : ':magnet:',
+        "Arcade" : ':video_game:',
+        "Bullet Hell" : ':gun:',
+        "First-Person" : ':person_bald:',
+        "Platformer" : ':runner:',
+        "Strategy" : ':chess_pawn:'
+    }
+
+    ddiff = DeepDiff(old_data, new_data)
 
     if list(ddiff.keys()).count('values_changed'):
         for value in ddiff['values_changed']:
@@ -146,14 +155,16 @@ def update(CE_ID, name, old_data, new_data, number):
                 embed.add_field(name='New Objective', value=value[value.rfind('[')+2:value.rfind('\''):])
 
 
-    if old_data.count('Achievements') > 0 and new_data.count('Achievements') > 0 and old_data['Achievements'] != new_data['Achievements']:
-        achievement_change = DeepDiff(old_data['Achievements'], new_data['Achievements'])
-        if achievement_change.count('dictionary_item_added') > 0:
-            for addition in achievement_change['dictionary_item_added']:
-                embed.add_field(name="Achievement Added", value=addition)
-        if achievement_change.count('dictionary_item_removed') > 0:
-            for addition in achievement_change['dictionary_item_removed']:
-                embed.add_field(name="Achievement Removed", value=addition)
+    for primary in old_data['Primary Objectives']:
+        if list(old_data['Primary Objectives'][primary].keys()).count('Achievements') > 0 and list(new_data['Primary Objectives'][primary].keys()).count('Achievements') > 0 and old_data['Primary Objectives'][primary]['Achievements'] != new_data['Primary Objectives'][primary]['Achievements']:
+            print("gets here")
+            achievement_change = DeepDiff(old_data['Primary Objectives'][primary]['Achievements'], new_data['Primary Objectives'][primary]['Achievements'])
+            if list(achievement_change.keys()).count('dictionary_item_added') > 0:
+                for addition in achievement_change['dictionary_item_added']:
+                    embed.add_field(name="Achievement Added", value=addition)
+            if list(achievement_change.keys()).count('dictionary_item_removed') > 0:
+                for addition in achievement_change['dictionary_item_removed']:
+                    embed.add_field(name="Achievement Removed", value=addition)
 
     
     return [embed, file]
@@ -210,22 +221,25 @@ def get_data(id, driver):
                 intermediate["Requirements"] = primary_objectives_list.pop(0)
             primary_objectives[title] = intermediate
 
-    for community_objectives_element in community_objectives_string:
-        community_objectives_list = community_objectives_element.text.split('\n')
-        while(len(community_objectives_list) > 0 and community_objectives_exist):
-            achievements = []
-            intermediate = {}
-            title = community_objectives_list.pop(0)
-            intermediate["Description"] = community_objectives_list.pop(0)
-            if(len(community_objectives_list) > 0 and community_objectives_list[0] == "Achievements:"):
-                community_objectives_list.pop(0)
-                while(len(community_objectives_list) > 0 and community_objectives_list[0] != "Requirements:"):
-                    achievements.append(community_objectives_list.pop(0))
-                intermediate["Achievements"] = achievements
-            if(len(community_objectives_list) > 0 and community_objectives_list[0] == "Requirements:"):
-                community_objectives_list.pop(0)
-                intermediate["Requirements"] = community_objectives_list.pop(0)
-            community_objectives[title] = intermediate
+
+    if community_objectives_exist:
+        for community_objectives_element in community_objectives_string:
+            community_objectives_list = community_objectives_element.text.split('\n')
+            print(community_objectives_list)
+            while(len(community_objectives_list) > 0 and community_objectives_exist):
+                achievements = []
+                intermediate = {}
+                title = community_objectives_list.pop(0)
+                intermediate["Description"] = community_objectives_list.pop(0)
+                if(len(community_objectives_list) > 0 and community_objectives_list[0] == "Achievements:"):
+                    community_objectives_list.pop(0)
+                    while(len(community_objectives_list) > 0 and community_objectives_list[0] != "Requirements:"):
+                        achievements.append(community_objectives_list.pop(0))
+                    intermediate["Achievements"] = achievements
+                if(len(community_objectives_list) > 0 and community_objectives_list[0] == "Requirements:"):
+                    community_objectives_list.pop(0)
+                    intermediate["Requirements"] = community_objectives_list.pop(0)
+                community_objectives[title] = intermediate
 
 
     full_game_info = {
@@ -342,11 +356,11 @@ def get_image(CE_ID, number):
     ]
     border_width = 15
     ob = Screenshot(bottom_right['y']+size['height']+border_width)
-    im = ob.full_screenshot(driver, save_path=r'.', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
+    im = ob.full_screenshot(driver, save_path=r'Web_Interaction/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
 
     
-    # im = Image.open('ss.png')
+    im = Image.open('Web_Interaction/ss{}.png'.format(number))
     im = im.crop((top_left['x']-border_width, top_left['y']-border_width, bottom_right['x']+size['width']+border_width, bottom_right['y']+size['height']+border_width)) # defines crop points
-    im.save('Web_Interaction/ss.png')
+    im.save('Web_Interaction/ss{}.png'.format(number))
 
     # return(discord.file('ss.png'))

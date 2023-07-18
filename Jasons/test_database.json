@@ -143,8 +143,8 @@
     "140": {
         "CE ID": "50f3310d-04b0-4619-9c43-d0aa689f1303",
         "Steam ID": "242820",
-        "Tier": "Tier 1",
-        "Genre": "Platformer",
+        "Tier": "Tier 4",
+        "Genre": "Action",
         "Primary Objectives": {
             "041": {
                 "Point Value": "15",
@@ -275,14 +275,15 @@
                     "World 10 Speed Trial",
                     "World 11 Trial",
                     "World 12 Trial",
-                    "World 2 Speed Trial Complete",
+                    "hehehaha",
                     "World 3 Speed Trial Complete",
                     "World 4 Speed Trial Complete",
                     "World 5 Speed Trial Complete",
                     "World 6 Speed Trial Complete",
                     "World 7 Speed Trial",
                     "World 8 Speed Trial",
-                    "World 9 Speed Trial"
+                    "World 9 Speed Trial",
+                    "new achievement"
                 ]
             }
         },
@@ -301,12 +302,6 @@
                     "I Refuse To Die!"
                 ],
                 "Requirements": "Screenshot of the Death Wish map (no Peace and Tranquility stamps; \"Unlimited Possibilities\" achievements can't be unlocked prior to \"I Refuse To Die!\"), OR video of \"Seal the Deal\"."
-            }
-        },
-        "Community Objectives": {
-            "Your Contract Has Expired": {
-                "Description": "Beat \"Seal the Deal\" with the One-Hit Hero badge equipped or without taking damage.",
-                "Requirements": "Video of the run."
             }
         }
     }
