@@ -27,7 +27,7 @@ from selenium.webdriver.chrome.options import Options
 
 # --------- other file imports ---------
 from Web_Interaction.curator import loop
-from Web_Interaction.scraping import all_game_data, get_achievements, get_games, get_completion_data
+from Web_Interaction.scraping import all_game_data, get_games, get_completion_data
 
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
@@ -283,7 +283,7 @@ async def roll_command(interaction, event: events) -> None:
     i = 0
     target_user = ""
     for current_user in userInfo :
-        if(userInfo[current_user]["discord_ID"] == interaction.user.id) :
+        if(userInfo[current_user]["Discord ID"] == interaction.user.id) :
             target_user = current_user
             break
     
@@ -294,8 +294,8 @@ async def roll_command(interaction, event: events) -> None:
     # if(event in list(users[target_user]['cooldowns'])) :
     #     return await interaction.response.followup(embed=discord.Embed(title="you are on cooldown"))
 
-    for eventInfo in userInfo[target_user]['current_rolls'] :
-        if(eventInfo['event_name'] == event) : return await interaction.followup.send(embed=discord.Embed(title="You are already participating in this event!"))
+    for eventInfo in userInfo[target_user]['Current Rolls'] :
+        if(eventInfo['Event Name'] == event) : return await interaction.followup.send(embed=discord.Embed(title="You are already participating in this event!"))
     
 
     with open('Jasons/database_tier.json', 'r') as dB : 
@@ -433,9 +433,9 @@ async def roll_command(interaction, event: events) -> None:
     else : embed=discord.Embed(title=(f"'{event}' is not a valid event."))
 
     # append the roll to the user's current rolls array
-    userInfo[target_user]["current_rolls"].append({"event_name" : event, 
-                                                  "end_time" : "" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                                  "games" : games})
+    userInfo[target_user]["Current Rolls"].append({"Event Name" : event, 
+                                                  "End Time" : "" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                                                  "Games" : games})
 
     # dump the info
     with open('Jasons/users2.json', 'w') as f :
@@ -495,6 +495,7 @@ async def get_genre_buttons(view, completion_time, price_limit, tier_number, eve
         buttons.append(discord.ui.Button(label=genre, style=discord.ButtonStyle.gray))
         view.add_item(buttons[i])
         i+=1
+
     async def AC_callback(interaction) : return await callback(interaction, "Action")
     async def AR_callback(interaction) : return await callback(interaction, "Arcade")
     async def BH_callback(interaction) : return await callback(interaction, "Bullet Hell")
@@ -544,15 +545,15 @@ async def checkRolls(interaction, user: discord.Member=None) :
     # designated user
     steam_user_name = ""
     for user_name in list(userInfo) :
-        if(userInfo[user_name]["discord_ID"] == target_user.id) :
+        if(userInfo[user_name]["Discord ID"] == target_user.id) :
             steam_user_name = user_name
             break
     
     if(steam_user_name == "") : return await interaction.response.followup("This user does not exist.")
     print(steam_user_name)
 
-    current_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 'current_rolls')
-    completed_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 'completed_rolls')
+    current_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 'Current Rolls')
+    completed_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 'Completed Rolls')
     
     # make the embed that you're going to send
     embed = discord.Embed(colour=0x000000, timestamp=datetime.datetime.now())
@@ -578,7 +579,7 @@ def get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 
         end_time = time.mktime(datetime.datetime.strptime(str(x['end_time']), "%Y-%m-%d %H:%M:%S").timetuple())
         roll_string = roll_string + "- __" + x['event_name'] + "__ (complete by <t:" + str(int(end_time)) + ">):\n"
         gameNum = 1
-        for game in x['games'] : # Iterate through all games in the roll event
+        for game in x['Games'] : # Iterate through all games in the roll event
             game_info = database_name_info[game] # Grab the dictionary containing all info about that game
             game_title = game # Set the game title
             roll_string += "  " + str(gameNum) + ". "+ str(game_title) + "\n" # Add the game number and the game title to the string
@@ -590,8 +591,8 @@ def get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 
     
     # account for no current rolls
     if(roll_string == "") :
-        if(x == 'current_rolls') : roll_string = f"{target_user.name} has no current rolls."
-        elif(x == 'completed_rolls') : roll_string = f"{target_user.name} has no completed rolls."
+        if(x == 'Current Rolls') : roll_string = f"{target_user.name} has no current rolls."
+        elif(x == 'Completed Rolls') : roll_string = f"{target_user.name} has no completed rolls."
 
     return roll_string
 
@@ -872,6 +873,42 @@ async def color(interaction) :
 @tree.command(name="test", description="test", guild=discord.Object(id=guild_ID))
 async def test(interaction) :
     return
+
+@tree.command(name="ce_register", description="Register yourself in the CE Assistant database to unlock rolls.", guild=discord.Object(id=guild_ID))
+async def register(interaction, ce_id: str) :
+    await interaction.response.defer() # defer the message
+    
+    #Open the user database
+    with open('Web_Interaction/users2.json', 'r') as dbU :
+        database_user = json.load(dbU)
+
+   
+    
+    print(f"Input = {ce_id}")
+    if(ce_id[:5:] == "https" and len(ce_id) >= 29 and (ce_id[29] == '-')) :
+        if(ce_id[(len(ce_id)-5)::] == "games") : ce_id = ce_id[21:(len(ce_id)-6):]
+        else : ce_id = ce_id[21::]
+    else: return await interaction.followup.send(f"'{ce_id}' is not a valid user link. Please try again or contact <@413427677522034727> for assistance.")
+    print(f"Working ID = {ce_id}")
+
+     # Make sure user isn't already registered
+    for user in database_user :
+        if(user["CE_ID"] == ce_id) : return await interaction.followup.send("You are already registered, silly!")
+    
+    user_dict = {
+        "User XYZ" : {
+            "CE ID" : ce_id,
+            "Discord ID" : interaction.user.id,
+            "Reroll Tickets" : 0,
+            "Owned Games" : {},
+            "Cooldowns" : {},
+            "Current Rolls" : [],
+            "Completed Rolls" : []
+        }
+    }
+
+    await interaction.followup.send("thanks man")
+
 
 # ----------------------------------- LOG IN ----------------------------
 @client.event

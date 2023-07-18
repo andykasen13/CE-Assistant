@@ -1,9 +1,9 @@
 {
     "andykasen13": {
-        "CE_ID": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
-        "discord_ID": 413427677522034727,
-        "reroll_tickets": "1",
-        "owned_games": {
+        "CE ID": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "Discord ID": 413427677522034727,
+        "Reroll Tickets": "1",
+        "Owned Games": {
             "Celeste": {
                 "POs": {
                     "Strawberry Lunatic": 0,
@@ -38,37 +38,10 @@
                 "Agent of Chaos": 5
             }
         },
-        "current_rolls": [
-            {
-                "event_name": "One Hell of a Day",
-                "end_time": "2023-07-17 19:06:55",
-                "games": [
-                    "LIMBO"
-                ]
-            },
-            {
-                "event_name": "One Hell of a Week",
-                "end_time": "2023-07-17 19:42:39",
-                "games": [
-                    "Shipped",
-                    "LIMBO",
-                    "Savant - Ascent",
-                    "PuPaiPo Space Deluxe",
-                    "God Damn The Garden"
-                ]
-            },
-            {
-                "event_name": "Triple Threat",
-                "end_time": "2023-07-17 20:09:02",
-                "games": []
-            },
-            {
-                "event_name": "Let Fate Decide",
-                "end_time": "2023-07-17 20:15:52",
-                "games": []
-            }
+        "Current Rolls": [
+
         ],
-        "completed_rolls": [
+        "Completed Rolls": [
             {
                 "event_name": "One Hell of a Day",
                 "end_time": "2023-04-03 21:28:08",
@@ -76,14 +49,16 @@
                     "GoNNER"
                 ]
             }
-        ]
+        ],
+        "Cooldowns" : {}
     },
     "Folkius": {
-        "CE_ID": "67bce20e-3306-4b83-8027-d6894d474740",
-        "discord_ID": 269468866256699392,
-        "reroll_tickets": "0",
-        "current_rolls": [],
-        "completed_rolls": [],
-        "cooldowns": {}
+        "CE ID": "67bce20e-3306-4b83-8027-d6894d474740",
+        "Discord ID": 269468866256699392,
+        "Reroll Tickets": "0",
+        "Owned Games" : {},
+        "Current Rolls": [],
+        "Completed Rolls": [],
+        "Cooldowns": {}
     }
 }
