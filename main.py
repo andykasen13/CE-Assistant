@@ -27,11 +27,7 @@ from selenium.webdriver.chrome.options import Options
 
 # --------- other file imports ---------
 from Web_Interaction.curator import loop
-<<<<<<< Updated upstream
 from Web_Interaction.scraping import all_game_data, get_games, get_completion_data
-=======
-from Web_Interaction.scraping import get_games, get_completion_data
->>>>>>> Stashed changes
 
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
@@ -47,6 +43,7 @@ with open('Jasons/secret_info.json') as f :
 
 discord_token = localJSONData['discord_token']
 guild_ID = localJSONData['guild_ID']
+ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 
 # Add the guild ids in which the slash command will appear. 
 # If it should be in all, remove the argument, but note that 
@@ -90,13 +87,11 @@ async def help(interaction) :
 # ------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------ROLL COMMAND --------------------------------------------------------- # 
 # ------------------------------------------------------------------------------------------------------------------------------- #
-events = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+events_solo = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
           "Russian Roulette"]
 
-
-def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, specific_genre = "any") :
-        banned_games = ["Serious Sam HD: The Second Encounter", 
+banned_games = ["Serious Sam HD: The Second Encounter", 
                         "Infinite Air with Mark McMorris", 
                         "A Bastard's Tale",
                         "A Most Extraordinary Gnome",
@@ -127,6 +122,7 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, speci
                         "Heavy Bullets",
                         "Barrier X"]
 
+def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, specific_genre = "any") :
         returned_game = ""
         rollable = False
         genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
@@ -258,7 +254,7 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
         embeds.append(getEmbed(selected_game, interaction.user.id))
         embeds[i+1].add_field(name="Rolled by", value = "<@" + str(interaction.user.id) + ">", inline=True)
         embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"),
-                                icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
+                                icon_url=ce_mountain_icon)
         embeds[i+1].set_author(name="Challenge Enthusiasts")
         embeds[i+1].set_thumbnail(url=interaction.user.avatar)
         for objective in database_name[selected_game]["Primary Objectives"] :
@@ -270,12 +266,49 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
     
     return embeds # Set the embed to send as the first one
 
+async def get_rollable_game_from_list(games) :
+    with open('Jasons/database_name.json', 'r') as dbN :
+        database_name = json.load(dbN)
+    rollable = False
+    while not rollable :
+        random_num = random.randint(0, len(games)-1)
+        random_game = games[random_num]
+
+        print(f"Seeing if {random_game} is rollable...")
+
+        # check for price and avg completion time
+        game_id = database_name[random_game]["Steam ID"]
+        # ----- Grab Steam JSON file -----
+        payload = {'appids': game_id, 'cc' : 'US'}
+        response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload)
+        jsonData = json.loads(response.text)
+
+        # ----- Determine game price -----
+        if(jsonData[str(game_id)]['data']['is_free']) : 
+            gamePrice = 0
+        else: 
+            gamePrice = float(str(jsonData[str(game_id)]['data']['price_overview']['final_formatted'])[1::])
+        
+        # ----- Grab SteamHunters completion time -----
+        completion_time = get_completion_data(game_id)
+        if(completion_time == "none") : continue
+        else : completion_time = int(completion_time)
+
+        print(f"Game price is {gamePrice}... {gamePrice < 20}")
+        print(f"Game completion time is {completion_time}... {completion_time < 40}")
+
+        # ----- Check to see if rollable -----
+        if(gamePrice < 20 and completion_time < 40) :
+            rollable = True
+            return random_game
+        print(' ')
 
 
-@tree.command(name="roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guild_ID))
-async def roll_command(interaction, event: events) -> None:
+@tree.command(name="roll_solo", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guild_ID))
+async def roll_solo_command(interaction, event: events_solo) -> None:
     await interaction.response.defer()
 
+    # Set up variables
     view = discord.ui.View(timeout=600)
     games = []
     embeds = []
@@ -291,25 +324,23 @@ async def roll_command(interaction, event: events) -> None:
             target_user = current_user
             break
     
+    # Inform the user that they are not registered.
     if(target_user == "") :
-        return await interaction.followup.send("You are not registered in the CE Assistant database. Please contact Andy for support.")
+        return await interaction.followup.send("You are not registered in the CE Assistant database. Please try /register with your CE link.")
 
+    # Check if the event is on cooldown...
+    if(event in list(userInfo[target_user]['Cooldowns'])) :
+        return await interaction.response.followup(embed=discord.Embed(title="Cooldown", description=f"You are currently on cooldown for {event}."))
 
-    # if(event in list(users[target_user]['cooldowns'])) :
-    #     return await interaction.response.followup(embed=discord.Embed(title="you are on cooldown"))
-
+    # ...or if the event is currently active.
     for eventInfo in userInfo[target_user]['Current Rolls'] :
-        if(eventInfo['Event Name'] == event) : return await interaction.followup.send(embed=discord.Embed(title="You are already participating in this event!"))
+        if(eventInfo['Event Name'] == event) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
     
-
-    with open('Jasons/database_tier.json', 'r') as dB : 
+    # Open the databases.
+    with open('Jasons/database_tier.json', 'r') as dB :
         database_tier = json.load(dB)
-    
     with open('Jasons/database_name.json', 'r') as dBN :
         database_name = json.load(dBN)
-  
-
-
 
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
@@ -444,19 +475,139 @@ async def roll_command(interaction, event: events) -> None:
     # dump the info
     with open('Jasons/users2.json', 'w') as f :
         json.dump(userInfo, f, indent=4)
-    # ---------------------------------------------
-    # ------------------ Co-ops -------------------
-    # Destiny Alignment: You and another player roll games
-    #   from the other's library, and both must complete them
-    # Soul Mates: You and another player agree on a tier, 
-    #   and then a game is rolled (time limit based on tier)
-
-    
 
     # Finally, send the embed
     await interaction.followup.send(embed=embed, view=view)
     print("Sent information on rolled game: " + str(games) + "\n")
 
+
+events_co_op = Literal["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
+                       "Winner Takes All", "Game Theory"]
+
+@tree.command(name="roll_co-op", description="Participate in Challenge Enthusiast Co-Op or PvP roll events!", guild=discord.Object(id=guild_ID))
+async def roll_co_op_command(interaction, event : events_co_op, partner : discord.Member) :
+    await interaction.response.defer()
+
+    # Open the user database
+    with open('Jasons/users2.json', 'r') as dbU:
+        database_user = json.load(dbU)
+    with open('Jasons/database_name.json', 'r') as dbN :
+        database_name = json.load(dbN)
+    
+    # Get the information from both users
+    interaction_user_data = ""
+    target_user_data = ""
+    view = discord.ui.View(timeout=600)
+    user_a_avatar = interaction.user.avatar
+
+    for user in database_user :
+        if database_user[user]["Discord ID"] == interaction.user.id : interaction_user_data = database_user[user]
+        elif database_user[user]["Discord ID"] == partner.id : target_user_data = database_user[user]
+    
+    if interaction_user_data == "" : return await interaction.followup.send("You are not registered in the CE Assistant database.")
+    if target_user_data == "" : return await interaction.followup.send(f"<@{partner.id}> is not registered in the CE Assistant database.")
+
+    print(list(interaction_user_data))
+
+    # ----------------------------------------------- Destiny Alignment ---------------------------------------------------
+    if(event == "Destiny Alignment") :
+
+        # Make sure both users are the same rank
+        if(interaction_user_data["Rank"] != target_user_data["Rank"]) : return await interaction.followup.send("You are not the same tier!")
+
+        # Send confirmation embed
+        embed = discord.Embed(
+            title="Destiny Alignment",
+            timestamp=datetime.datetime.now()
+        )
+        embed.add_field(name="Roll Information", value="You will each roll a game that the other has completed." 
+                        + " You must both complete all Primary Objectives for your rolled game."
+                        + " Cooldown is one month.")
+        embed.add_field(name="Confirmation", value=f"<@{partner.id}>, do you agree to participate with <@{interaction.user.id}>?")
+
+        # ----- Set up buttons... -----
+        agree_button = discord.ui.Button(label="Agree", style=discord.ButtonStyle.success)
+        deny_button = discord.ui.Button(label="Deny", style=discord.ButtonStyle.danger)
+
+        view.add_item(deny_button)
+        view.add_item(agree_button)
+
+        async def agree_callback(interaction) :
+            await interaction.response.defer()
+            if interaction.user.id != target_user_data["Discord ID"] : return
+            
+            interaction_user_completed_games = []
+            target_user_completed_games = []
+
+            # -------- Grab all completed games from interaction user --------
+            for interaction_user_game in interaction_user_data["Owned Games"] :
+                print(interaction_user_game)
+                # Grab all objectives completed by User A
+                try : interaction_user_obj_list = list(interaction_user_data["Owned Games"][interaction_user_game]["Primary Objectives"])
+                except : interaction_user_obj_list = []
+
+                # Grab all objectives for the game
+                database_obj_list = list(database_name[interaction_user_game]["Primary Objectives"])
+
+                # If they're the same, add the game to the list of possibilities.
+                if interaction_user_obj_list == database_obj_list : interaction_user_completed_games.append(interaction_user_game)
+            
+            # -------- Grab all completed games from target user --------
+            for target_user_game in target_user_data["Owned Games"] :
+                # Grab all objectives completed by User B
+                try: target_user_obj_list = list(target_user_data["Owned Games"][target_user_game]["Primary Objectives"])
+                except : target_user_obj_list = []
+
+                # Grab all objectives for the game
+                database_obj_list = list(database_name[target_user_game]["Primary Objectives"])
+
+                # If they're the same, add the game to the list of possibilities.
+                if target_user_obj_list == database_obj_list : target_user_completed_games.append(target_user_game)
+
+            # ----- Get rollable games from each user -----
+            interaction_user_selected_game = await get_rollable_game_from_list(interaction_user_completed_games)
+            target_user_selected_game = await get_rollable_game_from_list(target_user_completed_games)
+            games = [interaction_user_selected_game, target_user_selected_game]
+
+            # Clear the "agree" and "deny" buttons
+            view.clear_items()
+
+            # Grab the embeds you'll need
+            embeds = create_multi_embed("Destiny Alignment", 0, games, 28, interaction)
+
+            # Make adjustments to embeds
+            embeds[0].set_field_at(index=0, name="Rolled Games",
+                                  value=f"<@{target_user_data['Discord ID']}>: {interaction_user_selected_game}"
+                                  + f"\n<@{interaction_user_data['Discord ID']}>: {target_user_selected_game}")
+            embeds[0].set_thumbnail(url = ce_mountain_icon)
+            embeds[2].set_field_at(index = 1, name = "Rolled by", value = f"<@{interaction_user_data['Discord ID']}>")
+            embeds[2].set_thumbnail(url = user_a_avatar)
+
+            # Get page buttons
+            await get_buttons(view, embeds)
+
+            # and edit the message.
+            return await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
+
+        async def deny_callback(interaction) :
+            await interaction.response.defer()
+            if interaction.user.id != target_user_data["Discord ID"] : return
+
+            # Set up denial embed
+            embed = discord.Embed(
+                title="Roll Denied",
+                description=f"<@{partner.id}> has denied the roll.",
+                timestamp=datetime.datetime.now()
+            )
+
+            view.clear_items()
+            return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
+
+
+        agree_button.callback = agree_callback
+        deny_button.callback = deny_callback
+
+    return await interaction.followup.send(view=view, embed=embed)
 
 # -------------------------------------------------------------------------------------------------- #
 # -------------------------------------------- BUTTONS --------------------------------------------- #
@@ -524,7 +675,7 @@ async def get_genre_buttons(view, completion_time, price_limit, tier_number, eve
     buttons[2].callback = BH_callback
     buttons[3].callback = FP_callback
     buttons[4].callback = PF_callback
-    buttons[5].callback = ST_callback
+    buttons[5].callback = ST_callback        
 
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------- CHECK_ROLLS COMMAND ------------------------------------------------------ # 
@@ -566,7 +717,7 @@ async def checkRolls(interaction, user: discord.Member=None) :
     embed.add_field(name="Completed Rolls", value=completed_roll_str, inline=False)
     embed.set_thumbnail(url=target_user.avatar.url)
     embed.set_footer(text="CE Assistant",
-        icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
+        icon_url=ce_mountain_icon)
 
     # send the embed
     await interaction.followup.send(embed=embed)
@@ -751,9 +902,9 @@ def getEmbed(game_name, authorID):
     
     embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
     embed.set_image(url=imageLink)
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
+    embed.set_thumbnail(url=ce_mountain_icon)
     embed.set_footer(text="CE Assistant",
-        icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
+        icon_url=ce_mountain_icon)
     return embed
 
 
@@ -889,13 +1040,16 @@ async def test(interaction) :
 
 @tree.command(name="ce_register", description="Register yourself in the CE Assistant database to unlock rolls.", guild=discord.Object(id=guild_ID))
 async def register(interaction, ce_id: str) :
-    await interaction.response.defer() # defer the message
+    await interaction.response.defer(ephemeral=True) # defer the message
     
     #Open the user database
     with open('Jasons/users2.json', 'r') as dbU :
         database_user = json.load(dbU)
 
-   # Make sure the input is a valid CE-ID
+    # Set up total_points to calculate rank
+    total_points = 0
+
+    # Make sure the input is a valid CE-ID
     print(f"Input = {ce_id}")
     if(ce_id[:5:] == "https" and len(ce_id) >= 29 and (ce_id[29] == '-')) :
         if(ce_id[(len(ce_id)-5)::] == "games") : ce_id = ce_id[21:(len(ce_id)-6):]
@@ -905,14 +1059,19 @@ async def register(interaction, ce_id: str) :
 
     # Make sure user isn't already registered
     for user in database_user :
-        if(database_user[user]["CE ID"] == ce_id) : return await interaction.followup.send(f"This CE-ID is already registered to <@{database_user[user]['Discord ID']}>, silly!")
-        elif(database_user[user]["Discord ID"] == interaction.user.id) : return await interaction.followup.send("You are already registered in the database!")
+        if(database_user[user]["Discord ID"] == interaction.user.id) : return await interaction.followup.send("You are already registered in the database!")
+        elif(database_user[user]["CE ID"] == ce_id) : return await interaction.followup.send(f"This CE-ID is already registered to <@{database_user[user]['Discord ID']}>, silly!")
     
+    # Grab user info from CE API
+    response = requests.get(f"https://cedb.me/api/user/{ce_id}")
+    user_ce_data = json.loads(response.text)
+
     # Set up the user's JSON file
     user_dict = {
-        "User XYZ" : {
+        ce_id : {
             "CE ID" : ce_id,
             "Discord ID" : interaction.user.id,
+            "Rank" : "",
             "Reroll Tickets" : 0,
             "Owned Games" : {},
             "Cooldowns" : {},
@@ -920,6 +1079,50 @@ async def register(interaction, ce_id: str) :
             "Completed Rolls" : []
         }
     }
+    # Go through owned games in CE JSON
+    for game in user_ce_data["userGames"] :
+        game_name = game["game"]["name"]
+        
+        # Add the games to the local JSON
+        user_dict[ce_id]["Owned Games"][game_name] = {}
+
+    # Go through all objectives 
+    for objective in user_ce_data["userObjectives"] :
+        game_name = objective["objective"]["game"]["name"]
+        obj_name = objective["objective"]["name"]
+        
+        # If the objective is community, set the value to true
+        if objective["objective"]["community"] : user_dict[ce_id]["Owned Games"][game_name]["Community Objectives"] = {obj_name : True}
+
+        # If the objective is primary...
+        else : 
+            # ... and there are partial points AND no one has assigned requirements...
+            if(objective["objective"]["pointsPartial"] != 0 and objective["assignerId"] == None) :
+                # ... set the points earned to the partial points value.
+                points = objective["objective"]["pointsPartial"]
+            # ... and there are no partial points, set the points earned to the total points value.
+            else : points = objective["objective"]["points"]
+
+            # Add the points to user's total points
+            total_points += points
+
+            # Now actually update the value in the user's dictionary.
+            user_dict[ce_id]["Owned Games"][game_name]["Primary Objectives"] = {obj_name : points}
+
+
+    # Get the user's rank
+    rank = ""
+    if total_points < 50 : rank = "Rank E"
+    elif total_points < 250 : rank = "Rank D"
+    elif total_points < 500 : rank = "Rank C"
+    elif total_points < 1000 : rank = "Rank B"
+    elif total_points < 2500 : rank = "Rank A"
+    elif total_points < 5000 : rank = "Rank S"
+    elif total_points < 7500 : rank = "Rank SS"
+    elif total_points < 10000 : rank = "Rank SSS"
+    else : rank = "Rank EX"
+
+    user_dict[ce_id]["Rank"] = rank
 
     # Add the user file to the database
     database_user.update(user_dict)
@@ -928,8 +1131,21 @@ async def register(interaction, ce_id: str) :
     with open('Jasons/users2.json', 'w') as f :
         json.dump(database_user, f, indent=4)
 
+    # Create confirmation embed
+    embed = discord.Embed(
+        title="Registered!",
+        color=0x000000,
+        timestamp=datetime.datetime.now()
+    )
+    embed.add_field(name="Information", value=f"You have been registered in the CE Assistant database. Your CE-ID is {ce_id}"
+                    + f". You may now use all aspects of this bot.")
+    embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
+    embed.set_footer(text="CE Assistant",
+        icon_url=ce_mountain_icon)
+    embed.set_thumbnail(url=interaction.user.avatar)
+
     # Send a confirmation message
-    await interaction.followup.send("thanks man")
+    await interaction.followup.send(embed=embed)
 
 
 # ----------------------------------- LOG IN ----------------------------
