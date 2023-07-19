@@ -93,21 +93,23 @@ def get_objectives(CE_ID):
         index = 0
         achievement_name = []
         requirements = ''
+
+        objectives[index][objective['name']] = {
+            'Description' : objective['description'],
+        }
+
         if objective['community']:
             index = 1
+        else:
+            objectives[index][objective['name']]['Point Value'] = objective['points']
+            
         
-
         for requirement in objective['objectiveRequirements']:
             if requirement['type'] == 'achievement':
                 achievement_name.append(achievements[requirement['data']])
             elif requirement['type'] == 'custom':
                 requirements = requirement['data']
 
-
-        objectives[index][objective['name']] = {
-            'Description' : objective['description'],
-            'Point Value' : objective['points']
-        }
 
         if achievement_name != []:
             objectives[index][objective['name']]['Achievements'] = achievement_name
