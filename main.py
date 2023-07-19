@@ -494,20 +494,24 @@ async def roll_co_op_command(interaction, event : events_co_op, partner : discor
     with open('Jasons/database_name.json', 'r') as dbN :
         database_name = json.load(dbN)
     
-    # Get the information from both users
+    # Set up variables
     interaction_user_data = ""
     target_user_data = ""
     view = discord.ui.View(timeout=600)
     user_a_avatar = interaction.user.avatar
 
+    # Make sure the user doesn't select themselves
+    if interaction.user.id == partner.id : return await interaction.followup.send("You cannot enter a co-op roll with yourself.")
+
+    # Grab the information for both users
     for user in database_user :
         if database_user[user]["Discord ID"] == interaction.user.id : interaction_user_data = database_user[user]
-        elif database_user[user]["Discord ID"] == partner.id : target_user_data = database_user[user]
+        if database_user[user]["Discord ID"] == partner.id : target_user_data = database_user[user]
     
+    # Make sure both users are registered in the database
     if interaction_user_data == "" : return await interaction.followup.send("You are not registered in the CE Assistant database.")
     if target_user_data == "" : return await interaction.followup.send(f"<@{partner.id}> is not registered in the CE Assistant database.")
-
-    print(list(interaction_user_data))
+    
 
     # ----------------------------------------------- Destiny Alignment ---------------------------------------------------
     if(event == "Destiny Alignment") :
@@ -583,7 +587,7 @@ async def roll_co_op_command(interaction, event : events_co_op, partner : discor
                 if(interaction_user_owns_game) :
                     interaction_user_has_points_in_game = list(interaction_user_data["Owned Games"][target_user_selected_game].keys()).count("Primary Objectives") > 0
                 else : interaction_user_has_points_in_game = False
-                
+
             games = [interaction_user_selected_game, target_user_selected_game]
 
             # Clear the "agree" and "deny" buttons
@@ -621,8 +625,89 @@ async def roll_co_op_command(interaction, event : events_co_op, partner : discor
         agree_button.callback = agree_callback
         deny_button.callback = deny_callback
 
+
+    # --------------------------------------------- Soul Mates ---------------------------------------------------------
     elif(event == "Soul Mates") :
-        x=0
+        embed = discord.Embed(title="Soul Mates", timestamp=datetime.datetime.now())
+        embed.add_field(name="Roll Requirements", value="You and your partner must agree on a tier. A game will be rolled for both of you," 
+                                                        + "and you must **both** complete it in the time constraint listed below.")
+        embed.add_field(name="Tier Choices",
+                        value=":one: : 48 Hours\n:two: : 10 Days\n:three: : One Month\n:four: : Two Months\n:five: : Forever")
+        embed.set_thumbnail(url = ce_mountain_icon)
+        embed.set_author(name="Challenge Enthusiasts")
+        embed.set_footer(text="CE Assistant", icon_url=ce_mountain_icon)
+
+        buttons = []
+        i = 1
+        while i < 6 :
+            buttons.append(discord.ui.Button(label=f"Tier {i}"))
+            view.add_item(buttons[i-1])
+            i+=1
+    
+        async def t1_callback(interaction) : return await soulmate_callback(interaction, "Tier 1")
+        async def t2_callback(interaction) : return await soulmate_callback(interaction, "Tier 2")
+        async def t3_callback(interaction) : return await soulmate_callback(interaction, "Tier 3")
+        async def t4_callback(interaction) : return await soulmate_callback(interaction, "Tier 4")
+        async def t5_callback(interaction) : return await soulmate_callback(interaction, "Tier 5")
+
+        async def soulmate_callback(interaction, tier_num) :
+            await interaction.response.defer()
+            if interaction.user.id != interaction_user_data['Discord ID'] : return
+            view.clear_items()
+            game = get_rollable_game(40, 20, tier_num)
+
+            # ----- Make sure the other user doesn't have any points in the game they rolled -----
+            target_user_owns_game = True
+            target_user_has_points_in_game = True
+            interaction_user_owns_game = True
+            interaction_user_has_points_in_game = True
+            while (target_user_owns_game and target_user_has_points_in_game) or (interaction_user_owns_game and interaction_user_has_points_in_game) :
+                # grab a rollable game
+                game = get_rollable_game(40, 20, tier_num)
+                
+                # check to see if user B owns the game and if they have points in the game
+                target_user_owns_game = list(target_user_data["Owned Games"].keys()).count(game) > 0
+                if(target_user_owns_game) : 
+                    target_user_has_points_in_game = list(target_user_data["Owned Games"][game].keys()).count("Primary Objectives") > 0
+                else : target_user_has_points_in_game = False
+
+                # check to see if user A owns the game and if they have points in the game
+                interaction_user_owns_game = list(interaction_user_data["Owned Games"].keys()).count(game) > 0
+                if(interaction_user_owns_game) :
+                    interaction_user_has_points_in_game = list(interaction_user_data["Owned Games"][game].keys()).count("Primary Objectives") > 0
+                else : interaction_user_has_points_in_game = False
+
+            # ----- Set up agreement buttons for User B -----
+            agree_button = discord.ui.Button(label="Agree", style=discord.ButtonStyle.success)
+            deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
+            view.add_item(agree_button)
+            view.add_item(deny_button)
+            async def agree_callback(interaction) :
+                await interaction.response.defer()
+                if interaction.user.id != target_user_data['Discord ID'] : return
+                view.clear_items()
+                embed = getEmbed(game, interaction.user.id)
+                embed.add_field(name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
+                embed.add_field(name="Tier", value=database_name[game]["Tier"])
+                return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
+            async def deny_callback(interaction) :
+                await interaction.response.defer()
+                if interaction.user.id != target_user_data['Discord ID'] : return
+                view.clear_items()
+                return await interaction.followup.edit_message(message_id=interaction.message.id, embed=discord.Embed(title="Roll denied."))
+            agree_button.callback = agree_callback
+            deny_button.callback = deny_callback
+
+
+            # Set up embed for user B
+            embed = discord.Embed(title="Do you accept?", timestamp=datetime.datetime.now())
+            await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=view)
+
+        buttons[0].callback = t1_callback
+        buttons[1].callback = t2_callback
+        buttons[2].callback = t3_callback
+        buttons[3].callback = t4_callback
+        buttons[4].callback = t5_callback
         """
         - send a message asking what tier should be picked from
             - only user A should be able to respond
@@ -633,7 +718,7 @@ async def roll_co_op_command(interaction, event : events_co_op, partner : discor
             - game must be rerolled if either user has any points in the game
 
         """
-    
+    # -------------------------------------------- Teamwork Makes the Dream Work -------------------------------------------
     elif(event == "Teamwork Makes the Dream Work") :
         x=0
         """
@@ -643,6 +728,7 @@ async def roll_co_op_command(interaction, event : events_co_op, partner : discor
             - game must be rerolled if either user has any points in the game
         """
     
+    # -------------------------------------------------- Winner Takes All --------------------------------------------------
     elif(event == "Winner Takes All") :
         x=0
         """
