@@ -31,14 +31,14 @@ steam_api_key = localJSONData['steam_API_key']
 def get_games():
     # print(get_objectives('1e866995-6fec-452e-81ba-1e8f8594f4ea'))
     # driver = webdriver.Chrome()
-    # game_list()
+    game_list()
     # game_data(driver)
     # get_completion_data('504230')
     # get_by_tier()
     # game_updates = all_game_data(driver)
     # get_data('1e866995-6fec-452e-81ba-1e8f8594f4ea', driver)
     # get_name_data(driver)
-    get_update()
+    # get_update()
 
     # return game_updates
     
@@ -106,6 +106,7 @@ def get_objectives(CE_ID):
 
         objectives[index][objective['name']] = {
             'Description' : objective['description'],
+            'Point Value' : objective['points']
         }
 
         if achievement_name != []:
@@ -126,11 +127,11 @@ def get_update():
         print(differences)
         keys = list(differences.keys())
 
-        
+        updated_games = {}
 
         if keys.count('values_changed') > 0:
             for change in differences['values_changed']:
-                print(values_changed(change, differences['values_changed'][change]))
+                updated_games = values_changed(change, differences['values_changed'][change])
 
         if keys.count('dictionary_item_added') > 0:
             return
@@ -146,10 +147,13 @@ def get_update():
 
 def values_changed(change, values):
     updated_games = {}
-    game = change[change.find('[')+1:change.find(']')-1:]
-    edit = change[change.rfind('[')+1:change.rfind(']')-1]
+    game = change[change.find("['")+2:change.find("']"):]
+    edit = change[change.rfind("['")+2:change.rfind("']")]
     new_value = values['new_value']
     old_value = values['old_value']
+
+    location = get_title(change)
+    print(location)
 
     if list(updated_games.keys()).count(game) < 1:
         updated_games[game] = discord.Embed(
@@ -160,6 +164,19 @@ def values_changed(change, values):
 
     updated_games[game].add_field(name=edit, value="{} ➡ {}".format(old_value, new_value))
     return updated_games
+
+
+def get_title(root):
+    address = []
+    if len(root) > 2:
+        next = root[root.find("['")+2:root.find("']"):]
+        new_root = root[root.find("']")+2::]
+        address.append(next)
+        address.extend(get_title(new_root))
+        
+    return address
+
+
 
 def all_game_data():
     games = json.loads(open("./Jasons/test_database.json").read())
