@@ -912,8 +912,9 @@ async def scrape(interaction):
 
 
     correctChannel = client.get_channel(1128742486416834570)
-    for game in updates:  
-        await correctChannel.send(file=game[1], embed=game[0])
+    for dict in updates:
+        for game in dict:
+            await correctChannel.send(file=dict[game]['Image'], embed=dict[game]['Embed'])
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #

@@ -31,14 +31,14 @@ steam_api_key = localJSONData['steam_API_key']
 def get_games():
     # print(get_objectives('1e866995-6fec-452e-81ba-1e8f8594f4ea'))
     # driver = webdriver.Chrome()
-    game_list()
+    # game_list()
     # game_data(driver)
     # get_completion_data('504230')
     # get_by_tier()
     # game_updates = all_game_data(driver)
     # get_data('1e866995-6fec-452e-81ba-1e8f8594f4ea', driver)
     # get_name_data(driver)
-    # get_update()
+    return get_update()
 
     # return game_updates
     
@@ -127,11 +127,19 @@ def get_update():
         print(differences)
         keys = list(differences.keys())
 
+        image_number = 0
         updated_games = {}
+        new_games = {}
+        removed_games = {}
+        
 
         if keys.count('values_changed') > 0:
             for change in differences['values_changed']:
-                updated_games = values_changed(change, differences['values_changed'][change])
+                location = get_title(change)
+                name = location[0]
+                updated_games = values_changed(location, differences['values_changed'][change], image_number, updated_games)
+                print(updated_games)
+                image_number+=1
 
         if keys.count('dictionary_item_added') > 0:
             return
@@ -139,30 +147,40 @@ def get_update():
         if keys.count('dictionary_item_removed') > 0:
             return
         
+        games = [updated_games, new_games, removed_games]
 
+        return games
     else:
         return 'Up to date!'
 
+# updated_games = {}
 
-
-def values_changed(change, values):
-    updated_games = {}
-    game = change[change.find("['")+2:change.find("']"):]
-    edit = change[change.rfind("['")+2:change.rfind("']")]
+def values_changed(location, values, number, updated_games):
+    
     new_value = values['new_value']
     old_value = values['old_value']
 
-    location = get_title(change)
-    print(location)
+    
+    game = location.pop(0)
+    title = location.pop(0)
+    while len(location) > 0:
+        title = title + " : " + location.pop(0)
+
 
     if list(updated_games.keys()).count(game) < 1:
-        updated_games[game] = discord.Embed(
-            title=game,
-            colour= 0xefd839,
-            timestamp=datetime.now()
-        )
-
-    updated_games[game].add_field(name=edit, value="{} ➡ {}".format(old_value, new_value))
+        get_image(game, number)
+        updated_games[game] = {
+            'Embed' : discord.Embed(
+                title=game,
+                colour= 0xefd839,
+                timestamp=datetime.now()
+            ),
+            'Image' : discord.File("Web_Interaction/ss{}.png".format(number), filename="image.png")
+        }
+        updated_games[game]['Embed'].set_image(url='attachment://image.png')
+        
+    print(updated_games)
+    updated_games[game]['Embed'].add_field(name=title, value="{} ➡ {}".format(old_value, new_value))
     return updated_games
 
 
@@ -350,11 +368,13 @@ def get_completion_data(steam_id):
     return time
 
 
-def get_image(CE_ID, number):
+def get_image(game_name, number):
     options = Options()
     #options.add_argument('headless')
     driver = webdriver.Chrome(options=options)
     driver.set_window_size(width=1440, height=2000)
+    game_list = json.loads(open("./Jasons/database_name.json").read())
+    CE_ID = game_list[game_name]['CE ID']
     url = 'https://cedb.me/game/' + CE_ID
     driver.get(url)
 
