@@ -516,10 +516,7 @@ async def roll_co_op_command(interaction, event : events_co_op, partner : discor
         if(interaction_user_data["Rank"] != target_user_data["Rank"]) : return await interaction.followup.send("You are not the same tier!")
 
         # Send confirmation embed
-        embed = discord.Embed(
-            title="Destiny Alignment",
-            timestamp=datetime.datetime.now()
-        )
+        embed = discord.Embed(title="Destiny Alignment", timestamp=datetime.datetime.now())
         embed.add_field(name="Roll Information", value="You will each roll a game that the other has completed." 
                         + " You must both complete all Primary Objectives for your rolled game."
                         + " Cooldown is one month.")
@@ -528,10 +525,8 @@ async def roll_co_op_command(interaction, event : events_co_op, partner : discor
         # ----- Set up buttons... -----
         agree_button = discord.ui.Button(label="Agree", style=discord.ButtonStyle.success)
         deny_button = discord.ui.Button(label="Deny", style=discord.ButtonStyle.danger)
-
         view.add_item(deny_button)
         view.add_item(agree_button)
-
         async def agree_callback(interaction) :
             await interaction.response.defer()
             if interaction.user.id != target_user_data["Discord ID"] : return
@@ -564,9 +559,31 @@ async def roll_co_op_command(interaction, event : events_co_op, partner : discor
                 # If they're the same, add the game to the list of possibilities.
                 if target_user_obj_list == database_obj_list : target_user_completed_games.append(target_user_game)
 
-            # ----- Get rollable games from each user -----
-            interaction_user_selected_game = await get_rollable_game_from_list(interaction_user_completed_games)
-            target_user_selected_game = await get_rollable_game_from_list(target_user_completed_games)
+            # ----- Make sure the other user doesn't have any points in the game they rolled -----
+            target_user_owns_game = True
+            target_user_has_points_in_game = True
+
+            while target_user_owns_game and target_user_has_points_in_game :
+                # grab a rollable game
+                interaction_user_selected_game = await get_rollable_game_from_list(interaction_user_completed_games)
+                # check to see if they own the game and if they have points in the game
+                target_user_owns_game = list(target_user_data["Owned Games"].keys()).count(interaction_user_selected_game) > 0
+                if(target_user_owns_game) : 
+                    target_user_has_points_in_game = list(target_user_data["Owned Games"][interaction_user_selected_game].keys()).count("Primary Objectives") > 0
+                else : target_user_has_points_in_game = False
+
+            interaction_user_owns_game = True
+            interaction_user_has_points_in_game = True
+
+            while interaction_user_owns_game and interaction_user_has_points_in_game :
+                # grab a rollable game
+                target_user_selected_game = await get_rollable_game_from_list(target_user_completed_games)
+                # check to see if they own the game and if they have points in the game
+                interaction_user_owns_game = list(interaction_user_data["Owned Games"].keys()).count(target_user_selected_game) > 0
+                if(interaction_user_owns_game) :
+                    interaction_user_has_points_in_game = list(interaction_user_data["Owned Games"][target_user_selected_game].keys()).count("Primary Objectives") > 0
+                else : interaction_user_has_points_in_game = False
+                
             games = [interaction_user_selected_game, target_user_selected_game]
 
             # Clear the "agree" and "deny" buttons
@@ -588,7 +605,6 @@ async def roll_co_op_command(interaction, event : events_co_op, partner : discor
 
             # and edit the message.
             return await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
-
         async def deny_callback(interaction) :
             await interaction.response.defer()
             if interaction.user.id != target_user_data["Discord ID"] : return
@@ -602,10 +618,42 @@ async def roll_co_op_command(interaction, event : events_co_op, partner : discor
 
             view.clear_items()
             return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
-
-
         agree_button.callback = agree_callback
         deny_button.callback = deny_callback
+
+    elif(event == "Soul Mates") :
+        x=0
+        """
+        - send a message asking what tier should be picked from
+            - only user A should be able to respond
+            - this should include notes on how long each tier would have to complete the roll
+        - send another confirmation message 
+            - only user B should be allowed to respond
+        - get rollable games for whatever tier they asked for
+            - game must be rerolled if either user has any points in the game
+
+        """
+    
+    elif(event == "Teamwork Makes the Dream Work") :
+        x=0
+        """
+        - send confirmation message
+            - only user B should be allowed to respond
+        - roll them four tier 3 games
+            - game must be rerolled if either user has any points in the game
+        """
+    
+    elif(event == "Winner Takes All") :
+        x=0
+        """
+        - send a message asking what tier should be picked from
+            - only user A should be able to respond
+        - send a confirmation message for user B
+            - only user B should be allowed to respond
+        - roll a random game in that tier
+            - neither user can have completed any objectives in the game
+        """
+
 
     return await interaction.followup.send(view=view, embed=embed)
 
