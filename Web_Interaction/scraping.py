@@ -29,90 +29,150 @@ steam_api_key = localJSONData['steam_API_key']
 
 
 def get_games():
-
-    driver = webdriver.Chrome()
-    # game_list(driver)
+    # print(get_objectives('1e866995-6fec-452e-81ba-1e8f8594f4ea'))
+    # driver = webdriver.Chrome()
+    # game_list()
     # game_data(driver)
     # get_completion_data('504230')
     # get_by_tier()
-    game_updates = all_game_data(driver)
+    # game_updates = all_game_data(driver)
     # get_data('1e866995-6fec-452e-81ba-1e8f8594f4ea', driver)
     # get_name_data(driver)
+    get_update()
 
-    return game_updates
+    # return game_updates
     
 
 
 
-def game_list(driver):
+def game_list():
     api_response = requests.get('https://cedb.me/api/games')
     json_response = json.loads(api_response.text)
 
     new_data = {}
 
-    objectives = objectives(game['id'])
-
     for game in json_response:
-        new_data[game['name']] = {
-            "CE ID" : game['id'],
-            'Steam ID' : game['platformId'],
-            'Tier' : 'Tier' + game['tier'],
-            'Genre' : game['genre']['name'],
-            'Full Completions' : game['completion']['completed'],
-            'Total Owners' : game['completion']['total'],
-            'Primary Objectives' : objectives[0],
-            'Community Objectives' : objectives[1]
-        }
+        #objectives = get_objectives(game['id'])
+        new_data[game['name']] = get_game(game)
 
     with open('./Jasons/database_name.json', 'w') as f :
-        json.dump(games, f, indent=4)
+        json.dump(new_data, f, indent=4)
 
-    games = None
+    print('done')
+    new_data = None
     
 
-def objectives(CE_ID):
+def get_game(game):
+    objectives = get_objectives(game['id'])
+    returnable = {
+        "CE ID" : game['id'],
+        'Steam ID' : game['platformId'],
+        'Tier' : 'Tier ' + str(game['tier']),
+        'Genre' : game['genre']['name'],
+        'Full Completions' : game['completion']['completed'],
+        'Total Owners' : game['completion']['total'],
+        'Primary Objectives' : objectives[0],
+        'Community Objectives' : objectives[1]
+        }
+    
+    return returnable
+
+
+def get_objectives(CE_ID):
     api_response = requests.get('https://cedb.me/api/game/{}'.format(CE_ID))
     json_response = json.loads(api_response.text)
 
     objectives = [{}, {}]
-    index = 0
-    achievements = []
+    achievements = {}
+
+    for achievement in json_response['achievements']:
+        achievements[achievement['id']] = achievement['name']
+
 
     for objective in json_response['objectives']:
+        index = 0
+        achievement_name = []
+        requirements = ''
         if objective['community']:
             index = 1
         
+
         for requirement in objective['objectiveRequirements']:
             if requirement['type'] == 'achievement':
-                achievements.append(requirement['id'])
+                achievement_name.append(achievements[requirement['data']])
             elif requirement['type'] == 'custom':
                 requirements = requirement['data']
-
-        # for id in achievements:
 
 
         objectives[index][objective['name']] = {
             'Description' : objective['description'],
-            'Achievements' : achievements,
-            'Requirements' : requirements
         }
 
+        if achievement_name != []:
+            objectives[index][objective['name']]['Achievements'] = achievement_name
+        if requirements != '':
+            objectives[index][objective['name']]['Requirements'] = requirements
 
-def all_game_data(driver):
-    # driver = webdriver.Chrome()
+
+    return objectives
+
+
+def get_update():
+    new = json.loads(open("./Jasons/test_database_2.json").read()) #game_list()
+    old = json.loads(open("./Jasons/test_database.json").read())
+    
+    if new != old:
+        differences = DeepDiff(old, new, verbose_level=2)
+        print(differences)
+        keys = list(differences.keys())
+
+        
+
+        if keys.count('values_changed') > 0:
+            for change in differences['values_changed']:
+                print(values_changed(change, differences['values_changed'][change]))
+
+        if keys.count('dictionary_item_added') > 0:
+            return
+        
+        if keys.count('dictionary_item_removed') > 0:
+            return
+        
+
+    else:
+        return 'Up to date!'
+
+
+
+def values_changed(change, values):
+    updated_games = {}
+    game = change[change.find('[')+1:change.find(']')-1:]
+    edit = change[change.rfind('[')+1:change.rfind(']')-1]
+    new_value = values['new_value']
+    old_value = values['old_value']
+
+    if list(updated_games.keys()).count(game) < 1:
+        updated_games[game] = discord.Embed(
+            title=game,
+            colour= 0xefd839,
+            timestamp=datetime.now()
+        )
+
+    updated_games[game].add_field(name=edit, value="{} ➡ {}".format(old_value, new_value))
+    return updated_games
+
+def all_game_data():
     games = json.loads(open("./Jasons/test_database.json").read())
 
     game_updates = []
     i = 0
     for game in games:
-        data = get_data(games[game]["CE ID"], driver)
+        data = get_game(games[game])
         if (games[game] != data):
             to_send = update(games[game]["CE ID"], game, games[game], data, i)
             i+=1
             games[game] = data
             game_updates.append(to_send)
-            # correctChannel = client.get_channel(1128742486416834570)
-            # await correctChannel.send(file=to_send[1], embed=to_send[0])
         else:
             data = None
 
@@ -189,89 +249,7 @@ def update(CE_ID, name, old_data, new_data, number):
 
     
     return [embed, file]
-
-
-def get_name_data(driver):
-    games = json.loads(open("./Jasons/database_name.json").read())
-
-    for game in games:
-        games[game] = get_data(games[game]['CE ID'], driver)
-
-    with open('./Jasons/database_name.json', 'w') as f :
-        json.dump(games, f, indent=4)
     
-
-def get_data(id, driver):
-    url = "https://cedb.me/game/" + id
-    driver.get(url)
-    
-    table_list = []
-    while(len(table_list) < 1 or not table_list[0].is_displayed()):
-        table_list = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
-
-    primary_objectives_string = table_list[0].find_elements(By.TAG_NAME, "tr")
-    community_objectives_string = table_list[1].find_elements(By.TAG_NAME, "tr")
-
-    tier_and_genre = driver.find_elements(By.CLASS_NAME, "bp4-fill")
-    app_id = driver.find_element(By.CLASS_NAME, 'no-decoration').get_attribute("href")[34::]
-    tier = tier_and_genre[0].text
-    genre = tier_and_genre[1].text
-    headings = driver.find_elements(By.TAG_NAME, "h2")
-    community_objectives_exist = headings[1].text == "Community Objectives"
-
-
-    primary_objectives = {}
-    community_objectives = {}
-
-
-    for primary_objectives_element in primary_objectives_string:
-        primary_objectives_list = primary_objectives_element.text.split('\n')
-        while(len(primary_objectives_list) > 0):
-            achievements = []
-            intermediate = {}
-            title = primary_objectives_list.pop(0)
-            intermediate["Point Value"] = primary_objectives_list.pop(0)
-            intermediate["Description"] = primary_objectives_list.pop(0)
-            if(len(primary_objectives_list) > 0 and primary_objectives_list[0] == "Achievements:"):
-                primary_objectives_list.pop(0)
-                while(len(primary_objectives_list) > 0 and primary_objectives_list[0] != "Requirements:"):
-                    achievements.append(primary_objectives_list.pop(0))
-                intermediate["Achievements"] = achievements
-            if(len(primary_objectives_list) > 0 and primary_objectives_list[0] == "Requirements:"):
-                primary_objectives_list.pop(0)
-                intermediate["Requirements"] = primary_objectives_list.pop(0)
-            primary_objectives[title] = intermediate
-
-
-    if community_objectives_exist:
-        for community_objectives_element in community_objectives_string:
-            community_objectives_list = community_objectives_element.text.split('\n')
-            print(community_objectives_list)
-            while(len(community_objectives_list) > 0 and community_objectives_exist):
-                achievements = []
-                intermediate = {}
-                title = community_objectives_list.pop(0)
-                intermediate["Description"] = community_objectives_list.pop(0)
-                if(len(community_objectives_list) > 0 and community_objectives_list[0] == "Achievements:"):
-                    community_objectives_list.pop(0)
-                    while(len(community_objectives_list) > 0 and community_objectives_list[0] != "Requirements:"):
-                        achievements.append(community_objectives_list.pop(0))
-                    intermediate["Achievements"] = achievements
-                if(len(community_objectives_list) > 0 and community_objectives_list[0] == "Requirements:"):
-                    community_objectives_list.pop(0)
-                    intermediate["Requirements"] = community_objectives_list.pop(0)
-                community_objectives[title] = intermediate
-
-
-    full_game_info = {
-        "CE ID" : id,
-        "Steam ID" : app_id,
-        "Tier" : tier,
-        "Genre" : genre,
-        "Primary Objectives" : primary_objectives,
-        "Community Objectives" : community_objectives
-    }
-    return full_game_info
 
 
 def get_by_tier():
