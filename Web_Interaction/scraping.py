@@ -180,12 +180,13 @@ def values_changed(location, values, number, updated_games):
         old_value = values['old_value']
 
     game = location.pop(0)
-    title = location.pop(0)
+    title = ''
     while len(location) > 0:
         if location[0] == 'Achievements':
-            title = title + " : " + " Achievement Name Changed"
+            title = title + " : " + " Achievement Name"
             break
         title = title + " : " + location.pop(0)
+    title += " changed"
 
 
     if list(updated_games.keys()).count(game) < 1:
@@ -206,13 +207,13 @@ def values_changed(location, values, number, updated_games):
 
 def removal(location, value, number, removed_games):
     game = location.pop(0)
-    title = location.pop(0)
+    title = ''
     while len(location) > 0:
         if location[0] == 'Achievements':
-            title = title + " : " + "Achievement Removed"
+            title = title + " : " + "Achievement"
             break
         title = title + " : " + location.pop(0)
-
+    title += " Removed"
 
     if list(removed_games.keys()).count(game) < 1:
         get_image(game, number)
@@ -232,20 +233,20 @@ def removal(location, value, number, removed_games):
 
 def added(location, value, number, added_games):
     game = location.pop(0)
-    title = location.pop(0)
+    title = ''
     while len(location) > 0:
         if location[0] == 'Achievements':
-            title = title + " : " + "Achievement added"
+            title = title + " : " + "Achievement"
             break
         title = title + " : " + location.pop(0)
-
+    title += " added"
 
     if list(added_games.keys()).count(game) < 1:
         get_image(game, number)
         added_games[game] = {
             'Embed' : discord.Embed(
                 title=game,
-                colour= 0xce502c,
+                colour= 0x48b474,
                 timestamp=datetime.now()
             ),
             'Image' : discord.File("Web_Interaction/ss{}.png".format(number), filename="image.png")
@@ -265,97 +266,6 @@ def get_title(root):
         address.extend(get_title(new_root))
         
     return address
-
-
-
-def all_game_data():
-    games = json.loads(open("./Jasons/test_database.json").read())
-
-    game_updates = []
-    i = 0
-    for game in games:
-        data = get_game(games[game])
-        if (games[game] != data):
-            to_send = update(games[game]["CE ID"], game, games[game], data, i)
-            i+=1
-            games[game] = data
-            game_updates.append(to_send)
-        else:
-            data = None
-
-    # with open('./Jasons/test_database.json', 'w') as f :
-    #     json.dump(games, f, indent=4)
-
-    return game_updates
-
-
-
-def update(CE_ID, name, old_data, new_data, number):
-    get_image(CE_ID, number)
-    file = discord.File("Web_Interaction/ss{}.png".format(number), filename="image.png")
-    embed = discord.Embed(
-        title=name,
-        url=f"https://store.steampowered.com/app/{new_data['Steam ID']}/{name.replace(' ', '_')}/",
-        colour= 0xefd839,
-        timestamp=datetime.now()
-        )
-    embed.set_image(url='attachment://image.png')
-
-
-    icons = {
-        "Tier 0" : ':zero:',
-        "Tier 1" : ':one:',
-        "Tier 2" : ':two:',
-        "Tier 3" : ':three:',
-        "Tier 4" : ':four:',
-        "Tier 5" : ':five:',
-
-        "Action" : ':magnet:',
-        "Arcade" : ':video_game:',
-        "Bullet Hell" : ':gun:',
-        "First-Person" : ':person_bald:',
-        "Platformer" : ':runner:',
-        "Strategy" : ':chess_pawn:'
-    }
-
-    ddiff = DeepDiff(old_data, new_data)
-
-    if list(ddiff.keys()).count('values_changed'):
-        for value in ddiff['values_changed']:
-            if(list(icons.keys()).count(ddiff['values_changed'][value]['new_value']) > 0):
-                ddiff['values_changed'][value]['new_value'] = icons[ddiff['values_changed'][value]['new_value']]
-            if(list(icons.keys()).count(ddiff['values_changed'][value]['old_value']) > 0):
-                ddiff['values_changed'][value]['old_value'] = icons[ddiff['values_changed'][value]['old_value']]
-            embed.add_field(name=value[value.rfind('[')+2:value.rfind('\''):], value="{} ➡ {}".format(ddiff['values_changed'][value]['old_value'], ddiff['values_changed'][value]['new_value']))
-
-    
-    if list(ddiff.keys()).count('dictionary_item_added'):
-        for value in ddiff['dictionary_item_added']:
-            name_change = False
-            if list(ddiff.keys()).count('dictionary_item_removed'):
-                for other_value in ddiff['dictionary_item_removed']:
-                    if(ddiff['dictionary_item_added'][value]==ddiff['dictionary_item_removed'][other_value]):
-                        embed.add_field(name="Objective Name Change", value="{} ➡ {}".format(other_value[other_value.rfind('[')+2:other_value.rfind('\''):], value[value.rfind('[')+2:value.rfind('\''):]))
-                        name_change = True
-                    else:
-                        embed.add_field(name='Objective Removed', value=other_value[other_value.rfind('[')+2:other_value.rfind('\''):])
-            if not name_change:
-                embed.add_field(name='New Objective', value=value[value.rfind('[')+2:value.rfind('\''):])
-
-
-    for primary in old_data['Primary Objectives']:
-        if list(old_data['Primary Objectives'][primary].keys()).count('Achievements') > 0 and list(new_data['Primary Objectives'][primary].keys()).count('Achievements') > 0 and old_data['Primary Objectives'][primary]['Achievements'] != new_data['Primary Objectives'][primary]['Achievements']:
-            print("gets here")
-            achievement_change = DeepDiff(old_data['Primary Objectives'][primary]['Achievements'], new_data['Primary Objectives'][primary]['Achievements'])
-            if list(achievement_change.keys()).count('dictionary_item_added') > 0:
-                for addition in achievement_change['dictionary_item_added']:
-                    embed.add_field(name="Achievement Added", value=addition)
-            if list(achievement_change.keys()).count('dictionary_item_removed') > 0:
-                for addition in achievement_change['dictionary_item_removed']:
-                    embed.add_field(name="Achievement Removed", value=addition)
-
-    
-    return [embed, file]
     
 
 
@@ -470,5 +380,3 @@ def get_image(game_name, number):
     im = Image.open('Web_Interaction/ss{}.png'.format(number))
     im = im.crop((top_left['x']-border_width, top_left['y']-border_width, bottom_right['x']+size['width']+border_width, bottom_right['y']+size['height']+border_width)) # defines crop points
     im.save('Web_Interaction/ss{}.png'.format(number))
-
-    # return(discord.file('ss.png'))

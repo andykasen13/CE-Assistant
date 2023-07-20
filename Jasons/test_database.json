@@ -85,6 +85,22 @@
         },
         "Community Objectives": {}
     },
+    "Devil May Cry 5": {
+        "CE ID": "bacd841e-3086-4d92-a355-67cf515ddeb5",
+        "Steam ID": "601150",
+        "Tier": "Tier 3",
+        "Genre": "Action",
+        "Full Completions": 8,
+        "Total Owners": 169,
+        "Primary Objectives": {
+            "Devil May Style": {
+                "Description": "Clear all missions with S rank on \"Dante Must Die\" and \"Hell and Hell\" mode.",
+                "Point Value": 75,
+                "Requirements": "Video/GIF showing ranks on both modes, OR screenshot of\"Worthy of Legend\" achievement."
+            }
+        },
+        "Community Objectives": {}
+    },
     "140": {
         "CE ID": "50f3310d-04b0-4619-9c43-d0aa689f1303",
         "Steam ID": "242820",

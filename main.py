@@ -27,7 +27,7 @@ from selenium.webdriver.chrome.options import Options
 
 # --------- other file imports ---------
 from Web_Interaction.curator import loop
-from Web_Interaction.scraping import all_game_data, get_games, get_completion_data
+from Web_Interaction.scraping import get_games, get_completion_data
 
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
