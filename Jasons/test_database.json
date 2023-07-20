@@ -9,9 +9,10 @@
         "Primary Objectives": {
             "CEO of Awesome": {
                 "Description": "Obtain all achievements.",
-                "Achievements": [
-                    "I'm Klaus"
-                ]
+                "Point Value": 15,
+                "Achievements": {
+                    "7613bdf1-0d87-4caf-b072-2848ad9a1ff9": "I'm Klaus"
+                }
             }
         },
         "Community Objectives": {}
@@ -25,19 +26,20 @@
         "Total Owners": 100,
         "Primary Objectives": {
             "Microdasher": {
-                "Description": "Complete each world in under 2 minutes. / Complete each world without dying.",
-                "Achievements": [
-                    "Completed The Abyss Without Dying",
-                    "Completed The Grove Without Dying",
-                    "Completed The Depths In Under 2 Minutes",
-                    "Completed The Hearth Without Dying",
-                    "Completed The Abyss In Under 2 Minutes",
-                    "Completed The Aether Without Dying",
-                    "Completed The Aether In Under 2 Minutes",
-                    "Completed The Depths Without Dying",
-                    "Completed The Grove In Under 2 Minutes",
-                    "Completed The Hearth In Under 2 Minutes"
-                ]
+                "Description": "Complete each world in under 5 minutes. / Complete each world without dying.",
+                "Point Value": 10,
+                "Achievements": {
+                    "16f7c349-e7c8-4191-9f1b-2a52cf78b9c7": "Completed The Aether Without Dying",
+                    "61f1a69e-52ee-4f09-a7af-37478a541cef": "Completed The Aether In Under 2 Minutes",
+                    "70f7a3c9-78d0-45e2-84b0-28cde0818d4f": "Completed The Depths With Dying",
+                    "227a87e0-ed6d-4f63-925a-07d877c8b746": "Completed The Grove In Under 2 Minutes",
+                    "f3579f7c-2b98-4475-bbd3-487bd6bd4c7d": "Completed The Hearth In Under 2 Minutes",
+                    "fe1abcde-9a94-4f6b-8a3e-a674b453e0d2": "Completed The Abyss Without Dying",
+                    "4f5b7ffa-ec86-4678-b5ab-6e2b1349173b": "Completed The Grove Without Dying",
+                    "c31ac6ae-3b8a-46cd-98b4-8cfbdf551e14": "Completed The Depths In Under 2 Minutes",
+                    "091b07bb-284c-471c-844d-363b04de698f": "Completed The Abyss In Under 2 Minutes",
+                    "8196fa80-20c2-468d-9934-5cbc75acdf7f": "Completed The Hearth Without Dying"
+                }
             }
         },
         "Community Objectives": {}
@@ -52,9 +54,10 @@
         "Primary Objectives": {
             "Routing Ninja": {
                 "Description": "Earn 300 stars. / Get an X rank on all marathon modes.",
-                "Achievements": [
-                    "Wooooooooooooooah - Livin' on a prayer"
-                ]
+                "Point Value": 15,
+                "Achievements": {
+                    "dc2bffae-e43b-476f-b7d7-a55f1b0bc829": "Wooooooooooooooah - Livin' on a prayer"
+                }
             }
         },
         "Community Objectives": {}
@@ -65,17 +68,19 @@
         "Tier": "Tier 1",
         "Genre": "Platformer",
         "Full Completions": 33,
-        "Total Owners": 138,
+        "Total Owners": 139,
         "Primary Objectives": {
             "1001 Yikes": {
                 "Description": "Prove yourself.",
-                "Achievements": [
-                    "Towerful",
-                    "Speed Runner",
-                    "Headhunter",
-                    "Stone Cold",
-                    "Lost and Found"
-                ]
+                "Point Value": 10,
+                "Achievements": {
+                    "95b34459-e6b2-462a-a69b-fd68ba1d3235": "Headhunter",
+                    "c0a19c5b-1371-402f-9e4c-fd62fe80b444": "Stone Cold",
+                    "2f6c492f-bb3d-414a-ae91-7b83848a2d22": "Lost and Found",
+                    "e8ab3d94-05a9-4867-aa60-64dd097d1ba6": "Towerful",
+                    "5fae56e6-c189-4895-a7f3-f27b4ccdf55d": "Speed Runner",
+                    "dc2bffae-e43b-476f-b7d7-a55f1b0bc829": "Wooooooooooooooah - Livin' on a prayer"
+                }
             }
         },
         "Community Objectives": {}
@@ -90,12 +95,13 @@
         "Primary Objectives": {
             "041": {
                 "Description": "Complete all the mirror stages.",
-                "Achievements": [
-                    "01-00110001",
-                    "11-00110001",
-                    "001-00110001",
-                    "10-00110001"
-                ]
+                "Point Value": 15,
+                "Achievements": {
+                    "7badf7e9-5ae9-46f7-819b-b7ea4b3d89c8": "001-00110001",
+                    "22889e37-7d90-4232-a79f-e301e192795c": "10-00110001",
+                    "bac86116-7963-453b-a870-b33a1c5689a4": "01-00110001",
+                    "3ccafbdd-afac-44ab-9d2f-0a4022ca02db": "11-00110001"
+                }
             }
         },
         "Community Objectives": {}
@@ -105,25 +111,27 @@
         "Steam ID": "2099900",
         "Tier": "Tier 2",
         "Genre": "Arcade",
-        "Full Completions": 6,
+        "Full Completions": 7,
         "Total Owners": 37,
         "Primary Objectives": {
             "Where we're going, we don't need snow": {
                 "Description": "Record a score of 1080 seconds in Infinite mode",
-                "Achievements": [
-                    "1080!!!"
-                ]
+                "Point Value": 25,
+                "Achievements": {
+                    "f89053f2-cba1-48bd-bf1b-41dccfafb436": "1080!!!"
+                }
             },
             "Gridlocked": {
                 "Description": "Clear all stages with one life.",
-                "Achievements": [
-                    "600%_Red",
-                    "100%_Red",
-                    "300%_Red",
-                    "400%_Red",
-                    "500%_Red",
-                    "200%_Red"
-                ]
+                "Point Value": 10,
+                "Achievements": {
+                    "ba0aeae4-1353-4174-bcae-6fc80fe4aba0": "400%_Red",
+                    "7b9900c4-6285-45d3-8d91-eabaa01c5b2f": "500%_Red",
+                    "d89e28d8-336c-4d4e-a15b-6ab45ec845b9": "200%_Red",
+                    "ac10a123-1d77-40c2-9de7-a12efe4dd85f": "600%_Red",
+                    "20c36002-0207-4c36-be4c-9987d754ea7b": "100%_Red",
+                    "e164ac3e-7962-4c77-a21f-a92a13195aa8": "300%_Red"
+                }
             }
         },
         "Community Objectives": {}
@@ -138,13 +146,14 @@
         "Primary Objectives": {
             "Beyond Beyond Godlike": {
                 "Description": "Prove yourself.",
-                "Achievements": [
-                    "Polkka Dancer",
-                    "Superpowered!",
-                    "To infinity and beyond",
-                    "Beyond Godlike",
-                    "Mind-Twisted"
-                ]
+                "Point Value": 20,
+                "Achievements": {
+                    "fd490aeb-7c40-41d6-b8f3-91b5703e3363": "To infinity and beyond",
+                    "a072b5c6-3d5d-4abf-b646-03018469daca": "Beyond Godlike",
+                    "4c3f3527-d903-4122-b35d-a97d0ebcc8d3": "Mind-Twisted",
+                    "7a9ee590-5826-40be-b492-3ae3dc9df93a": "Polkka Dancer",
+                    "cae9dd57-b07f-4a41-9129-a3e06ac2fb3a": "Superpowered!"
+                }
             }
         },
         "Community Objectives": {}
@@ -159,10 +168,11 @@
         "Primary Objectives": {
             "9 Hours of Quality": {
                 "Description": "Complete the bestiary and beat the game.",
-                "Achievements": [
-                    "Gotta Kill Them All",
-                    "Saviour"
-                ]
+                "Point Value": 5,
+                "Achievements": {
+                    "8c464afb-86fd-4487-9d88-46f9f6961dab": "Saviour",
+                    "c9ac2f8a-a2a2-415b-aab7-f1fcfc8b37ad": "Gotta Kill Them All"
+                }
             }
         },
         "Community Objectives": {}
@@ -177,9 +187,10 @@
         "Primary Objectives": {
             "Oddly Specific": {
                 "Description": "Defeat 107 enemies in Endless Fighter Mode.",
-                "Achievements": [
-                    "Impossible"
-                ]
+                "Point Value": 10,
+                "Achievements": {
+                    "57a38a97-00e5-4b28-9e09-a6d03d270466": "Impossible"
+                }
             }
         },
         "Community Objectives": {}
@@ -190,41 +201,46 @@
         "Tier": "Tier 5",
         "Genre": "Arcade",
         "Full Completions": 8,
-        "Total Owners": 441,
+        "Total Owners": 442,
         "Primary Objectives": {
             "Melody Master": {
                 "Description": "Complete every world with a Pure Perfect rating.",
+                "Point Value": 130,
                 "Requirements": "Video/GIF showing 100% X-Accuracy for every world + videos of XO, XT, XI and MO Pure Perfects on 1.0x speed with Hit Error Meter enabled."
             },
             "Tempo Artisan": {
                 "Description": "Complete every world in the Neo Cosmos DLC with a Pure Perfect rating.",
+                "Point Value": 70,
                 "Requirements": "Video/GIF showing 100% X-Accuracy for every world + videos of T5 and all EX Pure Perfects on 1.0x speed with Hit Error Meter enabled."
             },
             "A Dance of Trial and Error": {
                 "Description": "Obtain the speed trial lantern for every world in the Xtra, Crown and Muse Dash islands.",
+                "Point Value": 40,
                 "Requirements": "Screenshots/GIF of each island."
             },
             "High Guardian": {
                 "Description": "Obtain the speed trial lantern for every world in the Neo Cosmos DLC.",
+                "Point Value": 20,
                 "Requirements": "Screenshots/GIF of each world."
             },
             "Orbitals on the Double": {
                 "Description": "Obtain the speed trial lantern for Worlds 1 through 12 and beat World B.",
-                "Achievements": [
-                    "World 5 Speed Trial Complete",
-                    "World 11 Trial",
-                    "World 1 Speed Trial Complete",
-                    "World 12 Trial",
-                    "World 9 Speed Trial",
-                    "Bonus Level Complete",
-                    "World 7 Speed Trial",
-                    "World 4 Speed Trial Complete",
-                    "World 8 Speed Trial",
-                    "World 3 Speed Trial Complete",
-                    "World 6 Speed Trial Complete",
-                    "World 2 Speed Trial Complete",
-                    "World 10 Speed Trial"
-                ]
+                "Point Value": 10,
+                "Achievements": {
+                    "ddfa5f66-e039-45d5-8842-3f3e655e13fc": "World 7 Speed Trial",
+                    "c30f1385-c629-4f61-8306-ebdd31930cb8": "World 4 Speed Trial Complete",
+                    "3c9fd30d-87ca-4415-87d0-65b2e2d80a04": "World 3 Speed Trial Complete",
+                    "499a516c-b3e9-41ba-8746-f350ecafb1f2": "World 8 Speed Trial",
+                    "2d018ea9-45e6-4cbb-836e-5445ab0608e1": "World 6 Speed Trial Complete",
+                    "50cb8830-790d-4e2e-b705-79ce8d18d1a5": "World 2 Speed Trial Complete",
+                    "e787a525-b300-4612-b278-df66bb23bba2": "World 10 Speed Trial",
+                    "eac4718a-a982-4834-88f6-01d082590091": "World 5 Speed Trial Complete",
+                    "6d8fdda7-d5bf-4e27-ad3e-bb6f5d0bcb8c": "World 1 Speed Trial Complete",
+                    "51815cf6-75a1-41b3-be84-20cd32fa7a96": "World 11 Trial",
+                    "d5b45b81-1b88-462e-8235-c892b31526b2": "World 12 Trial",
+                    "ef2ad91e-512c-4f58-bf37-a5e36d478687": "World 9 Speed Trial",
+                    "8a38ac22-7142-41da-af2e-6777840cce9c": "Bonus Level Complete"
+                }
             }
         },
         "Community Objectives": {}
@@ -239,9 +255,10 @@
         "Primary Objectives": {
             "Timeless End": {
                 "Description": "Obtain all Death Wish stamps without using \"Peace and Tranquility\" mode or any mods.",
-                "Achievements": [
-                    "I Refuse To Die!"
-                ],
+                "Point Value": 55,
+                "Achievements": {
+                    "dbce1c50-a26a-4b4d-a113-d4fe46c97793": "I Refuse To Die!"
+                },
                 "Requirements": "Screenshot of the Death Wish map (no Peace and Tranquility stamps; \"Unlimited Possibilities\" achievements can't be unlocked prior to \"I Refuse To Die!\"), OR video of \"Seal the Deal\"."
             }
         },

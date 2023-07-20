@@ -29,18 +29,10 @@ steam_api_key = localJSONData['steam_API_key']
 
 
 def get_games():
-    # print(get_objectives('1e866995-6fec-452e-81ba-1e8f8594f4ea'))
-    # driver = webdriver.Chrome()
     # game_list()
-    # game_data(driver)
-    # get_completion_data('504230')
     # get_by_tier()
-    # game_updates = all_game_data(driver)
-    # get_data('1e866995-6fec-452e-81ba-1e8f8594f4ea', driver)
-    # get_name_data(driver)
     return get_update()
 
-    # return game_updates
     
 
 
@@ -91,31 +83,30 @@ def get_objectives(CE_ID):
 
     for objective in json_response['objectives']:
         index = 0
-        achievement_name = []
+        achievement_name = {}
         requirements = ''
+
+        if objective['community']:
+            index = 1
+
+        for requirement in objective['objectiveRequirements']:
+            if requirement['type'] == 'achievement':
+                achievement_name[requirement['data']] = achievements[requirement['data']]
+            elif requirement['type'] == 'custom':
+                requirements = requirement['data']
 
         objectives[index][objective['name']] = {
             'Description' : objective['description'],
         }
 
-        if objective['community']:
-            index = 1
-        else:
+        if not objective['community']:
             objectives[index][objective['name']]['Point Value'] = objective['points']
-            
-        
-        for requirement in objective['objectiveRequirements']:
-            if requirement['type'] == 'achievement':
-                achievement_name.append(achievements[requirement['data']])
-            elif requirement['type'] == 'custom':
-                requirements = requirement['data']
 
-
-        if achievement_name != []:
+        if achievement_name != {}:
             objectives[index][objective['name']]['Achievements'] = achievement_name
         if requirements != '':
             objectives[index][objective['name']]['Requirements'] = requirements
-
+        
 
     return objectives
 
@@ -126,46 +117,74 @@ def get_update():
     
     if new != old:
         differences = DeepDiff(old, new, verbose_level=2)
-        print(differences)
         keys = list(differences.keys())
 
         image_number = 0
         updated_games = {}
-        new_games = {}
+        added_games = {}
         removed_games = {}
         
 
         if keys.count('values_changed') > 0:
             for change in differences['values_changed']:
                 location = get_title(change)
-                name = location[0]
                 updated_games = values_changed(location, differences['values_changed'][change], image_number, updated_games)
-                print(updated_games)
                 image_number+=1
 
         if keys.count('dictionary_item_added') > 0:
-            return
+            for addition in differences['dictionary_item_added']:
+                location = get_title(addition)
+                removed_games = removal(location, differences['dictionary_item_added'][addition], image_number, added_games)
+                image_number+=1
         
         if keys.count('dictionary_item_removed') > 0:
-            return
+            for removed in differences['dictionary_item_removed']:
+                location = get_title(removed)
+                removed_games = removal(location, differences['dictionary_item_removed'][removed], image_number, removed_games)
+                image_number+=1
         
-        games = [updated_games, new_games, removed_games]
+        games = [updated_games, added_games, removed_games]
 
         return games
     else:
-        return 'Up to date!'
+        print('Up to date!')
+        return []
 
-# updated_games = {}
 
 def values_changed(location, values, number, updated_games):
     
-    new_value = values['new_value']
-    old_value = values['old_value']
+    icons = {
+        "Tier 0" : ':zero:',
+        "Tier 1" : ':one:',
+        "Tier 2" : ':two:',
+        "Tier 3" : ':three:',
+        "Tier 4" : ':four:',
+        "Tier 5" : ':five:',
 
-    
+        "Action" : ':magnet:',
+        "Arcade" : ':video_game:',
+        "Bullet Hell" : ':gun:',
+        "First-Person" : ':person_bald:',
+        "Platformer" : ':runner:',
+        "Strategy" : ':chess_pawn:'
+    }
+
+    if list(icons.keys()).count(values['new_value']) > 0:
+        new_value = icons[values['new_value']]
+    else:
+        new_value = values['new_value']
+
+    if list(icons.keys()).count(values['old_value']) > 0:
+        old_value = icons[values['old_value']]
+    else:
+        old_value = values['old_value']
+
     game = location.pop(0)
     title = location.pop(0)
     while len(location) > 0:
+        if location[0] == 'Achievements':
+            title = title + " : " + " Achievement Name Changed"
+            break
         title = title + " : " + location.pop(0)
 
 
@@ -181,9 +200,60 @@ def values_changed(location, values, number, updated_games):
         }
         updated_games[game]['Embed'].set_image(url='attachment://image.png')
         
-    print(updated_games)
     updated_games[game]['Embed'].add_field(name=title, value="{} ➡ {}".format(old_value, new_value))
     return updated_games
+
+
+def removal(location, value, number, removed_games):
+    game = location.pop(0)
+    title = location.pop(0)
+    while len(location) > 0:
+        if location[0] == 'Achievements':
+            title = title + " : " + "Achievement Removed"
+            break
+        title = title + " : " + location.pop(0)
+
+
+    if list(removed_games.keys()).count(game) < 1:
+        get_image(game, number)
+        removed_games[game] = {
+            'Embed' : discord.Embed(
+                title=game,
+                colour= 0xce502c,
+                timestamp=datetime.now()
+            ),
+            'Image' : discord.File("Web_Interaction/ss{}.png".format(number), filename="image.png")
+        }
+        removed_games[game]['Embed'].set_image(url='attachment://image.png')
+        
+    removed_games[game]['Embed'].add_field(name=title, value="{} was removed".format(value))
+    return removed_games
+
+
+def added(location, value, number, added_games):
+    game = location.pop(0)
+    title = location.pop(0)
+    while len(location) > 0:
+        if location[0] == 'Achievements':
+            title = title + " : " + "Achievement added"
+            break
+        title = title + " : " + location.pop(0)
+
+
+    if list(added_games.keys()).count(game) < 1:
+        get_image(game, number)
+        added_games[game] = {
+            'Embed' : discord.Embed(
+                title=game,
+                colour= 0xce502c,
+                timestamp=datetime.now()
+            ),
+            'Image' : discord.File("Web_Interaction/ss{}.png".format(number), filename="image.png")
+        }
+        added_games[game]['Embed'].set_image(url='attachment://image.png')
+        
+    added_games[game]['Embed'].add_field(name=title, value="{} was added".format(value))
+    return added_games
 
 
 def get_title(root):
