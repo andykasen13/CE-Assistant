@@ -48,10 +48,6 @@ discord_token = localJSONData['discord_token']
 guild_ID = localJSONData['guild_ID']
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 
-# Add the guild ids in which the slash command will appear. 
-# If it should be in all, remove the argument, but note that 
-# it will take some time (up to an hour) to register the command 
-# if it's for all guilds.
     
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
