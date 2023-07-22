@@ -184,3 +184,4 @@ async def get_rollable_game_from_list(games) :
             rollable = True
             return random_game
         print(' ')
+
