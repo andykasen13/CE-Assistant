@@ -124,7 +124,9 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, speci
             
             # ----- Grab SteamHunters completion time -----
             completion_time = get_completion_data(gameID)
-            if(completion_time == "none") : continue
+            if(completion_time == "none") :
+                print(f"No completion data for {returned_game}.") 
+                continue
             else : completion_time = int(completion_time)
 
             print(f"Game price is {gamePrice}... {gamePrice < price_limit}")
@@ -135,6 +137,7 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, speci
                 rollable = True
             print("\n")
 
+        # ----- We now have a rollable game. Return it. -----
         print(f"{returned_game} is rollable.")
         print("\n")
         return returned_game

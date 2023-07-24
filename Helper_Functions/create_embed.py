@@ -58,8 +58,8 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
         for objective in database_name[selected_game]["Primary Objectives"] :
             total_points += int(database_name[selected_game]["Primary Objectives"][objective]["Point Value"])
         embeds[i+1].add_field(name="CE Status", value=f"{total_points} Points", inline=True)
-        embeds[i+1].add_field(name="CE Owners", value="[insert]", inline=True)
-        embeds[i+1].add_field(name="CE Completions", value="[insert]", inline=True)
+        embeds[i+1].add_field(name="CE Owners", value= database_name[selected_game]["Total Owners"], inline=True)
+        embeds[i+1].add_field(name="CE Completions", value= database_name[selected_game]["Full Completions"], inline=True)
         i+=1
     
     return embeds # Set the embed to send as the first one

@@ -15,14 +15,18 @@
         "Discord ID": 413427677522034727,
         "Rank": "Rank C",
         "Reroll Tickets": 0,
+        "Casino Score": 0,
         "Owned Games": {
             "Neon White": {
                 "Primary Objectives": {
+                    "Demon Exterminator": 35,
+                    "Rocket League": 10,
                     "Heaven's Janitor": 5
                 }
             },
             "Hollow Knight": {
                 "Primary Objectives": {
+                    "Void Given Focus": 30,
                     "Cloak and Nail": 20
                 }
             },
@@ -36,14 +40,14 @@
                     "Golden Samurai": 25
                 }
             },
-            "Celeste": {
-                "Primary Objectives": {
-                    "Mountain Climber": 20
-                }
-            },
             "UNSIGHTED": {
                 "Primary Objectives": {
                     "Seeing is Believing": 20
+                }
+            },
+            "Celeste": {
+                "Primary Objectives": {
+                    "Mountain Climber": 20
                 }
             },
             "Deepest Sword": {
@@ -56,24 +60,19 @@
                     "Anti-Corruption Protocol": 15
                 }
             },
-            "Death's Door": {
-                "Primary Objectives": {
-                    "Knocking on..": 10
-                }
-            },
             "Garfield Kart - Furious Racing": {
                 "Primary Objectives": {
                     "Lasagna Fuel": 10
                 }
             },
-            "Cuphead": {
+            "Death's Door": {
                 "Primary Objectives": {
-                    "BRAVO!!!": 5
+                    "Knocking on..": 10
                 }
             },
-            "Untitled Goose Game": {
+            "GoNNER": {
                 "Primary Objectives": {
-                    "Agent of Chaos": 5
+                    "Slick Ikk": 5
                 }
             },
             "Clustertruck": {
@@ -81,186 +80,14 @@
                     "Mothertrucker": 5
                 }
             },
-            "GoNNER": {
-                "Primary Objectives": {
-                    "Slick Ikk": 5
-                }
-            },
             "TUNIC": {
                 "Primary Objectives": {
                     "Action Over": 5
                 }
             },
-            "Milli & Greg": {
+            "Untitled Goose Game": {
                 "Primary Objectives": {
-                    "Cat Fanatic": 5
-                }
-            },
-            "ibb & obb": {},
-            "Dead Cells": {},
-            "Ultimate Custom Night": {},
-            "Hextech Mayhem: A League of Legends Story\u2122": {},
-            "Lorera": {},
-            "Raw Data": {},
-            "Unrailed!": {},
-            "Gunborg: Dark Matters": {},
-            "Crash Bandicoot\u2122 N. Sane Trilogy": {},
-            "Cyber Hook": {},
-            "Little Nightmares": {},
-            "Neon Boost": {},
-            "You Have to Win the Game": {},
-            "The Witness": {},
-            "Clone Drone in the Danger Zone": {},
-            "Rise of the Tomb Raider\u2122": {},
-            "Overcooked! 2": {},
-            "Portal": {},
-            "Ori and the Will of the Wisps": {},
-            "Ori and the Blind Forest: Definitive Edition": {},
-            "Geometry Dash": {},
-            "Furi": {},
-            "Primal Light": {},
-            "DOOM Eternal": {},
-            "ZeroRanger": {},
-            "Halo: The Master Chief Collection": {},
-            "Enter the Gungeon": {},
-            "Crashlands": {},
-            "- Challenge Enthusiasts -": {
-                "Community Objectives": {
-                    "Intro Quest": true
-                }
-            },
-            "Getting Over It with Bennett Foddy": {},
-            "TowerFall Ascension": {},
-            "The Messenger": {},
-            "Sonic Mania": {},
-            "Pacify": {},
-            "ELDEN RING": {}
-        },
-        "Cooldowns": {},
-        "Current Rolls": [
-            {
-                "Event Name": "Two Week T2 Streak",
-                "End Time": "2023-07-19 10:43:20",
-                "Games": [
-                    "SUPERHOT VR",
-                    "Neptunia Shooter"
-                ]
-            }
-        ],
-        "Completed Rolls": []
-    },
-    "835afaad-0059-4e39-b24f-24b2c76b1d08": {
-        "CE ID": "835afaad-0059-4e39-b24f-24b2c76b1d08",
-        "Discord ID": 688037250537095296,
-        "Rank": "Rank C",
-        "Reroll Tickets": 0,
-        "Owned Games": {
-            "Katana ZERO": {
-                "Primary Objectives": {
-                    "Golden Samurai": 25
-                }
-            },
-            "Geometry Dash": {
-                "Primary Objectives": {
-                    "The Impossible Game": 30
-                }
-            },
-            "Buck Up And Drive!": {
-                "Primary Objectives": {
-                    "youtube.com/watch?v=A41UYTcP_jc": 20
-                }
-            },
-            "Hollow Knight": {
-                "Primary Objectives": {
-                    "Cloak and Nail": 20
-                }
-            },
-            "Hades": {
-                "Primary Objectives": {
-                    "From Hell and Back": 20
-                }
-            },
-            "Yumori Forest": {
-                "Primary Objectives": {
-                    "Forest Guardian": 5
-                }
-            },
-            "Sekiro\u2122: Shadows Die Twice": {
-                "Primary Objectives": {
-                    "One-Armed Wolf": 15
-                },
-                "Community Objectives": {
-                    "Pure Blade": true
-                }
-            },
-            "UNSIGHTED": {
-                "Primary Objectives": {
-                    "Seeing is Believing": 20
-                }
-            },
-            "Celeste": {
-                "Primary Objectives": {
-                    "Mountain Climber": 20
-                }
-            },
-            "Bladed Fury": {
-                "Primary Objectives": {
-                    "Oriental Fury": 20
-                }
-            },
-            "ELDEN RING": {
-                "Primary Objectives": {
-                    "Elden Lord": 20
-                }
-            },
-            "Lovely Planet": {
-                "Primary Objectives": {
-                    "Lovely Ace": 15
-                }
-            },
-            "Heavy Bullets": {
-                "Primary Objectives": {
-                    "Bullet Recycler": 15
-                }
-            },
-            "Verlet Swing": {
-                "Primary Objectives": {
-                    "Teapots of Glory": 15
-                }
-            },
-            "Micro Platformer": {
-                "Primary Objectives": {
-                    "Micro Nightmare": 15
-                }
-            },
-            "Overclocked": {
-                "Primary Objectives": {
-                    "Glass-Cannon Vigilante": 15
-                }
-            },
-            "Curvatron": {
-                "Primary Objectives": {
-                    "Snake Charmer": 10
-                }
-            },
-            "Duet": {
-                "Primary Objectives": {
-                    "Dialogue": 10
-                }
-            },
-            "Momodora: Reverie Under The Moonlight": {
-                "Primary Objectives": {
-                    "Lun Priestess": 10
-                }
-            },
-            "Aaero": {
-                "Primary Objectives": {
-                    "Master Star Tracer": 10
-                }
-            },
-            "Alien Removal Division": {
-                "Primary Objectives": {
-                    "Extraterrestrial Exterminator": 10
+                    "Agent of Chaos": 5
                 }
             },
             "Cuphead": {
@@ -268,113 +95,132 @@
                     "BRAVO!!!": 5
                 }
             },
-            "Ghost Song": {
+            "Milli & Greg": {
                 "Primary Objectives": {
-                    "Survivor of Lorian": 5
+                    "Cat Fanatic": 5
                 }
             },
-            "High Hell": {
-                "Primary Objectives": {
-                    "Holy Hell": 5
-                }
-            },
-            "Lorera": {
-                "Primary Objectives": {
-                    "Growth": 5
-                }
-            },
-            "GoNNER": {
-                "Primary Objectives": {
-                    "Slick Ikk": 5
-                }
-            },
-            "Just Shapes & Beats": {
-                "Primary Objectives": {
-                    "Beats": 5
-                }
-            },
-            "You Have to Win the Game": {
-                "Primary Objectives": {
-                    "You Have to Wear the Sunglasses": 5
-                }
-            },
-            "Mr. Bree+": {
-                "Primary Objectives": {
-                    "This Piggy Went Home Alive": 5
-                }
-            },
-            "Deepest Sword": {},
-            "APE OUT": {},
-            "Eraser": {},
-            "Terra Feminarum": {},
-            "Mega Serval": {},
-            "The Binding of Isaac": {},
-            "Baldi's Basics Classic Remastered": {},
-            "Prologue for a Vacant Kingdom": {},
-            "Devil Daggers": {},
-            "Jigoku Kisetsukan: Sense of the Seasons": {},
-            "Enter the Gungeon": {},
-            "Gravity": {},
-            "Spirits Abyss": {},
             "Hextech Mayhem: A League of Legends Story\u2122": {},
-            "Khimera: Destroy All Monster Girls": {},
-            "STAY": {},
-            "Touhou Fantasia / \u4e1c\u65b9\u68a6\u60f3\u66f2": {},
-            "Zardy's Maze": {},
-            "Ultimate Custom Night": {},
-            "Vacuum Pilot": {},
-            "Haiku, the Robot": {},
-            "Neon Boost": {},
-            "VVVVVV": {},
-            "Dead Cells": {},
-            "Lone Fungus": {},
             "ibb & obb": {},
-            "Sound Slide": {},
-            "SCP: Containment Breach Multiplayer": {},
-            "Starstruck: Prologue": {},
-            "Desktop Dungeons": {},
-            "Blasphemous": {},
-            "Cheese Game": {},
-            "Kreedz Climbing": {},
+            "Dead Cells": {},
+            "The Witness": {},
+            "Ultimate Custom Night": {},
+            "ZeroRanger": {},
+            "Raw Data": {},
+            "Gunborg: Dark Matters": {},
+            "Crash Bandicoot\u2122 N. Sane Trilogy": {},
+            "Little Nightmares": {},
+            "Stardew Valley": {},
+            "Cyber Hook": {},
+            "Unrailed!": {},
+            "Neon Boost": {},
+            "You Have to Win the Game": {},
+            "Clone Drone in the Danger Zone": {},
+            "Enter the Gungeon": {},
+            "Crashlands": {},
             "Muck": {},
-            "DUSK": {},
             "Portal": {},
-            "Laserboy": {},
-            "Titan Souls": {},
-            "panGEMic": {},
+            "- \u200ePuzzle Games -": {
+                "Community Objectives": {
+                    "Portal 2": true
+                }
+            },
+            "Ori and the Will of the Wisps": {},
             "Ori and the Blind Forest: Definitive Edition": {},
-            "Trials\u00ae Rising": {},
-            "Phantom Jump": {},
-            "Garfield Kart - Furious Racing": {},
-            "Flem": {},
-            "Bananner Nababber": {},
-            "RFLEX": {},
-            "Shooting Game KARI": {},
-            "HUNTDOWN": {},
+            "Geometry Dash": {},
+            "Furi": {},
+            "Primal Light": {},
+            "ELDEN RING": {},
+            "Overcooked! 2": {},
+            "Sifu": {},
+            "PAYDAY 2": {},
             "- Challenge Enthusiasts -": {
                 "Community Objectives": {
-                    "Never Lucky": true
+                    "Intro Quest": true,
+                    "One Hell of a Day": true
                 }
             },
-            "Trackmania": {},
-            "Rain World": {},
-            "Tormentor\u274cPunisher": {},
             "TowerFall Ascension": {},
-            "Fork Parker's Holiday Profit Hike": {},
-            "Muse Dash": {},
-            "TrackMania Nations Forever": {},
-            "Straimium Immortaly": {},
-            "RAYZE": {},
-            "Wizard of Legend": {},
-            "Akane": {},
+            "The Messenger": {},
+            "Sonic Mania": {},
+            "Pacify": {},
+            "Lorera": {},
+            "Halo: The Master Chief Collection": {},
             "DOOM Eternal": {},
-            "Find You": {},
-            "Peggle Extreme": {},
-            "Eternal Cave Escape": {},
+            "Rise of the Tomb Raider\u2122": {},
             "Getting Over It with Bennett Foddy": {}
         },
         "Cooldowns": {},
-        "Current Rolls": [],
-        "Completed Rolls": []
+        "Current Rolls": [
+            {
+                "Event Name": "Never Lucky",
+                "End Time": "2023-07-23 18:19:20",
+                "Games": [
+                    "PAWARUMI"
+                ]
+            },
+            {
+                "Event Name": "One Hell of a Day",
+                "End Time": "2023-07-23 18:19:57",
+                "Games": [
+                    "One Gun Guy"
+                ]
+            },
+            {
+                "Event Name": "One Hell of a Month",
+                "End Time": "2023-07-23 18:20:17",
+                "Games": []
+            },
+            {
+                "Event Name": "One Hell of a Week",
+                "End Time": "2023-07-23 18:20:43",
+                "Games": [
+                    "UBERMOSH:OMEGA",
+                    "Kill The Plumber",
+                    "Perchang",
+                    "LinearShooter Remixed",
+                    "High Hell"
+                ]
+            },
+            {
+                "Event Name": "Triple Threat",
+                "End Time": "2023-08-21 15:05:19",
+                "Games": [
+                    "Titan Souls",
+                    "Going Under",
+                    "RIVE: Wreck, Hack, Die, Retry!"
+                ]
+            },
+            {
+                "Event Name": "Let Fate Decide",
+                "End Time": "2023-07-25 15:11:54",
+                "Games": [
+                    "Riptale"
+                ]
+            },
+            {
+                "Event Name": "Two 'Two Week T2 Streak' Streak",
+                "End Time": "2023-08-21 15:40:53",
+                "Games": [
+                    "Golf Gang",
+                    "Evergate",
+                    "Yars: Recharged",
+                    "Wuppo: Definitive Edition"
+                ]
+            }
+        ],
+        "Completed Rolls": [
+            {
+                "Event Name": "One Hell of a Day"
+            },
+            {
+                "Event Name": "Two Week T2 Streak",
+                "End Time": "2023-08-07 15:39:29",
+                "Games": [
+                    "Shu",
+                    "Neptunia Shooter"
+                ]
+            }
+        ]
     }
 }

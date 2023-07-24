@@ -1,7 +1,9 @@
 import discord
 from Helper_Functions.create_embed import create_multi_embed
 from Helper_Functions.rollable_games import get_rollable_game
-
+import json
+import datetime
+from datetime import timedelta
 
 # -------------------------------------------------------------------------------------------------- #
 # -------------------------------------------- BUTTONS --------------------------------------------- #
@@ -34,7 +36,7 @@ async def get_buttons(view, embeds):
     buttons[0].callback = hehe
     buttons[1].callback = haha
 
-async def get_genre_buttons(view, completion_time, price_limit, tier_number, event_name, time_limit, cooldown_time, num_of_games) :
+async def get_genre_buttons(view, completion_time, price_limit, tier_number, event_name, time_limit, cooldown_time, num_of_games, user_id) :
     games = []
     genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
     buttons = []
@@ -54,7 +56,8 @@ async def get_genre_buttons(view, completion_time, price_limit, tier_number, eve
 
     async def callback(interaction, genre_name):
         await interaction.response.defer()
-        print(interaction)
+        
+        if interaction.user.id != user_id : return
         i=0
         while i < num_of_games :
             games.append(get_rollable_game(completion_time, price_limit, tier_number, genre_name))
@@ -63,6 +66,23 @@ async def get_genre_buttons(view, completion_time, price_limit, tier_number, eve
         embeds = create_multi_embed(event_name, time_limit, games, cooldown_time, interaction)
         await get_buttons(view, embeds)
         await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
+
+        with open("Jasons/users2.json", "r") as u :
+            database_user = json.load(u)
+        
+        for user in database_user :
+            if(database_user[user]['Discord ID'] == user_id) : 
+                target_user = user
+                break
+
+        database_user[target_user]["Current Rolls"].append({"Event Name" : event_name, 
+                                                    "End Time" : "" + (datetime.datetime.now()+timedelta(time_limit)).strftime("%Y-%m-%d %H:%M:%S"),
+                                                    "Games" : games})
+        
+
+        # dump the info
+        with open('Jasons/users2.json', 'w') as f :
+            json.dump(database_user, f, indent=4)
 
     buttons[0].callback = AC_callback
     buttons[1].callback = AR_callback

@@ -74,3 +74,38 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 - for each game, it should go to the user's file in `users.json`, check if they own the game
 - if they don't own the game, just print all of the objectives
 - if they DO own the game, go through the user's progress on each (and be sure not to send back the COs)
+
+## checking on rolls
+### if the user completes the roll:
+- user uses /update
+- runs command to go through each game in "current rolls"
+- if they are all completed, send a message saying they've completed the roll (and alert an admin)
+- and also move the roll out of "current rolls" and into "completed rolls"
+- unless of course it is fourward thinking
+
+### if the user fails the roll:
+- have a command that logs all times to check
+- at that designated time, if the user has not completed the roll, update their local database for them. if they've completed the game, see above. if they haven't, send a message saying they failed the roll (probably ephemeral), add the game to cooldown if necessary, and delete it from their "current rolls"
+
+
+
+
+# CE-Assistant
+This discord bot, using `discord.py` and made by myself and @TheronBoozer, handles automation in the Challenge Enthusiasts Discord Server.
+
+## Random Rolls
+The Challenge Enthusiasts host events that involved randomly rolling games on Steam for bonuses outside of their normal point values.
+
+For example, if you roll One Hell of a Day, the bot will return an easy game - and you have 24 hours to complete it. If you succeed, you will be awarded a Community Objective on your profile.
+
+### `/roll`
+`/roll` takes in one parameter: the name of the event. This will return a (multi-page) embed detailing the game(s) and event you've rolled in.
+
+### `/check_rolls`
+`/check_rolls` takes in one parameter: a discord user. If no parameter is provided, the sender is chosen as the user. This sends back an embed detailing all current (and completed) rolls for that user.
+
+### DM Reminders
+Users can ask the bot to send them reminders on their rolls.
+
+### Cooldowns
+Each event has a specific cooldown (only if the roll is failed) and the bot will ping users when their cooldown ends.
