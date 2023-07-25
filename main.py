@@ -32,9 +32,14 @@ from Helper_Functions.rollable_games import get_rollable_game, get_rollable_game
 from Helper_Functions.create_embed import create_multi_embed, getEmbed
 from Helper_Functions.roll_string import get_roll_string
 from Helper_Functions.buttons import get_buttons, get_genre_buttons
+from Helper_Functions.end_time import roll_completed
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
 intents = discord.Intents.default()
+intents.reactions = True
+intents.members = True
+intents.guilds = True
+
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
@@ -47,9 +52,6 @@ with open('Jasons/secret_info.json') as f :
 discord_token = localJSONData['discord_token']
 guild_ID = localJSONData['guild_ID']
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
-
-global casino_channel 
-casino_channel = client.get_channel(811286469251039333)
     
 
 
@@ -294,7 +296,7 @@ async def roll_solo_command(interaction, event: events_solo) -> None:
     if not dont_save :
         # append the roll to the user's current rolls array
         userInfo[target_user]["Current Rolls"].append({"Event Name" : event, 
-                                                    "End Time" : "" + (datetime.datetime.now()+times[event]).strftime("%Y-%m-%d %H:%M:%S"),
+                                                    "End Time" : "" + (datetime.datetime.now()+times[event]).timetuple(),
                                                     "Games" : games})
 
     # dump the info
@@ -1114,15 +1116,19 @@ async def color(interaction) :
 @tree.command(name="test", description="test", guild=discord.Object(id=guild_ID))
 async def test(interaction) :
     await interaction.response.defer()
-    driver = webdriver.Chrome()
-    driver.get('https://cedb.me/user/835afaad-0059-4e39-b24f-24b2c76b1d08/games')
+    casino_channel = client.get_channel(811286469251039333)
 
-    game_names = []
-    while (len(game_names) < 8) or (not game_names[7].is_displayed()):
-        game_names = driver.find_elements(By.TAG_NAME, 'h2')
-    for game in game_names :
-        print(game.text)
-    return await interaction.followup.send("hfajsdk")
+
+    with open('Jasons/users2.json', 'r') as dbU:
+        database_user = json.load(dbU)
+    
+    target_user = "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+    
+    await roll_completed("Fourward Thinking", casino_channel, target_user)
+
+    await interaction.followup.send('done')
+
+
 
 
 

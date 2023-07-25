@@ -153,17 +153,20 @@
         "Cooldowns": {},
         "Current Rolls": [
             {
-                "Event Name": "Never Lucky",
-                "End Time": "2023-07-23 18:19:20",
-                "Games": [
-                    "PAWARUMI"
-                ]
-            },
-            {
                 "Event Name": "One Hell of a Day",
                 "End Time": "2023-07-23 18:19:57",
                 "Games": [
-                    "One Gun Guy"
+                    "One Gun Guy",
+                    "Evergate"
+                ]
+            },
+            {
+                "Event Name": "Fourward Thinking",
+                "Games": [
+                    "PAWARUMI",
+                    "Evergate",
+                    "Going Under",
+                    "Kill The Plumber"
                 ]
             },
             {
