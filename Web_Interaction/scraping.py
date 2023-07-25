@@ -29,15 +29,20 @@ steam_api_key = localJSONData['steam_API_key']
 
 
 def get_games():
-    # game_list()
-    # get_by_tier()
-    return get_update()
+    fin = game_list()
+    get_by_tier()
+    return fin
 
     
 
 
 
 def game_list():
+    options = Options()
+    options.add_argument('headless')
+    driver = webdriver.Chrome(options=options)
+    driver.set_window_size(width=1440, height=2000)
+
     api_response = requests.get('https://cedb.me/api/games')
     json_response = json.loads(api_response.text)
 
@@ -46,12 +51,13 @@ def game_list():
     current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
     
     new_data = json.loads(open("./Jasons/database_name.json").read())
+    number = 0
 
     for game in json_response:
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
         if updated_time > current_newest:
-            print(updated_time)
-            print(game['name'])
+            update(game, current_dict[game['name']], driver, number)
+            number += 1
             new_data[game['name']] = get_game(game)
 
 
@@ -61,7 +67,58 @@ def game_list():
     #     json.dump(new_data, f, indent=4)
 
     print('done')
-    return new_data    
+    return new_data
+
+
+def update(game, old_game, driver, number):
+    icons = {
+        "Tier 0" : ':zero:',
+        "Tier 1" : ':one:',
+        "Tier 2" : ':two:',
+        "Tier 3" : ':three:',
+        "Tier 4" : ':four:',
+        "Tier 5" : ':five:',
+
+        "Action" : ':magnet:',
+        "Arcade" : ':video_game:',
+        "Bullet Hell" : ':gun:',
+        "First-Person" : ':person_bald:',
+        "Platformer" : ':runner:',
+        "Strategy" : ':chess_pawn:'
+    }
+        
+    new_game = get_game(game)
+    get_image(game, number, new_game, driver)
+    embed = {
+        'Embed' : discord.Embed(
+            title=game,
+            colour= 0xefd839,
+            timestamp=datetime.now()
+        ),
+        'Image' : discord.File("Web_Interaction/ss{}.png".format(number), filename="image.png")
+    }
+    embed.set_image(url='attachment://image.png')
+    update = ""
+    
+    #check tier
+    if new_game['Tier'] != old_game['Tier']:
+        update += "\n{} ➡ {}".format(icons[old_game['Tier']], icons[new_game['Tier']])
+
+    #check Genre
+    if new_game['Genre'] != old_game['Genre']:
+        update += "\n{} ➡ {}".format(icons[old_game['Tier']], icons[new_game['Tier']])
+
+    #check primary objectives
+    if new_game['Primary Objectives'] != old_game['Primary Objectives']:
+        for objective in new_game['Primary Objectives']:
+            if list(old_game['Primary Objectives'].keys()).contains(objective) and old_game['Primary Objectives'] != new_game['Primary Objectives']:
+                # check description
+                if new_game['Primary Objectives']['Description'] != old_game['Primary Objectives']['Description']:
+                    update += "\nDescription Updated"
+                if new_game['Primary Objectives']['Point Value'] != old_game['Primary Objectives']['Point Value']:
+                    update += "\n{} :star: ➡ {} :star:".format(old_game['Point Value'], new_game['Point Value'])
+
+    return
 
 def get_game(game):
     objectives = get_objectives(game['id'])
