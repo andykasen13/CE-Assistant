@@ -150,16 +150,10 @@
             "Rise of the Tomb Raider\u2122": {},
             "Getting Over It with Bennett Foddy": {}
         },
-        "Cooldowns": {},
+        "Cooldowns": {
+            "One Hell of a Day": 1691519241
+        },
         "Current Rolls": [
-            {
-                "Event Name": "One Hell of a Day",
-                "End Time": "2023-07-23 18:19:57",
-                "Games": [
-                    "One Gun Guy",
-                    "Evergate"
-                ]
-            },
             {
                 "Event Name": "Fourward Thinking",
                 "Games": [
@@ -173,26 +167,6 @@
                 "Event Name": "One Hell of a Month",
                 "End Time": "2023-07-23 18:20:17",
                 "Games": []
-            },
-            {
-                "Event Name": "One Hell of a Week",
-                "End Time": "2023-07-23 18:20:43",
-                "Games": [
-                    "UBERMOSH:OMEGA",
-                    "Kill The Plumber",
-                    "Perchang",
-                    "LinearShooter Remixed",
-                    "High Hell"
-                ]
-            },
-            {
-                "Event Name": "Triple Threat",
-                "End Time": "2023-08-21 15:05:19",
-                "Games": [
-                    "Titan Souls",
-                    "Going Under",
-                    "RIVE: Wreck, Hack, Die, Retry!"
-                ]
             },
             {
                 "Event Name": "Let Fate Decide",
@@ -222,6 +196,23 @@
                 "Games": [
                     "Shu",
                     "Neptunia Shooter"
+                ]
+            },
+            {
+                "Event Name": "Triple Threat",
+                "End Time": 1690306351,
+                "Games": [
+                    "Titan Souls",
+                    "Going Under",
+                    "RIVE: Wreck, Hack, Die, Retry!"
+                ]
+            },
+            {
+                "Event Name": "One Hell of a Day",
+                "End Time": 1690306825,
+                "Games": [
+                    "One Gun Guy",
+                    "Evergate"
                 ]
             }
         ]

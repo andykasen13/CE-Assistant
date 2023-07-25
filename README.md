@@ -87,7 +87,18 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 - have a command that logs all times to check
 - at that designated time, if the user has not completed the roll, update their local database for them. if they've completed the game, see above. if they haven't, send a message saying they failed the roll (probably ephemeral), add the game to cooldown if necessary, and delete it from their "current rolls"
 
+## imports
 
+You will need to `pip install` the following:
+
+- `discord`
+- `selenium`
+- `pillow`
+- `deepdiff`
+- `monthdelta`
+- `psutil`
+- `requests`
+- `bs4`
 
 
 # CE-Assistant

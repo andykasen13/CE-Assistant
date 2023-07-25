@@ -32,7 +32,7 @@ from Helper_Functions.rollable_games import get_rollable_game, get_rollable_game
 from Helper_Functions.create_embed import create_multi_embed, getEmbed
 from Helper_Functions.roll_string import get_roll_string
 from Helper_Functions.buttons import get_buttons, get_genre_buttons
-from Helper_Functions.end_time import roll_completed
+from Helper_Functions.end_time import roll_completed, roll_failed
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
 intents = discord.Intents.default()
@@ -145,7 +145,7 @@ async def roll_solo_command(interaction, event: events_solo) -> None:
 
     # ...or if the event is currently active.
     for eventInfo in userInfo[target_user]['Current Rolls'] :
-        if(eventInfo['Event Name'] == event) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
+        if((eventInfo['Event Name'] == event) and event != "Fourward Thinking") : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
     
     # Open the databases.
     with open('Jasons/database_tier.json', 'r') as dB :
@@ -282,12 +282,50 @@ async def roll_solo_command(interaction, event: events_solo) -> None:
     # -------------------------------------------- Fourward Thinking --------------------------------------------
     elif event == "Fourward Thinking" :
         # idk
-        embed = discord.Embed(title=("fourward thinking"))
+        
+        # See if the user has already rolled Fourward Thinking
+        has_roll = False
+        roll_num = 0
+        for roll in userInfo[target_user]["Current Rolls"] :
+            if roll["Event Name"] == "Fourward Thinking" : 
+                has_roll = True
+                break
+            roll_num += 1
+
+
+        if(not has_roll) : 
+            # Has not rolled Fourward Thinking before
+            embed = discord.Embed(title=("fourward thinking"))
+        elif (has_roll and (list(userInfo[target_user]["Current Rolls"][roll_num].keys()).count("End Time") == 0)) :
+            # Has rolled Fourward Thinking but isn't done with the roll yet.
+            embed = discord.Embed(title="You are currently participating in Fourward Thinking!")
+        else : 
+            # Has rolled Fourward Thinking and is ready for the next roll
+            # OR OR OR is done!
+            num_of_games = len(userInfo[target_user]["Current Rolls"][roll][games])
+            if(num_of_games == 1) :
+                # roll a t2
+                x=0
+            elif(num_of_games == 2):
+                x=0
+                # roll a t3
+            elif(num_of_games == 3):
+                x=0
+                #roll a t4
+            elif(num_of_games == 4) :
+                x=0
+                # be done
+            else : 
+                x=0
+                #error
 
     # -------------------------------------------- Russian Roulette --------------------------------------------
     elif event == "Russian Roulette" :
         # choose six t5s and get one at random
         embed = discord.Embed(title=("russian roulette"))
+
+        
+
         ends = False
 
     # -------------------------------------------- kill yourself --------------------------------------------
@@ -296,7 +334,7 @@ async def roll_solo_command(interaction, event: events_solo) -> None:
     if not dont_save :
         # append the roll to the user's current rolls array
         userInfo[target_user]["Current Rolls"].append({"Event Name" : event, 
-                                                    "End Time" : "" + (datetime.datetime.now()+times[event]).timetuple(),
+                                                    "End Time" :  int(time.mktime((datetime.datetime.now()+times[event]).timetuple())),
                                                     "Games" : games})
 
     # dump the info
@@ -1124,7 +1162,7 @@ async def test(interaction) :
     
     target_user = "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
     
-    await roll_completed("Fourward Thinking", casino_channel, target_user)
+    await roll_failed("One Hell of a Day", casino_channel, target_user)
 
     await interaction.followup.send('done')
 
