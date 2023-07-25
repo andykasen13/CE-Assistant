@@ -41,18 +41,27 @@ def game_list():
     api_response = requests.get('https://cedb.me/api/games')
     json_response = json.loads(api_response.text)
 
-    new_data = {}
+    current_dict = json.loads(open("./Jasons/curator_count.json").read())
+    current_newest = current_dict['Updated Time']
+    current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
+    
+    new_data = json.loads(open("./Jasons/database_name.json").read())
 
     for game in json_response:
-        #objectives = get_objectives(game['id'])
-        new_data[game['name']] = get_game(game)
+        updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+        if updated_time > current_newest:
+            print(updated_time)
+            print(game['name'])
+            new_data[game['name']] = get_game(game)
 
-    with open('./Jasons/database_name.json', 'w') as f :
-        json.dump(new_data, f, indent=4)
+
+    # with open('Jasons/curator_count.json', 'w') as f:
+    #     json.dump(current_dict, f, indent=4)
+    # with open('./Jasons/database_name.json', 'w') as f :
+    #     json.dump(new_data, f, indent=4)
 
     print('done')
-    new_data = None
-    
+    return new_data    
 
 def get_game(game):
     objectives = get_objectives(game['id'])
@@ -112,38 +121,48 @@ def get_objectives(CE_ID):
 
 
 def get_update():
-    new = json.loads(open("./Jasons/test_database_2.json").read()) #game_list()
-    old = json.loads(open("./Jasons/test_database.json").read())
+    new = game_list()
+    old = json.loads(open("./Jasons/database_name.json").read())
     
     if new != old:
+        options = Options()
+        options.add_argument('headless')
+        driver = webdriver.Chrome(options=options)
+        driver.set_window_size(width=1440, height=2000)
+
         differences = DeepDiff(old, new, verbose_level=2)
         keys = list(differences.keys())
 
         image_number = 0
         updated_games = {}
-        added_games = {}
-        removed_games = {}
+        # added_games = {}
+        # removed_games = {}
         
 
         if keys.count('values_changed') > 0:
             for change in differences['values_changed']:
                 location = get_title(change)
-                updated_games = values_changed(location, differences['values_changed'][change], image_number, updated_games)
+                if location[1] == 'Total Owners' or location[1] == 'Full Completions':
+                    continue
+                updated_games = values_changed(driver, location, differences['values_changed'][change], image_number, updated_games, new)
                 image_number+=1
 
         if keys.count('dictionary_item_added') > 0:
             for addition in differences['dictionary_item_added']:
                 location = get_title(addition)
-                removed_games = removal(location, differences['dictionary_item_added'][addition], image_number, added_games)
+                updated_games = added(driver, location, differences['dictionary_item_added'][addition], image_number, updated_games, new)
                 image_number+=1
         
         if keys.count('dictionary_item_removed') > 0:
             for removed in differences['dictionary_item_removed']:
                 location = get_title(removed)
-                removed_games = removal(location, differences['dictionary_item_removed'][removed], image_number, removed_games)
+                updated_games = removal(location, differences['dictionary_item_removed'][removed], updated_games)
                 image_number+=1
         
-        games = [updated_games, added_games, removed_games]
+        games = [updated_games, updated_games, updated_games]
+
+        # with open('./Jasons/database_name.json', 'w') as f :
+        #     json.dump(new, f, indent=4)
 
         return games
     else:
@@ -151,7 +170,7 @@ def get_update():
         return []
 
 
-def values_changed(location, values, number, updated_games):
+def values_changed(driver, location, values, number, updated_games, new):
     
     icons = {
         "Tier 0" : ':zero:',
@@ -190,7 +209,7 @@ def values_changed(location, values, number, updated_games):
 
 
     if list(updated_games.keys()).count(game) < 1:
-        get_image(game, number)
+        get_image(game, number, new, driver)
         updated_games[game] = {
             'Embed' : discord.Embed(
                 title=game,
@@ -205,7 +224,7 @@ def values_changed(location, values, number, updated_games):
     return updated_games
 
 
-def removal(location, value, number, removed_games):
+def removal(location, value, updated_games):
     game = location.pop(0)
     title = ''
     while len(location) > 0:
@@ -215,23 +234,22 @@ def removal(location, value, number, removed_games):
         title = title + " : " + location.pop(0)
     title += " Removed"
 
-    if list(removed_games.keys()).count(game) < 1:
-        get_image(game, number)
-        removed_games[game] = {
+    if list(updated_games.keys()).count(game) < 1:
+        updated_games[game] = {
             'Embed' : discord.Embed(
                 title=game,
                 colour= 0xce502c,
                 timestamp=datetime.now()
             ),
-            'Image' : discord.File("Web_Interaction/ss{}.png".format(number), filename="image.png")
+            'Image' : discord.File("Web_Interaction/removed.png", filename="image.png")
         }
-        removed_games[game]['Embed'].set_image(url='attachment://image.png')
+        updated_games[game]['Embed'].set_image(url='attachment://image.png')
         
-    removed_games[game]['Embed'].add_field(name=title, value="{} was removed".format(value))
-    return removed_games
+    updated_games[game]['Embed'].add_field(name=title, value="{} was removed".format(value))
+    return updated_games
 
 
-def added(location, value, number, added_games):
+def added(driver, location, value, number, updated_games, new):
     game = location.pop(0)
     title = ''
     while len(location) > 0:
@@ -241,9 +259,9 @@ def added(location, value, number, added_games):
         title = title + " : " + location.pop(0)
     title += " added"
 
-    if list(added_games.keys()).count(game) < 1:
-        get_image(game, number)
-        added_games[game] = {
+    if list(updated_games.keys()).count(game) < 1:
+        get_image(game, number, new, driver)
+        updated_games[game] = {
             'Embed' : discord.Embed(
                 title=game,
                 colour= 0x48b474,
@@ -251,10 +269,10 @@ def added(location, value, number, added_games):
             ),
             'Image' : discord.File("Web_Interaction/ss{}.png".format(number), filename="image.png")
         }
-        added_games[game]['Embed'].set_image(url='attachment://image.png')
+        updated_games[game]['Embed'].set_image(url='attachment://image.png')
         
-    added_games[game]['Embed'].add_field(name=title, value="{} was added".format(value))
-    return added_games
+    updated_games[game]['Embed'].add_field(name=title, value="{} was added".format(value))
+    return updated_games
 
 
 def get_title(root):
@@ -350,13 +368,8 @@ def get_completion_data(steam_id):
     return time
 
 
-def get_image(game_name, number):
-    options = Options()
-    #options.add_argument('headless')
-    driver = webdriver.Chrome(options=options)
-    driver.set_window_size(width=1440, height=2000)
-    game_list = json.loads(open("./Jasons/database_name.json").read())
-    CE_ID = game_list[game_name]['CE ID']
+def get_image(game_name, number, new_data, driver):
+    CE_ID = new_data[game_name]['CE ID']
     url = 'https://cedb.me/game/' + CE_ID
     driver.get(url)
 
