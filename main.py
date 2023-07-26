@@ -1152,8 +1152,8 @@ async def color(interaction) :
 async def test(interaction) :
     await interaction.response.defer()
     casino_channel = client.get_channel(811286469251039333)
-
-    embed = discord.Embed(title="fsd", description=" jfldsahfjlsad \n-{} <:CE_points:1128420207329816597> --> {} <:CE_points:1128420207329816597>".format(125, 120))
+    testy = " jfldsahfjlsad \n-{} <:CE_points:1128420207329816597> --> {} <:CE_points:1128420207329816597>".format(125, 120)
+    embed = discord.Embed(title="fsd", description=testy)
 
     return await interaction.followup.send(embed=embed)
 
