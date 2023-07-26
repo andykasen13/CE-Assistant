@@ -155,7 +155,7 @@
         },
         "Current Rolls": [
             {
-                "Event Name": "Fourward Thinking",
+                "Event Name": "One Hell of a Day",
                 "Games": [
                     "PAWARUMI",
                     "Evergate",
@@ -169,11 +169,14 @@
                 "Games": []
             },
             {
-                "Event Name": "Let Fate Decide",
-                "End Time": "2023-07-25 15:11:54",
+                "Event Name": "Fourward Thinking",
                 "Games": [
-                    "Riptale"
-                ]
+                    "Riptale",
+                    "Resident Evil 4",
+                    "I Am Fish",
+                    "Within the blade"
+                ],
+                "End Time": 1692807508
             },
             {
                 "Event Name": "Two 'Two Week T2 Streak' Streak",

@@ -102,7 +102,7 @@ events_solo = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a 
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
           "Russian Roulette"]
 @tree.command(name="solo-roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guild_ID))
-async def roll_solo_command(interaction, event: events_solo) -> None:   
+async def roll_solo_command(interaction : discord.Interaction, event: events_solo) -> None:   
     await interaction.response.defer()
 
     # Set up variables
@@ -296,28 +296,50 @@ async def roll_solo_command(interaction, event: events_solo) -> None:
         if(not has_roll) : 
             # Has not rolled Fourward Thinking before
             embed = discord.Embed(title=("fourward thinking"))
-        elif (has_roll and (list(userInfo[target_user]["Current Rolls"][roll_num].keys()).count("End Time") == 0)) :
+        elif (has_roll and "End Time" in list(userInfo[target_user]["Current Rolls"][roll_num].keys())) :
             # Has rolled Fourward Thinking but isn't done with the roll yet.
             embed = discord.Embed(title="You are currently participating in Fourward Thinking!")
+            dont_save = True
         else : 
             # Has rolled Fourward Thinking and is ready for the next roll
             # OR OR OR is done!
-            num_of_games = len(userInfo[target_user]["Current Rolls"][roll][games])
+            num_of_games = len(userInfo[target_user]["Current Rolls"][roll_num]["Games"])
+            print(num_of_games)
+
+            # set up the starting embed
+            embeds.append(discord.Embed(title=event, timestamp=datetime.datetime.now()))
             if(num_of_games == 1) :
-                # roll a t2
-                x=0
-            elif(num_of_games == 2):
-                x=0
-                # roll a t3
+                # get a game
+                game = get_rollable_game(40, 20, "Tier 2")
+
+                embeds[0].add_field(name="Roll Status", value="You have rolled your T2. You have two weeks to complete.")
+
+            elif(num_of_games == 2):              
+                # get a game
+                game = get_rollable_game(40, 20, "Tier 3")
+
+                embeds[0].add_field(name="Roll Status", value = "You have rolled your T3. You have three weeks to complete.")
             elif(num_of_games == 3):
-                x=0
+                # get a game
+                game = get_rollable_game(40, 20, "Tier 2")
+                
+                embeds[0].add_field(name="Roll Status", value = "You have rolled your T4. You have four weeks to complete.")
                 #roll a t4
-            elif(num_of_games == 4) :
-                x=0
-                # be done
-            else : 
-                x=0
-                #error
+            
+            # get the embed for the new game
+            embeds.append(getEmbed(game, interaction.user.id))
+
+            # get buttons
+            await get_buttons(view, embeds)
+            embed = embeds[0]
+
+            # update users2.json
+            userInfo[target_user]["Current Rolls"][roll_num]["Games"].append(game)
+            userInfo[target_user]["Current Rolls"][roll_num]["End Time"] = int(time.mktime((datetime.datetime.now()+timedelta(7*(num_of_games+1))).timetuple()))
+            
+            # dont add the thing to users2.json AGAIN!
+            dont_save = True
+
 
     # -------------------------------------------- Russian Roulette --------------------------------------------
     elif event == "Russian Roulette" :
@@ -331,7 +353,7 @@ async def roll_solo_command(interaction, event: events_solo) -> None:
     # -------------------------------------------- kill yourself --------------------------------------------
     else : embed=discord.Embed(title=(f"'{event}' is not a valid event."))
 
-    if not dont_save :
+    if dont_save is False :
         # append the roll to the user's current rolls array
         userInfo[target_user]["Current Rolls"].append({"Event Name" : event, 
                                                     "End Time" :  int(time.mktime((datetime.datetime.now()+times[event]).timetuple())),
@@ -1156,6 +1178,9 @@ async def test(interaction) :
     await interaction.response.defer()
     casino_channel = client.get_channel(811286469251039333)
 
+    embed = discord.Embed(title="fsd", description=" jfldsahfjlsad \n-{} <:CE_points:1128420207329816597> --> {} <:CE_points:1128420207329816597>".format(125, 120))
+
+    return await interaction.followup.send(embed=embed)
 
     with open('Jasons/users2.json', 'r') as dbU:
         database_user = json.load(dbU)
