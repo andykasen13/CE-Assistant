@@ -1174,16 +1174,8 @@ async def color(interaction) :
 async def test(interaction : discord.Interaction) :
     await interaction.response.defer()
     casino_channel = client.get_channel(811286469251039333)
-    old = {
-        "Point Value" : 125
-    }
-    new = {
-        "Point Value" : 120
-    }
-
-    point_emoji = discord.utils.get(interaction.guild.emojis, name=":CE_points:")
-
-    embed = discord.Embed(title="fsd", description="\n- hello\n\t- my balls itch\n\t\t- {} <:CE_points:1128420207329816597> ➡ {} <:CE_points:1128420207329816597>".format(point_emoji, new['Point Value']))
+    testy = " jfldsahfjlsad \n-{} <:CE_points:1128420207329816597> --> {} <:CE_points:1128420207329816597>".format(125, 120)
+    embed = discord.Embed(title="fsd", description=testy)
 
     return await interaction.followup.send(embed=embed)
 

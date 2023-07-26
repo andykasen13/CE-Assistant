@@ -47,7 +47,7 @@ times = [
 @tasks.loop(time = times)
 async def loop(client):
     data = json.loads(open("./Jasons/curator_count.json").read())['Current Reviews']
-    data['Current Reviews'] = await checkCuratorCount(client)
+    data = await checkCuratorCount(client)
     print(data)
 
     with open("./Jasons/curator_count.json", "w") as jsonFile:

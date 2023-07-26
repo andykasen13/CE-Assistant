@@ -38,33 +38,57 @@ def get_games():
 
 
 def game_list():
+    # Set selenium driver and preferences
     options = Options()
     options.add_argument('headless')
     driver = webdriver.Chrome(options=options)
     driver.set_window_size(width=1440, height=2000)
 
+    # grab first game to get color on the rest of them
     url = 'https://cedb.me/game/1e8565aa-b9f2-4b41-9578-22e4c2a5436b'
     driver.get(url)
+    objective_lst = []
+    while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
+        objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
 
+
+    # set up API requests
     api_response = requests.get('https://cedb.me/api/games')
     json_response = json.loads(api_response.text)
 
+    # grab last updated time
     current_dict = json.loads(open("./Jasons/curator_count.json").read())
     current_newest = current_dict['Updated Time']
     current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
     
+    # grab the new data and initialize trackers
     new_data = json.loads(open("./Jasons/database_name.json").read())
     number = 0
     updated_games = []
     game_tracker = list(new_data.keys())
 
+
+    # game loop adding updated parts
     for game in json_response:
+
+        # check if updated since last check
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+        
+        # if game is updated
         if updated_time > current_newest and game['name'] in list(new_data.keys()):
             game_tracker.remove(game['name'])
-            updated_games.append(update(game, new_data[game['name']], driver, number))
-            number += 1
+            test_old = new_data[game['name']]
+            test_new = get_game(game)
+            del test_new['Full Completions']
+            del test_new['Total Owners']
+            del test_old['Full Completions']
+            del test_old['Total Owners']
+            if test_old != test_new:
+                updated_games.append(update(game, new_data[game['name']], driver, number))
+                number += 1
             new_data[game['name']] = get_game(game)
+
+        # if game is new
         elif not game['name'] in list(new_data.keys()):
             get_image(number, game['id'], driver)
             new_data[game['name']] = get_game(game)
@@ -80,9 +104,13 @@ def game_list():
             embed['Embed'].set_image(url='attachment://image.png')
             updated_games.append(embed)
             number += 1
+
+        # game is neither new nor updated
         else:
             game_tracker.remove(game['name'])
 
+
+    # games removed
     for game in game_tracker:
         embed = {
             'Embed' : discord.Embed(
@@ -105,93 +133,191 @@ def game_list():
     return updated_games
 
 
+# updates for games
 def update(game, old_game, driver, number):
-    icons = {   #TODO change these to CE emojis
-        "Tier 0" : '<:tier0:1126268390605070426>',
-        "Tier 1" : '<:tier1:1126268393725644810>',
-        "Tier 2" : '<:tier2:1126268395483037776>',
-        "Tier 3" : '<:tier3:1126268398561677364>',
-        "Tier 4" : '<:tier4:1126268402596585524>',
-        "Tier 5" : '<:tier5:1126268404781809756>',
-        "Tier 6" : '<:tier6:1126268408116285541>',
-        "Tier 7" : '<:tier7:1126268411220074547>',
 
-        "Action" : '<:CE_action:1126326215356198942>',
-        "Arcade" : '<:CE_arcade:1126326209983291473>',
-        "Bullet Hell" : '<:CE_bullethell:1126326205642190848>',
-        "First-Person" : '<:CE_firstperson:1126326202102186034>',
-        "Platformer" : '<:CE_platformer:1126326197983383604>',
-        "Strategy" : '<:CE_strategy:1126326195915591690>'
+    # icons for CE emoji
+    icons = {   #TODO change these to CE emojis
+        "Tier 0" : '<:tier0:1133560874464985139>', #<:tier0:1126268390605070426>',
+        "Tier 1" : '<:tier1:1133560876381773846>', #'<:tier1:1126268393725644810>',
+        "Tier 2" : '<:tier2:1133560878294372432>', #'<:tier2:1126268395483037776>',
+        "Tier 3" : '<:tier3:1133560879544291469>', #'<:tier3:1126268398561677364>',
+        "Tier 4" : '<:tier4:1133560881356226650>', #'<:tier4:1126268402596585524>',
+        "Tier 5" : '<:tier5:1133560882291548323>', #'<:tier5:1126268404781809756>',
+        "Tier 6" : '<:tier6:1133540654983688324>', #'<:tier6:1126268408116285541>',
+        "Tier 7" : '<:tier7:1133540655981920347>', #'<:tier7:1126268411220074547>',
+
+        "Action" : '<:CE_action:1133558549990088734>', #'<:CE_action:1126326215356198942>',
+        "Arcade" : '<:CE_arcade:1133558574287683635>', #'<:CE_arcade:1126326209983291473>',
+        "Bullet Hell" : '<:CE_bullethell:1133558610530676757>', #'<:CE_bullethell:1126326205642190848>',
+        "First-Person" : '<:CE_firstperson:1133558611898015855>', #'<:CE_firstperson:1126326202102186034>',
+        "Platformer" : '<:CE_platformer:1133558613705769020>', #'<:CE_platformer:1126326197983383604>',
+        "Strategy" : '<:CE_strategy:1133558616536915988>', #'<:CE_strategy:1126326195915591690>'
     }
         
+    # get game info and image
     new_game = get_game(game)
     get_image(number, new_game['CE ID'], driver, new_data=new_game)
 
+    # initialize the embed description
     update = ""
     
-    #check tier
+    # ------------------- check tier -------------------
     if new_game['Tier'] != old_game['Tier']:
         update += "\n- {} ➡ {}".format(icons[old_game['Tier']], icons[new_game['Tier']])
 
-    #check Genre
+
+    # ------------------- check Genre -------------------
     if new_game['Genre'] != old_game['Genre']:
         update += "\n- {} ➡ {}".format(icons[old_game['Tier']], icons[new_game['Tier']])
 
-    #check primary objectives
+
+    # ------------------- check primary objectives -------------------
     if new_game['Primary Objectives'] != old_game['Primary Objectives']:
+
+        # primary objective loop
         for objective in new_game['Primary Objectives']:
-            if objective in list(old_game['Primary Objectives'].keys()) and old_game['Primary Objectives'] != new_game['Primary Objectives']:
+
+            # if objective is new
+            if objective in list(new_game['Primary Objectives'].keys()) and not objective in list(old_game['Primary Objectives'].keys()):
+                update += "\n- New Primary Objective '{}' added\n\t- {} points <:CE_points:1133558614867587162>\n  - {}".format(objective, new_game['Primary Objectives'][objective]['Point Value'], new_game['Primary Objectives'][objective]['Description'])
+            
+            # if objective is updated
+            elif objective in list(old_game['Primary Objectives'].keys()) and old_game['Primary Objectives'] != new_game['Primary Objectives']:
+                
+                # initialize some shit
                 new = new_game['Primary Objectives'][objective]
                 old = old_game['Primary Objectives'][objective]
-                update += "\n- {} updated".format(objective)
 
-                # check description
+
+                # ------------------- check points -------------------
+                # points increased
+                if new['Point Value'] > old['Point Value']:
+                    update += "\n- '{}' increased from {} <:CE_points:1133558614867587162> ➡ {} <:CE_points:1133558614867587162> points".format(objective, old['Point Value'], new['Point Value'])
+                                       #<:CE_points:1128420207329816597>
+
+                # points decreased
+                elif new['Point Value'] < old['Point Value']:
+                    update += "\n- '{}' decreased from {} <:CE_points:1133558614867587162> ➡ {} <:CE_points:1133558614867587162> points".format(objective, old['Point Value'], new['Point Value'])
+                
+                # points unchanged
+                else:
+                    update += "\n- '{}' updated".format(objective)
+
+
+                # ------------------- check description -------------------
                 if new['Description'] != old['Description']:
                     update += "\n\t- Description Updated"
 
-                # check points
-                if new['Point Value'] != old['Point Value']:
-                    update += "\n\t- {} <:CE_points:1128420207329816597> ➡ {} <:CE_points:1128420207329816597>".format(old['Point Value'], new['Point Value'])
 
-                # check requirements
+                # ------------------- check requirements -------------------
+                # requirements are new
                 if 'Requirements' in list(new.keys()) and not 'Requirements' in list(old.keys()):
-                    update += "\n\t- Requirement {} added".format(new['Requirements'])
+                    update += "\n\t- Requirement '{}' added".format(new['Requirements'])
+                
+                # requirements deleted
                 elif 'Requirements' in list(old.keys()) and not 'Requirements' in list(new.keys()):
                     update += "\n\t- Requirements removed"
-                elif 'Requirements' in list(new.keys()) and new['Requirements'] != old['Requirements']:
-                    update += "\n\t- Requirements updated from {} ➡ {}".format(old['Requirements'], new['Requirements'])
                 
-                # check achievements
+                # requirements changed
+                elif 'Requirements' in list(new.keys()) and new['Requirements'] != old['Requirements']:
+                    update += "\n\t- Requirements updated from '{}' ➡ '{}'".format(old['Requirements'], new['Requirements'])
+                
+
+                # ------------------- check achievements -------------------
+                # if achievements are a new requirement
                 if 'Achievements' in list(new.keys()) and not 'Achievements' in list(old.keys()):
-                    update += "\n\t- Achievements added"
+
+                    # initialize added achievement message
+                    stand_in = "\n\t- "
+
+                    # achievement loop
                     for achievement in new['Achievements']:
-                        if achievement in old_achievements:
-                            old_achievements.remove(achievement)
+
+                        # not the last achievement
+                        if achievement != new['Achievements'][list(new['Achievements'].keys())[-1]]:
+                            stand_in += "'{}', ".format(achievement)
+                        # the last achievement
                         else:
-                            update += "\n\t\t- Achievement '{}' added".format(achievement)
+                            stand_in += "and '{}' added".format(achievement)
+                    
+                    # add to message
+                    update += stand_in
+                
+
+                # no more achievements
                 elif 'Achievements' in list(old.keys()) and not 'Achievements' in list(new.keys()):
                     update += "\n\t- All achievements removed"
-                elif 'Achievements' in list(new.keys()) and new['Achievements'] != old['Achievements']:
-                    update += "\n\t- Achievements updated"
-                    old_achievements = old['Achievements']
-                    for achievement in new['Achievements']:
-                        if achievement in old_achievements:
-                            old_achievements.pop(achievement)
-                        else:
-                            update += "\n\t\t- Achievement '{}' added".format(new['Achievements'][achievement])
-                    for achievement in old_achievements:
-                        update += "\n\t\t- Achievement '{}' removed".format(old['Achievements'][achievement])
+                
 
+                # achievements changed
+                elif 'Achievements' in list(new.keys()) and new['Achievements'] != old['Achievements']:
+                    
+                    # initialize new achievements and old achievement tracker
+                    stand_in = "\n- Achievements "
+                    old_achievements = old['Achievements']
+                    to_delete = []
+
+                    # make sure the last achievement is new
+                    for achievement in new['Achievements']:
+                        if achievement in list(old_achievements.keys()):
+                            old_achievements.pop(achievement)
+                            to_delete.append(achievement)
+                            
+                    for achievement in to_delete:
+                        del new['Achievements'][achievement]
+
+                    # loop through achievements
+                    for achievement in new['Achievements']:
+                        
+                        # new and not last achievement
+                        if new['Achievements'][achievement] != new['Achievements'][list(new['Achievements'].keys())[-1]]:
+                            stand_in += "'{}', ".format(new['Achievements'][achievement])
+
+                        # the last achievement
+                        else:
+                            stand_in += "and '{}'".format(achievement)
+
+                    # add to message if pertinent
+                    if len(stand_in) > 17:
+                        update += stand_in
+
+
+                    # anything left over has been removed
+                    if len(old_achievements) > 0:
+
+                        # initialize
+                        stand_in = "\n\t- Achievements "
+
+                        # loop through each removed game
+                        for achievement in old_achievements:
+                            print(old_achievements[list(old_achievements.keys())[-1]])
+                            # if no the last one
+                            if old['Achievements'][achievement] != old_achievements[list(old_achievements.keys())[-1]]:
+                                stand_in += "'{}', ".format(old['Achievements'][achievement])
+
+                            # if it is the last one
+                            else:
+                                stand_in += "and '{}' removed".format(old['Achievements'][achievement])
+                    
+                    # add to message if pertinent
+                    if len(stand_in) > 17:
+                        update += stand_in
+
+
+    # ------------------- make final embed -------------------
     embed = {
         'Embed' : discord.Embed(
             title=game['name'],
             colour= 0xefd839,
             timestamp=datetime.now(),
-            description=update
+            description=update.strip()
         ),
         'Image' : discord.File("Pictures/ss{}.png".format(number), filename="image.png")
     }
     embed['Embed'].set_image(url='attachment://image.png')
+
+    # return :)
     return embed
 
 
@@ -335,18 +461,21 @@ def get_completion_data(steam_id):
 
 
 def get_image(number, CE_ID, driver, new_data={}):
-    # CE_ID = new_data['CE ID']
-    url = 'https://cedb.me/game/' + CE_ID
-    driver.get(url)
+
     if 'Tier' in new_data and new_data['Tier'] == 'Tier 0':
-        print('small picture')
         pic = Image.open('Pictures/fix_later.png')
         pic.save('Pictures/ss{}.png'.format(number))
     else:
-        objective_lst = []
-        while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
-            objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
-
+        try:
+            url = 'https://cedb.me/game/' + CE_ID
+            driver.get(url)
+            objective_lst = []
+            while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
+                objective_lst = []
+                objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+        except :
+            print("I'm a doodoo head")
+            get_image(number, CE_ID, driver, new_data)
         top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
         bottom_right = objective_lst[len(objective_lst)-2].location
         size = objective_lst[len(objective_lst)-2].size
