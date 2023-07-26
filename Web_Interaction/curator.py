@@ -50,8 +50,9 @@ async def loop(client):
         data = json.load(jsonFile)
     data['Current Reviews'] = await checkCuratorCount(client)
     print(data)
+
     with open("./Jasons/curator_count.json", "w") as jsonFile:
-        json.dump(data, jsonFile)
+        json.dump(data, jsonFile, indent = 4)
 
 
 async def curatorUpdate(num: int, client) :

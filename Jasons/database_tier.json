@@ -9,7 +9,7 @@
         "First-Person": [],
         "Platformer": [],
         "Strategy": [
-            "- Puzzle Games -"
+            "- \u200ePuzzle Games -"
         ]
     },
     "Tier 1": {
@@ -43,7 +43,6 @@
             "Death's Door",
             "DEATHRUN TV",
             "Destructivator 2",
-            "Devil May Cry HD Collection",
             "Dispersio 2",
             "Dizzy Rogues",
             "Driven Out",
@@ -180,7 +179,6 @@
             "OlliOlli",
             "OlliOlli2: Welcome to Olliwood",
             "oO",
-            "Overcooked! 2",
             "Pan-Dimensional Conga Combat",
             "Perchang",
             "Pirate Pop Plus",
@@ -240,7 +238,7 @@
         "Bullet Hell": [
             "#Snake2 DX: Reawakening",
             "ASTRONAUTILUS",
-            "Barrage Musical ~A Fantasy of Tempest~",
+            "Barrage Musical  ~A Fantasy of Tempest~",
             "Blast Rush Classic",
             "Blazend",
             "Bullet Heaven 2",
@@ -258,7 +256,7 @@
             "Gridform",
             "GUNBIRD",
             "Gunlocked",
-            "Hifuu Nightmare Diary ~ Violet Detector.",
+            "Hifuu Nightmare Diary ~ Violet Detector. ",
             "HyperDot",
             "Idol Hell",
             "ITTA",
@@ -285,8 +283,7 @@
             "Touhou Bunkachou \uff5e Double Spoiler",
             "Vacant Kingdom",
             "VECTORLORD",
-            "Zenodyne R",
-            "ZeroRanger"
+            "Zenodyne R"
         ],
         "First-Person": [
             "A Story About My Uncle",
@@ -520,6 +517,7 @@
             "Lone Fungus",
             "Mega Man 11",
             "Mega Man Legacy Collection / \u30ed\u30c3\u30af\u30de\u30f3 \u30af\u30e9\u30b7\u30c3\u30af\u30b9 \u30b3\u30ec\u30af\u30b7\u30e7\u30f3",
+            "Midnight Fight Express",
             "Mr. Shifty",
             "My Friend Pedro",
             "Nex Machina",
@@ -591,6 +589,7 @@
             "Mushroom 11",
             "OmniBus",
             "One Wheel Guy",
+            "Overcooked! 2",
             "PAC-MAN\u2122 CHAMPIONSHIP EDITION 2",
             "Paperball",
             "Pato Box",
@@ -670,12 +669,12 @@
             "THOTH",
             "Touhou Bunkachou \uff5e Shoot the Bullet.",
             "Touhou Kikeijuu ~ Wily Beast and Weakest Creature.",
-            "Touhou Kouryudou ~ Unconnected Marketeers.",
             "Touhou Tenkuushou ~ Hidden Star in Four Seasons.",
             "Wish Project",
             "WITCH-BOT MEGLILO",
             "Xmas Shooting - Scramble!!",
             "Yars: Recharged",
+            "ZeroRanger",
             "\u4e1c\u65b9\u8fdc\u7a7a\u754c ~ Ultimate Vitality of Imagination",
             "\u6771\u65b9\u5b9f\u5728\u76f8 \uff5e Dream Logical World",
             "\u6771\u65b9\u5e55\u83ef\u796d TouHou Makuka Sai ~ Fantastic Danmaku Festival"
@@ -803,9 +802,11 @@
             "Aeterna Noctis",
             "Atomicrops",
             "Bleed",
+            "Cave Story+",
             "Caveblazers",
             "Colt Canyon",
             "Devil May Cry 5",
+            "Devil May Cry HD Collection",
             "Eldest Souls",
             "Furi",
             "Fury Unleashed",
@@ -816,7 +817,6 @@
             "Jotun: Valhalla Edition",
             "Lenna's Inception",
             "METAL GEAR RISING: REVENGEANCE",
-            "Midnight Fight Express",
             "MindSeize",
             "Mortal Shell",
             "Nuclear Throne",
@@ -832,6 +832,7 @@
             "Titan Souls",
             "Valfaris",
             "Vanquish",
+            "Voidigo",
             "Ys: The Oath in Felghana",
             "Yumori Forest"
         ],
@@ -901,6 +902,7 @@
             "Touhou Kanjuden ~ Legacy of Lunatic Kingdom.",
             "Touhou Kikamu ~ Elegant Impermanence of Sakura",
             "Touhou Kishinjou ~ Double Dealing Character.",
+            "Touhou Kouryudou ~ Unconnected Marketeers.",
             "Touhou Nemuri Sekai ~ Wonderful Waking World",
             "Touhou Shinreibyou ~ Ten Desires.",
             "Yousei Daisensou ~ Touhou Sangetsusei - Great Fairy Wars",
@@ -920,7 +922,6 @@
             "Hot Lava",
             "Neon White",
             "Paint the Town Red",
-            "PAYDAY 2",
             "PAYDAY\u2122 The Heist",
             "Primordial Pain",
             "Serious Sam HD: The Second Encounter",
@@ -932,7 +933,6 @@
             "Astrogon",
             "BattleBlock Theater\u00ae",
             "Bouncing Hero",
-            "Cave Story+",
             "Crash Bandicoot\u2122 4: It\u2019s About Time",
             "Cursed Castilla (Maldita Castilla EX)",
             "Eryi's Action",
@@ -971,7 +971,6 @@
     },
     "Tier 4": {
         "Action": [
-            "[NINJA GAIDEN: Master Collection] NINJA GAIDEN \u03a3",
             "Bleed 2",
             "Crashlands",
             "Curse of the Dead Gods",
@@ -989,8 +988,10 @@
             "Super House of Dead Ninjas",
             "Tormentor\u274cPunisher",
             "TowerFall Ascension",
+            "Wee Tanks!",
             "Wings of Vi",
-            "Ys Origin"
+            "Ys Origin",
+            "[NINJA GAIDEN: Master Collection] NINJA GAIDEN \u03a3"
         ],
         "Arcade": [
             "Avoid - Sensory Overload",
@@ -1010,7 +1011,6 @@
             "Worm Adventure 4: Into the Wormhole"
         ],
         "Bullet Hell": [
-            "\u2200kashicverse -Malicious Wake-",
             "BLUE REVOLVER",
             "Bullet Hell Monday",
             "CosmoDreamer",
@@ -1024,6 +1024,7 @@
             "Raiden IV: OverKill",
             "STRIKERS 1945",
             "Terra Feminarum",
+            "\u2200kashicverse -Malicious Wake-",
             "\u6771\u65b9\u50ac\u72d0\u8b5a \uff5e Servants of Harvest Wish",
             "\u6771\u65b9\u5e55\u83ef\u796d \u6625\u96ea\u7bc7 \uff5e Fantastic Danmaku Festival Part II"
         ],
@@ -1034,6 +1035,7 @@
             "Extricate",
             "Halo: The Master Chief Collection",
             "KILLRUN",
+            "PAYDAY 2",
             "SCP: Containment Breach Multiplayer",
             "Stickit",
             "Verlet Swing",
