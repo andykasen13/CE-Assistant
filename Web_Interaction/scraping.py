@@ -19,6 +19,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
+ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
+
+
 
 
 # Grab information from json file
@@ -95,13 +98,18 @@ def game_list():
             
             embed = {
                 'Embed' : discord.Embed(
-                    title=game['name'] + " added to the site", # TODO make it fill out more info (tier, genre, num of objectives for _ points)
+                    title="__" + game['name'] + "__ added to the site", # TODO make it fill out more info (tier, genre, num of objectives for _ points)
                     colour= 0x48b474,
                     timestamp=datetime.now()
                 ),
                 'Image' : discord.File("Pictures/ss{}.png".format(number), filename="image.png")
             }
             embed['Embed'].set_image(url='attachment://image.png')
+            embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://example.com", icon_url=ce_hex_icon)
+            embed['Embed'].set_thumbnail(url=ce_hex_icon)
+            embed['Embed'].set_footer(text="CE Assistant",
+                icon_url=ce_hex_icon)
+           
             updated_games.append(embed)
             number += 1
 
@@ -180,7 +188,7 @@ def update(game, old_game, driver, number):
 
             # if objective is new
             if objective in list(new_game['Primary Objectives'].keys()) and not objective in list(old_game['Primary Objectives'].keys()):
-                update += "\n- New Primary Objective '{}' added\n\t- {} points <:CE_points:1133558614867587162>\n  - {}".format(objective, new_game['Primary Objectives'][objective]['Point Value'], new_game['Primary Objectives'][objective]['Description'])
+                update += "\n- New Primary Objective '**{}**' added:\n\t- {} points <:CE_points:1133558614867587162>\n  - {}".format(objective, new_game['Primary Objectives'][objective]['Point Value'], new_game['Primary Objectives'][objective]['Description'])
             
             # if objective is updated
             elif objective in list(old_game['Primary Objectives'].keys()) and old_game['Primary Objectives'] != new_game['Primary Objectives']:
@@ -193,16 +201,16 @@ def update(game, old_game, driver, number):
                 # ------------------- check points -------------------
                 # points increased
                 if new['Point Value'] > old['Point Value']:
-                    update += "\n- '{}' increased from {} <:CE_points:1133558614867587162> ➡ {} <:CE_points:1133558614867587162> points".format(objective, old['Point Value'], new['Point Value'])
+                    update += "\n- '**{}**' increased from {} <:CE_points:1133558614867587162> ➡ {} <:CE_points:1133558614867587162> points:".format(objective, old['Point Value'], new['Point Value'])
                                        #<:CE_points:1128420207329816597>
 
                 # points decreased
                 elif new['Point Value'] < old['Point Value']:
-                    update += "\n- '{}' decreased from {} <:CE_points:1133558614867587162> ➡ {} <:CE_points:1133558614867587162> points".format(objective, old['Point Value'], new['Point Value'])
+                    update += "\n- '**{}**' decreased from {} <:CE_points:1133558614867587162> ➡ {} <:CE_points:1133558614867587162> points:".format(objective, old['Point Value'], new['Point Value'])
                 
                 # points unchanged
                 else:
-                    update += "\n- '{}' updated".format(objective)
+                    update += "\n- '**{}**' updated".format(objective)
 
 
                 # ------------------- check description -------------------
@@ -308,7 +316,7 @@ def update(game, old_game, driver, number):
     # ------------------- make final embed -------------------
     embed = {
         'Embed' : discord.Embed(
-            title=game['name'],
+            title="__" + game['name'] + "__ updated on the site:",
             colour= 0xefd839,
             timestamp=datetime.now(),
             description=update.strip()
@@ -316,6 +324,10 @@ def update(game, old_game, driver, number):
         'Image' : discord.File("Pictures/ss{}.png".format(number), filename="image.png")
     }
     embed['Embed'].set_image(url='attachment://image.png')
+    embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://example.com", icon_url=ce_hex_icon)
+    embed['Embed'].set_thumbnail(url=ce_hex_icon)
+    embed['Embed'].set_footer(text="CE Assistant",
+        icon_url=ce_hex_icon)
 
     # return :)
     return embed

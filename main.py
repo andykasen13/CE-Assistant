@@ -53,6 +53,7 @@ with open('Jasons/secret_info.json') as f :
 discord_token = localJSONData['discord_token']
 guild_ID = localJSONData['guild_ID']
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
+ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
     
 
 
@@ -986,11 +987,13 @@ async def scrape(interaction):
     updates = await scrape_thread_call() #all_game_data(client)
     await interaction.channel.send("scraped")
 
+    print(updates)
+
 
     correctChannel = client.get_channel(1128742486416834570)
     for dict in updates:
-        for game in dict:
-            await correctChannel.send(file=dict[game]['Image'], embed=dict[game]['Embed'])
+        #for game in dict:
+            await correctChannel.send(file=dict['Image'], embed=dict['Embed'])
 
 
 
