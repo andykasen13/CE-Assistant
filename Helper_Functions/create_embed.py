@@ -71,6 +71,7 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 def getEmbed(game_name, authorID):
 
+    total_points = 0
     #TODO add error exceptions
     #TODO turn this into a class with getters and setters for wider versatility
 
@@ -116,7 +117,7 @@ def getEmbed(game_name, authorID):
     jsonData = json.loads(response.text)
     
     # Save important information
-    gameTitle = jsonData[correct_app_id]['data']['name']
+    game_name = jsonData[correct_app_id]['data']['name']
     imageLink = jsonData[correct_app_id]['data']['header_image']
     gameDescription = jsonData[correct_app_id]['data']['short_description']
     if(jsonData[correct_app_id]['data']['is_free']) : 
@@ -127,7 +128,7 @@ def getEmbed(game_name, authorID):
 # --- CREATE EMBED ---
 
     # and create the embed!
-    embed = discord.Embed(title=f"{gameTitle}",
+    embed = discord.Embed(title=f"{game_name}",
         url=f"https://store.steampowered.com/app/{correct_app_id}/{gameNameWithLinkFormat}/",
         description=(f"{gameDescription}"),
         colour=0x000000,
@@ -140,4 +141,13 @@ def getEmbed(game_name, authorID):
     embed.set_thumbnail(url=ce_mountain_icon)
     embed.set_footer(text="CE Assistant",
         icon_url=ce_mountain_icon)
+    embed.add_field(name="Requested by", value = "<@" + str(authorID) + ">", inline=True)
+    if game_name in database_name.keys() :
+        for objective in database_name[game_name]["Primary Objectives"] :
+            total_points += int(database_name[game_name]["Primary Objectives"][objective]["Point Value"])
+        embed.add_field(name="CE Status", value=f"{total_points} Points", inline=True)
+        embed.add_field(name="CE Owners", value= database_name[game_name]["Total Owners"], inline=True)
+        embed.add_field(name="CE Completions", value= database_name[game_name]["Full Completions"], inline=True)
+    else : embed.add_field(name="CE Status", value="Not on Challenge Enthusiasts", inline=True)
+
     return embed

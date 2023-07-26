@@ -33,6 +33,7 @@ from Helper_Functions.create_embed import create_multi_embed, getEmbed
 from Helper_Functions.roll_string import get_roll_string
 from Helper_Functions.buttons import get_buttons, get_genre_buttons
 from Helper_Functions.end_time import roll_completed, roll_failed
+from Helper_Functions.update import update_p
 
 # --------------------------------------------------- ok back to the normal bot ----------------------------------------------
 intents = discord.Intents.default()
@@ -918,7 +919,7 @@ async def checkRolls(interaction, user: discord.Member=None) :
 
     # if no user is provided default to sender
     if user is None :
-        target_user = interaction.user
+        user = interaction.user
 
     #open the json file and get the data
     with open('Jasons/users2.json', 'r') as f :
@@ -931,22 +932,22 @@ async def checkRolls(interaction, user: discord.Member=None) :
     # designated user
     steam_user_name = ""
     for user_name in list(userInfo) :
-        if(userInfo[user_name]["Discord ID"] == target_user.id) :
+        if(userInfo[user_name]["Discord ID"] == user.id) :
             steam_user_name = user_name
             break
     
     if(steam_user_name == "") : return await interaction.response.followup("This user does not exist.")
     print(steam_user_name)
 
-    current_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 'Current Rolls')
-    completed_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, target_user, 'Completed Rolls')
+    current_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, user, 'Current Rolls')
+    completed_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, user, 'Completed Rolls')
     
     # make the embed that you're going to send
     embed = discord.Embed(colour=0x000000, timestamp=datetime.datetime.now())
-    embed.add_field(name="User", value = "<@" + str(target_user.id) + ">", inline=False)
+    embed.add_field(name="User", value = "<@" + str(user.id) + ">", inline=False)
     embed.add_field(name="Current Rolls", value=current_roll_str, inline=False)
     embed.add_field(name="Completed Rolls", value=completed_roll_str, inline=False)
-    embed.set_thumbnail(url=target_user.avatar.url)
+    embed.set_thumbnail(url=user.avatar.url)
     embed.set_footer(text="CE Assistant",
         icon_url=ce_mountain_icon)
 
@@ -987,8 +988,33 @@ async def scrape(interaction):
 
 
     correctChannel = client.get_channel(1128742486416834570)
-    for game in updates:
-        await correctChannel.send(file=game['Image'], embed=game['Embed'])
+    for dict in updates:
+        for game in dict:
+            await correctChannel.send(file=dict[game]['Image'], embed=dict[game]['Embed'])
+
+
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------- COMMAND RESOURCE TESTING ---------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+@tree.command(name="resource_testing", description="runs function while recording ram and time", guild=discord.Object(id=guild_ID))
+async def resource_testing(function):
+    ram_usage = []
+    time = []
+    ram_before = psutil.virtual_memory()[3]/1000000000
+    time_before = datetime.datetime.now()
+    await function
+    ram_after = psutil.virtual_memory()[3]/1000000000
+    time_after = datetime.datetime.now()
+    ram_usage.append(ram_after-ram_before)
+    time.append((time_after-time_before).total_seconds())
+
+    print('ram usage (GB): ' + str(sum(ram_usage)/len(ram_usage)))
+    print('time taken (s):' + str(sum(time)/len(time)))
+
 
 
 
@@ -999,28 +1025,24 @@ async def scrape(interaction):
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="steam_game", description="Get information on any steam game", guild=discord.Object(id=guild_ID))
-async def steam_command(interaction, game_name: str):
+async def steam_command(interaction : discord.Interaction, game_name: str):
 
     # Log the command
     print("Recieved steam_game command with parameter: " + game_name + ".")
 
     # Defer the interaction
-    await interaction.response.defer()
+    await interaction.response.defer(ephemeral=True)
 
     # Get the embed
     embed = getEmbed(game_name, interaction.user.id)
     embed.set_author(name="Requested Steam info on '" + game_name + "'")
-    embed.add_field(name="Requested by", value="<@" + str(interaction.user.id) + ">", inline=True)
-    embed.add_field(name="CE Status", value="Not on CE / x Points", inline=True)
-    embed.add_field(name="CE Owners", value="[insert]", inline=True)
-    embed.add_field(name="CE Completions", value="[insert]", inline=True)
     
 
     # Finally, send the embed
     await interaction.followup.send(embed=embed)
 
     # And log it
-    print("Sent information on requested game " + game_name + "\n")
+    print("Sent information on requested game " + game_name + ": " + embed.title +"\n")
 
 
 
@@ -1149,11 +1171,19 @@ async def color(interaction) :
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="test", description="test", guild=discord.Object(id=guild_ID))
-async def test(interaction) :
+async def test(interaction : discord.Interaction) :
     await interaction.response.defer()
     casino_channel = client.get_channel(811286469251039333)
+    old = {
+        "Point Value" : 125
+    }
+    new = {
+        "Point Value" : 120
+    }
 
-    embed = discord.Embed(title="fsd", description=" jfldsahfjlsad \n-{} <:CE_points:1128420207329816597> --> {} <:CE_points:1128420207329816597>".format(125, 120))
+    point_emoji = discord.utils.get(interaction.guild.emojis, name=":CE_points:")
+
+    embed = discord.Embed(title="fsd", description="\n- hello\n\t- my balls itch\n\t\t- {} <:CE_points:1128420207329816597> ➡ {} <:CE_points:1128420207329816597>".format(point_emoji, new['Point Value']))
 
     return await interaction.followup.send(embed=embed)
 
@@ -1190,7 +1220,7 @@ async def register(interaction, ce_id: str) :
 
     # Make sure the input is a valid CE-ID
     print(f"Input = {ce_id}")
-    if(ce_id[:5:] == "https" and len(ce_id) >= 29 and (ce_id[29] == '-')) :
+    if(ce_id[:20:] == "https://cedb.me/user" and len(ce_id) >= 29 and (ce_id[29] == '-')) :
         if(ce_id[(len(ce_id)-5)::] == "games") : ce_id = ce_id[21:(len(ce_id)-6):]
         else : ce_id = ce_id[21::]
     else: return await interaction.followup.send(f"'{ce_id}' is not a valid user link. Please try again or contact <@413427677522034727> for assistance.")
@@ -1219,6 +1249,7 @@ async def register(interaction, ce_id: str) :
             "Completed Rolls" : []
         }
     }
+
     # Go through owned games in CE JSON
     for game in user_ce_data["userGames"] :
         game_name = game["game"]["name"]
@@ -1307,6 +1338,31 @@ async def register(interaction, ce_id: str) :
 
 
 
+
+@tree.command(name="update", description="Update your stats in the CE Assistant database.", guild=discord.Object(id=guild_ID))
+async def update(interaction : discord.Interaction) :
+
+    # Defer the message
+    await interaction.response.defer()
+
+    str = update_p(interaction.user.id)
+
+    if str == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
+    elif(str == "Updated") :
+        # Create confirmation embed
+        embed = discord.Embed(
+            title="Updated!",
+            color=0x000000,
+            timestamp=datetime.datetime.now()
+        )
+        embed.add_field(name="Information", value=f"Your information has been updated in the CE Assistant database.")
+        embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
+        embed.set_footer(text="CE Assistant",
+            icon_url=ce_mountain_icon)
+        embed.set_thumbnail(url=interaction.user.avatar)
+
+        # Send a confirmation message
+        await interaction.followup.send(embed=embed)
 
 
 

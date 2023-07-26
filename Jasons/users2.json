@@ -15,7 +15,7 @@
         "Discord ID": 413427677522034727,
         "Rank": "Rank C",
         "Reroll Tickets": 0,
-        "Casino Score": 0,
+        "Casino Score": 1,
         "Owned Games": {
             "Neon White": {
                 "Primary Objectives": {
@@ -150,73 +150,13 @@
             "Rise of the Tomb Raider\u2122": {},
             "Getting Over It with Bennett Foddy": {}
         },
-        "Cooldowns": {
-            "One Hell of a Day": 1691519241
-        },
+        "Cooldowns": {},
         "Current Rolls": [
-            {
-                "Event Name": "One Hell of a Day",
-                "Games": [
-                    "PAWARUMI",
-                    "Evergate",
-                    "Going Under",
-                    "Kill The Plumber"
-                ]
-            },
-            {
-                "Event Name": "One Hell of a Month",
-                "End Time": "2023-07-23 18:20:17",
-                "Games": []
-            },
-            {
-                "Event Name": "Fourward Thinking",
-                "Games": [
-                    "Riptale",
-                    "Resident Evil 4",
-                    "I Am Fish",
-                    "Within the blade"
-                ],
-                "End Time": 1692807508
-            },
-            {
-                "Event Name": "Two 'Two Week T2 Streak' Streak",
-                "End Time": "2023-08-21 15:40:53",
-                "Games": [
-                    "Golf Gang",
-                    "Evergate",
-                    "Yars: Recharged",
-                    "Wuppo: Definitive Edition"
-                ]
-            }
+            "Caca"
         ],
         "Completed Rolls": [
             {
                 "Event Name": "One Hell of a Day"
-            },
-            {
-                "Event Name": "Two Week T2 Streak",
-                "End Time": "2023-08-07 15:39:29",
-                "Games": [
-                    "Shu",
-                    "Neptunia Shooter"
-                ]
-            },
-            {
-                "Event Name": "Triple Threat",
-                "End Time": 1690306351,
-                "Games": [
-                    "Titan Souls",
-                    "Going Under",
-                    "RIVE: Wreck, Hack, Die, Retry!"
-                ]
-            },
-            {
-                "Event Name": "One Hell of a Day",
-                "End Time": 1690306825,
-                "Games": [
-                    "One Gun Guy",
-                    "Evergate"
-                ]
             }
         ]
     }

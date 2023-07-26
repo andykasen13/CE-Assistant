@@ -1,288 +1,1570 @@
-{
-    "-KLAUS-": {
-        "CE ID": "1e8565aa-b9f2-4b41-9578-22e4c2a5436b",
-        "Steam ID": "729370",
-        "Tier": "Tier 1",
-        "Genre": "Platformer",
-        "Full Completions": 4,
-        "Total Owners": 30,
-        "Primary Objectives": {
-            "CEO of Awesome": {
-                "Description": "Obtain all achievements.",
-                "Point Value": 15,
-                "Achievements": {
-                    "7613bdf1-0d87-4caf-b072-2848ad9a1ff9": "I'm Klaus"
-                }
+[
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "ec1f8e58-b184-496c-a9aa-678876d9dc7b",
+        "points": 50,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "ec1f8e58-b184-496c-a9aa-678876d9dc7b",
+            "name": "Hollow Knight",
+            "platform": "steam",
+            "platformId": "367520",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/367520/ss_5384f9f8b96a0b9934b2bc35a4058376211636d2.1920x1080.jpg?t=1577747500",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/367520/header.jpg?t=1577747500",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/367520/7b87aecda896ae747a6e40e3eb63498cb8b84df2.jpg",
+            "tier": 5,
+            "points": 275,
+            "createdAt": "2020-01-28T08:26:42.000Z",
+            "updatedAt": "2023-01-25T03:51:08.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {}
+        }
     },
-    "-SPROUT-": {
-        "CE ID": "d9512a9b-e89b-417c-9fa2-cc22396a5f72",
-        "Steam ID": "1336340",
-        "Tier": "Tier 1",
-        "Genre": "Platformer",
-        "Full Completions": 61,
-        "Total Owners": 100,
-        "Primary Objectives": {
-            "Microdasher": {
-                "Description": "Complete each world in under 5 minutes. / Complete each world without dying.",
-                "Point Value": 10,
-                "Achievements": {
-                    "16f7c349-e7c8-4191-9f1b-2a52cf78b9c7": "Completed The Aether Without Dying",
-                    "61f1a69e-52ee-4f09-a7af-37478a541cef": "Completed The Aether In Under 2 Minutes",
-                    "70f7a3c9-78d0-45e2-84b0-28cde0818d4f": "Completed The Depths With Dying",
-                    "227a87e0-ed6d-4f63-925a-07d877c8b746": "Completed The Grove In Under 2 Minutes",
-                    "f3579f7c-2b98-4475-bbd3-487bd6bd4c7d": "Completed The Hearth In Under 2 Minutes",
-                    "fe1abcde-9a94-4f6b-8a3e-a674b453e0d2": "Completed The Abyss Without Dying",
-                    "4f5b7ffa-ec86-4678-b5ab-6e2b1349173b": "Completed The Grove Without Dying",
-                    "c31ac6ae-3b8a-46cd-98b4-8cfbdf551e14": "Completed The Depths In Under 2 Minutes",
-                    "091b07bb-284c-471c-844d-363b04de698f": "Completed The Abyss In Under 2 Minutes",
-                    "8196fa80-20c2-468d-9934-5cbc75acdf7f": "Completed The Hearth Without Dying"
-                }
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "23dfa792-591a-4f55-99ae-1c34180b22c8",
+        "points": 50,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "23dfa792-591a-4f55-99ae-1c34180b22c8",
+            "name": "Neon White",
+            "platform": "steam",
+            "platformId": "1533420",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1533420/ss_d8c2c0eb97bc25344f24da92e55b6420ca94c607.1920x1080.jpg?t=1655938828",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1533420/header.jpg?t=1655938828",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1533420/0c26e58be78678cb80716370bd607778d85b3ab5.jpg",
+            "tier": 3,
+            "points": 70,
+            "createdAt": "2022-06-24T23:32:39.000Z",
+            "updatedAt": "2022-08-21T22:41:48.000Z",
+            "genreId": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+            "genre": {
+                "id": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+                "name": "First-Person",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {}
+        }
     },
-    "10 Second Ninja X": {
-        "CE ID": "2e0a208c-fc31-447b-a96e-e01c3c4bf6fa",
-        "Steam ID": "435790",
-        "Tier": "Tier 1",
-        "Genre": "Platformer",
-        "Full Completions": 60,
-        "Total Owners": 382,
-        "Primary Objectives": {
-            "Routing Ninja": {
-                "Description": "Earn 300 stars. / Get an X rank on all marathon modes.",
-                "Point Value": 15,
-                "Achievements": {
-                    "dc2bffae-e43b-476f-b7d7-a55f1b0bc829": "Wooooooooooooooah - Livin' on a prayer"
-                }
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "f191e27e-6a6e-4323-b35a-442c32819b05",
+        "points": 30,
+        "invalid": false,
+        "createdAt": "2023-04-09T22:38:41.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "f191e27e-6a6e-4323-b35a-442c32819b05",
+            "name": "Teenage Mutant Ninja Turtles: Shredder's Revenge",
+            "platform": "steam",
+            "platformId": "1361510",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1361510/ss_3c0c96a66b61231bfa9f0689fb9c9b38f9c88fd8.1920x1080.jpg?t=1679323514",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1361510/header.jpg?t=1679323514",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1361510/42b5c6566f9141a08a11dc74b8b915c919410d2c.jpg",
+            "tier": 2,
+            "points": 31,
+            "createdAt": "2023-04-09T20:06:32.000Z",
+            "updatedAt": "2023-07-12T09:49:37.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {}
+        }
     },
-    "1001 Spikes": {
-        "CE ID": "c04662d6-fdcc-4b55-918b-f1d1eb0d25de",
-        "Steam ID": "260790",
-        "Tier": "Tier 1",
-        "Genre": "Platformer",
-        "Full Completions": 33,
-        "Total Owners": 139,
-        "Primary Objectives": {
-            "1001 Yikes": {
-                "Description": "Prove yourself.",
-                "Point Value": 10,
-                "Achievements": {
-                    "95b34459-e6b2-462a-a69b-fd68ba1d3235": "Headhunter",
-                    "c0a19c5b-1371-402f-9e4c-fd62fe80b444": "Stone Cold",
-                    "2f6c492f-bb3d-414a-ae91-7b83848a2d22": "Lost and Found",
-                    "e8ab3d94-05a9-4867-aa60-64dd097d1ba6": "Towerful",
-                    "5fae56e6-c189-4895-a7f3-f27b4ccdf55d": "Speed Runner",
-                    "dc2bffae-e43b-476f-b7d7-a55f1b0bc829": "Wooooooooooooooah - Livin' on a prayer"
-                }
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "1d41d4eb-b72f-42cf-a02c-e356edb5442e",
+        "points": 25,
+        "invalid": false,
+        "createdAt": "2022-11-17T03:17:25.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "1d41d4eb-b72f-42cf-a02c-e356edb5442e",
+            "name": "Katana ZERO",
+            "platform": "steam",
+            "platformId": "460950",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/460950/ss_c269a57182b021d2aac2bb8d42421d0ef301360d.1920x1080.jpg?t=1577748083",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/460950/header.jpg?t=1577748083",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/460950/874ee87e03abd66ff158727c051ceb173e3cba3c.jpg",
+            "tier": 5,
+            "points": 300,
+            "createdAt": "2020-01-28T08:33:36.000Z",
+            "updatedAt": "2022-10-29T16:10:22.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {}
+        }
     },
-    "Devil May Cry 5": {
-        "CE ID": "bacd841e-3086-4d92-a355-67cf515ddeb5",
-        "Steam ID": "601150",
-        "Tier": "Tier 3",
-        "Genre": "Action",
-        "Full Completions": 8,
-        "Total Owners": 169,
-        "Primary Objectives": {
-            "Devil May Style": {
-                "Description": "Clear all missions with S rank on \"Dante Must Die\" and \"Hell and Hell\" mode.",
-                "Point Value": 75,
-                "Requirements": "Video/GIF showing ranks on both modes, OR screenshot of\"Worthy of Legend\" achievement."
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "1e866995-6fec-452e-81ba-1e8f8594f4ea",
+        "points": 20,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "1e866995-6fec-452e-81ba-1e8f8594f4ea",
+            "name": "Celeste",
+            "platform": "steam",
+            "platformId": "504230",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/504230/ss_1ad297c2044cdcf450ee83e56350cafb590da755.1920x1080.jpg?t=1567740791",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/504230/header.jpg?t=1567740791",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/504230/04cb7aa0b497a3962e6b1655b7fd81a2cc95d18b.jpg",
+            "tier": 5,
+            "points": 250,
+            "createdAt": "2020-01-28T06:52:42.000Z",
+            "updatedAt": "2023-03-05T15:43:35.000Z",
+            "genreId": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+            "genre": {
+                "id": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+                "name": "Platformer",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {}
+        }
     },
-    "140": {
-        "CE ID": "50f3310d-04b0-4619-9c43-d0aa689f1303",
-        "Steam ID": "242820",
-        "Tier": "Tier 1",
-        "Genre": "Platformer",
-        "Full Completions": 83,
-        "Total Owners": 297,
-        "Primary Objectives": {
-            "041": {
-                "Description": "Complete all the mirror stages.",
-                "Point Value": 15,
-                "Achievements": {
-                    "7badf7e9-5ae9-46f7-819b-b7ea4b3d89c8": "001-00110001",
-                    "22889e37-7d90-4232-a79f-e301e192795c": "10-00110001",
-                    "bac86116-7963-453b-a870-b33a1c5689a4": "01-00110001",
-                    "3ccafbdd-afac-44ab-9d2f-0a4022ca02db": "11-00110001"
-                }
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "d5b52d31-5dee-4f0b-9fa8-3c41c76c0063",
+        "points": 20,
+        "invalid": false,
+        "createdAt": "2022-10-21T16:56:44.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "d5b52d31-5dee-4f0b-9fa8-3c41c76c0063",
+            "name": "Deepest Sword",
+            "platform": "steam",
+            "platformId": "1647160",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1647160/ss_f918bbbcd3b8e42406774e278f9f3a00e6f81f59.1920x1080.jpg?t=1623222012",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1647160/header.jpg?t=1623222012",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1647160/1d33811f4736c3b63bc61ddb3307f21d796139e3.jpg",
+            "tier": 2,
+            "points": 20,
+            "createdAt": "2021-06-14T15:07:35.000Z",
+            "updatedAt": "2022-03-27T23:54:04.000Z",
+            "genreId": "ec499226-0913-4db1-890e-093b366bcb3c",
+            "genre": {
+                "id": "ec499226-0913-4db1-890e-093b366bcb3c",
+                "name": "Arcade",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {}
+        }
     },
-    "4X4": {
-        "CE ID": "d4f6a3ac-c123-4ee4-a409-e0e1d44a137f",
-        "Steam ID": "2099900",
-        "Tier": "Tier 2",
-        "Genre": "Arcade",
-        "Full Completions": 7,
-        "Total Owners": 37,
-        "Primary Objectives": {
-            "Where we're going, we don't need snow": {
-                "Description": "Record a score of 1080 seconds in Infinite mode",
-                "Point Value": 25,
-                "Achievements": {
-                    "f89053f2-cba1-48bd-bf1b-41dccfafb436": "1080!!!"
-                }
-            },
-            "Gridlocked": {
-                "Description": "Clear all stages with one life.",
-                "Point Value": 10,
-                "Achievements": {
-                    "ba0aeae4-1353-4174-bcae-6fc80fe4aba0": "400%_Red",
-                    "7b9900c4-6285-45d3-8d91-eabaa01c5b2f": "500%_Red",
-                    "d89e28d8-336c-4d4e-a15b-6ab45ec845b9": "200%_Red",
-                    "ac10a123-1d77-40c2-9de7-a12efe4dd85f": "600%_Red",
-                    "20c36002-0207-4c36-be4c-9987d754ea7b": "100%_Red",
-                    "e164ac3e-7962-4c77-a21f-a92a13195aa8": "300%_Red"
-                }
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "d5863239-58a1-4f49-b8ac-4772d7a6fdc9",
+        "points": 20,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "d5863239-58a1-4f49-b8ac-4772d7a6fdc9",
+            "name": "UNSIGHTED",
+            "platform": "steam",
+            "platformId": "1062110",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1062110/ss_c31e4d724b4aab236bd41958f984c4168ff4e37e.1920x1080.jpg?t=1633729228",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1062110/header.jpg?t=1633729228",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1062110/7c29f932fb349a7d186a36df3ffdb848537a7b84.jpg",
+            "tier": 2,
+            "points": 20,
+            "createdAt": "2021-10-19T00:56:04.000Z",
+            "updatedAt": "2022-03-27T23:54:04.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {}
+        }
     },
-    "64.0": {
-        "CE ID": "4408b00f-eac4-4a5f-98f3-0ed3897e73a4",
-        "Steam ID": "578850",
-        "Tier": "Tier 2",
-        "Genre": "Arcade",
-        "Full Completions": 41,
-        "Total Owners": 179,
-        "Primary Objectives": {
-            "Beyond Beyond Godlike": {
-                "Description": "Prove yourself.",
-                "Point Value": 20,
-                "Achievements": {
-                    "fd490aeb-7c40-41d6-b8f3-91b5703e3363": "To infinity and beyond",
-                    "a072b5c6-3d5d-4abf-b646-03018469daca": "Beyond Godlike",
-                    "4c3f3527-d903-4122-b35d-a97d0ebcc8d3": "Mind-Twisted",
-                    "7a9ee590-5826-40be-b492-3ae3dc9df93a": "Polkka Dancer",
-                    "cae9dd57-b07f-4a41-9129-a3e06ac2fb3a": "Superpowered!"
-                }
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "e235fb6a-3b7e-42be-ab03-b5834719d9a9",
+        "points": 15,
+        "invalid": false,
+        "createdAt": "2023-01-04T15:34:15.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "e235fb6a-3b7e-42be-ab03-b5834719d9a9",
+            "name": "Haiku, the Robot",
+            "platform": "steam",
+            "platformId": "1231880",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1231880/ss_34f57025f49e8cf534a507b5fc3e013d98272da1.1920x1080.jpg?t=1671195453",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1231880/header_alt_assets_0.jpg?t=1671195453",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1231880/20ab21e6ab09ad5e644cfc628d5ac92e2fd9933b.jpg",
+            "tier": 1,
+            "points": 15,
+            "createdAt": "2023-01-04T09:59:42.000Z",
+            "updatedAt": "2023-01-22T15:28:52.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {}
+        }
     },
-    "9 Years of Shadows": {
-        "CE ID": "b8d32f16-c5f9-4cc7-a902-2adab70b65ec",
-        "Steam ID": "1402120",
-        "Tier": "Tier 1",
-        "Genre": "Action",
-        "Full Completions": 5,
-        "Total Owners": 8,
-        "Primary Objectives": {
-            "9 Hours of Quality": {
-                "Description": "Complete the bestiary and beat the game.",
-                "Point Value": 5,
-                "Achievements": {
-                    "8c464afb-86fd-4487-9d88-46f9f6961dab": "Saviour",
-                    "c9ac2f8a-a2a2-415b-aab7-f1fcfc8b37ad": "Gotta Kill Them All"
-                }
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "6734b594-d5c4-4522-b771-107d077ce9c5",
+        "points": 10,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "6734b594-d5c4-4522-b771-107d077ce9c5",
+            "name": "Death's Door",
+            "platform": "steam",
+            "platformId": "894020",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/894020/ss_dd9b5a2e40d3d512d1c978a5dfda5999c458a517.1920x1080.jpg?t=1627414742",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/894020/header.jpg?t=1627414742",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/894020/d48d2167c15e8d2af57cfbc31228b90e36f4508c.jpg",
+            "tier": 1,
+            "points": 10,
+            "createdAt": "2021-08-10T17:51:51.000Z",
+            "updatedAt": "2022-03-27T23:54:02.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {}
+        }
     },
-    "A Bastard's Tale": {
-        "CE ID": "48c7eaee-1b2d-47f7-8dc9-00f449b13500",
-        "Steam ID": "371550",
-        "Tier": "Tier 1",
-        "Genre": "Action",
-        "Full Completions": 1,
-        "Total Owners": 37,
-        "Primary Objectives": {
-            "Oddly Specific": {
-                "Description": "Defeat 107 enemies in Endless Fighter Mode.",
-                "Point Value": 10,
-                "Achievements": {
-                    "57a38a97-00e5-4b28-9e09-a6d03d270466": "Impossible"
-                }
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "1e2b4f12-228a-4786-8876-f04faba55134",
+        "points": 10,
+        "invalid": false,
+        "createdAt": "2023-05-13T20:39:54.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "1e2b4f12-228a-4786-8876-f04faba55134",
+            "name": "Garfield Kart - Furious Racing",
+            "platform": "steam",
+            "platformId": "1085510",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1085510/ss_825199e8cd512ce01e07a03b652e7a9d7814afe7.1920x1080.jpg?t=1680529625",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1085510/header.jpg?t=1680529625",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1085510/dbb7640f3d7b8027eadf708d899031390b1fe694.jpg",
+            "tier": 1,
+            "points": 11,
+            "createdAt": "2023-05-13T18:45:39.000Z",
+            "updatedAt": "2023-07-12T09:52:06.000Z",
+            "genreId": "ec499226-0913-4db1-890e-093b366bcb3c",
+            "genre": {
+                "id": "ec499226-0913-4db1-890e-093b366bcb3c",
+                "name": "Arcade",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {}
+        }
     },
-    "A Dance of Fire and Ice": {
-        "CE ID": "22177e06-2002-488a-8c90-fe3ff3849647",
-        "Steam ID": "977950",
-        "Tier": "Tier 5",
-        "Genre": "Arcade",
-        "Full Completions": 8,
-        "Total Owners": 442,
-        "Primary Objectives": {
-            "Melody Master": {
-                "Description": "Complete every world with a Pure Perfect rating.",
-                "Point Value": 130,
-                "Requirements": "Video/GIF showing 100% X-Accuracy for every world + videos of XO, XT, XI and MO Pure Perfects on 1.0x speed with Hit Error Meter enabled."
-            },
-            "Tempo Artisan": {
-                "Description": "Complete every world in the Neo Cosmos DLC with a Pure Perfect rating.",
-                "Point Value": 70,
-                "Requirements": "Video/GIF showing 100% X-Accuracy for every world + videos of T5 and all EX Pure Perfects on 1.0x speed with Hit Error Meter enabled."
-            },
-            "A Dance of Trial and Error": {
-                "Description": "Obtain the speed trial lantern for every world in the Xtra, Crown and Muse Dash islands.",
-                "Point Value": 40,
-                "Requirements": "Screenshots/GIF of each island."
-            },
-            "High Guardian": {
-                "Description": "Obtain the speed trial lantern for every world in the Neo Cosmos DLC.",
-                "Point Value": 20,
-                "Requirements": "Screenshots/GIF of each world."
-            },
-            "Orbitals on the Double": {
-                "Description": "Obtain the speed trial lantern for Worlds 1 through 12 and beat World B.",
-                "Point Value": 10,
-                "Achievements": {
-                    "ddfa5f66-e039-45d5-8842-3f3e655e13fc": "World 7 Speed Trial",
-                    "c30f1385-c629-4f61-8306-ebdd31930cb8": "World 4 Speed Trial Complete",
-                    "3c9fd30d-87ca-4415-87d0-65b2e2d80a04": "World 3 Speed Trial Complete",
-                    "499a516c-b3e9-41ba-8746-f350ecafb1f2": "World 8 Speed Trial",
-                    "2d018ea9-45e6-4cbb-836e-5445ab0608e1": "World 6 Speed Trial Complete",
-                    "50cb8830-790d-4e2e-b705-79ce8d18d1a5": "World 2 Speed Trial Complete",
-                    "e787a525-b300-4612-b278-df66bb23bba2": "World 10 Speed Trial",
-                    "eac4718a-a982-4834-88f6-01d082590091": "World 5 Speed Trial Complete",
-                    "6d8fdda7-d5bf-4e27-ad3e-bb6f5d0bcb8c": "World 1 Speed Trial Complete",
-                    "51815cf6-75a1-41b3-be84-20cd32fa7a96": "World 11 Trial",
-                    "d5b45b81-1b88-462e-8235-c892b31526b2": "World 12 Trial",
-                    "ef2ad91e-512c-4f58-bf37-a5e36d478687": "World 9 Speed Trial",
-                    "8a38ac22-7142-41da-af2e-6777840cce9c": "Bonus Level Complete"
-                }
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "d301043e-b889-48b0-8658-c68087561b49",
+        "points": 5,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "d301043e-b889-48b0-8658-c68087561b49",
+            "name": "Clustertruck",
+            "platform": "steam",
+            "platformId": "397950",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/397950/ss_ffe91adf2baa39c441fc6d1ca8905204f64c8afc.1920x1080.jpg?t=1563881923",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/397950/header.jpg?t=1563881923",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/397950/dedd6835d801bfaa5d10cd4d70dfecba5510b0ef.jpg",
+            "tier": 1,
+            "points": 5,
+            "createdAt": "2020-01-28T08:06:31.000Z",
+            "updatedAt": "2022-03-27T23:54:04.000Z",
+            "genreId": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+            "genre": {
+                "id": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+                "name": "First-Person",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {}
+        }
     },
-    "A Hat in Time": {
-        "CE ID": "21144d8d-c943-4130-8349-6e768220cfc9",
-        "Steam ID": "253230",
-        "Tier": "Tier 4",
-        "Genre": "Platformer",
-        "Full Completions": 29,
-        "Total Owners": 411,
-        "Primary Objectives": {
-            "Timeless End": {
-                "Description": "Obtain all Death Wish stamps without using \"Peace and Tranquility\" mode or any mods.",
-                "Point Value": 55,
-                "Achievements": {
-                    "dbce1c50-a26a-4b4d-a113-d4fe46c97793": "I Refuse To Die!"
-                },
-                "Requirements": "Screenshot of the Death Wish map (no Peace and Tranquility stamps; \"Unlimited Possibilities\" achievements can't be unlocked prior to \"I Refuse To Die!\"), OR video of \"Seal the Deal\"."
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "7632d9d3-8d02-4af6-932c-0d7b59842e48",
+        "points": 5,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "7632d9d3-8d02-4af6-932c-0d7b59842e48",
+            "name": "Cuphead",
+            "platform": "steam",
+            "platformId": "268910",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/268910/ss_615455299355eaf552c638c7ea5b24a8b46e02dd.1920x1080.jpg?t=1656595442",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/268910/header.jpg?t=1656595442",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/268910/c19f1bd916b6d171e94089d03112ec4e4e4da84e.jpg",
+            "tier": 2,
+            "points": 25,
+            "createdAt": "2020-01-28T06:23:50.000Z",
+            "updatedAt": "2022-07-04T20:03:29.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
-        },
-        "Community Objectives": {
-            "Your Contract Has Expired": {
-                "Description": "Beat \"Seal the Deal\" with the One-Hit Hero badge equipped or without taking damage.",
-                "Requirements": "Video of the run."
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "57bf2d54-3730-432f-9ae0-801b8a70193f",
+        "points": 5,
+        "invalid": false,
+        "createdAt": "2023-01-05T02:40:59.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "57bf2d54-3730-432f-9ae0-801b8a70193f",
+            "name": "GoNNER",
+            "platform": "steam",
+            "platformId": "437570",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/437570/ss_acec9616041108ed2db3f8bc1120f1c06a44d30e.1920x1080.jpg?t=1561443690",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/437570/header.jpg?t=1561443690",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/437570/337e12b8e8bd8c99624d4ca17dd526b0c24038d7.jpg",
+            "tier": 1,
+            "points": 5,
+            "createdAt": "2020-01-28T08:18:41.000Z",
+            "updatedAt": "2022-03-27T23:54:01.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "f6462444-2797-4ad1-b9c6-839671a9e551",
+        "points": 5,
+        "invalid": false,
+        "createdAt": "2023-01-20T13:00:00.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "f6462444-2797-4ad1-b9c6-839671a9e551",
+            "name": "Milli & Greg",
+            "platform": "steam",
+            "platformId": "1598210",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1598210/ss_94ef0c32216e64a490685b588dcb24c225f5cdf7.1920x1080.jpg?t=1637263616",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1598210/header.jpg?t=1637263616",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1598210/9a548ae4be8929ac06bca20eab4b55c4ee9a9987.jpg",
+            "tier": 1,
+            "points": 5,
+            "createdAt": "2022-04-22T19:55:26.000Z",
+            "updatedAt": "2022-04-22T20:00:03.000Z",
+            "genreId": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+            "genre": {
+                "id": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+                "name": "Platformer",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "544e8a12-3cc5-4ce6-8018-dfa962f1fd45",
+        "points": 5,
+        "invalid": false,
+        "createdAt": "2023-04-14T13:17:01.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "544e8a12-3cc5-4ce6-8018-dfa962f1fd45",
+            "name": "TUNIC",
+            "platform": "steam",
+            "platformId": "553420",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/553420/ss_9c0184ba83022786f74f4a70ebae5c47d2a3c35c.1920x1080.jpg?t=1649107473",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/553420/header.jpg?t=1649107473",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/553420/f4c05eb0f62914cf03a33c820e42359dad439912.jpg",
+            "tier": 1,
+            "points": 5,
+            "createdAt": "2023-04-14T03:13:47.000Z",
+            "updatedAt": "2023-04-14T13:17:01.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "a5252cda-034d-4ec4-8ccc-029817aef04a",
+        "points": 5,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "a5252cda-034d-4ec4-8ccc-029817aef04a",
+            "name": "Untitled Goose Game",
+            "platform": "steam",
+            "platformId": "837470",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/837470/ss_deb5b83b07d3f7c1050ea46b51117109da06952b.1920x1080.jpg?t=1623284142",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/837470/header.jpg?t=1623284142",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/837470/6e2e1a85218053fbb1bca010bf28d73f1bec1965.jpg",
+            "tier": 1,
+            "points": 5,
+            "createdAt": "2022-04-19T20:15:55.000Z",
+            "updatedAt": "2022-04-19T20:53:17.000Z",
+            "genreId": "ec499226-0913-4db1-890e-093b366bcb3c",
+            "genre": {
+                "id": "ec499226-0913-4db1-890e-093b366bcb3c",
+                "name": "Arcade",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "76574ec1-42df-4488-a511-b9f2d9290e5d",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-12-01T23:25:03.000Z",
+        "updatedAt": "2023-07-18T00:02:22.000Z",
+        "game": {
+            "id": "76574ec1-42df-4488-a511-b9f2d9290e5d",
+            "name": "- Challenge Enthusiasts -",
+            "platform": "steam",
+            "platformId": "613920",
+            "background": "https://cdn.discordapp.com/attachments/956376724780777482/1128590152470634556/1.png",
+            "header": "https://media.discordapp.net/attachments/1113837454139596863/1133258936506654730/image.png",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/613920/4c84b7fe8daed36ec5416618a23b75aadd1f7cc5.jpg",
+            "tier": 0,
+            "points": 0,
+            "createdAt": "2022-11-30T16:47:27.000Z",
+            "updatedAt": "2023-07-25T04:46:40.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "27578157-10b2-4f29-acee-452c2dc59477",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-07-19T04:07:27.000Z",
+        "updatedAt": "2023-07-19T04:12:16.000Z",
+        "game": {
+            "id": "27578157-10b2-4f29-acee-452c2dc59477",
+            "name": "- ‎Puzzle Games -",
+            "platform": "steam",
+            "platformId": "1485250",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1485250/ss_caa702dadcf61bac608af0ed58bbdcbd780e773b.1920x1080.jpg?t=1667428831",
+            "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/434470/header.jpg?t=1592768689",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1485250/0bec671712be4bf2ab48cbcbe06eae5c4b2550a4.jpg",
+            "tier": 0,
+            "points": 0,
+            "createdAt": "2023-05-03T11:07:02.000Z",
+            "updatedAt": "2023-06-25T05:15:11.000Z",
+            "genreId": "ffb558c1-5a45-4b8c-856c-e9622ce54f00",
+            "genre": {
+                "id": "ffb558c1-5a45-4b8c-856c-e9622ce54f00",
+                "name": "Strategy",
+                "createdAt": "2023-06-24T05:09:45.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "8fa87bf9-55df-48bd-8412-f9cb9094f7ec",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-02-18T04:22:01.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "8fa87bf9-55df-48bd-8412-f9cb9094f7ec",
+            "name": "Clone Drone in the Danger Zone",
+            "platform": "steam",
+            "platformId": "597170",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/597170/ss_b0e2f164f94d531f6c49785598f2a444d3e965a4.1920x1080.jpg?t=1671196150",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/597170/header.jpg?t=1671196150",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/597170/2c09e97d9c2ded6c73d3502ef2121bfdcb5aee61.jpg",
+            "tier": 2,
+            "points": 25,
+            "createdAt": "2023-02-17T17:05:48.000Z",
+            "updatedAt": "2023-05-20T17:47:24.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "c23a06b2-9fc7-49ed-9b34-05e012cdd19a",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "c23a06b2-9fc7-49ed-9b34-05e012cdd19a",
+            "name": "Crash Bandicoot™ N. Sane Trilogy",
+            "platform": "steam",
+            "platformId": "731490",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/731490/ss_66d4bf28161b1c7a5a78f579bcea05a0785f2c50.1920x1080.jpg?t=1568841571",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/731490/header.jpg?t=1568841571",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/731490/26854575fde25d87574a42b0f2a5550f0b32c3a1.jpg",
+            "tier": 2,
+            "points": 35,
+            "createdAt": "2020-01-28T07:16:35.000Z",
+            "updatedAt": "2022-03-27T23:54:04.000Z",
+            "genreId": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+            "genre": {
+                "id": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+                "name": "Platformer",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "853a5465-5c71-49c0-b294-7ab8525c9417",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "853a5465-5c71-49c0-b294-7ab8525c9417",
+            "name": "Crashlands",
+            "platform": "steam",
+            "platformId": "391730",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/391730/ss_4371ea930febc58b90a94b59e1c6661e84b6cb1c.1920x1080.jpg?t=1601494868",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/391730/header.jpg?t=1601494868",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/391730/8fb73009c5f9918aab9717d8f9db1a4604733297.jpg",
+            "tier": 4,
+            "points": 80,
+            "createdAt": "2021-01-17T18:56:44.000Z",
+            "updatedAt": "2022-03-27T23:54:03.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "ce8ac365-fdbc-4c86-8543-bab271fa4b17",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-10-29T18:06:05.000Z",
+        "updatedAt": "2023-02-22T08:25:46.000Z",
+        "game": {
+            "id": "ce8ac365-fdbc-4c86-8543-bab271fa4b17",
+            "name": "Cyber Hook",
+            "platform": "steam",
+            "platformId": "1130410",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/1130410/ss_6d3f658371a6649ec9cc23223d491db40965dcd9.1920x1080.jpg?t=1601307810",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/1130410/header.jpg?t=1601307810",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1130410/baae5c5654b147e6dae608cd6598e65d35271dff.jpg",
+            "tier": 1,
+            "points": 10,
+            "createdAt": "2020-09-29T09:21:53.000Z",
+            "updatedAt": "2023-04-10T03:37:56.000Z",
+            "genreId": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+            "genre": {
+                "id": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+                "name": "First-Person",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "b97a37a4-4aad-4e01-99e2-1c8bdb2fc5f5",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "b97a37a4-4aad-4e01-99e2-1c8bdb2fc5f5",
+            "name": "Dead Cells",
+            "platform": "steam",
+            "platformId": "588650",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/588650/ss_ac28000ade40cc2fe5c128f32ac98ba33c008a7a.1920x1080.jpg?t=1656004389",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/588650/header_alt_assets_14.jpg?t=1656004389",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/588650/a431361e5dae5fd6ac2433064b62b2a37abc38f1.jpg",
+            "tier": 4,
+            "points": 135,
+            "createdAt": "2020-01-28T08:42:38.000Z",
+            "updatedAt": "2023-05-30T00:42:29.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "5d268c17-5bd0-4eeb-b40f-adc3a0289072",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "5d268c17-5bd0-4eeb-b40f-adc3a0289072",
+            "name": "DOOM Eternal",
+            "platform": "steam",
+            "platformId": "782330",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/782330/ss_4f93a7c5003d49cb32f6c0c6e547452b284580a0.1920x1080.jpg?t=1631811902",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg?t=1631811902",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/782330/14235f425d27ab3b83661ba14c17d22dc90e566b.jpg",
+            "tier": 4,
+            "points": 180,
+            "createdAt": "2021-09-24T05:16:09.000Z",
+            "updatedAt": "2022-07-23T19:10:51.000Z",
+            "genreId": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+            "genre": {
+                "id": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+                "name": "First-Person",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "06af14b9-161b-4d47-bf84-f028fe2a39ca",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-01-04T15:34:15.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "06af14b9-161b-4d47-bf84-f028fe2a39ca",
+            "name": "ELDEN RING",
+            "platform": "steam",
+            "platformId": "1245620",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1245620/ss_ae44317e3bd07b7690b4d62cc5d0d1df30367a91.1920x1080.jpg?t=1683618443",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg?t=1683618443",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1245620/b6e290dd5a92ce98f89089a207733c70c41a1871.jpg",
+            "tier": 2,
+            "points": 20,
+            "createdAt": "2022-03-05T05:42:40.000Z",
+            "updatedAt": "2023-07-11T02:32:17.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "85e5d2d8-bdd0-4df3-8a60-8bc6d01ac0d5",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "85e5d2d8-bdd0-4df3-8a60-8bc6d01ac0d5",
+            "name": "Enter the Gungeon",
+            "platform": "steam",
+            "platformId": "311690",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/311690/ss_bca0036bc452b872a7d9ee3de9e0c9548e8cd4f5.1920x1080.jpg?t=1575923806",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/311690/header.jpg?t=1575923806",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/311690/b459d94ad4b6a5eabd71005874037b9577a4ca31.jpg",
+            "tier": 2,
+            "points": 20,
+            "createdAt": "2020-04-14T18:46:16.000Z",
+            "updatedAt": "2022-03-27T23:54:03.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "13983ef6-551b-4b56-858a-878c14663746",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "13983ef6-551b-4b56-858a-878c14663746",
+            "name": "Furi",
+            "platform": "steam",
+            "platformId": "423230",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/423230/ss_c8e726dc261e4180224d5f0d459e609390594c8e.1920x1080.jpg?t=1579278969",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/423230/header.jpg?t=1579278969",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/423230/85ba3f445459796811d4ea9596914e77dcc0a082.jpg",
+            "tier": 3,
+            "points": 50,
+            "createdAt": "2020-01-28T08:35:10.000Z",
+            "updatedAt": "2023-06-28T11:02:20.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "1f67cb6d-926b-4af5-877e-73d3050d4684",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "1f67cb6d-926b-4af5-877e-73d3050d4684",
+            "name": "Geometry Dash",
+            "platform": "steam",
+            "platformId": "322170",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/322170/ss_89fd9afb5dea806cb0c696bbb2b4e602cc21a713.1920x1080.jpg?t=1577384776",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/322170/header.jpg?t=1577384776",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/322170/7e3919a83bb8702042c45f200432b7773fb86bee.jpg",
+            "tier": 4,
+            "points": 120,
+            "createdAt": "2020-04-09T12:05:39.000Z",
+            "updatedAt": "2023-01-09T22:05:47.000Z",
+            "genreId": "ec499226-0913-4db1-890e-093b366bcb3c",
+            "genre": {
+                "id": "ec499226-0913-4db1-890e-093b366bcb3c",
+                "name": "Arcade",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "00e18e29-db63-44a2-964a-2d51771a5ae3",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "00e18e29-db63-44a2-964a-2d51771a5ae3",
+            "name": "Getting Over It with Bennett Foddy",
+            "platform": "steam",
+            "platformId": "240720",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/240720/ss_413828bfd197dae1e356f6b43c4c38a9d3466591.1920x1080.jpg?t=1577387341",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/240720/header.jpg?t=1577387341",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/240720/161090eb78acf2e28333e8ae182121d906f1ee85.jpg",
+            "tier": 1,
+            "points": 10,
+            "createdAt": "2020-01-28T09:50:39.000Z",
+            "updatedAt": "2022-03-27T23:54:00.000Z",
+            "genreId": "ec499226-0913-4db1-890e-093b366bcb3c",
+            "genre": {
+                "id": "ec499226-0913-4db1-890e-093b366bcb3c",
+                "name": "Arcade",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "c22d19a7-7045-47c6-be2c-3af1ad192258",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-01-16T05:03:31.000Z",
+        "updatedAt": "2023-05-25T00:31:25.000Z",
+        "game": {
+            "id": "c22d19a7-7045-47c6-be2c-3af1ad192258",
+            "name": "Gunborg: Dark Matters",
+            "platform": "steam",
+            "platformId": "1529160",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1529160/ss_8e57120519950b64b0cb2db35cad48ec114c3aef.1920x1080.jpg?t=1658341413",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1529160/header.jpg?t=1658341413",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1529160/955022adc19162cec725609dfb019ce79f81d741.jpg",
+            "tier": 1,
+            "points": 5,
+            "createdAt": "2022-09-29T05:14:01.000Z",
+            "updatedAt": "2022-09-29T05:27:35.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "6391af2f-26d4-44eb-a685-aeb3575f6825",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "6391af2f-26d4-44eb-a685-aeb3575f6825",
+            "name": "Halo: The Master Chief Collection",
+            "platform": "steam",
+            "platformId": "976730",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/976730/ss_ce40a85f9f7f3fa0f620a87f8919f3212ab8e46e.1920x1080.jpg?t=1649955774",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/976730/header.jpg?t=1649955774",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/976730/196a45d8df1981ff6b6b1872a38dc38f6c22875d.jpg",
+            "tier": 4,
+            "points": 100,
+            "createdAt": "2022-05-03T02:51:50.000Z",
+            "updatedAt": "2022-05-03T03:48:23.000Z",
+            "genreId": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+            "genre": {
+                "id": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+                "name": "First-Person",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "af9d0fc3-4e13-4a65-847d-1ab3e6043e52",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-04-13T02:58:04.000Z",
+        "updatedAt": "2023-04-14T13:17:03.000Z",
+        "game": {
+            "id": "af9d0fc3-4e13-4a65-847d-1ab3e6043e52",
+            "name": "Hextech Mayhem: A League of Legends Story™",
+            "platform": "steam",
+            "platformId": "1651960",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1651960/ss_f070a1b0adf4684186dea9f79deb8a2fb7e461f8.1920x1080.jpg?t=1645904692",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1651960/header.jpg?t=1645904692",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1651960/417a948ac1cef6ef58391defbec3b6c83155b496.jpg",
+            "tier": 3,
+            "points": 60,
+            "createdAt": "2022-02-27T23:01:23.000Z",
+            "updatedAt": "2022-03-27T23:54:04.000Z",
+            "genreId": "ec499226-0913-4db1-890e-093b366bcb3c",
+            "genre": {
+                "id": "ec499226-0913-4db1-890e-093b366bcb3c",
+                "name": "Arcade",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "b0c4c8b6-abda-4862-9f8a-b6e4fcb76487",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "b0c4c8b6-abda-4862-9f8a-b6e4fcb76487",
+            "name": "ibb & obb",
+            "platform": "steam",
+            "platformId": "95400",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/95400/ss_61465a341b7798caf9f8885cbb90a7145a40d249.1920x1080.jpg?t=1590420876",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/95400/header.jpg?t=1590420876",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/95400/1e179e3aa2f16e00d4baf3c978554ea20a8890d0.jpg",
+            "tier": 1,
+            "points": 10,
+            "createdAt": "2021-10-24T15:54:12.000Z",
+            "updatedAt": "2022-06-20T22:40:36.000Z",
+            "genreId": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+            "genre": {
+                "id": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+                "name": "Platformer",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "f8532223-4bd9-4da4-965b-d48aef58df94",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "f8532223-4bd9-4da4-965b-d48aef58df94",
+            "name": "Little Nightmares",
+            "platform": "steam",
+            "platformId": "424840",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/424840/ss_328207fbb7a33b95ab6df8bcef7858e670943c17.1920x1080.jpg?t=1630581910",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/424840/header.jpg?t=1630581910",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/424840/1904c041f963b5e2cb22b56c370444517cc4e288.jpg",
+            "tier": 1,
+            "points": 10,
+            "createdAt": "2022-04-01T19:48:44.000Z",
+            "updatedAt": "2022-04-01T19:52:29.000Z",
+            "genreId": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+            "genre": {
+                "id": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+                "name": "Platformer",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "651051b5-6878-49d8-afa9-8c23c63ee518",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-11-17T01:01:34.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "651051b5-6878-49d8-afa9-8c23c63ee518",
+            "name": "Lorera",
+            "platform": "steam",
+            "platformId": "1309940",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1309940/ss_7f8d417f700689d431832bc5e8d631d2b318118b.1920x1080.jpg?t=1612704838",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1309940/header.jpg?t=1612704838",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1309940/a7c6901b6a76c8777075d02c66ad03c0627d2518.jpg",
+            "tier": 1,
+            "points": 15,
+            "createdAt": "2022-04-04T15:54:39.000Z",
+            "updatedAt": "2022-11-27T14:40:04.000Z",
+            "genreId": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+            "genre": {
+                "id": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+                "name": "Platformer",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "374d4bf9-c2f8-4032-aa54-5c11194287ab",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-07-19T04:07:27.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "374d4bf9-c2f8-4032-aa54-5c11194287ab",
+            "name": "Muck",
+            "platform": "steam",
+            "platformId": "1625450",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1625450/ss_9427bb428a690b6898197b9ed2663adaf0210ea2.1920x1080.jpg?t=1625163481",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1625450/header.jpg?t=1625163481",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1625450/a123e3d10527fbdf3fea7ea235e11b41da3754dc.jpg",
+            "tier": 2,
+            "points": 36,
+            "createdAt": "2023-06-18T17:22:03.000Z",
+            "updatedAt": "2023-07-12T15:12:04.000Z",
+            "genreId": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+            "genre": {
+                "id": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+                "name": "First-Person",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "db21aec8-327f-45ba-bc59-579775c34092",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-10-29T18:06:05.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "db21aec8-327f-45ba-bc59-579775c34092",
+            "name": "Neon Boost",
+            "platform": "steam",
+            "platformId": "1057850",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/1057850/ss_b0603b96f053cf1c1970c8696dabc5c5f26dd39b.1920x1080.jpg?t=1577210539",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/1057850/header.jpg?t=1577210539",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1057850/0cbf3631e30872a38e8044d4986867b3080d994f.jpg",
+            "tier": 1,
+            "points": 5,
+            "createdAt": "2020-01-28T08:04:05.000Z",
+            "updatedAt": "2022-03-27T23:54:04.000Z",
+            "genreId": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+            "genre": {
+                "id": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+                "name": "First-Person",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "1f710a58-25f6-4f40-aab1-efa9c88874c5",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "1f710a58-25f6-4f40-aab1-efa9c88874c5",
+            "name": "Ori and the Blind Forest: Definitive Edition",
+            "platform": "steam",
+            "platformId": "387290",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/387290/ss_304ededbbfd607cb37e708cd83e7160c7d840863.1920x1080.jpg?t=1557766574",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/387290/header.jpg?t=1557766574",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/387290/a8b0c1ca89fa421e5061d4ac5c17e2fbf4f08845.jpg",
+            "tier": 3,
+            "points": 50,
+            "createdAt": "2020-01-28T06:49:32.000Z",
+            "updatedAt": "2022-03-27T23:54:00.000Z",
+            "genreId": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+            "genre": {
+                "id": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+                "name": "Platformer",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "2330b737-ee21-4c36-a282-e3730553d457",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "2330b737-ee21-4c36-a282-e3730553d457",
+            "name": "Ori and the Will of the Wisps",
+            "platform": "steam",
+            "platformId": "1057090",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1057090/ss_0cf0ec6681ae5771173790dbc99ddb3bf3b886ad.1920x1080.jpg?t=1612897638",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1057090/header.jpg?t=1612897638",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1057090/ea50b151bb1e2c39e7bdd3ff4f8cc5e8738d6983.jpg",
+            "tier": 3,
+            "points": 75,
+            "createdAt": "2022-06-07T02:48:54.000Z",
+            "updatedAt": "2023-03-21T21:04:54.000Z",
+            "genreId": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+            "genre": {
+                "id": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+                "name": "Platformer",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "535d2f2f-ed84-4d60-92e6-1059440eee17",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-05-13T20:39:54.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "535d2f2f-ed84-4d60-92e6-1059440eee17",
+            "name": "Overcooked! 2",
+            "platform": "steam",
+            "platformId": "728880",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/728880/ss_2f84a12e1fe82cca37848bf29d4b8b16e83db03b.1920x1080.jpg?t=1670442579",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/728880/header.jpg?t=1670442579",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/728880/bac36f471109038ae0b40619de4109d475f86a54.jpg",
+            "tier": 2,
+            "points": 30,
+            "createdAt": "2023-05-13T18:41:47.000Z",
+            "updatedAt": "2023-07-13T03:14:40.000Z",
+            "genreId": "ec499226-0913-4db1-890e-093b366bcb3c",
+            "genre": {
+                "id": "ec499226-0913-4db1-890e-093b366bcb3c",
+                "name": "Arcade",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "69c28740-3189-4de7-8c5b-cf805f12ac22",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-02-03T22:48:39.000Z",
+        "updatedAt": "2023-02-17T04:01:18.000Z",
+        "game": {
+            "id": "69c28740-3189-4de7-8c5b-cf805f12ac22",
+            "name": "Pacify",
+            "platform": "steam",
+            "platformId": "967050",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/967050/ss_cae7f7fdc93c2ac0cd52dfe86c587b7d98db4f6b.1920x1080.jpg?t=1639171467",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/967050/header.jpg?t=1639171467",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/967050/58100bbcafa4244c8ea086d8de1208787c44c7e0.jpg",
+            "tier": 1,
+            "points": 10,
+            "createdAt": "2022-03-27T02:35:22.000Z",
+            "updatedAt": "2022-03-31T07:51:39.000Z",
+            "genreId": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+            "genre": {
+                "id": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+                "name": "First-Person",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "557c467d-243c-4179-9fc9-6256f3cc071a",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-07-19T04:07:27.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "557c467d-243c-4179-9fc9-6256f3cc071a",
+            "name": "PAYDAY 2",
+            "platform": "steam",
+            "platformId": "218620",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/218620/ss_67979091e0441e3df7aa885eaa107e2032973869.1920x1080.jpg?t=1688973656",
+            "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/218620/header.jpg?t=1541531162",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/218620/a6abc0d0c1e79c0b5b0f5c8ab81ce9076a542414.jpg",
+            "tier": 4,
+            "points": 100,
+            "createdAt": "2023-07-11T05:53:30.000Z",
+            "updatedAt": "2023-07-16T20:12:05.000Z",
+            "genreId": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+            "genre": {
+                "id": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+                "name": "First-Person",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "35d705c9-5dc5-4857-a35e-998da34bd760",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-01-24T03:14:17.000Z",
+        "updatedAt": "2023-07-25T00:27:40.000Z",
+        "game": {
+            "id": "35d705c9-5dc5-4857-a35e-998da34bd760",
+            "name": "Portal",
+            "platform": "steam",
+            "platformId": "400",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/400/0000002582.1920x1080.jpg?t=1673562889",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/400/header.jpg?t=1673562889",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/400/cfa928ab4119dd137e50d728e8fe703e4e970aff.jpg",
+            "tier": 1,
+            "points": 5,
+            "createdAt": "2023-01-24T00:09:56.000Z",
+            "updatedAt": "2023-01-24T00:13:59.000Z",
+            "genreId": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+            "genre": {
+                "id": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+                "name": "First-Person",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "12c95a05-221f-49ab-95e7-9a928f485c03",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-02-08T19:15:53.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "12c95a05-221f-49ab-95e7-9a928f485c03",
+            "name": "Primal Light",
+            "platform": "steam",
+            "platformId": "771420",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/771420/ss_28e0efe791819d3ae32b66b32b7eec21796f84d8.1920x1080.jpg?t=1613945936",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/771420/header.jpg?t=1613945936",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/771420/b785c0528aada5938aea068a96c38641874097b9.jpg",
+            "tier": 1,
+            "points": 10,
+            "createdAt": "2022-06-04T14:32:20.000Z",
+            "updatedAt": "2022-06-04T14:40:53.000Z",
+            "genreId": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+            "genre": {
+                "id": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+                "name": "Platformer",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "bfbc4b13-2a5a-45ca-a99a-8f6b425d5129",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-01-08T03:42:37.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "bfbc4b13-2a5a-45ca-a99a-8f6b425d5129",
+            "name": "Raw Data",
+            "platform": "steam",
+            "platformId": "436320",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/436320/ss_74d89ad4d4e47c277f380dc4cd2da1c94249afba.1920x1080.jpg?t=1565043373",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/436320/header.jpg?t=1565043373",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/436320/8b5c46829f26e148f06e4f4fde437f675fdaeca8.jpg",
+            "tier": 1,
+            "points": 10,
+            "createdAt": "2023-01-06T18:40:49.000Z",
+            "updatedAt": "2023-01-07T00:13:45.000Z",
+            "genreId": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+            "genre": {
+                "id": "a6d00cc0-9481-47cb-bb52-a7011041915a",
+                "name": "First-Person",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "5bd04a9d-76a9-40c3-8890-3f4231372e65",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "5bd04a9d-76a9-40c3-8890-3f4231372e65",
+            "name": "Rise of the Tomb Raider™",
+            "platform": "steam",
+            "platformId": "391220",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/391220/ss_4ef0868ecfc6b19bc1af18b88cabe33fe8147cf7.1920x1080.jpg?t=1638178620",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/391220/header.jpg?t=1638178620",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/391220/0b8a37f32ed2b7c934be8aa94d53f71e274c6497.jpg",
+            "tier": 1,
+            "points": 10,
+            "createdAt": "2022-04-06T21:49:05.000Z",
+            "updatedAt": "2022-04-22T19:50:51.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "53c4e85f-4e43-4d51-823e-cabe21302e88",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-07-19T04:07:27.000Z",
+        "updatedAt": "2023-07-24T00:10:53.000Z",
+        "game": {
+            "id": "53c4e85f-4e43-4d51-823e-cabe21302e88",
+            "name": "Sifu",
+            "platform": "steam",
+            "platformId": "2138710",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/2138710/ss_fcbdfe30cb361fdc6971878306a5179d175240c9.1920x1080.jpg?t=1681393220",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/2138710/header.jpg?t=1681393220",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/2138710/3930eb06cc31a6c91ab243afd4c45f49c9d0c5c1.jpg",
+            "tier": 2,
+            "points": 30,
+            "createdAt": "2023-04-17T12:15:08.000Z",
+            "updatedAt": "2023-04-17T13:08:34.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "6b5832bb-74ab-4c09-b20e-aad4afbd8e5c",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-01-24T03:14:17.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "6b5832bb-74ab-4c09-b20e-aad4afbd8e5c",
+            "name": "Sonic Mania",
+            "platform": "steam",
+            "platformId": "584400",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/584400/ss_27efb8f61892a9bd732952c76dae9dd7ad1b6748.1920x1080.jpg?t=1669906775",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/584400/header.jpg?t=1669906775",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/584400/c329b28adc1eb1ae73c9d4df9d9e48d7ea63bd86.jpg",
+            "tier": 1,
+            "points": 10,
+            "createdAt": "2023-01-21T15:00:34.000Z",
+            "updatedAt": "2023-01-21T15:17:29.000Z",
+            "genreId": "ec499226-0913-4db1-890e-093b366bcb3c",
+            "genre": {
+                "id": "ec499226-0913-4db1-890e-093b366bcb3c",
+                "name": "Arcade",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "c98bced4-e6d7-4034-8e85-5208d1487f8d",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-07-19T04:07:27.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "c98bced4-e6d7-4034-8e85-5208d1487f8d",
+            "name": "Stardew Valley",
+            "platform": "steam",
+            "platformId": "413150",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/413150/ss_b887651a93b0525739049eb4194f633de2df75be.1920x1080.jpg?t=1666917466",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg?t=1666917466",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/413150/35d1377200084a4034238c05b0c8930451e2fb40.jpg",
+            "tier": 1,
+            "points": 5,
+            "createdAt": "2023-06-12T20:20:15.000Z",
+            "updatedAt": "2023-06-12T21:51:55.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "6c0f3d61-3046-48bd-88fd-5eac74f01306",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "6c0f3d61-3046-48bd-88fd-5eac74f01306",
+            "name": "The Messenger",
+            "platform": "steam",
+            "platformId": "764790",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/764790/ss_8e0fa7f8226d8f8fd0dd313e26e6b4d97562f7a3.1920x1080.jpg?t=1576862991",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/764790/header.jpg?t=1576862991",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/764790/0557eb871fd0e6c6124532bf959af2604be5aa9d.jpg",
+            "tier": 1,
+            "points": 10,
+            "createdAt": "2020-01-28T09:11:37.000Z",
+            "updatedAt": "2022-06-20T22:11:49.000Z",
+            "genreId": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+            "genre": {
+                "id": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+                "name": "Platformer",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "93847607-3a88-46a1-8834-c75482290eb0",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "93847607-3a88-46a1-8834-c75482290eb0",
+            "name": "The Witness",
+            "platform": "steam",
+            "platformId": "210970",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/210970/ss_9c73ac83c8acfb69db6166f239fdba2ffa099b32.1920x1080.jpg?t=1598383120",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/210970/header.jpg?t=1598383120",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/210970/5406b4e33862420abfb60a23e581cad2a1ec85f7.jpg",
+            "tier": 1,
+            "points": 5,
+            "createdAt": "2022-04-30T05:58:04.000Z",
+            "updatedAt": "2023-06-24T06:31:45.000Z",
+            "genreId": "ffb558c1-5a45-4b8c-856c-e9622ce54f00",
+            "genre": {
+                "id": "ffb558c1-5a45-4b8c-856c-e9622ce54f00",
+                "name": "Strategy",
+                "createdAt": "2023-06-24T05:09:45.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "6d210be2-50de-49f4-a533-8eb5fa0c6bbc",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-03-20T03:05:26.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "6d210be2-50de-49f4-a533-8eb5fa0c6bbc",
+            "name": "TowerFall Ascension",
+            "platform": "steam",
+            "platformId": "251470",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/251470/ss_5f5782e7f91f99dbeb7f9a561771378f850ae872.1920x1080.jpg?t=1572893711",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/251470/header.jpg?t=1572893711",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/251470/c7ad90c5f12c86496fdf7215127cf50e6a6860be.jpg",
+            "tier": 4,
+            "points": 175,
+            "createdAt": "2020-06-09T19:24:58.000Z",
+            "updatedAt": "2023-03-22T17:54:40.000Z",
+            "genreId": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+            "genre": {
+                "id": "4d43349a-43a8-4755-9d52-41ece63ec5b1",
+                "name": "Action",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "bedaf17e-a054-4973-b2f6-71140fec4cbb",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-16T02:22:45.000Z",
+        "updatedAt": "2023-07-19T04:07:27.000Z",
+        "game": {
+            "id": "bedaf17e-a054-4973-b2f6-71140fec4cbb",
+            "name": "Ultimate Custom Night",
+            "platform": "steam",
+            "platformId": "871720",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/871720/ss_0663312e4957c04b7aa714e98533ee1c7e650778.1920x1080.jpg?t=1568143255",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/871720/header.jpg?t=1568143255",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/871720/b2fd1232960c8a481c7b857509ad20dd11c0de64.jpg",
+            "tier": 3,
+            "points": 65,
+            "createdAt": "2022-09-08T21:07:10.000Z",
+            "updatedAt": "2022-09-08T22:38:05.000Z",
+            "genreId": "ec499226-0913-4db1-890e-093b366bcb3c",
+            "genre": {
+                "id": "ec499226-0913-4db1-890e-093b366bcb3c",
+                "name": "Arcade",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "c026c669-6f4d-4131-aa85-3e8740becfc3",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-09-02T02:15:19.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "c026c669-6f4d-4131-aa85-3e8740becfc3",
+            "name": "Unrailed!",
+            "platform": "steam",
+            "platformId": "1016920",
+            "background": "https://cdn.akamai.steamstatic.com/steam/apps/1016920/ss_718c17d9145a8f11eb99de457d513fc79bd82979.1920x1080.jpg?t=1650543886",
+            "header": "https://cdn.akamai.steamstatic.com/steam/apps/1016920/header.jpg?t=1650543886",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/1016920/d52e7b3ffc58010b2792160e07ce6834f8c3d80b.jpg",
+            "tier": 2,
+            "points": 20,
+            "createdAt": "2022-04-25T20:19:28.000Z",
+            "updatedAt": "2022-04-25T20:52:00.000Z",
+            "genreId": "ec499226-0913-4db1-890e-093b366bcb3c",
+            "genre": {
+                "id": "ec499226-0913-4db1-890e-093b366bcb3c",
+                "name": "Arcade",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "deee7db2-1d09-4af9-962a-fe70281f4241",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2022-10-31T05:42:07.000Z",
+        "updatedAt": "2023-07-19T04:11:47.000Z",
+        "game": {
+            "id": "deee7db2-1d09-4af9-962a-fe70281f4241",
+            "name": "You Have to Win the Game",
+            "platform": "steam",
+            "platformId": "286100",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/286100/ss_8828c154cc251359ceb07af6e79e438611912bb9.1920x1080.jpg?t=1555631337",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/286100/header.jpg?t=1555631337",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/286100/26628aeaa64d8827918cd2e8abefa2a27bb29d28.jpg",
+            "tier": 1,
+            "points": 15,
+            "createdAt": "2020-01-28T09:02:43.000Z",
+            "updatedAt": "2022-12-07T04:33:14.000Z",
+            "genreId": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+            "genre": {
+                "id": "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd",
+                "name": "Platformer",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
+            }
+        }
+    },
+    {
+        "userId": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+        "gameId": "5fd38c1a-c388-46a2-bc26-da4b83bb6cbb",
+        "points": 0,
+        "invalid": false,
+        "createdAt": "2023-02-03T00:16:39.000Z",
+        "updatedAt": "2023-07-16T22:43:34.000Z",
+        "game": {
+            "id": "5fd38c1a-c388-46a2-bc26-da4b83bb6cbb",
+            "name": "ZeroRanger",
+            "platform": "steam",
+            "platformId": "809020",
+            "background": "https://steamcdn-a.akamaihd.net/steam/apps/809020/ss_7081dfff27428066ee1525be046afd7ea90869a6.1920x1080.jpg?t=1576499622",
+            "header": "https://steamcdn-a.akamaihd.net/steam/apps/809020/header.jpg?t=1576499622",
+            "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/809020/807c9b0f292c4be4bc8d447019e736f52716d04c.jpg",
+            "tier": 2,
+            "points": 25,
+            "createdAt": "2020-01-28T08:48:19.000Z",
+            "updatedAt": "2023-07-16T22:24:44.000Z",
+            "genreId": "7f8676fe-4900-400b-9284-c073388d88f7",
+            "genre": {
+                "id": "7f8676fe-4900-400b-9284-c073388d88f7",
+                "name": "Bullet Hell",
+                "createdAt": "2020-02-01T06:31:10.000Z",
+                "updatedAt": "2023-06-27T03:29:01.000Z"
             }
         }
     }
-}
+]
