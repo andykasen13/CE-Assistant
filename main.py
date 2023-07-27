@@ -3,6 +3,7 @@ import asyncio
 from datetime import datetime, timedelta
 import datetime
 import functools
+import os
 import time
 import typing
 from monthdelta import monthdelta
@@ -987,13 +988,12 @@ async def scrape(interaction):
     updates = await scrape_thread_call() #all_game_data(client)
     await interaction.channel.send("scraped")
 
-    print(updates)
-
-
     correctChannel = client.get_channel(1128742486416834570)
-    for dict in updates:
-        #for game in dict:
+    for dict in updates[0]:
             await correctChannel.send(file=dict['Image'], embed=dict['Embed'])
+
+    for i in range(0, updates[1]):
+        os.remove('Pictures/ss{}.png'.format(i))
 
 
 
