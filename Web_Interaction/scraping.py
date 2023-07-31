@@ -38,8 +38,11 @@ def get_games():
 
     
 
+<<<<<<< Updated upstream
 
 # check for updated games
+=======
+>>>>>>> Stashed changes
 def game_list():
     # Set selenium driver and preferences
     options = Options()
@@ -555,29 +558,28 @@ def get_image(number, CE_ID, driver, new_data={}):
         pic = Image.open('Pictures/fix_later.png')
         pic.save('Pictures/ss{}.png'.format(number))
     else:
-        try:
-            url = 'https://cedb.me/game/' + CE_ID
-            driver.get(url)
-            objective_lst = []
-            while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
-                objective_lst = []
-                objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
-        except :
-            print("I'm a doodoo head")
-            get_image(number, CE_ID, driver, new_data)
-        top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
-        bottom_right = objective_lst[len(objective_lst)-2].location
-        size = objective_lst[len(objective_lst)-2].size
+        url = 'https://cedb.me/game/' + CE_ID
+        driver.get(url)
+        # objective_lst = []
+        while(len(driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")) < 1 or not driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")[0].is_displayed()):
+            continue            
+
+        # top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
+        # bottom_right = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")[-2].location
+        size = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")[-2].size
 
         header_elements = [
             'bp4-navbar',
             'tr-fadein'
         ]
+
         border_width = 15
-        ob = Screenshot(bottom_right['y']+size['height']+border_width)
+
+
+        ob = Screenshot(driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")[-2].location['y']+size['height']+border_width)
         im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
 
         
         im = Image.open('Pictures/ss{}.png'.format(number))
-        im = im.crop((top_left['x']-border_width, top_left['y']-border_width, bottom_right['x']+size['width']+border_width, bottom_right['y']+size['height']+border_width)) # defines crop points
+        im = im.crop((driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location['x']-border_width, driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location['y']-border_width, driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")[-2].location['x']+size['width']+border_width, driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")[-2].location['y']+size['height']+border_width)) # defines crop points
         im.save('Pictures/ss{}.png'.format(number))

@@ -109,7 +109,7 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
     await interaction.response.defer()
 
     # Set up variables
-    view = discord.ui.View(timeout=600)
+    view = discord.ui.View(timeout=10)
     games = []
     embeds = []
     genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
@@ -148,6 +148,7 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
 
     # ...or if the event is currently active.
     for eventInfo in userInfo[target_user]['Current Rolls'] :
+        print(eventInfo)
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking") : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
     
     # Open the databases.
@@ -159,7 +160,7 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
         # Get one random (rollable) game in Tier 1, non-genre specific
-        games.append(get_rollable_game(10, 10, "Tier 1"))
+        games.append(get_rollable_game(10, 10, "Tier 1", userInfo[current_user]))
 
         # Create the embed
         embed = getEmbed(games[0], interaction.user.id)
@@ -177,9 +178,9 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
         print("received two week t2 streak")
 
         # ----- Grab two random games -----
-        games.append(get_rollable_game(40, 20, "Tier 2"))
+        games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user]))
         genres.remove(database_name[games[0]]["Genre"])
-        games.append(get_rollable_game(40, 20, "Tier 2", genres))
+        games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres))
         
         # ----- Get all the embeds -----s
         embeds = create_multi_embed("Two Week T2 Streak", 14, games, 0, interaction,)
@@ -196,7 +197,7 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
         genres.remove("Strategy")
         i = 0
         while i < 5:
-            games.append(get_rollable_game(10, 10, "Tier 1", genres))
+            games.append(get_rollable_game(10, 10, "Tier 1", userInfo[current_user], genres))
             genres.remove(database_name[games[i]]["Genre"])
             i+=1
 
@@ -204,8 +205,6 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
         embeds = create_multi_embed("One Hell of a Week", 7, games, 28, interaction)       
         embed = embeds[0] # Set the embed to send as the first one
         await get_buttons(view, embeds) # Create buttons
-
-        dont_save = True
 
     # -------------------------------------------- One Hell of a Month --------------------------------------------
     elif event == "One Hell of a Month" : 
@@ -227,7 +226,7 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
         genres.remove("Strategy")
         i=0
         while i < 4:
-            games.append(get_rollable_game(40, 20, "Tier 2", genres))
+            games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres))
             genres.remove(database_name[games[i]]["Genre"])
             i+=1
         
@@ -239,7 +238,7 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
     # -------------------------------------------- Never Lucky --------------------------------------------
     elif event == "Never Lucky" :
         # one t3
-        games.append(get_rollable_game(40, 20, "Tier 3"))
+        games.append(get_rollable_game(40, 20, "Tier 3", userInfo[current_user]))
 
         ends = False
 
@@ -313,18 +312,18 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
             embeds.append(discord.Embed(title=event, timestamp=datetime.datetime.now()))
             if(num_of_games == 1) :
                 # get a game
-                game = get_rollable_game(40, 20, "Tier 2")
+                game = get_rollable_game(40, 20, "Tier 2", userInfo[current_user])
 
                 embeds[0].add_field(name="Roll Status", value="You have rolled your T2. You have two weeks to complete.")
 
             elif(num_of_games == 2):              
                 # get a game
-                game = get_rollable_game(40, 20, "Tier 3")
+                game = get_rollable_game(40, 20, "Tier 3", userInfo[current_user])
 
                 embeds[0].add_field(name="Roll Status", value = "You have rolled your T3. You have three weeks to complete.")
             elif(num_of_games == 3):
                 # get a game
-                game = get_rollable_game(40, 20, "Tier 2")
+                game = get_rollable_game(40, 20, "Tier 4", userInfo[current_user])
                 
                 embeds[0].add_field(name="Roll Status", value = "You have rolled your T4. You have four weeks to complete.")
                 #roll a t4
@@ -380,7 +379,7 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
 events_co_op = Literal["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
                        "Winner Takes All", "Game Theory"]
 
-@tree.command(name="roll-co-op", description="Participate in Challenge Enthusiast Co-Op or PvP roll events!", guild=discord.Object(id=guild_ID))
+@tree.command(name="co-op-roll", description="Participate in Challenge Enthusiast Co-Op or PvP roll events!", guild=discord.Object(id=guild_ID))
 async def roll_co_op_command(interaction : discord.Interaction, event : events_co_op, partner : discord.Member) :
     await interaction.response.defer()
 
@@ -914,7 +913,7 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 # -------------------------------------------------------- CHECK_ROLLS COMMAND ----------------------------------------------------- # 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-@tree.command(name="check_rolls", description="Check the active rolls of anyone on the server", guild=discord.Object(id=guild_ID))
+@tree.command(name="check-rolls", description="Check the active rolls of anyone on the server", guild=discord.Object(id=guild_ID))
 async def checkRolls(interaction, user: discord.Member=None) :
     # defer the message
     await interaction.response.defer()
@@ -1003,7 +1002,7 @@ async def scrape(interaction):
 # ---------------------------------------------------- COMMAND RESOURCE TESTING ---------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-@tree.command(name="resource_testing", description="runs function while recording ram and time", guild=discord.Object(id=guild_ID))
+@tree.command(name="resource-testing", description="runs function while recording ram and time", guild=discord.Object(id=guild_ID))
 async def resource_testing(function):
     ram_usage = []
     time = []
@@ -1027,7 +1026,7 @@ async def resource_testing(function):
 # --------------------------------------------------------- STEAM TEST COMMAND ------------------------------------------------------ #
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------------------------------------------------------------------------------------------- #
-@tree.command(name="steam_game", description="Get information on any steam game", guild=discord.Object(id=guild_ID))
+@tree.command(name="steam-game", description="Get information on any steam game", guild=discord.Object(id=guild_ID))
 async def steam_command(interaction : discord.Interaction, game_name: str):
 
     # Log the command
@@ -1055,7 +1054,7 @@ async def steam_command(interaction : discord.Interaction, game_name: str):
 # --------------------------------------------------------- COLORS ----------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-@tree.command(name="set_color", description="Set your name color to any color you've unlocked!", guild=discord.Object(id=guild_ID))
+@tree.command(name="set-color", description="Set your name color to any color you've unlocked!", guild=discord.Object(id=guild_ID))
 async def color(interaction) :
     await interaction.response.defer(ephemeral=True)
 
@@ -1177,21 +1176,12 @@ async def color(interaction) :
 async def test(interaction : discord.Interaction) :
     await interaction.response.defer()
     casino_channel = client.get_channel(811286469251039333)
-    testy = " jfldsahfjlsad \n-{} <:CE_points:1128420207329816597> --> {} <:CE_points:1128420207329816597>".format(125, 120)
-    embed = discord.Embed(title="fsd", description=testy)
+    embed = discord.Embed(title="__Celeste__ has been updadted on the site", description="' ∀MAZING' increased from 120 :CE_points: ➡ 125 :CE_points: points: Achievements '∀NOTHER ONE', and '∀DVENTED' removed New Primary Objective '∀WOKEN' added: 30 points :CE_points: Clear the Pandemonic Nightmare stage, and clear Hymeno Striker on AKASCHIC+RM difficulty.")
+    embed.set_thumbnail(url=ce_hex_icon)
+    embed.set_image(url="https://media.discordapp.net/attachments/1128742486416834570/1133903990090895440/image.png?width=1083&height=542")
+    embed.set_author(name="Challenge Enthusiasts", icon_url="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/504230/04cb7aa0b497a3962e6b1655b7fd81a2cc95d18b.jpg")
 
     return await interaction.followup.send(embed=embed)
-
-    with open('Jasons/users2.json', 'r') as dbU:
-        database_user = json.load(dbU)
-    
-    target_user = "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
-    
-    await roll_failed("One Hell of a Day", casino_channel, target_user)
-
-    await interaction.followup.send('done')
-
-
 
 
 
@@ -1202,8 +1192,8 @@ async def test(interaction : discord.Interaction) :
 # -------------------------------------------------- REGISTRATION COMMAND----------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-@tree.command(name="ce_register", description="Register yourself in the CE Assistant database to unlock rolls.", guild=discord.Object(id=guild_ID))
-async def register(interaction, ce_id: str) :
+@tree.command(name="register", description="Register yourself in the CE Assistant database to unlock rolls.", guild=discord.Object(id=guild_ID))
+async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
     
     #Open the user database
@@ -1328,6 +1318,9 @@ async def register(interaction, ce_id: str) :
         icon_url=ce_mountain_icon)
     embed.set_thumbnail(url=interaction.user.avatar)
 
+    registered_role = discord.utils.get(interaction.guild.roles, name = "registered")
+    await interaction.user.add_roles(registered_role)
+
     # Send a confirmation message
     await interaction.followup.send(embed=embed)
 
@@ -1358,6 +1351,45 @@ async def update(interaction : discord.Interaction) :
 
         # Send a confirmation message
         await interaction.followup.send(embed=embed)
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# -------------------------------------------------------- REASON COMMAND----------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+@tree.command(name="add-reason", description="Add reason to embed", guild=discord.Object(id=guild_ID))
+async def reason(interaction : discord.Interaction, reason : str, embed_id : str) :
+
+    # grab the site additions channel
+    # TODO: update this in the CE server
+    site_additions_channel = client.get_channel(1128742486416834570)
+
+    # try to get the message
+    try :
+        message = await site_additions_channel.fetch_message(int(embed_id))
+
+    # if it errors, message is not in the site-additions channel
+    except :
+        return await interaction.response.send_message("This message is not in the <#1128742486416834570> channel.")
+    
+    # grab the embed
+    embed = message.embeds[0]
+
+    # try and see if the embed already has a reason field
+    try :
+        if(embed.fields[len(embed.fields)-1].name == "Reason") :
+            embed.set_field_at(index=len(embed.fields)-1, name="Reason", value=reason)
+    
+    # if it errors, then just add a reason field
+    except :
+        embed.add_field(name="Reason", value=reason, inline=False)
+
+    # edit the message
+    await message.edit(embed=embed)
+
+    # and send a response to the original interaction
+    await interaction.response.send_message("worked", ephemeral=True)
 
 
 

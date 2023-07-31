@@ -9,7 +9,7 @@ from datetime import timedelta
 # -------------------------------------------- BUTTONS --------------------------------------------- #
 # -------------------------------------------------------------------------------------------------- #
 
-async def get_buttons(view, embeds):
+async def get_buttons(view : discord.ui.View, embeds):
     currentPage = 1
     page_limit = len(embeds)
     buttons = [discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False), discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)]
@@ -35,6 +35,15 @@ async def get_buttons(view, embeds):
 
     buttons[0].callback = hehe
     buttons[1].callback = haha
+
+    
+
+    async def disable() :
+        for button in buttons :
+            button.disabled = True
+        print("disabled")
+
+    view.on_timeout = disable()
 
 async def get_genre_buttons(view, completion_time, price_limit, tier_number, event_name, time_limit, cooldown_time, num_of_games, user_id) :
     games = []

@@ -4,14 +4,14 @@ import datetime
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------------------- ROLL STRING ---------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-def get_roll_string(userInfo, steam_user_name, database_name_info, target_user, x) :
+def get_roll_string(userInfo, ce_id, database_name_info, target_user, roll_type) :
     # set up this bullshit
     roll_string = ""
 
     # grab all current rolls
-    for x in userInfo[steam_user_name][x] :
-        end_time = time.mktime(datetime.datetime.strptime(str(x['end_time']), "%Y-%m-%d %H:%M:%S").timetuple())
-        roll_string = roll_string + "- __" + x['event_name'] + "__ (complete by <t:" + str(int(end_time)) + ">):\n"
+    for x in userInfo[ce_id][roll_type] :
+        end_time = x["End Time"]
+        roll_string = roll_string + "- __" + x['Event Name'] + "__ (complete by <t:" + end_time + ">):\n"
         gameNum = 1
         for game in x['Games'] : # Iterate through all games in the roll event
             game_info = database_name_info[game] # Grab the dictionary containing all info about that game

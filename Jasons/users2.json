@@ -15,7 +15,7 @@
         "Discord ID": 413427677522034727,
         "Rank": "Rank C",
         "Reroll Tickets": 0,
-        "Casino Score": 1,
+        "Casino Score": 0,
         "Owned Games": {
             "Neon White": {
                 "Primary Objectives": {
@@ -152,7 +152,32 @@
         },
         "Cooldowns": {},
         "Current Rolls": [
-            "Caca"
+            {
+                "Event Name": "Two Week T2 Streak",
+                "End Time": 1691705069,
+                "Games": [
+                    "TWWWR",
+                    "WITCH-BOT MEGLILO"
+                ]
+            },
+            {
+                "Event Name": "One Hell of a Week",
+                "End Time": 1691100380,
+                "Games": [
+                    "Chameleon Run Deluxe Edition",
+                    "Drive!Drive!Drive!",
+                    "VECTORLORD",
+                    "Taimumari",
+                    "Spelldash"
+                ]
+            },
+            {
+                "Event Name": "One Hell of a Day",
+                "End Time": 1690826282,
+                "Games": [
+                    "Darkour"
+                ]
+            }
         ],
         "Completed Rolls": [
             {

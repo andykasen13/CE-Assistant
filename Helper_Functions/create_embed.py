@@ -50,16 +50,12 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
     for selected_game in game_list :
         total_points = 0
         embeds.append(getEmbed(selected_game, interaction.user.id))
-        embeds[i+1].add_field(name="Rolled by", value = "<@" + str(interaction.user.id) + ">", inline=True)
         embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"),
                                 icon_url=ce_mountain_icon)
         embeds[i+1].set_author(name="Challenge Enthusiasts")
         embeds[i+1].set_thumbnail(url=interaction.user.avatar)
         for objective in database_name[selected_game]["Primary Objectives"] :
             total_points += int(database_name[selected_game]["Primary Objectives"][objective]["Point Value"])
-        embeds[i+1].add_field(name="CE Status", value=f"{total_points} Points", inline=True)
-        embeds[i+1].add_field(name="CE Owners", value= database_name[selected_game]["Total Owners"], inline=True)
-        embeds[i+1].add_field(name="CE Completions", value= database_name[selected_game]["Full Completions"], inline=True)
         i+=1
     
     return embeds # Set the embed to send as the first one
