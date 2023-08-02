@@ -20,7 +20,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
-
+ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
 
 
 
@@ -38,11 +38,6 @@ def get_games():
 
     
 
-<<<<<<< Updated upstream
-
-# check for updated games
-=======
->>>>>>> Stashed changes
 def game_list():
     # Set selenium driver and preferences
     options = Options()
@@ -154,7 +149,7 @@ def game_list():
             embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
             embed['Embed'].set_thumbnail(url=ce_hex_icon)
             embed['Embed'].set_footer(text="CE Assistant",
-                icon_url=ce_hex_icon)
+                icon_url=ce_james_icon)
            
             updated_games.append(embed)
             number += 1
@@ -225,7 +220,7 @@ def update(game, old_game, driver, number, icon, icons):
     embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
     embed['Embed'].set_thumbnail(url=ce_hex_icon)
     embed['Embed'].set_footer(text="CE Assistant",
-        icon_url=ce_hex_icon)
+        icon_url=ce_james_icon)
 
     # return :)
     return embed
@@ -245,9 +240,12 @@ def objective_update(type, new_game, old_game):
             if objective in list(new_game['{} Objectives'.format(type)].keys()) and not objective in list(old_game['{} Objectives'.format(type)].keys()):
                 if objective + " (UNCLEARED)" in list(old_game['{} Objectives'.format(type)].keys()):
                     update += update_embed(new_game, old_game, objective, type, cleared=False)
+                elif type == 'Primary':
+                    update += "\n- New Primary Objective '**{}**' added:\n\t- {} points <:CE_points:1133558614867587162>\n  - {}".format(objective, new_game['{} Objectives'.format(type)][objective]['Point Value'], new_game['{} Objectives'.format(type)][objective]['Description'])
                 else:
-                    update += "\n- New {} Objective '**{}**' added:\n\t- {} points <:CE_points:1133558614867587162>\n  - {}".format(type, objective, new_game['{} Objectives'.format(type)][objective]['Point Value'], new_game['{} Objectives'.format(type)][objective]['Description'])
-            
+                    update += "\n- New Community Objective '**{}**' added:\n\t  - {}".format(objective, new_game['{} Objectives'.format(type)][objective]['Description'])
+
+
             # if objective is updated
             elif objective in list(old_game['{} Objectives'.format(type)].keys()) and old_game['{} Objectives'.format(type)][objective] != new_game['{} Objectives'.format(type)][objective]:
                 update += update_embed(new_game, old_game, objective, type)

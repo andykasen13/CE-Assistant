@@ -5,6 +5,21 @@ from bs4 import BeautifulSoup
 import discord
 import requests
 
+ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
+
+
+async def single_run(client, requested_reviews):
+    if requested_reviews > 0:
+        data = json.loads(open("./Jasons/curator_count.json").read())
+        data['Curator Count'] = await checkCuratorCount(client)
+        print(data)
+
+        with open("./Jasons/curator_count.json", "w") as jsonFile:
+            json.dump(data, jsonFile, indent=4)
+    else:
+        curatorUpdate(requested_reviews, client)
+
+
 
 async def getCuratorCount():
     veggies = {'cc': 'us', 'l' : 'english'}
@@ -46,8 +61,8 @@ times = [
 
 @tasks.loop(time = times)
 async def loop(client):
-    data = json.loads(open("./Jasons/curator_count.json").read())['Current Reviews']
-    data = await checkCuratorCount(client)
+    data = json.loads(open("./Jasons/curator_count.json").read())
+    data['Curator Count'] = await checkCuratorCount(client)
     print(data)
 
     with open("./Jasons/curator_count.json", "w") as jsonFile:
@@ -122,7 +137,7 @@ async def curatorUpdate(num: int, client) :
         embed.add_field(name="CE Link", value=f"[Click here]({links[x]})", inline=True)
         embed.set_image(url=imageLink)
         embed.set_footer(text="CE Assistant",
-            icon_url="https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg")
+            icon_url=ce_james_icon)
         embed.set_author(name="New game added to curator!", url="https://store.steampowered.com/curator/36185934/")
     
         correctChannel = client.get_channel(1128742486416834570)

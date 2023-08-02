@@ -69,7 +69,7 @@ async def get_genre_buttons(view, completion_time, price_limit, tier_number, eve
         if interaction.user.id != user_id : return
         i=0
         while i < num_of_games :
-            games.append(get_rollable_game(completion_time, price_limit, tier_number, genre_name))
+            games.append(get_rollable_game(completion_time, price_limit, tier_number, specific_genre =genre_name))
             i+=1
         view.clear_items()
         embeds = create_multi_embed(event_name, time_limit, games, cooldown_time, interaction)

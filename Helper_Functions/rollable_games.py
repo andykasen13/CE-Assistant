@@ -34,7 +34,8 @@ banned_games = ["Serious Sam HD: The Second Encounter",
                         "The King's Bird",
                         "you have to win the game",
                         "Heavy Bullets",
-                        "Barrier X"]
+                        "Barrier X",
+                        "Elasto Mania Remastered"]
 
 
 
@@ -113,8 +114,8 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
             # ---- Check to see if the user has already completed the game -----
             if(user_info != -1) :
                 print("Seeing if the user has already completed the game...")
-                if((returned_game in user_info["Owned Games"].keys()) 
-                and "Primary Objectives" in user_info["Owned Games"][returned_game]
+                if((returned_game in list(user_info["Owned Games"].keys())) 
+                and "Primary Objectives" in list(user_info["Owned Games"][returned_game].keys())
                 and user_info["Owned Games"][returned_game]["Primary Objectives"].keys() == database_name[returned_game]["Primary Objectives"].keys()) :
                     print("User has completed game. Moving on...\n")
                     continue
@@ -129,10 +130,13 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
             # ----- Determine game price -----
             if(jsonData[str(gameID)]['data']['is_free']) : 
                 gamePrice = 0
-            else: 
+            elif('price_overview' in list(jsonData[str(gameID)]['data'].keys())): 
                 gamePrice = float(str(jsonData[str(gameID)]['data']['price_overview']['final_formatted'])[1::])
+            else :
+                gamePrice = 999999
             
             # ----- Grab SteamHunters completion time -----
+            print("getting completions data'")
             completion_time = get_completion_data(gameID)
             if(completion_time == "none") :
                 print(f"No completion data for {returned_game}.") 

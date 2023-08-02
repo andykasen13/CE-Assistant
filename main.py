@@ -27,7 +27,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
 # --------- other file imports ---------
-from Web_Interaction.curator import loop
+from Web_Interaction.curator import loop, single_run
 from Web_Interaction.scraping import get_games, get_completion_data
 from Helper_Functions.rollable_games import get_rollable_game, get_rollable_game_from_list
 from Helper_Functions.create_embed import create_multi_embed, getEmbed
@@ -55,7 +55,7 @@ discord_token = localJSONData['discord_token']
 guild_ID = localJSONData['guild_ID']
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
-    
+ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
@@ -105,11 +105,12 @@ events_solo = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a 
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
           "Russian Roulette"]
 @tree.command(name="solo-roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guild_ID))
+@app_commands.describe(event="The event you'd like to participate in")
 async def roll_solo_command(interaction : discord.Interaction, event: events_solo) -> None:   
     await interaction.response.defer()
 
     # Set up variables
-    view = discord.ui.View(timeout=10)
+    view = discord.ui.View(timeout=600)
     games = []
     embeds = []
     genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
@@ -119,11 +120,11 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
         "One Hell of a Month" : monthdelta(1),
         "Two Week T2 Streak" : timedelta(14),
         "Two 'Two Week T2 Streak' Streak" : timedelta(28),
-        "Never Lucky" : 0,
+        "Never Lucky" : timedelta(0),
         "Triple Threat" : monthdelta(1),
-        "Let Fate Decide" : 0,
-        "Fourward Thinking" : 0,
-        "Russian Roulette" : 0
+        "Let Fate Decide" : timedelta(0),
+        "Fourward Thinking" : timedelta(0),
+        "Russian Roulette" :timedelta(0)
     }
     dont_save = False
     ends = True
@@ -209,7 +210,8 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
     # -------------------------------------------- One Hell of a Month --------------------------------------------
     elif event == "One Hell of a Month" : 
         # five t1s from each category
-        embed = discord.Embed(title=f"you have month")
+        embed = discord.Embed(title=f"⚠️Roll still under construction!⚠️")
+        dont_save = True
 
     # -------------------------------------------- Two "Two Week T2 Streak" Streak ---------------------------------------------
     elif event == "Two 'Two Week T2 Streak' Streak" :
@@ -346,14 +348,13 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
     # -------------------------------------------- Russian Roulette --------------------------------------------
     elif event == "Russian Roulette" :
         # choose six t5s and get one at random
-        embed = discord.Embed(title=("russian roulette"))
+        embed = discord.Embed(title=("⚠️Roll still under construction!⚠️"))
 
-        
+        dont_save = True
 
         ends = False
 
-    # -------------------------------------------- kill yourself --------------------------------------------
-    else : embed=discord.Embed(title=(f"'{event}' is not a valid event."))
+    # ------------------------------------ CONTINUE ON ---------------------------------------------------
 
     if dont_save is False :
         # append the roll to the user's current rolls array
@@ -380,6 +381,8 @@ events_co_op = Literal["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dr
                        "Winner Takes All", "Game Theory"]
 
 @tree.command(name="co-op-roll", description="Participate in Challenge Enthusiast Co-Op or PvP roll events!", guild=discord.Object(id=guild_ID))
+@app_commands.describe(event="The event you'd like to participate in")
+@app_commands.describe(partner="The user you'd like to enter the roll with")
 async def roll_co_op_command(interaction : discord.Interaction, event : events_co_op, partner : discord.Member) :
     await interaction.response.defer()
 
@@ -398,12 +401,16 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
     genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
 
     # Make sure the user doesn't select themselves
-    if interaction.user.id == partner.id : return await interaction.followup.send("You cannot enter a co-op roll with yourself.")
+    #if interaction.user.id == partner.id : return await interaction.followup.send("You cannot enter a co-op roll with yourself.")
 
     # Grab the information for both users
     for user in database_user :
-        if database_user[user]["Discord ID"] == interaction.user.id : interaction_user_data = database_user[user]
-        if database_user[user]["Discord ID"] == partner.id : target_user_data = database_user[user]
+        if database_user[user]["Discord ID"] == interaction.user.id : 
+            interaction_user_data = database_user[user]
+            username_interaction = user
+        if database_user[user]["Discord ID"] == partner.id : 
+            target_user_data = database_user[user]
+            username_target = user
     
     # Make sure both users are registered in the database
     if interaction_user_data == "" : return await interaction.followup.send("You are not registered in the CE Assistant database.")
@@ -414,7 +421,7 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
     if(event == "Destiny Alignment") :
 
         # Make sure both users are the same rank
-        if(interaction_user_data["Rank"] != target_user_data["Rank"]) : return await interaction.followup.send("You are not the same tier!")
+        if(interaction_user_data["Rank"] != target_user_data["Rank"]) : return await interaction.followup.send("You are not the same rank!")
 
         # Send confirmation embed
         embed = discord.Embed(title="Destiny Alignment", timestamp=datetime.datetime.now())
@@ -508,6 +515,17 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
             # Get page buttons
             await get_buttons(view, embeds)
 
+            
+            database_user[username_interaction]["Current Rolls"].append({"Event Name" : event, 
+                                                                         "Games" : [target_user_selected_game],
+                                                                         "Partner": username_target})
+            database_user[username_target]["Current Rolls"].append({"Event Name" : event,
+                                                                    "Games" : [interaction_user_selected_game],
+                                                                    "Partner" : username_interaction})
+        
+            with open('Jasons/users2.json', 'w') as f:
+                json.dump(database_user, f, indent=4)
+
             # and edit the message.
             return await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
         
@@ -535,7 +553,7 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
                         value=":one: : 48 Hours\n:two: : 10 Days\n:three: : One Month\n:four: : Two Months\n:five: : Forever")
         embed.set_thumbnail(url = ce_mountain_icon)
         embed.set_author(name="Challenge Enthusiasts")
-        embed.set_footer(text="CE Assistant", icon_url=ce_mountain_icon)
+        embed.set_footer(text="CE Assistant", icon_url=ce_james_icon)
 
         buttons = []
         i = 1
@@ -550,10 +568,12 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
         async def t4_callback(interaction) : return await soulmate_callback(interaction, "Tier 4")
         async def t5_callback(interaction) : return await soulmate_callback(interaction, "Tier 5")
 
-        async def soulmate_callback(interaction, tier_num) :
+        async def soulmate_callback(interaction : discord.Interaction, tier_num) :
             await interaction.response.defer()
             if interaction.user.id != interaction_user_data['Discord ID'] : return
             view.clear_items()
+
+            await interaction.followup.edit_message(embed=discord.Embed(title="Working..."), message_id=interaction.message.id, view=view)
 
             # ----- Make sure the other user doesn't have any points in the game they rolled -----
             target_user_owns_game = True
@@ -588,6 +608,38 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
                 embed = getEmbed(game, interaction.user.id)
                 embed.add_field(name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
                 embed.add_field(name="Tier", value=database_name[game]["Tier"])
+
+                times = {"Tier 1" : timedelta(days=2),
+                         "Tier 2" : timedelta(10),
+                         "Tier 3" : timedelta(30),
+                         "Tier 4" : timedelta(60)}
+
+            
+                # fake dict 1
+                fake_dict_1 = {
+                    "Event Name" : event
+                }
+                if(tier_num != "Tier 5") : fake_dict_1.update({"End Time" : int(time.mktime((datetime.datetime.now()+times[tier_num]).timetuple()))})
+                fake_dict_1.update({"Games" : [game],
+                                    "Partner": username_target})
+
+                # fake dict 2
+                fake_dict_2 = {
+                    "Event Name" : event
+                }
+                if(tier_num != "Tier 5") : fake_dict_2.update({"End Time" : int(time.mktime((datetime.datetime.now()+times[tier_num]).timetuple()))})
+                fake_dict_2.update({"Games" : [game],
+                                    "Partner": username_target})
+                    
+
+                    
+
+                database_user[username_interaction]["Current Rolls"].append(fake_dict_1)
+                database_user[username_target]["Current Rolls"].append(fake_dict_2)
+                
+                with open('Jasons/users2.json', 'w') as f:
+                    json.dump(database_user, f, indent=4)
+
                 return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
             async def deny_callback(interaction) :
                 await interaction.response.defer()
@@ -675,6 +727,18 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
             # Get page buttons
             await get_buttons(view, embeds)
 
+            database_user[username_interaction]["Current Rolls"].append({"Event Name" : event, 
+                                                                        "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(30)).timetuple())),
+                                                                         "Games" : games,
+                                                                         "Partner": username_target})
+            database_user[username_target]["Current Rolls"].append({"Event Name" : event,
+                                                                        "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(30)).timetuple())),
+                                                                    "Games" : games,
+                                                                    "Partner" : username_interaction})
+            
+            with open('Jasons/users2.json', 'w') as f :
+                json.dump(database_user, f, indent=4)
+
             # and edit the message.
             return await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
         async def deny_callback(interaction) :
@@ -698,7 +762,7 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
                                                         + " The first to complete all Primary Objectives will win.")
         embed.set_thumbnail(url = ce_mountain_icon)
         embed.set_author(name="Challenge Enthusiasts")
-        embed.set_footer(text="CE Assistant", icon_url=ce_mountain_icon)
+        embed.set_footer(text="CE Assistant", icon_url=ce_james_icon)
 
         buttons = []
         i = 1
@@ -751,7 +815,18 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
                 embed = getEmbed(game, interaction.user.id)
                 embed.add_field(name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
                 embed.add_field(name="Tier", value=database_name[game]["Tier"])
-                embed.add_field(name="Completion", value="When you have completed, submit your proof to <#811286469251039333>. The first to do so wins.")
+                embed.add_field(name="Completion", value="When you have completed, submit your proof to <#747384873320448082>. The first to do so wins.")
+
+                database_user[username_interaction]["Current Rolls"].append({"Event Name" : event, 
+                                                                         "Games" : [game],
+                                                                         "Partner": username_target})
+                database_user[username_target]["Current Rolls"].append({"Event Name" : event,
+                                                                    "Games" : [game],
+                                                                    "Partner" : username_interaction})
+            
+                with open('Jasons/users2.json', 'w') as f :
+                    json.dump(database_user, f, indent=4)
+
                 return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
             async def deny_callback(interaction) :
                 await interaction.response.defer()
@@ -782,14 +857,14 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 
     # ---------------------------------------------------- Game Theory -----------------------------------------------------
     elif(event == "Game Theory") :
-        embed = discord.Embed(title="Soul Mates", timestamp=datetime.datetime.now())
+        embed = discord.Embed(title="Game Theory", timestamp=datetime.datetime.now())
         embed.add_field(name="Roll Requirements", value="You and your partner must agree on a tier. A game will be rolled for both of you," 
                                                         + "and you must **both** complete it in the time constraint listed below.")
         embed.add_field(name="Tier Choices",
                         value=f"<@{interaction.user.id}>, please select the genre for the other user.")
         embed.set_thumbnail(url = ce_mountain_icon)
         embed.set_author(name="Challenge Enthusiasts")
-        embed.set_footer(text="CE Assistant", icon_url=ce_mountain_icon)
+        embed.set_footer(text="CE Assistant", icon_url=ce_james_icon)
 
         buttons = []
         i = 0
@@ -813,6 +888,8 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
         buttons[3].callback = fps_callback
         buttons[4].callback = platformer_callback
         buttons[5].callback = strategy_callback
+
+        buttons[5].disabled = True
 
         async def game_theory_callback_1(interaction : discord.Interaction, targets_genre) :
             await interaction.response.defer()
@@ -844,6 +921,8 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
             buttons[4].callback = platformer_callback1
             buttons[5].callback = strategy_callback1
 
+            buttons[5].disabled = True
+
             async def game_theory_callback_2(interaction : discord.Interaction, interactions_genre) :
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data["Discord ID"] : return
@@ -857,7 +936,7 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 
                 while target_user_owns_game and target_user_has_points_in_game :
                     # grab a rollable game
-                    target_user_selected_game = get_rollable_game(40, 20, "Tier 3", targets_genre)
+                    target_user_selected_game = get_rollable_game(40, 20, "Tier 3", specific_genre=targets_genre)
                     # check to see if they own the game and if they have points in the game
                     target_user_owns_game = list(target_user_data["Owned Games"].keys()).count(target_user_selected_game) > 0
                     if(target_user_owns_game) : 
@@ -870,7 +949,7 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 
                 while interaction_user_owns_game and interaction_user_has_points_in_game :
                     # grab a rollable game
-                    interaction_user_selected_game = get_rollable_game(40, 20, "Tier 3", interactions_genre)
+                    interaction_user_selected_game = get_rollable_game(40, 20, "Tier 3", specific_genre=interactions_genre)
                     # check to see if they own the game and if they have points in the game
                     interaction_user_owns_game = list(interaction_user_data["Owned Games"].keys()).count(interaction_user_selected_game) > 0
                     if(interaction_user_owns_game) :
@@ -896,12 +975,29 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
                 # Get the buttons
                 await get_buttons(view, embeds)
 
+                database_user[username_interaction]["Current Rolls"].append({"Event Name" : event, 
+                                                                         "Games" : interaction_user_selected_game,
+                                                                         "Partner": username_target})
+                database_user[username_target]["Current Rolls"].append({"Event Name" : event,
+                                                                    "Games" : target_user_selected_game,
+                                                                    "Partner" : username_interaction})
+            
+                with open('Jasons/users2.json', 'w') as f :
+                    json.dump(database_user, f, indent=4)
+
                 # Edit the message
                 await interaction.followup.edit_message(message_id=interaction.message.id, view=view, embed=embed)
             
+            # ------------- END OF CALLBACK ----------------------
+            
             # Edit the message
             await interaction.followup.edit_message(message_id=interaction.message.id, view=view, embed=embed)
+
+        # ---------- END OF CALLBACK --------------
                 
+        # append the roll to the user's current rolls array
+
+
 
     return await interaction.followup.send(view=view, embed=embed)
 
@@ -914,8 +1010,10 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="check-rolls", description="Check the active rolls of anyone on the server", guild=discord.Object(id=guild_ID))
+@app_commands.describe(user="The user you'd like to check the rolls of")
 async def checkRolls(interaction, user: discord.Member=None) :
     # defer the message
+    print('balls')
     await interaction.response.defer()
 
     # if no user is provided default to sender
@@ -950,7 +1048,7 @@ async def checkRolls(interaction, user: discord.Member=None) :
     embed.add_field(name="Completed Rolls", value=completed_roll_str, inline=False)
     embed.set_thumbnail(url=user.avatar.url)
     embed.set_footer(text="CE Assistant",
-        icon_url=ce_mountain_icon)
+        icon_url=ce_james_icon)
 
     # send the embed
     await interaction.followup.send(embed=embed)
@@ -987,7 +1085,7 @@ async def scrape(interaction):
     updates = await scrape_thread_call() #all_game_data(client)
     await interaction.channel.send("scraped")
 
-    correctChannel = client.get_channel(1128742486416834570)
+    correctChannel = client.get_channel(1135993275162050690)
     for dict in updates[0]:
             await correctChannel.send(file=dict['Image'], embed=dict['Embed'])
 
@@ -996,27 +1094,21 @@ async def scrape(interaction):
 
 
 
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------- CURATE ---------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+@tree.command(name="curate", description="manually activate the curator check", guild=discord.Object(id=guild_ID))
+@app_commands.describe(num="Number of previous curator entries to pull")
+async def curate(interaction, num : int = 0):
+    await interaction.response.defer()
+    await single_run(client, num)
 
-# ---------------------------------------------------------------------------------------------------------------------------------- #
-# ---------------------------------------------------------------------------------------------------------------------------------- #
-# ---------------------------------------------------- COMMAND RESOURCE TESTING ---------------------------------------------------- #
-# ---------------------------------------------------------------------------------------------------------------------------------- #
-# ---------------------------------------------------------------------------------------------------------------------------------- #
-@tree.command(name="resource-testing", description="runs function while recording ram and time", guild=discord.Object(id=guild_ID))
-async def resource_testing(function):
-    ram_usage = []
-    time = []
-    ram_before = psutil.virtual_memory()[3]/1000000000
-    time_before = datetime.datetime.now()
-    await function
-    ram_after = psutil.virtual_memory()[3]/1000000000
-    time_after = datetime.datetime.now()
-    ram_usage.append(ram_after-ram_before)
-    time.append((time_after-time_before).total_seconds())
-
-    print('ram usage (GB): ' + str(sum(ram_usage)/len(ram_usage)))
-    print('time taken (s):' + str(sum(time)/len(time)))
-
+    if num > 0:
+        await interaction.followup.send('Those are the last {} curator reviews!'.format(num))
+    else:
+        await interaction.followup.send('There are no new curator reviews.')
 
 
 
@@ -1058,14 +1150,14 @@ async def steam_command(interaction : discord.Interaction, game_name: str):
 async def color(interaction) :
     await interaction.response.defer(ephemeral=True)
 
-    ex_rank_role = discord.utils.get(interaction.guild.roles, name = "EX RANK")
-    sss_rank_role = discord.utils.get(interaction.guild.roles, name = "SSS RANK")
-    ss_rank_role = discord.utils.get(interaction.guild.roles, name = "SS RANK")
-    s_rank_role = discord.utils.get(interaction.guild.roles, name = "S RANK")
-    a_rank_role = discord.utils.get(interaction.guild.roles, name = "A RANK")
-    b_rank_role = discord.utils.get(interaction.guild.roles, name = "B RANK")
-    c_rank_role = discord.utils.get(interaction.guild.roles, name = "C RANK")
-    d_rank_role = discord.utils.get(interaction.guild.roles, name = "D RANK")
+    ex_rank_role = discord.utils.get(interaction.guild.roles, name = "EX Rank")
+    sss_rank_role = discord.utils.get(interaction.guild.roles, name = "SSS Rank")
+    ss_rank_role = discord.utils.get(interaction.guild.roles, name = "SS Rank")
+    s_rank_role = discord.utils.get(interaction.guild.roles, name = "S Rank")
+    a_rank_role = discord.utils.get(interaction.guild.roles, name = "A Rank")
+    b_rank_role = discord.utils.get(interaction.guild.roles, name = "B Rank")
+    c_rank_role = discord.utils.get(interaction.guild.roles, name = "C Rank")
+    d_rank_role = discord.utils.get(interaction.guild.roles, name = "D Rank")
 
     black_role = discord.utils.get(interaction.guild.roles, name = "Black")
     red_role = discord.utils.get(interaction.guild.roles, name = "Red")
@@ -1075,6 +1167,7 @@ async def color(interaction) :
     blue_role = discord.utils.get(interaction.guild.roles, name = "Blue")
     green_role = discord.utils.get(interaction.guild.roles, name = "Green")
     brown_role = discord.utils.get(interaction.guild.roles, name = "Brown")  
+    grey_role = discord.utils.get(interaction.guild.roles, name = "Gray")
 
 
     view = discord.ui.View(timeout=60)
@@ -1115,7 +1208,7 @@ async def color(interaction) :
                                                             and not ss_rank_role in interaction.user.roles
                                                             and not sss_rank_role in interaction.user.roles
                                                             and not ex_rank_role in interaction.user.roles)))
-
+    grey_button = discord.ui.Button(label="⚪")
     
     async def black_callback(interaction) : return await assign_role(interaction, black_role)
     async def red_callback(interaction) : return await assign_role(interaction, red_role)
@@ -1125,6 +1218,7 @@ async def color(interaction) :
     async def blue_callback(interaction) : return await assign_role(interaction, blue_role)
     async def green_callback(interaction) : return await assign_role(interaction, green_role)
     async def brown_callback(interaction) : return await assign_role(interaction, brown_role)
+    async def grey_callback(interaction) : return await assign_role(interaction, grey_role)
 
     black_button.callback = black_callback
     red_button.callback = red_callback
@@ -1134,6 +1228,7 @@ async def color(interaction) :
     blue_button.callback = blue_callback
     green_button.callback = green_callback
     brown_button.callback = brown_callback
+    grey_button.callback = grey_callback
 
     view.add_item(black_button)
     view.add_item(red_button)
@@ -1143,6 +1238,7 @@ async def color(interaction) :
     view.add_item(blue_button)
     view.add_item(green_button)
     view.add_item(brown_button)
+    view.add_item(grey_button)
 
     async def assign_role(interaction, role) :
         if(role in interaction.user.roles) : return await interaction.response.edit_message(embed=discord.Embed(title = f"You already have the {role.name} role!", color = role.color))
@@ -1156,7 +1252,8 @@ async def color(interaction) :
         if(purple_role in interaction.user.roles and not(role == purple_role)) : await interaction.user.remove_roles(purple_role)
         if(blue_role in interaction.user.roles and not(role == blue_role)) : await interaction.user.remove_roles(blue_role)
         if(green_role in interaction.user.roles and not(role == green_role)) : await interaction.user.remove_roles(green_role)
-        if(brown_role in interaction.user.roles and not(role == brown_button)) : await interaction.user.remove_roles(brown_role)
+        if(brown_role in interaction.user.roles and not(role == brown_role)) : await interaction.user.remove_roles(brown_role)
+        if(grey_role in interaction.user.roles and not(role == grey_role)) : await interaction.user.remove_roles(grey_role)
 
         return await interaction.response.edit_message(embed=discord.Embed(title = f"You have recieved the {role.name} role!", color=role.color))
         
@@ -1193,6 +1290,7 @@ async def test(interaction : discord.Interaction) :
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="register", description="Register yourself in the CE Assistant database to unlock rolls.", guild=discord.Object(id=guild_ID))
+@app_commands.describe(ce_id="Please use the link to your personal CE user page!")
 async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
     
@@ -1315,11 +1413,11 @@ async def register(interaction : discord.Interaction, ce_id: str) :
                     + f". You may now use all aspects of this bot.")
     embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
     embed.set_footer(text="CE Assistant",
-        icon_url=ce_mountain_icon)
+        icon_url=ce_james_icon)
     embed.set_thumbnail(url=interaction.user.avatar)
 
     registered_role = discord.utils.get(interaction.guild.roles, name = "registered")
-    await interaction.user.add_roles(registered_role)
+    #await interaction.user.add_roles(registered_role)
 
     # Send a confirmation message
     await interaction.followup.send(embed=embed)
@@ -1346,7 +1444,7 @@ async def update(interaction : discord.Interaction) :
         embed.add_field(name="Information", value=f"Your information has been updated in the CE Assistant database.")
         embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
         embed.set_footer(text="CE Assistant",
-            icon_url=ce_mountain_icon)
+            icon_url=ce_james_icon)
         embed.set_thumbnail(url=interaction.user.avatar)
 
         # Send a confirmation message
@@ -1359,6 +1457,8 @@ async def update(interaction : discord.Interaction) :
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="add-reason", description="Add reason to embed", guild=discord.Object(id=guild_ID))
+@app_commands.describe(reason="The string you'd like to add under the 'Reason' banner on a site-addition embed")
+@app_commands.describe(embed_id="The message ID of the embed you'd like to change the reason of")
 async def reason(interaction : discord.Interaction, reason : str, embed_id : str) :
 
     # grab the site additions channel

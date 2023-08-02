@@ -176,13 +176,3503 @@
                 "End Time": 1690826282,
                 "Games": [
                     "Darkour"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Teamwork Makes the Dream Work",
+                "End Time": 1693529267,
+                "Games": [
+                    "Zuma's Revenge!",
+                    "Skybolt Zack",
+                    "Furi",
+                    "Hot Lava"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Teamwork Makes the Dream Work",
+                "End Time": 1693529267,
+                "Games": [
+                    "Zuma's Revenge!",
+                    "Skybolt Zack",
+                    "Furi",
+                    "Hot Lava"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Fourward Thinking",
+                "End Time": 1690942415,
+                "Games": []
+            },
+            {
+                "Event Name": "Teamwork Makes the Dream Work",
+                "End Time": 1693536400,
+                "Games": [
+                    "Eryi's Action",
+                    "Blind Drive",
+                    "Super High Ball: Pinball Platformer",
+                    "Super High Ball: Pinball Platformer"
+                ],
+                "Partner": "75875716-9a2e-44c1-bca4-0ba3aeb7f927"
+            },
+            {
+                "Event Name": "Winner Takes All",
+                "Games": "World of Goo",
+                "Partner": "67bce20e-3306-4b83-8027-d6894d474740"
+            }
+        ],
+        "Completed Rolls": [
+            {
+                "Event Name": "One Hell of a Day"
+            },
+            {
+                "Event Name": "One Hell of a Day",
+                "End Time": 1690826282,
+                "Games": [
+                    "GoNNER"
+                ]
+            }
+        ]
+    },
+    "67bce20e-3306-4b83-8027-d6894d474740": {
+        "CE ID": "67bce20e-3306-4b83-8027-d6894d474740",
+        "Discord ID": 269468866256699392,
+        "Rank": "Rank S",
+        "Reroll Tickets": 0,
+        "Casino Score": 0,
+        "Owned Games": {
+            "NOISZ": {
+                "Primary Objectives": {
+                    "Void Vanquisher": 180,
+                    "Sound Dodger": 70
+                }
+            },
+            "Hitogata Happa": {
+                "Primary Objectives": {
+                    "Doll Master": 75,
+                    "Endless Possibilities": 30,
+                    "Even if the world ends...": 20,
+                    "Not An Unlucky Number": 15,
+                    "Phantastique Tea Party": 5
+                }
+            },
+            "DoDonPachi Resurrection": {
+                "Primary Objectives": {
+                    "1.5 2-All": 60,
+                    "Humanity's Triumph": 50,
+                    "Blissful Death": 15
+                }
+            },
+            "Like Dreamer": {
+                "Primary Objectives": {
+                    "Chaos Control": 90,
+                    "Hidden Gem": 20,
+                    "Bulletalk Warriors": 10
+                }
+            },
+            "Terra Feminarum": {
+                "Primary Objectives": {
+                    "The Light Comes From The North": 80,
+                    "Beyond The Dark Star": 30,
+                    "Road to Pohjola": 10
+                }
+            },
+            "Ikaruga": {
+                "Primary Objectives": {
+                    "Kuro to Shiro": 100,
+                    "Butsutekkai": 15
+                }
+            },
+            "CosmoDreamer": {
+                "Primary Objectives": {
+                    "Your Own Nightmare": 80,
+                    "Dream Adventurer": 15,
+                    "Dream Explorer": 5
+                },
+                "Community Objectives": {
+                    "Inner Peace": true
+                }
+            },
+            "BLUE REVOLVER": {
+                "Primary Objectives": {
+                    "Summit Chaser": 90
+                }
+            },
+            "\u6771\u65b9\u5e55\u83ef\u796d \u6625\u96ea\u7bc7 \uff5e Fantastic Danmaku Festival Part II": {
+                "Primary Objectives": {
+                    "Fantastic Flight": 85
+                }
+            },
+            "Star of Providence / Monolith": {
+                "Primary Objectives": {
+                    "The Watch": 30,
+                    "Banished Cores": 30,
+                    "Void-Class Threat": 15
+                }
+            },
+            "Neon White": {
+                "Primary Objectives": {
+                    "Demon Exterminator": 35,
+                    "I just keep getting better and better.": 20,
+                    "Rocket League": 10,
+                    "Heaven's Janitor": 5
+                }
+            },
+            "Touhou Chireiden ~ Subterranean Animism.": {
+                "Primary Objectives": {
+                    "Nuclear Hazard": 45,
+                    "Blaze Venturer": 15,
+                    "Unconscious Rock": 10
+                }
+            },
+            "Jigoku Kisetsukan: Sense of the Seasons": {
+                "Primary Objectives": {
+                    "None Winged Angel": 70
+                }
+            },
+            "Mushihimesama": {
+                "Primary Objectives": {
+                    "Arrange Master": 35,
+                    "Maniac Master": 35
+                }
+            },
+            "Hellsinker.": {
+                "Primary Objectives": {
+                    "Graveyard Survivor": 70
+                }
+            },
+            "Touhou Fantasia / \u4e1c\u65b9\u68a6\u60f3\u66f2": {
+                "Primary Objectives": {
+                    "Catastrophic Showdown": 60
+                }
+            },
+            "DANMAKAI: Red Forbidden Fruit": {
+                "Primary Objectives": {
+                    "Danmakainya": 55
+                }
+            },
+            "ALLTYNEX Second": {
+                "Primary Objectives": {
+                    "Satariel Theory": 40,
+                    "Outside Calculations": 15
+                }
+            },
+            "Touhou Fuujinroku ~ Mountain of Faith.": {
+                "Primary Objectives": {
+                    "Faith Battlefield": 35,
+                    "Hippity Hoppity": 10,
+                    "The Wind Blows High": 10
+                }
+            },
+            "Shooting Game KARI": {
+                "Primary Objectives": {
+                    "This is Shooting Game": 35,
+                    "Primary Objective KIBISH\u012a": 20
+                }
+            },
+            "Touhou Kanjuden ~ Legacy of Lunatic Kingdom.": {
+                "Primary Objectives": {
+                    "Crimson Impurity": 30,
+                    "Welcome \u2764 Hell": 15,
+                    "A Sip of Lunacy": 5
+                }
+            },
+            "Titan Souls": {
+                "Primary Objectives": {
+                    "Iron Will": 40,
+                    "Soul Searcher": 10
+                }
+            },
+            "Touhou Nemuri Sekai ~ Wonderful Waking World": {
+                "Primary Objectives": {
+                    "Weigh the Anchor": 35,
+                    "Danse Macabre": 10,
+                    "The Deluge": 5
+                }
+            },
+            "Murasaki": {
+                "Primary Objectives": {
+                    "Rinko's Demise": 30,
+                    "Lethal Concert": 20
+                }
+            },
+            "Hades": {
+                "Primary Objectives": {
+                    "Heat Wave": 25,
+                    "From Hell and Back": 20
+                }
+            },
+            "Touhou Shinreibyou ~ Ten Desires.": {
+                "Primary Objectives": {
+                    "Unyielding Desires": 30,
+                    "Battlecry": 10,
+                    "A Hopeful Prayer": 5
+                }
+            },
+            "QP Shooting - Dangerous!!": {
+                "Primary Objectives": {
+                    "I Love Pudding": 25,
+                    "Galactic Pudding Guardian": 20
+                }
+            },
+            "MUSYNX": {
+                "Primary Objectives": {
+                    "VSRG Adept": 30,
+                    "VSRG Novice": 10
+                }
+            },
+            "Yousei Daisensou ~ Touhou Sangetsusei - Great Fairy Wars": {
+                "Primary Objectives": {
+                    "Cirno's Perfect Danmaku Class": 20,
+                    "Almighty Fairy": 15,
+                    "Flower Viewing": 5
+                }
+            },
+            "Touhou Kishinjou ~ Double Dealing Character.": {
+                "Primary Objectives": {
+                    "Disaster Mallet": 25,
+                    "Inverted Horizon": 10,
+                    "The Drumming": 5
+                }
+            },
+            "Bleed": {
+                "Primary Objectives": {
+                    "New Greatest Hero": 40
+                }
+            },
+            "Maiden and Spell": {
+                "Primary Objectives": {
+                    "Danmaku Duelist": 40
+                }
+            },
+            "Astebreed: Definitive Edition": {
+                "Primary Objectives": {
+                    "Lucis Force": 35
+                }
+            },
+            "Kero Blaster": {
+                "Primary Objectives": {
+                    "Weaponized Frog Memes": 35
+                }
+            },
+            "\u4e1c\u65b9\u8fdc\u7a7a\u754c ~ Ultimate Vitality of Imagination": {
+                "Primary Objectives": {
+                    "Vanishing Galaxy": 35
+                }
+            },
+            "KAMUI": {
+                "Primary Objectives": {
+                    "Xaffiquel Theory": 20,
+                    "Xaffiquel Slayer": 15
+                }
+            },
+            "Wish Project": {
+                "Primary Objectives": {
+                    "Wish Upon a Horn": 35
+                }
+            },
+            "\u6771\u65b9\u5b9f\u5728\u76f8 \uff5e Dream Logical World": {
+                "Primary Objectives": {
+                    "Illogical": 20,
+                    "Empathical": 15
+                }
+            },
+            "Midnight Fight Express": {
+                "Primary Objectives": {
+                    "Hotline Express": 10,
+                    "King of Challenges": 10,
+                    "You Won't Be Forgotten My Friend": 10
+                }
+            },
+            "Bullet Hell Monday": {
+                "Primary Objectives": {
+                    "New Week, New Game": 30
+                }
+            },
+            "WITCH-BOT MEGLILO": {
+                "Primary Objectives": {
+                    "*teleports behind you*": 30
+                }
+            },
+            "Yars: Recharged": {
+                "Primary Objectives": {
+                    "Yars' Counterattack": 25,
+                    "Hazard Course": 5
+                }
+            },
+            "Within the blade": {
+                "Primary Objectives": {
+                    "Iron Shinobi": 30
+                }
+            },
+            "Lichtspeer: Double Speer Edition": {
+                "Primary Objectives": {
+                    "Supergeil Impaler": 30
+                }
+            },
+            "Xmas Shooting - Scramble!!": {
+                "Primary Objectives": {
+                    "Xmas Savior": 15,
+                    "Xmas Juice": 15
+                }
+            },
+            "TechBeat Heart": {
+                "Primary Objectives": {
+                    "With Love": 30
+                }
+            },
+            "The Binding of Isaac": {
+                "Primary Objectives": {
+                    "Eternal Crybaby": 20,
+                    "Good Christian Boy": 10
+                }
+            },
+            "Rhythm Sprout: Sick Beats & Bad Sweets": {
+                "Primary Objectives": {
+                    "Sweet Beats": 30
+                }
+            },
+            "Super Multitasking": {
+                "Primary Objectives": {
+                    "Feet Required": 20,
+                    "Local Legend": 10
+                }
+            },
+            "Touhou Kikeijuu ~ Wily Beast and Weakest Creature.": {
+                "Primary Objectives": {
+                    "Oh!Create!": 20,
+                    "Highway to the Realm": 10
+                }
+            },
+            "Yoiyami Dancers: Twilight Danmaku Dancers": {
+                "Primary Objectives": {
+                    "Bullet Backdancer": 30
+                }
+            },
+            "Soundodger+": {
+                "Primary Objectives": {
+                    "Melophobia": 30
+                }
+            },
+            "Danmaku Unlimited 2": {
+                "Primary Objectives": {
+                    "Trillionare": 25,
+                    "True Boss": 5
+                }
+            },
+            "BIT.TRIP FATE": {
+                "Primary Objectives": {
+                    "Fateful Trips": 25
+                }
+            },
+            "Supercharged Robot VULKAISER": {
+                "Primary Objectives": {
+                    "GO, GO, VULKAISER!": 25
+                }
+            },
+            "Hack or Die!": {
+                "Primary Objectives": {
+                    "Hackerman": 25
+                }
+            },
+            "FOTONICA": {
+                "Primary Objectives": {
+                    "Flow State Runner": 25
+                }
+            },
+            "Outskirts": {
+                "Primary Objectives": {
+                    "Circle Pit": 25
+                }
+            },
+            "E.Z": {
+                "Primary Objectives": {
+                    "E.Z Streak": 25
+                }
+            },
+            "Project Starship X": {
+                "Primary Objectives": {
+                    "Swagthulhu Cometh": 25
+                }
+            },
+            "\u6771\u65b9\u5e55\u83ef\u796d TouHou Makuka Sai ~ Fantastic Danmaku Festival": {
+                "Primary Objectives": {
+                    "Fly Through Scarlet": 25
+                }
+            },
+            "Azure Reflections / \u821e\u83ef\u84bc\u9b54\u93e1": {
+                "Primary Objectives": {
+                    "Azure Lunatic": 25
+                }
+            },
+            "Last Command": {
+                "Primary Objectives": {
+                    "Refactoring Nightmare": 25
+                }
+            },
+            "\u6771\u65b9\u50ac\u72d0\u8b5a \uff5e Servants of Harvest Wish": {
+                "Primary Objectives": {
+                    "Bountiful Day": 20,
+                    "Silent Night": 5
+                }
+            },
+            "Dig Dog": {
+                "Primary Objectives": {
+                    "Gid God": 25
+                }
+            },
+            "Clone Drone in the Danger Zone": {
+                "Primary Objectives": {
+                    "This Human is a Beast": 15,
+                    "Clone Drone in the Danger Arena": 10
+                }
+            },
+            "Murasaki Tsurugi": {
+                "Primary Objectives": {
+                    "Keisan's Demise": 20
+                }
+            },
+            "Danmaku Unlimited 3": {
+                "Primary Objectives": {
+                    "Spirit of Graze": 20
+                }
+            },
+            "DEEMO -Reborn-": {
+                "Primary Objectives": {
+                    "Fairytale Pianist": 20
+                }
+            },
+            "The Textorcist: The Story of Ray Bibbia": {
+                "Primary Objectives": {
+                    "H4rdc0re M45t3R": 20
+                }
+            },
+            "Touhou Tenkuushou ~ Hidden Star in Four Seasons.": {
+                "Primary Objectives": {
+                    "Seasonal Blast": 15,
+                    "Backdoor Club": 5
+                }
+            },
+            "Enter the Gungeon": {
+                "Primary Objectives": {
+                    "Ammonomicon": 20
+                }
+            },
+            "SUPER CHICKEN JUMPER": {
+                "Primary Objectives": {
+                    "Playing Chicken": 20
+                }
+            },
+            "Shmups Skill Test \u30b7\u30e5\u30fc\u30c6\u30a3\u30f3\u30b0\u6280\u80fd\u691c\u5b9a": {
+                "Primary Objectives": {
+                    "Shmup Array": 20
+                }
+            },
+            "Super Hexagon": {
+                "Primary Objectives": {
+                    "Hexagon": 20
+                }
+            },
+            "BLACK BIRD": {
+                "Primary Objectives": {
+                    "Dark Omen": 20
+                }
+            },
+            "Evorales": {
+                "Primary Objectives": {
+                    "Gnustroyer": 20
+                }
+            },
+            "Touhou Bunkachou \uff5e Shoot the Bullet.": {
+                "Primary Objectives": {
+                    "Photography God Girl": 20
+                }
+            },
+            "Soft Body": {
+                "Primary Objectives": {
+                    "Hard Body": 20
+                }
+            },
+            "Sky Racket": {
+                "Primary Objectives": {
+                    "Break 'Em Up": 20
+                }
+            },
+            "Electronic Super Joy": {
+                "Primary Objectives": {
+                    "Oh, You Touch My Tralala": 20
+                }
+            },
+            "Disc Room": {
+                "Primary Objectives": {
+                    "Sawwy": 20
+                }
+            },
+            "Neptunia Shooter": {
+                "Primary Objectives": {
+                    "No Miss Clear": 20
+                }
+            },
+            "Aliens Go Home Run": {
+                "Primary Objectives": {
+                    "Genres Go Alien Run": 15
+                }
+            },
+            "Axiom Verge": {
+                "Primary Objectives": {
+                    "Biomechanoid Glitch": 15
+                }
+            },
+            "Cybarian: The Time Travelling Warrior": {
+                "Primary Objectives": {
+                    "Barbaric Strength": 15
+                }
+            },
+            "SUPERHOT": {
+                "Primary Objectives": {
+                    "Just Killing Red Guys": 10,
+                    "GET RED": 5
+                }
+            },
+            "RefleX": {
+                "Primary Objectives": {
+                    "Zodiac Theory": 15
+                }
+            },
+            "Ms. Splosion Man": {
+                "Primary Objectives": {
+                    "Splotastic Pink Justice": 15
+                }
+            },
+            "Lovely Planet": {
+                "Primary Objectives": {
+                    "Lovely Ace": 15
+                }
+            },
+            "140": {
+                "Primary Objectives": {
+                    "041": 15
+                }
+            },
+            "STAY": {
+                "Primary Objectives": {
+                    "Final Exam": 15
+                }
+            },
+            "Barrage Musical  ~A Fantasy of Tempest~": {
+                "Primary Objectives": {
+                    "Ignition": 10,
+                    "Blazing Musician (PARTIALLY UNCLEARED)": 5
+                }
+            },
+            "Bullet Heaven 2": {
+                "Primary Objectives": {
+                    "Heavenly Bullets": 15
+                }
+            },
+            "Downwell": {
+                "Primary Objectives": {
+                    "Well, That's It": 15
+                }
+            },
+            "The Royal Cosmonautical Society": {
+                "Primary Objectives": {
+                    "Cosmonautical Master": 15
+                }
+            },
+            "PuPaiPo Space Deluxe": {
+                "Primary Objectives": {
+                    "Space Pizza": 10,
+                    "Plus Ultra Pizza": 5
+                }
+            },
+            "Danmaku Amanojaku ~ Impossible Spell Card.": {
+                "Primary Objectives": {
+                    "Peak Amanojaku": 15
+                }
+            },
+            "Touhou Bunkachou \uff5e Double Spoiler": {
+                "Primary Objectives": {
+                    "Mysterious Journalist": 15
+                }
+            },
+            "Flying Red Barrel - The Diary of a Little Aviator": {
+                "Primary Objectives": {
+                    "Red Wings": 15
+                }
+            },
+            "Blazend": {
+                "Primary Objectives": {
+                    "Blaze It": 15
+                }
+            },
+            "Game Soup": {
+                "Primary Objectives": {
+                    "Microgame Mania": 10
+                }
+            },
+            "Duet": {
+                "Primary Objectives": {
+                    "Dialogue": 10
+                }
+            },
+            "LIMBO": {
+                "Primary Objectives": {
+                    "Limboed Through Limbo": 10
+                }
+            },
+            "BARRIER X": {
+                "Primary Objectives": {
+                    "Life in the Fast Lane": 10
+                }
+            },
+            "ITTA": {
+                "Primary Objectives": {
+                    "Ittakunai": 10
+                }
+            },
+            "No Parachute": {
+                "Primary Objectives": {
+                    "Starfall": 10
+                }
+            },
+            "Thy Kingdom Crumble": {
+                "Primary Objectives": {
+                    "Game of Throne": 10
+                }
+            },
+            "A Dance of Fire and Ice": {
+                "Primary Objectives": {
+                    "Orbitals on the Double": 10
+                }
+            },
+            "Dark Old Sun": {
+                "Primary Objectives": {
+                    "I Walk a Lonely Void": 10
+                }
+            },
+            "Risk of Rain 2": {
+                "Primary Objectives": {
+                    "Hailstorm": 10
+                }
+            },
+            "Cyber Hook": {
+                "Primary Objectives": {
+                    "Retrowave Traceur": 10
+                }
+            },
+            "Speed Limit": {
+                "Primary Objectives": {
+                    "Time is Relative": 10
+                }
+            },
+            "Dino Run DX": {
+                "Primary Objectives": {
+                    "Meteor Dodger": 10
+                }
+            },
+            "Exit the Gungeon": {
+                "Primary Objectives": {
+                    "Diginomocon": 5,
+                    "Mech-Cthulhu": 5
+                }
+            },
+            "Idol Hell": {
+                "Primary Objectives": {
+                    "Mecha Hell": 10
+                }
+            },
+            "Momodora: Reverie Under The Moonlight": {
+                "Primary Objectives": {
+                    "Lun Priestess": 10
+                }
+            },
+            "Miles & Kilo": {
+                "Primary Objectives": {
+                    "Short for Kilometer": 10
+                }
+            },
+            "Outlast": {
+                "Primary Objectives": {
+                    "Bowelwhistler": 5,
+                    "Insanity Asylum": 5
+                }
+            },
+            "Hifuu Nightmare Diary ~ Violet Detector. ": {
+                "Primary Objectives": {
+                    "Violet President": 10
+                }
+            },
+            "Panic Porcupine": {
+                "Primary Objectives": {
+                    "Fright and Flight": 10
+                }
+            },
+            "FEWAR-DVD": {
+                "Primary Objectives": {
+                    "FEAR \ud83d\udc99 DD": 10
+                }
+            },
+            "Void Prison": {
+                "Primary Objectives": {
+                    "3, 2, 1, GO!": 5,
+                    "Dyschronometria": 5
+                }
+            },
+            "Alien Removal Division": {
+                "Primary Objectives": {
+                    "Extraterrestrial Exterminator": 10
+                }
+            },
+            "Jet Buster": {
+                "Primary Objectives": {
+                    "Idol Buster": 10
+                }
+            },
+            "Sound Slide": {
+                "Primary Objectives": {
+                    "Visions of Virtuous Living": 10
+                }
+            },
+            "Platformity": {
+                "Primary Objectives": {
+                    "Pillar Man": 5,
+                    "Plat' Former": 5
+                }
+            },
+            "Old School Musical": {
+                "Primary Objectives": {
+                    "Old School Cool": 10
+                }
+            },
+            "Celeste": {
+                "Primary Objectives": {
+                    "Mountain Climber": 10
+                }
+            },
+            "Garfield Kart - Furious Racing": {
+                "Primary Objectives": {
+                    "Lasagna Fuel": 10
+                }
+            },
+            "Heroine of the Sniper": {
+                "Primary Objectives": {
+                    "Legendawy Snipuwu": 10
+                }
+            },
+            "Arcade Mayhem Juanito": {
+                "Primary Objectives": {
+                    "Juanito Go Pang Pang!": 10
+                }
+            },
+            "Inside My Radio": {
+                "Primary Objectives": {
+                    "Feel the Beat": 10
+                }
+            },
+            "Rheum": {
+                "Primary Objectives": {
+                    "Booster Shot": 10
+                }
+            },
+            "REVOLVER360 RE:ACTOR": {
+                "Primary Objectives": {
+                    "Reactor": 10
+                }
+            },
+            "Touhou Kouryudou ~ Unconnected Marketeers.": {
+                "Primary Objectives": {
+                    "Shopping Spree": 5,
+                    "Centipede Slayer": 5
+                }
+            },
+            "ZeroRanger": {
+                "Primary Objectives": {
+                    "SYSTEM ENDLESS": 10
+                }
+            },
+            "LinearShooter Remixed": {
+                "Primary Objectives": {
+                    "Linear Shooter": 10
+                }
+            },
+            "You Died but a Necromancer revived you": {
+                "Primary Objectives": {
+                    "Trapmancer Gauntlet": 10
+                }
+            },
+            "POSTAL 2": {
+                "Primary Objectives": {
+                    "You should have signed my petition": 10
+                }
+            },
+            "DARK SOULS\u2122 III": {
+                "Primary Objectives": {
+                    "Praise the Sun": 10
+                }
+            },
+            "Spelldash": {
+                "Primary Objectives": {
+                    "Rune Carver": 10
+                }
+            },
+            "TWWWR": {
+                "Primary Objectives": {
+                    "Towering Meadow": 5
+                }
+            },
+            "Lovely Planet Arcade": {
+                "Primary Objectives": {
+                    "Lovely": 5
+                }
+            },
+            "Transpire": {
+                "Primary Objectives": {
+                    "Inspiring Speed": 5
+                }
+            },
+            "SPLIT BULLET": {
+                "Primary Objectives": {
+                    "Splitsteroids": 5
+                }
+            },
+            "VECTORLORD": {
+                "Primary Objectives": {
+                    "VECTORGOD": 5
+                }
+            },
+            "Superliminal": {
+                "Primary Objectives": {
+                    "A Different Perspective on Challenge": 5
+                }
+            },
+            "Iwate Mountain Dance": {
+                "Primary Objectives": {
+                    "Bullet Dance": 5
+                }
+            },
+            "Savant - Ascent": {
+                "Primary Objectives": {
+                    "Savant": 5
+                }
+            },
+            "#Snake2 DX: Reawakening": {
+                "Primary Objectives": {
+                    "Long-Awaited Sequel": 5
+                }
+            },
+            "RAIN Project": {
+                "Primary Objectives": {
+                    "Mountain of Chaos": 5
+                }
+            },
+            "MO:Astray": {
+                "Primary Objectives": {
+                    "Mo Problems": 5
+                }
+            },
+            "The Treehouse Man": {
+                "Primary Objectives": {
+                    "The Silence": 5
+                }
+            },
+            "Cuphead": {
+                "Primary Objectives": {
+                    "BRAVO!!!": 5
+                }
+            },
+            "Slender: The Arrival": {
+                "Primary Objectives": {
+                    "Don't Look Back": 5
+                }
+            },
+            "Bot Vice": {
+                "Primary Objectives": {
+                    "Gun Girl": 5
+                }
+            },
+            "oO": {
+                "Primary Objectives": {
+                    "RoOlling": 5
+                }
+            },
+            "Vectronom": {
+                "Primary Objectives": {
+                    "Blocked Rhythms": 5
+                }
+            },
+            "Prologue for a Vacant Kingdom": {
+                "Primary Objectives": {
+                    "What's Yet to Come": 5
+                }
+            },
+            "The Adventures of Ten and Till": {
+                "Primary Objectives": {
+                    "Waves of Devolution": 5
+                }
+            },
+            "Blast Rush Classic": {
+                "Primary Objectives": {
+                    "Endurance Emperor": 5
+                }
+            },
+            "Risk of Rain": {
+                "Primary Objectives": {
+                    "Rainstorm": 5
+                }
+            },
+            "Flem": {
+                "Primary Objectives": {
+                    "Apophlegmatism": 5
+                }
+            },
+            "Castle Crashers\u00ae": {
+                "Primary Objectives": {
+                    "Untouchable Knight": 5
+                }
+            },
+            "Marimoth": {
+                "Primary Objectives": {
+                    "For the Royalty": 5
+                }
+            },
+            "Clustertruck": {
+                "Primary Objectives": {
+                    "Mothertrucker": 5
+                }
+            },
+            "Crucible": {
+                "Primary Objectives": {
+                    "Trial by Fire": 5
+                }
+            },
+            "UBERMOSH:OMEGA": {
+                "Primary Objectives": {
+                    "UBERMOSH:PIT": 5
+                }
+            },
+            "Boson X": {
+                "Primary Objectives": {
+                    "Particle Accelerator": 5
+                }
+            },
+            "Bananner Nababber": {
+                "Primary Objectives": {
+                    "Rug Pull": 5
+                }
+            },
+            "You Have to Win the Game": {
+                "Primary Objectives": {
+                    "You Have to Wear the Sunglasses": 5
+                }
+            },
+            "Ellipsis": {
+                "Primary Objectives": {
+                    "Ellipsis": 5
+                }
+            },
+            "Sayonara Wild Hearts": {
+                "Primary Objectives": {
+                    "Sayonara": 5
+                }
+            },
+            "Neon Boost": {
+                "Primary Objectives": {
+                    "Rootin' Tootin' Rockets": 5
+                }
+            },
+            "Portal": {
+                "Primary Objectives": {
+                    "I'm Doing Science": 5
+                }
+            },
+            "Duke Dashington Remastered": {
+                "Primary Objectives": {
+                    "Dashing, A Ton": 5
+                }
+            },
+            "High Hell": {
+                "Primary Objectives": {
+                    "Holy Hell": 5
+                }
+            },
+            "Project Rhombus": {
+                "Primary Objectives": {
+                    "Meet the Arrows": 5
+                }
+            },
+            "Heads Run": {
+                "Primary Objectives": {
+                    "Overwhelmingly Aesthetic": 5
+                }
+            },
+            "Tightrope Theatre": {
+                "Primary Objectives": {
+                    "Chester the Clown": 5
+                }
+            },
+            "Apple Slash": {
+                "Primary Objectives": {
+                    "Can't touch meeeeeeeeeeeeeeeeeeeeeeeeeeeeeee!": 5
+                }
+            },
+            "Escape from Terror City": {
+                "Primary Objectives": {
+                    "So Bad, It's Good": 5
+                }
+            },
+            "Another Perspective": {
+                "Primary Objectives": {
+                    "Another Puzzle Platformer Speedrun": 5
+                }
+            },
+            "Chameleon Run Deluxe Edition": {
+                "Primary Objectives": {
+                    "I Has Feets": 5
+                }
+            },
+            "HyperDot": {
+                "Primary Objectives": {
+                    "Dot Dodger": 5
+                }
+            },
+            "Pixboy": {
+                "Primary Objectives": {
+                    "Pixboy Color": 5
+                },
+                "Community Objectives": {
+                    "Pixboy Advance": true
+                }
+            },
+            "Dispersio 2": {
+                "Primary Objectives": {
+                    "Knightio": 5
+                }
+            },
+            "Sundered\u00ae: Eldritch Edition": {},
+            "SCP: Containment Breach Multiplayer": {},
+            "Super Puzzle Platformer Deluxe": {},
+            "OmniBus": {},
+            "SteamWorld Dig 2": {},
+            "HYPER DEMON": {},
+            "VVVVVV": {},
+            "HoPiKo": {},
+            "Exception": {},
+            "Dragon Blaze": {},
+            "MindSeize": {},
+            "Thumper": {},
+            "GrappleWell": {},
+            "ASSAULT SHELL": {},
+            "Super House of Dead Ninjas": {},
+            "Pogostuck: Rage With Your Friends": {},
+            "Gunlocked": {},
+            "Flat Heroes": {},
+            "Deathsmiles": {},
+            "Graceful Explosion Machine": {},
+            "Outlast 2": {},
+            "Radical Rabbit Stew": {},
+            "All Day Dying": {},
+            "Shu": {},
+            "Dispersio": {},
+            "Baldi's Basics Classic Remastered": {},
+            "One Way Heroics": {},
+            "ASTRONAUTILUS": {},
+            "NiGHTS Into Dreams": {},
+            "ESCHATOS": {},
+            "Wuppo: Definitive Edition": {},
+            "satryn deluxe": {},
+            "Gravity": {},
+            "ICEwall": {},
+            "The Witness": {},
+            "The King's Bird": {},
+            "Kubinashi Recollection": {},
+            "In Retrospect": {},
+            "Hollow Knight": {},
+            "Astrogon": {},
+            "One Finger Death Punch": {},
+            "Just Shapes & Beats": {},
+            "Geballer": {},
+            "Skybolt Zack": {},
+            "Overpass": {},
+            "Eraser": {},
+            "Circa Infinity": {},
+            "Overture": {},
+            "Devil Daggers": {},
+            "DSY: Don't Shoot Yourself": {},
+            "Mega Serval": {},
+            "Dustforce DX": {},
+            "Hot Lava": {},
+            "ENDER LILIES: Quietus of the Knights": {},
+            "Gorescript": {},
+            "LOVE 3": {},
+            "SEUM: Speedrunners from Hell": {},
+            "BioShock Infinite": {},
+            "Ultimate Custom Night": {},
+            "Curvatron": {},
+            "Heavy Bullets": {},
+            "One Gun Guy": {},
+            "BULLET SOUL / \u30d0\u30ec\u30c3\u30c8\u30bd\u30a6\u30eb - \u5f3e\u9b42 -": {},
+            "Aka Manto | \u8d64\u30de\u30f3\u30c8": {},
+            "Rogue Legacy": {},
+            "4X4": {},
+            "Vacuum Pilot": {},
+            "Salt and Sanctuary": {},
+            "Atomik: RunGunJumpGun": {},
+            "Crimzon Clover WORLD IGNITION": {},
+            "Zardy's Maze": {},
+            "Jet Lancer": {},
+            "Super Hiking League DX": {},
+            "Quantum Conundrum": {},
+            "Beat Blast": {},
+            "Valfaris": {},
+            "Stardew Valley": {},
+            "Operation STEEL": {},
+            "Geometry Wars\u2122 3: Dimensions Evolved": {},
+            "BattleBlock Theater\u00ae": {},
+            "Vacant Kingdom": {},
+            "Thief": {},
+            "SOMOS": {},
+            "Skyhook": {},
+            "Going Under": {},
+            "Velocity\u00aeUltra": {},
+            "Deepest Sword": {},
+            "Unworthy": {},
+            "Super Meat Boy Forever": {},
+            "Jamestown+": {},
+            "LOVE 2: kuso": {},
+            "METAL GEAR RISING: REVENGEANCE": {},
+            "N-GON": {},
+            "Demon Go!": {},
+            "NEO NEO": {},
+            "Bastion": {},
+            "Killer Chambers": {},
+            "Marble It Up!": {},
+            "LOST BUBBLES: Sweet mates": {},
+            "Wunderling DX": {},
+            "Bob Was Hungry": {},
+            "Castle of Shikigami": {},
+            "DeadCore": {},
+            "Rhythmy": {},
+            "Serious Sam 4": {},
+            "Assault Android Cactus+": {},
+            "PAYDAY\u2122 The Heist": {},
+            "Gunvein": {},
+            "Khimera: Destroy All Monster Girls": {},
+            "Cook, Serve, Delicious! 2!!": {},
+            "Serious Sam 3: BFE": {},
+            "I wanna be The Cat": {},
+            "ALTF4": {},
+            "Innoquous 5": {},
+            "Primordial Pain": {},
+            "-SPROUT-": {},
+            "STRIKERS 1945": {},
+            "Hoppup!": {},
+            "Rabi-Ribi": {},
+            "EDGE": {},
+            "Hard Reset Extended Edition": {},
+            "10 Second Ninja X": {},
+            "Light Fall": {},
+            "Snake Pass": {},
+            "Fist's Elimination Tower": {},
+            "Laserboy": {},
+            "UDONGEIN X": {},
+            "Burn It Down": {},
+            "Hotline Miami": {},
+            "JUMPGRID": {},
+            "Zenodyne R": {},
+            "A Healer Only Lives Twice": {},
+            "Crypt of the NecroDancer": {},
+            "THOTH": {},
+            "Sekiro\u2122: Shadows Die Twice": {},
+            "panGEMic": {},
+            "Lovely Planet 2: April Skies": {},
+            "- \u200ePuzzle Games -": {},
+            "LOVE": {},
+            "Rhythm Doctor": {},
+            "Super Lovely Planet": {},
+            "PUSS!": {},
+            "ScourgeBringer": {},
+            "Space Invaders Extreme": {},
+            "Super Meat Boy": {},
+            "Resident Evil 4": {},
+            "Desktop Dungeons": {},
+            "Zenohell": {},
+            "RFLEX": {},
+            "DYE": {},
+            "Alien Shooter": {},
+            "Battle Planet - Judgement Day": {},
+            "Cheese Game": {},
+            "Destructivator 2": {},
+            "\u2200kashicverse -Malicious Wake-": {},
+            "Alien: Isolation": {},
+            "Drink More Glurp": {},
+            "LUMINES REMASTERED": {},
+            "Remnants of Naezith": {},
+            "Sharpshooter Plus": {},
+            "Q.U.B.E: Director's Cut": {},
+            "DUSK": {},
+            "Kreedz Climbing": {},
+            "Cosmophony": {},
+            "Gravity Den": {},
+            "Ascent": {},
+            "Phantom Jump": {},
+            "clown town 1443": {},
+            "Spelunky": {},
+            "Straima": {},
+            "Gridform": {},
+            "Noita": {},
+            "Super Nano Blaster": {},
+            "Risk System": {},
+            "XCOM\u00ae 2": {},
+            "Serious Sam: Siberian Mayhem": {},
+            "Hotline Miami 2: Wrong Number": {},
+            "Sine Mora EX": {},
+            "Aaero": {},
+            "Resident Evil": {},
+            "Anarcute": {},
+            "Colt Canyon": {},
+            "Deus Ex: Mankind Divided": {},
+            "Balancelot": {},
+            "STANDBY": {},
+            "Singled Out": {},
+            "BADLAND: Game of the Year Edition": {},
+            "Absolute Drift": {},
+            "Mute Crimson+": {},
+            "POSTAL Redux": {},
+            "Spin Rhythm XD": {},
+            "A2 Zygon": {},
+            "Eryi's Action": {},
+            "Paperball": {},
+            "MagiCat": {},
+            "-KLAUS-": {},
+            "Trials\u00ae Rising": {},
+            "Race The Sun": {},
+            "Spitkiss": {},
+            "Argus Panoptes": {},
+            "The Next Penelope": {},
+            "Crimzon Clover World EXplosion": {},
+            "Rival Megagun": {},
+            "Touhou Kikamu ~ Elegant Impermanence of Sakura": {},
+            "Serious Sam HD: The First Encounter": {},
+            "Safety First!": {},
+            "Furi": {},
+            "Binaries": {},
+            "Heck Deck": {},
+            "Godstrike": {},
+            "Dead": {},
+            "Micro Platformer": {},
+            "Lorera": {},
+            "KILLBUG": {},
+            "Tormentor\u274cPunisher": {},
+            "Sora": {},
+            "Trackmania": {},
+            "Deathstate: Abyssal Edition": {},
+            "Gundemonium Recollection": {},
+            "Raiden IV: OverKill": {},
+            "Drifting Lands": {},
+            "- Challenge Enthusiasts -": {
+                "Community Objectives": {
+                    "Never Lucky": true,
+                    "One Hell of a Week": true,
+                    "Reading Rainbow": true,
+                    "Insert Tired Old Meme Here": true,
+                    "\"I'll add it to the backlog.\"": true,
+                    "Two Week T2 Streak": true,
+                    "Objectively Cracked": true,
+                    "That Belongs In A Museum!": true,
+                    "Happy Anniversary": true,
+                    "Soul Mates": true,
+                    "One Hell of a Day": true,
+                    "One Hell of a Month": true,
+                    "Two \"Two Week T2 Streak\" Streak": true,
+                    "Triple Threat": true,
+                    "High Roller": true,
+                    "Let Fate Decide": true,
+                    "Intro Quest": true,
+                    "Destiny Alignment ": true
+                }
+            },
+            "Driven Out": {},
+            "Nowhere Patrol": {},
+            "RIVE: Wreck, Hack, Die, Retry!": {},
+            "Shotgun King: The Final Checkmate": {},
+            "TrackMania Nations Forever": {},
+            "BPM: BULLETS PER MINUTE": {},
+            "Reverse x Reverse": {},
+            "Bladed Fury": {},
+            "Muse Dash": {},
+            "Call of Juarez: Gunslinger": {},
+            "Jamestown": {},
+            "Fork Parker's Holiday Profit Hike": {},
+            "Deus Ex: Human Revolution - Director's Cut": {},
+            "Hatred": {},
+            "Steredenn": {},
+            "Hell is Other Demons": {},
+            "Airscape - The Fall of Gravity": {},
+            "Caveblazers": {},
+            "Run or Die": {},
+            "sunny-place": {},
+            "LUFTRAUSERS": {},
+            "Trace Vector": {},
+            "Prompt": {},
+            "Starstruck: Prologue": {},
+            "Arcane Golf": {},
+            "GUNBIRD 2": {},
+            "Devastator": {},
+            "Astrodogs": {},
+            "Squidlit": {},
+            "Taimumari": {},
+            "Temp Zero": {},
+            "Nex Machina": {},
+            "The Basement Collection": {},
+            "PAWARUMI": {},
+            "Tick Tack Puppet": {},
+            "Charge Kid": {},
+            "Straimium Immortaly": {},
+            "The Sun and Moon": {},
+            "ARMED SEVEN": {},
+            "ERSATZ": {},
+            "A Bastard's Tale": {},
+            "Chippy": {},
+            "Guacamelee! Super Turbo Championship Edition": {},
+            "Eternal Cave Escape": {},
+            "Cruelty Squad": {},
+            "Pizza Tower": {},
+            "Lovely Planet Remix": {},
+            "64.0": {},
+            "Drive!Drive!Drive!": {},
+            "Bleed 2": {},
+            "Serious Sam HD: The Second Encounter": {},
+            "Lantern Bearer": {},
+            "GUNBIRD": {},
+            "Spelunky 2": {},
+            "PAC-MAN\u2122 CHAMPIONSHIP EDITION 2": {},
+            "Braid": {},
+            "Immortal Redneck": {},
+            "Everhood": {},
+            "Nekuia": {},
+            "Steel Vampire": {},
+            "RITE": {},
+            "Rise of the Tomb Raider\u2122": {},
+            "Sullen": {},
+            "Wizard of Legend": {},
+            "CometStriker DX": {},
+            "Blitz Breaker": {},
+            "Point Perfect": {},
+            "Distance": {},
+            "Slime-san: Superslime Edition": {},
+            "BLACKHOLE": {},
+            "Find You": {},
+            "Samurai Aces": {},
+            "I am Ball": {},
+            "Spectraball": {},
+            "Peggle Extreme": {},
+            "Overclocked": {},
+            "PAYDAY 2": {},
+            "Nuclear Throne": {},
+            "A Story About My Uncle": {},
+            "Verlet Swing": {},
+            "GoNNER": {},
+            "DESYNC": {},
+            "Stealth Bastard Deluxe": {}
+        },
+        "Cooldowns": {},
+        "Current Rolls": [
+            {
+                "Event Name": "One Hell of a Week",
+                "End Time": 1691545539,
+                "Games": [
+                    "clutchball",
+                    "Salmon Ninja",
+                    "Lost Potato",
+                    "Samurai Aces",
+                    "God Damn The Garden"
+                ]
+            },
+            {
+                "Event Name": "Two Week T2 Streak",
+                "End Time": 1692151872,
+                "Games": [
+                    "Blazing Beaks",
+                    "Super Lovely Planet"
+                ]
+            },
+            {
+                "Event Name": "Two 'Two Week T2 Streak' Streak",
+                "End Time": 1693361899,
+                "Games": [
+                    "Spitkiss",
+                    "Bloodroots",
+                    "Simulacrum",
+                    "DYE"
+                ]
+            },
+            {
+                "Event Name": "Never Lucky",
+                "End Time": 1690942800,
+                "Games": [
+                    "Zenohell"
+                ]
+            },
+            {
+                "Event Name": "Soul Mates",
+                "Games": [
+                    "Super Rude Bear Resurrection"
+                ],
+                "Partner": "75875716-9a2e-44c1-bca4-0ba3aeb7f927"
+            },
+            {
+                "Event Name": "Winner Takes All",
+                "Games": [
+                    "World of Goo"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Triple Threat",
+                "End Time": "2023-08-29 23:30:30",
+                "Games": [
+                    "Vanquish",
+                    "Eldest Souls",
+                    "ScourgeBringer"
+                ]
+            },
+            {
+                "Event Name": "Triple Threat",
+                "End Time": "2023-08-29 23:30:43",
+                "Games": [
+                    "I Am Fish",
+                    "I Am Fish",
+                    "Zuma's Revenge!"
+                ]
+            },
+            {
+                "Event Name": "One Hell of a Day",
+                "End Time": 1691033727,
+                "Games": [
+                    "Crazy Taxi"
                 ]
             }
         ],
         "Completed Rolls": [
             {
                 "Event Name": "One Hell of a Day"
+            },
+            {
+                "Event Name": "One Hell of a Week"
+            },
+            {
+                "Event Name": "One Hell of a Month"
+            },
+            {
+                "Event Name": "Two Week T2 Streak"
+            },
+            {
+                "Event Name": "Never Lucky"
+            },
+            {
+                "Event Name": "Triple Threat"
+            },
+            {
+                "Event Name": "Let Fate Decide"
+            },
+            {
+                "Event Name": "Soul Mates"
             }
         ]
+    },
+    "75875716-9a2e-44c1-bca4-0ba3aeb7f927": {
+        "CE ID": "75875716-9a2e-44c1-bca4-0ba3aeb7f927",
+        "Discord ID": 274256923811905537,
+        "Rank": "Rank S",
+        "Reroll Tickets": 0,
+        "Casino Score": 0,
+        "Owned Games": {
+            "Celeste": {
+                "Primary Objectives": {
+                    "Strawberry Lunatic": 150,
+                    "Strawberry Enthusiast": 80,
+                    "Mountain Climber": 20
+                },
+                "Community Objectives": {
+                    "Double Golden": true,
+                    "Space Jam": true,
+                    "Intrepid Explorer": true,
+                    "Above and Beyond": true
+                }
+            },
+            "Open Hexagon": {
+                "Primary Objectives": {
+                    "Shapeshifter": 170,
+                    "Multidimensional": 50
+                }
+            },
+            "Dustforce DX": {
+                "Primary Objectives": {
+                    "Custodial Master": 60,
+                    "Certified Janitor": 30
+                }
+            },
+            "Phantom Jump": {
+                "Primary Objectives": {
+                    "Phantom Immortality": 50,
+                    "Phantom Speed": 20,
+                    "Phantom Completion": 10
+                },
+                "Community Objectives": {
+                    "Made of Ectoplasm": true
+                }
+            },
+            "Reverse x Reverse": {
+                "Primary Objectives": {
+                    "Rithmocoded": 40,
+                    "Reverse Engineering": 20
+                }
+            },
+            "Umihara Kawase Shun": {
+                "Primary Objectives": {
+                    "Real Man's Fishing": 60
+                }
+            },
+            "Hoppup!": {
+                "Primary Objectives": {
+                    "Jump Teen": 35,
+                    "Jump Kid": 25
+                }
+            },
+            "Super Lumi Live": {
+                "Primary Objectives": {
+                    "Twice as Perfect": 40,
+                    "Twice Twice as Perfect": 15
+                }
+            },
+            "Super Magbot": {
+                "Primary Objectives": {
+                    "Yolo Magnet": 40,
+                    "Magnet for Stars": 10
+                },
+                "Community Objectives": {
+                    "Made of Magnetism": true
+                }
+            },
+            "Furi": {
+                "Primary Objectives": {
+                    "Titan Toppler": 35,
+                    "Furioso": 15
+                }
+            },
+            "Q - A Neon Platformer": {
+                "Primary Objectives": {
+                    "Q": 20,
+                    "Smooth Moves": 10,
+                    "Square Peg, Round Hole": 10,
+                    "Reinvent the Wheel": 10
+                }
+            },
+            "Ori and the Blind Forest: Definitive Edition": {
+                "Primary Objectives": {
+                    "Saw the Forest Through the Trees": 50
+                }
+            },
+            "BattleBlock Theater\u00ae": {
+                "Primary Objectives": {
+                    "Battleblock Insanity": 30,
+                    "Cubical Thespianism": 20
+                }
+            },
+            "Hades": {
+                "Primary Objectives": {
+                    "Heat Wave": 25,
+                    "From Hell and Back": 20
+                }
+            },
+            "SteamWorld Heist": {
+                "Primary Objectives": {
+                    "Yellow Supergiant": 40
+                }
+            },
+            "The End Is Nigh": {
+                "Primary Objectives": {
+                    "Unbreakable": 30,
+                    "Undying": 10
+                },
+                "Community Objectives": {
+                    "Spike Tales - Unbreakable-er": true
+                }
+            },
+            "RUN: The world in-between": {
+                "Primary Objectives": {
+                    "Absolution": 25,
+                    "Endless Nightmare": 15
+                }
+            },
+            "Sockventure": {
+                "Primary Objectives": {
+                    "Invincible Sock": 40
+                }
+            },
+            "RFLEX": {
+                "Primary Objectives": {
+                    "Sober Enough to Drive": 40
+                }
+            },
+            "Leo\u2019s Fortune - HD Edition": {
+                "Primary Objectives": {
+                    "Mind on the Money": 35
+                }
+            },
+            "Within the blade": {
+                "Primary Objectives": {
+                    "Iron Shinobi": 30
+                }
+            },
+            "Like Dreamer": {
+                "Primary Objectives": {
+                    "Hidden Gem": 20,
+                    "Bulletalk Warriors": 10
+                }
+            },
+            "Eternal Cave Escape": {
+                "Primary Objectives": {
+                    "Speedlunking Out of It": 25
+                }
+            },
+            "LOVE 2: kuso": {
+                "Primary Objectives": {
+                    "Ichi, Ni, San!": 15,
+                    "Yoku Yatta": 10
+                }
+            },
+            "WaveLand": {
+                "Primary Objectives": {
+                    "WaveDash": 25
+                }
+            },
+            "Dispersio": {
+                "Primary Objectives": {
+                    "Cosmonautio": 25
+                }
+            },
+            "Umihara Kawase": {
+                "Primary Objectives": {
+                    "Old School Fishing": 25
+                }
+            },
+            "SwordBounce": {
+                "Primary Objectives": {
+                    "Leave This Earth": 25
+                }
+            },
+            "Castle Crashers\u00ae": {
+                "Primary Objectives": {
+                    "Crashing the Party": 20,
+                    "Untouchable Knight": 5
+                }
+            },
+            "Argus Panoptes": {
+                "Primary Objectives": {
+                    "Humanity Lost": 20,
+                    "Into the Deep": 5
+                }
+            },
+            "Mail Mole + 'Xpress Deliveries": {
+                "Primary Objectives": {
+                    "Holey Moley": 15,
+                    "Mole in the Hole!": 5
+                }
+            },
+            "Angry Video Game Nerd II: ASSimilation": {
+                "Primary Objectives": {
+                    "Diarrhea Dump in His Ear": 20
+                }
+            },
+            "SUPER CHICKEN JUMPER": {
+                "Primary Objectives": {
+                    "Playing Chicken": 20
+                }
+            },
+            "VVVVVV": {
+                "Primary Objectives": {
+                    "UniVVVVVVersal Cadet": 20
+                }
+            },
+            "Super Hexagon": {
+                "Primary Objectives": {
+                    "Hexagon": 20
+                },
+                "Community Objectives": {
+                    "Hyper Hexagon": true,
+                    "Super Hexagon": true
+                }
+            },
+            "Super Lovely Planet": {
+                "Primary Objectives": {
+                    "S for FPS": 20
+                }
+            },
+            "Hyper Light Drifter": {
+                "Primary Objectives": {
+                    "Drifting Away": 20
+                }
+            },
+            "Deepest Sword": {
+                "Primary Objectives": {
+                    "Sword in the Hole": 20
+                }
+            },
+            "Khimera: Destroy All Monster Girls": {
+                "Primary Objectives": {
+                    "Monster Girl Quest": 10,
+                    "No Touching Allowed": 10
+                }
+            },
+            "Bouncing Hero": {
+                "Primary Objectives": {
+                    "Bonus Bouncer": 10,
+                    "Perpetual Motion Machine": 10
+                }
+            },
+            "Wuppo: Definitive Edition": {
+                "Primary Objectives": {
+                    "Stroopwumfel": 20
+                }
+            },
+            "Hayfever": {
+                "Primary Objectives": {
+                    "Bless You": 20
+                }
+            },
+            "Shmups Skill Test \u30b7\u30e5\u30fc\u30c6\u30a3\u30f3\u30b0\u6280\u80fd\u691c\u5b9a": {
+                "Primary Objectives": {
+                    "Shmup Array": 20
+                }
+            },
+            "-KLAUS-": {
+                "Primary Objectives": {
+                    "CEO of Awesome": 15
+                }
+            },
+            "Ys I": {
+                "Primary Objectives": {
+                    "Adol Begins": 15
+                }
+            },
+            "RITE": {
+                "Primary Objectives": {
+                    "Rite of the Coinage": 15
+                }
+            },
+            "The King's Bird": {
+                "Primary Objectives": {
+                    "Pro Glider": 15
+                }
+            },
+            "LOVE": {
+                "Primary Objectives": {
+                    "You Only Love Once": 15
+                }
+            },
+            "STAY": {
+                "Primary Objectives": {
+                    "Final Exam": 15
+                }
+            },
+            "Overclocked": {
+                "Primary Objectives": {
+                    "Glass-Cannon Vigilante": 15
+                }
+            },
+            "10 Second Ninja X": {
+                "Primary Objectives": {
+                    "Routing Ninja": 15
+                }
+            },
+            "Ember Knights": {
+                "Primary Objectives": {
+                    "Blazing Cinders": 15
+                }
+            },
+            "You Have to Win the Game": {
+                "Primary Objectives": {
+                    "You Have to Be the Gamer": 10,
+                    "You Have to Wear the Sunglasses": 5
+                }
+            },
+            "SEUM: Speedrunners from Hell": {
+                "Primary Objectives": {
+                    "Hell Raiser": 10,
+                    "Number of the Beast": 5
+                }
+            },
+            "Eat Colors": {
+                "Primary Objectives": {
+                    "Splash!!": 15
+                }
+            },
+            "Bloody Trapland": {
+                "Primary Objectives": {
+                    "Happy Tree Friends": 15
+                }
+            },
+            "Micro Platformer": {
+                "Primary Objectives": {
+                    "Micro Nightmare": 15
+                },
+                "Community Objectives": {
+                    "Micro Jumper": true
+                }
+            },
+            "Fork Parker's Holiday Profit Hike": {
+                "Primary Objectives": {
+                    "Fork It Over": 15
+                }
+            },
+            "140": {
+                "Primary Objectives": {
+                    "041": 15
+                }
+            },
+            "N++ (NPLUSPLUS)": {
+                "Primary Objectives": {
+                    "Enlightened": 15
+                }
+            },
+            "Downwell": {
+                "Primary Objectives": {
+                    "Well, That's It": 15
+                }
+            },
+            "-SPROUT-": {
+                "Primary Objectives": {
+                    "Microdasher": 10
+                }
+            },
+            "BARRIER X": {
+                "Primary Objectives": {
+                    "Life in the Fast Lane": 10
+                }
+            },
+            "Cyber Hook": {
+                "Primary Objectives": {
+                    "Retrowave Traceur": 10
+                },
+                "Community Objectives": {
+                    "Cyber Contortionist": true
+                }
+            },
+            "Konrad the Rocket": {
+                "Primary Objectives": {
+                    "Konrad the Deathless": 10
+                }
+            },
+            "Super Chibi Knight": {
+                "Primary Objectives": {
+                    "Knight of Legend": 10
+                }
+            },
+            "Get-A-Grip Chip": {
+                "Primary Objectives": {
+                    "Not Even A Chip": 10
+                }
+            },
+            "Getting Over It with Bennett Foddy": {
+                "Primary Objectives": {
+                    "Got Over It": 10
+                }
+            },
+            "Mega Serval": {
+                "Primary Objectives": {
+                    "Japari Safari": 10
+                }
+            },
+            "Toast Time": {
+                "Primary Objectives": {
+                    "I Am Toast": 10
+                }
+            },
+            "Curvatron": {
+                "Primary Objectives": {
+                    "Snake Charmer": 10
+                }
+            },
+            "Lantern Bearer": {
+                "Primary Objectives": {
+                    "Bearly Made It": 10
+                }
+            },
+            "Thrill Penguin": {
+                "Primary Objectives": {
+                    "Thrill Seeker": 10
+                }
+            },
+            "Quickly, Quackley!": {
+                "Primary Objectives": {
+                    "Quacked": 10
+                }
+            },
+            "STANDBY": {
+                "Primary Objectives": {
+                    "Dashing Performance": 10
+                }
+            },
+            "Prompt": {
+                "Primary Objectives": {
+                    "Ahead of the Dev": 10
+                }
+            },
+            "HyperRogue": {
+                "Primary Objectives": {
+                    "Tesselated Trifecta": 10
+                },
+                "Community Objectives": {
+                    "In the Interest of Achieving a Higher Appreciation for Non-Euclidean Geometry": true
+                }
+            },
+            "Squidlit": {
+                "Primary Objectives": {
+                    "Squid Squirt": 10
+                }
+            },
+            "Lost Potato": {
+                "Primary Objectives": {
+                    "Hot Potato": 10
+                }
+            },
+            "Inside My Radio": {
+                "Primary Objectives": {
+                    "Feel the Beat": 10
+                }
+            },
+            "Wunderling DX": {
+                "Primary Objectives": {
+                    "Wunderful": 10
+                }
+            },
+            "Demon Go!": {
+                "Primary Objectives": {
+                    "Hellrasier Allstar": 10
+                }
+            },
+            "Sound Slide": {
+                "Primary Objectives": {
+                    "Visions of Virtuous Living": 10
+                }
+            },
+            "ibb & obb": {
+                "Primary Objectives": {
+                    "Friends are a Privilege": 10
+                }
+            },
+            "Jet Buster": {
+                "Primary Objectives": {
+                    "Idol Buster": 10
+                }
+            },
+            "Alien Removal Division": {
+                "Primary Objectives": {
+                    "Extraterrestrial Exterminator": 10
+                }
+            },
+            "Hob": {
+                "Primary Objectives": {
+                    "Invulnerable": 10
+                }
+            },
+            "Darkour": {
+                "Primary Objectives": {
+                    "Swift Shifts": 10
+                }
+            },
+            "Miles & Kilo": {
+                "Primary Objectives": {
+                    "Short for Kilometer": 10
+                }
+            },
+            "Keep Talking and Nobody Explodes": {
+                "Primary Objectives": {
+                    "Mind and Pincers": 10
+                }
+            },
+            "Wizard of Legend": {
+                "Primary Objectives": {
+                    "Battlemage": 10
+                }
+            },
+            "Airscape - The Fall of Gravity": {
+                "Primary Objectives": {
+                    "CephaloGod": 10
+                }
+            },
+            "Ys II": {
+                "Primary Objectives": {
+                    "The Black Pearl Rises": 10
+                }
+            },
+            "No Parachute": {
+                "Primary Objectives": {
+                    "Starfall": 10
+                }
+            },
+            "Crumble": {
+                "Primary Objectives": {
+                    "Sanicball": 10
+                }
+            },
+            "Salmon Ninja": {
+                "Primary Objectives": {
+                    "Jump Like a Fish": 10
+                }
+            },
+            "Sprinter": {
+                "Primary Objectives": {
+                    "Run, Forrest, Run!": 10
+                }
+            },
+            "Lovely Planet Arcade": {
+                "Primary Objectives": {
+                    "Lovely": 5
+                }
+            },
+            "One Gun Guy": {
+                "Primary Objectives": {
+                    "One Gun God": 5
+                }
+            },
+            "SUPER FLAIL": {
+                "Primary Objectives": {
+                    "Wrecking Ball": 5
+                }
+            },
+            "Boson X": {
+                "Primary Objectives": {
+                    "Particle Accelerator": 5
+                }
+            },
+            "Bastion": {
+                "Primary Objectives": {
+                    "Introspection": 5
+                }
+            },
+            "Find You": {
+                "Primary Objectives": {
+                    "More Like F*ck You": 5
+                }
+            },
+            "Raven's Hike": {
+                "Primary Objectives": {
+                    "Hikeshot": 5
+                }
+            },
+            "Prologue for a Vacant Kingdom": {
+                "Primary Objectives": {
+                    "What's Yet to Come": 5
+                }
+            },
+            "Vectronom": {
+                "Primary Objectives": {
+                    "Blocked Rhythms": 5
+                }
+            },
+            "oO": {
+                "Primary Objectives": {
+                    "RoOlling": 5
+                }
+            },
+            "Peggle Extreme": {
+                "Primary Objectives": {
+                    "Peggle Novice": 5
+                }
+            },
+            "Transpire": {
+                "Primary Objectives": {
+                    "Inspiring Speed": 5
+                }
+            },
+            "SPLIT BULLET": {
+                "Primary Objectives": {
+                    "Splitsteroids": 5
+                }
+            },
+            "Taimumari": {
+                "Primary Objectives": {
+                    "Winged Wizardess": 5
+                }
+            },
+            "Almost There: The Platformer": {
+                "Primary Objectives": {
+                    "Super Tofu Boy": 5
+                }
+            },
+            "C-4": {
+                "Primary Objectives": {
+                    "7355608": 5
+                }
+            },
+            "Gunborg: Dark Matters": {
+                "Primary Objectives": {
+                    "Swordborg": 5
+                }
+            },
+            "Stardew Valley": {
+                "Primary Objectives": {
+                    "Fector's Trial": 5
+                }
+            },
+            "Ascent": {
+                "Primary Objectives": {
+                    "Snowy Mountain King": 5
+                }
+            },
+            "Portal": {
+                "Primary Objectives": {
+                    "I'm Doing Science": 5
+                }
+            },
+            "UBERMOSH:OMEGA": {
+                "Primary Objectives": {
+                    "UBERMOSH:PIT": 5
+                }
+            },
+            "Laserboy": {
+                "Primary Objectives": {
+                    "Laserboss": 5
+                }
+            },
+            "Chameleon Run Deluxe Edition": {
+                "Primary Objectives": {
+                    "I Has Feets": 5
+                }
+            },
+            "SPINGUN": {
+                "Primary Objectives": {
+                    "Two Buttons Is Plenty": 5
+                }
+            },
+            "Milli & Greg": {
+                "Primary Objectives": {
+                    "Cat Fanatic": 5
+                }
+            },
+            "Duke Dashington Remastered": {
+                "Primary Objectives": {
+                    "Dashing, A Ton": 5
+                }
+            },
+            "Flem": {
+                "Primary Objectives": {
+                    "Apophlegmatism": 5
+                }
+            },
+            "High Hell": {
+                "Primary Objectives": {
+                    "Holy Hell": 5
+                }
+            },
+            "Jubilee": {
+                "Primary Objectives": {
+                    "Save the Animals": 5
+                }
+            },
+            "Eraser": {
+                "Primary Objectives": {
+                    "Every time I get mad, I punch my balls": 5
+                }
+            },
+            "panGEMic": {
+                "Primary Objectives": {
+                    "The Skeleton Appears": 5
+                }
+            },
+            "Exception": {
+                "Primary Objectives": {
+                    "throws GameNotCompleteException": 5
+                }
+            },
+            "Apple Slash": {
+                "Primary Objectives": {
+                    "Can't touch meeeeeeeeeeeeeeeeeeeeeeeeeeeeeee!": 5
+                }
+            },
+            "Heads Run": {
+                "Primary Objectives": {
+                    "Overwhelmingly Aesthetic": 5
+                }
+            },
+            "Super Gravity Ball": {
+                "Primary Objectives": {
+                    "Falling Up, Up, Down, Down, Left, Right, Left, Right": 5
+                }
+            },
+            "Ellipsis": {
+                "Primary Objectives": {
+                    "Ellipsis": 5
+                }
+            },
+            "Metrico+": {
+                "Primary Objectives": {
+                    "Abstraction": 5
+                }
+            },
+            "Singled Out": {
+                "Primary Objectives": {
+                    "Quickscope Identification": 5
+                }
+            },
+            "MINICHEF": {
+                "Primary Objectives": {
+                    "Compliments to the Chef": 5
+                }
+            },
+            "Spectraball": {
+                "Primary Objectives": {
+                    "This Is For All the Marbles": 5
+                }
+            },
+            "NiGHTS Into Dreams": {
+                "Primary Objectives": {
+                    "Dreamweaver": 5
+                }
+            },
+            "Project Rhombus": {
+                "Primary Objectives": {
+                    "Meet the Arrows": 5
+                }
+            },
+            "Clustertruck": {
+                "Primary Objectives": {
+                    "Mothertrucker": 5
+                }
+            },
+            "Super Pig X": {
+                "Primary Objectives": {
+                    "Blood Tofu": 5
+                }
+            },
+            "Kreedz Climbing": {
+                "Primary Objectives": {
+                    "Bungee Boss": 5
+                }
+            },
+            "Pixboy": {
+                "Primary Objectives": {
+                    "Pixboy Color": 5
+                },
+                "Community Objectives": {
+                    "Pixboy Advance": true
+                }
+            },
+            "Baldi's Basics Classic Remastered": {},
+            "Despotism 3k": {},
+            "SpeedRunners": {},
+            "Mr. Shifty": {},
+            "Pogostuck: Rage With Your Friends": {},
+            "Just Arms": {},
+            "Bob Was Hungry": {},
+            "A Pixel Story": {},
+            "Overture": {},
+            "Gravity": {},
+            "SCP: Containment Breach Multiplayer": {},
+            "\u6771\u65b9\u5b9f\u5728\u76f8 \uff5e Dream Logical World": {},
+            "Little Nightmares": {},
+            "Sayonara Umihara Kawase": {},
+            "Terra Feminarum": {},
+            "Cursed Castilla (Maldita Castilla EX)": {},
+            "Jigoku Kisetsukan: Sense of the Seasons": {},
+            "In Retrospect": {},
+            "The Surge": {},
+            "Peggle Deluxe": {},
+            "Shu": {},
+            "Fortix": {},
+            "Astrogon": {},
+            "Hollow Knight": {},
+            "Outlast": {},
+            "TrackMania\u00b2 Stadium": {},
+            "Neon Boost": {},
+            "Unrailed!": {},
+            "Evergate": {},
+            "Zardy's Maze": {},
+            "E.Z": {},
+            "Touhou Fantasia / \u4e1c\u65b9\u68a6\u60f3\u66f2": {},
+            "Santa Claus in Trouble (HD)": {},
+            "Cave Story+": {},
+            "Serious Sam 3: BFE": {},
+            "Cook, Serve, Delicious! 2!!": {},
+            "Fury Unleashed": {},
+            "Trials Evolution: Gold Edition": {},
+            "Ys: The Oath in Felghana": {},
+            "Gorescript": {},
+            "Dark Old Sun": {},
+            "Ultimate Custom Night": {},
+            "Ys VI: The Ark of Napishtim": {},
+            "Super Rude Bear Resurrection": {},
+            "Outlast 2": {},
+            "Super Puzzle Platformer Deluxe": {},
+            "Scoot Kaboom and the Tomb of Doom": {},
+            "Risk of Rain": {},
+            "Super House of Dead Ninjas": {},
+            "Lone Fungus": {},
+            "Super Meat Boy Forever": {},
+            "MineRalph": {},
+            "Dead Cells": {},
+            "Innoquous 5": {},
+            "Soundodger+": {},
+            "HoPiKo": {},
+            "Duck Game": {},
+            "Going Under": {},
+            "Tile Runner": {},
+            "Vacuum Pilot": {},
+            "Duet": {},
+            "Iconoclasts": {},
+            "Everhood": {},
+            "Extricate": {},
+            "Hotline Miami": {},
+            "Aim Climb": {},
+            "Bleed": {},
+            "Angry Video Game Nerd Adventures": {},
+            "Snake Pass": {},
+            "Pix the Cat": {},
+            "Hard Reset Extended Edition": {},
+            "Zenodyne R": {},
+            "Touhou Nemuri Sekai ~ Wonderful Waking World": {},
+            "- \u200ePuzzle Games -": {
+                "Community Objectives": {
+                    "Portal 2": true
+                }
+            },
+            "HackyZack": {},
+            "Axolotl is Dry": {},
+            "Remnants of Naezith": {},
+            "Another Perspective": {},
+            "Immortal Redneck": {},
+            "PAC-MAN\u2122 CHAMPIONSHIP EDITION 2": {},
+            "The Sun and Moon": {},
+            "Gravity Den": {},
+            "Dino Run DX": {},
+            "DYE": {},
+            "Rhythm Journey": {},
+            "Desktop Dungeons": {},
+            "Splasher": {},
+            "Super Meat Boy": {},
+            "Cheese Game": {},
+            "Lovely Planet": {},
+            "Cosmophony": {},
+            "Neon White": {},
+            "Ori and the Will of the Wisps": {},
+            "RUINER": {},
+            "Crucible": {},
+            "DARK SOULS\u2122 III": {},
+            "LIMBO": {},
+            "System Purge": {},
+            "Waveform": {},
+            "clown town 1443": {},
+            "Absolute Drift": {},
+            "Xmas Shooting - Scramble!!": {},
+            "Curse of the Dead Gods": {},
+            "Peggle\u2122 Nights": {},
+            "A Night at the Races": {},
+            "Deus Ex: Mankind Divided": {},
+            "Dead": {},
+            "Bananner Nababber": {},
+            "Nihilumbra": {},
+            "Crypt of the NecroDancer": {},
+            "A Dance of Fire and Ice": {},
+            "EDGE": {},
+            "A Hat in Time": {},
+            "The Treehouse Man": {},
+            "Geometry Dash": {},
+            "JumpJet Rex": {},
+            "Spitkiss": {},
+            "Trials\u00ae Rising": {},
+            "Garfield Kart - Furious Racing": {},
+            "Mr. Bree+": {},
+            "MagiCat": {},
+            "Anarcute": {},
+            "Mega Man Legacy Collection / \u30ed\u30c3\u30af\u30de\u30f3 \u30af\u30e9\u30b7\u30c3\u30af\u30b9 \u30b3\u30ec\u30af\u30b7\u30e7\u30f3": {},
+            "Momodora: Reverie Under The Moonlight": {},
+            "The Messenger": {},
+            "Call of Juarez: Gunslinger": {},
+            "Muse Dash": {},
+            "Hypnocult": {},
+            "Wings of Vi": {},
+            "Demon Turf": {},
+            "Bot Vice": {},
+            "Star of Providence / Monolith": {},
+            "TrackMania Nations Forever": {},
+            "Lorera": {},
+            "Stealth Bastard Deluxe": {},
+            "BLACKHOLE": {},
+            "Point Perfect": {},
+            "You Have 10 Seconds (2023)": {},
+            "Action Henk": {},
+            "Never Give Up": {},
+            "MO:Astray": {},
+            "How I learned to Skate": {},
+            "Enter the Gungeon": {},
+            "\u6771\u65b9\u50ac\u72d0\u8b5a \uff5e Servants of Harvest Wish": {},
+            "Starstruck: Prologue": {},
+            "SpiderHeck": {},
+            "The Basement Collection": {},
+            "- Challenge Enthusiasts -": {
+                "Community Objectives": {
+                    "Never Lucky": true,
+                    "One Hell of a Week": true,
+                    "Insert Tired Old Meme Here": true,
+                    "Two Week T2 Streak": true,
+                    "One Hell of a Day": true,
+                    "Teamwork Makes the Dream Work": true,
+                    "Triple Threat": true,
+                    "High Roller": true,
+                    "Let Fate Decide": true,
+                    "Intro Quest": true,
+                    "Destiny Alignment ": true,
+                    "Supporter": true
+                }
+            },
+            "Cuphead": {},
+            "Trackmania": {},
+            "Rain World": {},
+            "TowerFall Ascension": {},
+            "Toki": {},
+            "Avoid - Sensory Overload": {},
+            "A Story About My Uncle": {},
+            "Nuclear Throne": {},
+            "PAYDAY 2": {},
+            "Hyperun": {},
+            "MUSYNX": {},
+            "Deep Rock Galactic": {},
+            "Wrack": {},
+            "Murasaki": {},
+            "Rotund Takeoff": {},
+            "Unravel Two": {},
+            "Shooting Game KARI": {},
+            "64.0": {},
+            "Jump King": {},
+            "Grapple": {},
+            "Verlet Swing": {},
+            "Blitz Breaker": {},
+            "RAYZE": {},
+            "Tadpole Treble": {},
+            "Savant - Ascent": {},
+            "SUPERHOT": {},
+            "Cathedral": {},
+            "Akane": {},
+            "METAL SLUG X": {},
+            "Sullen": {},
+            "Surgeon Simulator": {},
+            "Plug Me": {},
+            "Thy Kingdom Crumble": {},
+            "Sunblaze": {},
+            "Bleed 2": {}
+        },
+        "Cooldowns": {},
+        "Current Rolls": [
+            {
+                "Event Name": "One Hell of a Day",
+                "End Time": 1691028374,
+                "Games": [
+                    "Pan-Dimensional Conga Combat"
+                ]
+            },
+            {
+                "Event Name": "Soul Mates",
+                "Games": [
+                    "Super Rude Bear Resurrection"
+                ],
+                "Partner": "75875716-9a2e-44c1-bca4-0ba3aeb7f927"
+            },
+            {
+                "Event Name": "Teamwork Makes the Dream Work",
+                "End Time": 1693536400,
+                "Games": [
+                    "Eryi's Action",
+                    "Blind Drive",
+                    "Super High Ball: Pinball Platformer",
+                    "Super High Ball: Pinball Platformer"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            }
+        ],
+        "Completed Rolls": [
+            {
+                "Event Name": "One Hell of a Day"
+            },
+            {
+                "Event Name": "One Hell of a Week"
+            },
+            {
+                "Event Name": "Two Week T2 Streak"
+            },
+            {
+                "Event Name": "Never Lucky"
+            },
+            {
+                "Event Name": "Triple Threat"
+            },
+            {
+                "Event Name": "Let Fate Decide"
+            },
+            {
+                "Event Name": "Teamwork Makes the Dream Work"
+            }
+        ]
+    },
+    "ee70b232-754c-4501-9ce9-3dce6cd57c3a": {
+        "CE ID": "ee70b232-754c-4501-9ce9-3dce6cd57c3a",
+        "Discord ID": 198332072765554688,
+        "Rank": "Rank S",
+        "Reroll Tickets": 0,
+        "Casino Score": 0,
+        "Owned Games": {
+            "N++ (NPLUSPLUS)": {
+                "Primary Objectives": {
+                    "Ultimate Ninja": 250,
+                    "Golden++": 100,
+                    "Golden": 75,
+                    "Thousand Step Ascent": 75,
+                    "Golden Co-op": 50,
+                    "Enlightened": 15
+                },
+                "Community Objectives": {
+                    "Haxxed": true,
+                    "Nitrous": true
+                }
+            },
+            "MineRalph": {
+                "Primary Objectives": {
+                    "The Fabled Savior": 190,
+                    "King of the Caves": 90,
+                    "Get MineRolled": 40,
+                    "Rolling Stone": 20,
+                    "Ball Buster": 10
+                }
+            },
+            "HyperRogue": {
+                "Primary Objectives": {
+                    "Poincar\u00e9's Prodigy": 80,
+                    "Curvature Conquistador": 80,
+                    "Lobachevskian Legend": 10,
+                    "Ultraparallel Universes": 20,
+                    "Horocyclic Herder": 10,
+                    "Tesselated Trifecta": 10
+                },
+                "Community Objectives": {
+                    "Master of the Non-Standard": true,
+                    "Blades of Beltrami": true,
+                    "In the Interest of Achieving a Higher Appreciation for Non-Euclidean Geometry": true
+                }
+            },
+            "Geometry Dash": {
+                "Primary Objectives": {
+                    "Gauntlet Crusher": 50,
+                    "Demon Dasher": 40,
+                    "The Impossible Game": 30
+                },
+                "Community Objectives": {
+                    "Numismatist": true
+                }
+            },
+            "The End Is Nigh": {
+                "Primary Objectives": {
+                    "Super Mega Player": 50,
+                    "Unbreakable": 30,
+                    "Undying": 10
+                }
+            },
+            "Odium to the Core": {
+                "Primary Objectives": {
+                    "Nightmare Fuel": 80
+                }
+            },
+            "Jump King": {
+                "Primary Objectives": {
+                    "Jump Knight": 45,
+                    "Jump Peasant": 25
+                }
+            },
+            "Q - A Neon Platformer": {
+                "Primary Objectives": {
+                    "Q": 20,
+                    "Smooth Moves": 10,
+                    "Square Peg, Round Hole": 10,
+                    "Reinvent the Wheel": 10
+                }
+            },
+            "Astrogon": {
+                "Primary Objectives": {
+                    "Starry Square": 20,
+                    "Cosmic Cube": 20
+                }
+            },
+            "Hypnocult": {
+                "Primary Objectives": {
+                    "Hypnotized": 40
+                },
+                "Community Objectives": {
+                    "Therapy Session": true
+                }
+            },
+            "INK": {
+                "Primary Objectives": {
+                    "INKing": 35
+                }
+            },
+            "Leo\u2019s Fortune - HD Edition": {
+                "Primary Objectives": {
+                    "Mind on the Money": 35
+                }
+            },
+            "Deathless Dungeon": {
+                "Primary Objectives": {
+                    "Deathcathalon": 25,
+                    "Dungeons and Draugrs": 10
+                }
+            },
+            "Action Henk": {
+                "Primary Objectives": {
+                    "Henky-Dory": 35
+                }
+            },
+            "Angry Video Game Nerd I & II Deluxe": {
+                "Primary Objectives": {
+                    "Wreck-It Rolfe": 30
+                }
+            },
+            "Soundodger+": {
+                "Primary Objectives": {
+                    "Melophobia": 30
+                },
+                "Community Objectives": {
+                    "Homey For Life": true,
+                    "Sound Dodger+2": true,
+                    "Sound Dodger+1": true
+                }
+            },
+            "Velocibox": {
+                "Primary Objectives": {
+                    "Tunnel Visionary": 30
+                }
+            },
+            "Atomik: RunGunJumpGun": {
+                "Primary Objectives": {
+                    "Atomik Scavenger": 25
+                }
+            },
+            "DYE": {
+                "Primary Objectives": {
+                    "HUE": 25
+                }
+            },
+            "Robbie Swifthand and the Orb of Mysteries": {
+                "Primary Objectives": {
+                    "Insane Robber": 20,
+                    "Swift Robber": 5
+                },
+                "Community Objectives": {
+                    "Resilient Robber": true
+                }
+            },
+            "Cuphead": {
+                "Primary Objectives": {
+                    "A Great Slam And Then Some": 10,
+                    "Ceramic Warrior": 10,
+                    "BRAVO!!!": 5
+                },
+                "Community Objectives": {
+                    "Rubber Hose": true
+                }
+            },
+            "Hack or Die!": {
+                "Primary Objectives": {
+                    "Hackerman": 25
+                }
+            },
+            "Stilt Fella": {
+                "Primary Objectives": {
+                    "Standard Fella": 10,
+                    "Extra Fella": 10
+                }
+            },
+            "Dead": {
+                "Primary Objectives": {
+                    "It Begins": 20
+                },
+                "Community Objectives": {
+                    "Anger Issues": true
+                }
+            },
+            "Dustforce DX": {
+                "Primary Objectives": {
+                    "Certified Janitor": 20
+                }
+            },
+            "Super Hexagon": {
+                "Primary Objectives": {
+                    "Hexagon": 20
+                },
+                "Community Objectives": {
+                    "Hyper Hexagon": true,
+                    "Super Hexagon": true
+                }
+            },
+            "Mushroom 11": {
+                "Primary Objectives": {
+                    "Terrible Trip": 20
+                }
+            },
+            "VVVVVV": {
+                "Primary Objectives": {
+                    "UniVVVVVVersal Cadet": 20
+                }
+            },
+            "Tricky Towers": {
+                "Primary Objectives": {
+                    "Tetromino Towers": 20
+                }
+            },
+            "TumbleSeed": {
+                "Primary Objectives": {
+                    "They seed me rollin'": 20
+                }
+            },
+            "Trace Vector": {
+                "Primary Objectives": {
+                    "Absolute Gradients": 10,
+                    "Vectorious": 10
+                }
+            },
+            "Celeste": {
+                "Primary Objectives": {
+                    "Mountain Climber": 20
+                },
+                "Community Objectives": {
+                    "Double Golden": true
+                }
+            },
+            "Disc Room": {
+                "Primary Objectives": {
+                    "Sawwy": 20
+                }
+            },
+            "PewDiePie: Legend of the Brofist": {
+                "Primary Objectives": {
+                    "Pugtastic": 20
+                }
+            },
+            "Remnants of Naezith": {
+                "Primary Objectives": {
+                    "Mighty Thunder Dragon": 20
+                }
+            },
+            "Trials Evolution: Gold Edition": {
+                "Primary Objectives": {
+                    "Trials Evolution: Gold": 20
+                }
+            },
+            "Angry Video Game Nerd II: ASSimilation": {
+                "Primary Objectives": {
+                    "Diarrhea Dump in His Ear": 20
+                }
+            },
+            "Never Give Up": {
+                "Primary Objectives": {
+                    "Shut Up, Arin!": 20
+                }
+            },
+            "The Zachtronics Solitaire Collection": {
+                "Primary Objectives": {
+                    "Fortune Teller": 10,
+                    "Hardly Working": 5
+                },
+                "Community Objectives": {
+                    "Working Hard": true,
+                    "Expert Gambler": true,
+                    "Honest Cheat": true
+                }
+            },
+            "Gravity": {
+                "Primary Objectives": {
+                    "Gravitron": 15
+                }
+            },
+            "Zardy's Maze": {
+                "Primary Objectives": {
+                    "Mazetermind": 15
+                }
+            },
+            "Charge Kid": {
+                "Primary Objectives": {
+                    "Turing Approved": 10,
+                    "\"I'm in.\"": 5
+                }
+            },
+            "Radium 2": {
+                "Primary Objectives": {
+                    "Ra\u00b2dical": 15
+                }
+            },
+            "Run or Die": {
+                "Primary Objectives": {
+                    "In the Flow": 10,
+                    "Run for Your Life": 5
+                },
+                "Community Objectives": {
+                    "Stranger Danger": true
+                }
+            },
+            "Micro Platformer": {
+                "Primary Objectives": {
+                    "Micro Nightmare": 15
+                }
+            },
+            "Flip of Light": {
+                "Primary Objectives": {
+                    "Color InVVVVVVerter": 15
+                }
+            },
+            "Goscurry": {
+                "Primary Objectives": {
+                    "Driving to Nowhere": 15
+                }
+            },
+            "Overclocked": {
+                "Primary Objectives": {
+                    "Glass-Cannon Vigilante": 15
+                }
+            },
+            "Bejeweled\u00ae 3": {
+                "Primary Objectives": {
+                    "Bedazzling": 15
+                }
+            },
+            "Wormatozoa": {
+                "Primary Objectives": {
+                    "Host Jumper": 15
+                }
+            },
+            "LOVE": {
+                "Primary Objectives": {
+                    "You Only Love Once": 15
+                }
+            },
+            "RITE": {
+                "Primary Objectives": {
+                    "Rite of the Coinage": 15
+                }
+            },
+            "Flat Heroes": {
+                "Primary Objectives": {
+                    "Block of Flats": 15
+                }
+            },
+            "Fenix Rage": {
+                "Primary Objectives": {
+                    "Cookie Monster": 15
+                }
+            },
+            "SEUM: Speedrunners from Hell": {
+                "Primary Objectives": {
+                    "Hell Raiser": 10,
+                    "Number of the Beast": 5
+                }
+            },
+            "iO": {
+                "Primary Objectives": {
+                    "SeniOr Wheeler": 10,
+                    "JuniOr Wheeler": 5
+                }
+            },
+            "Rotund Zero": {
+                "Primary Objectives": {
+                    "Becoming Mighty": 5,
+                    "Very Very Pure": 5,
+                    "Congratulations": 5
+                }
+            },
+            "140": {
+                "Primary Objectives": {
+                    "041": 15
+                }
+            },
+            "A Dance of Fire and Ice": {
+                "Primary Objectives": {
+                    "Orbitals on the Double": 10
+                }
+            },
+            "Super Meat Boy": {
+                "Primary Objectives": {
+                    "Gold Encrusted Meat": 10
+                }
+            },
+            "Marble It Up!": {
+                "Primary Objectives": {
+                    "Diamond Roller": 10
+                }
+            },
+            "Super Impossible Road": {
+                "Primary Objectives": {
+                    "Spaceballs": 5,
+                    "Statistically Possible": 5
+                }
+            },
+            "SOMOS": {
+                "Primary Objectives": {
+                    "Side to Side": 10
+                }
+            },
+            "Toast Time": {
+                "Primary Objectives": {
+                    "I Am Toast": 10
+                }
+            },
+            "Darkour": {
+                "Primary Objectives": {
+                    "Swift Shifts": 10
+                }
+            },
+            "Toki": {
+                "Primary Objectives": {
+                    "King of Kong": 10
+                }
+            },
+            "Distance": {
+                "Primary Objectives": {
+                    "Gaining Distance": 10
+                }
+            },
+            "Cloudberry Kingdom": {
+                "Primary Objectives": {
+                    "Better Than Nothing": 10
+                }
+            },
+            "I am Ball": {
+                "Primary Objectives": {
+                    "Bouncy Brilliant Ball": 10
+                }
+            },
+            "A Story About My Uncle": {
+                "Primary Objectives": {
+                    "Mr. Beam": 10
+                }
+            },
+            "STANDBY": {
+                "Primary Objectives": {
+                    "Dashing Performance": 10
+                }
+            },
+            "Wunderling DX": {
+                "Primary Objectives": {
+                    "Wunderful": 10
+                }
+            },
+            "Airscape - The Fall of Gravity": {
+                "Primary Objectives": {
+                    "CephaloGod": 10
+                }
+            },
+            "Flywrench": {
+                "Primary Objectives": {
+                    "Flappy Planets": 10
+                }
+            },
+            "Necrosphere": {
+                "Primary Objectives": {
+                    "Get the Hell Out of Sphere": 10
+                }
+            },
+            "Starstruck: Prologue": {
+                "Primary Objectives": {
+                    "Fretboard Finesse": 5,
+                    "Chord Strummer": 5
+                }
+            },
+            "Getting Over It with Bennett Foddy": {
+                "Primary Objectives": {
+                    "Got Over It": 10
+                },
+                "Community Objectives": {
+                    "Sexy Hiking Skills": true
+                }
+            },
+            "Crypt of the NecroDancer": {
+                "Primary Objectives": {
+                    "Prelude in Crypt Major": 10
+                }
+            },
+            "PUSS!": {
+                "Primary Objectives": {
+                    "Vaporwave Maze Game": 5
+                }
+            },
+            "Boson X": {
+                "Primary Objectives": {
+                    "Particle Accelerator": 5
+                }
+            },
+            "Clustertruck": {
+                "Primary Objectives": {
+                    "Mothertrucker": 5
+                }
+            },
+            "Heads Run": {
+                "Primary Objectives": {
+                    "Overwhelmingly Aesthetic": 5
+                }
+            },
+            "The Witness": {
+                "Primary Objectives": {
+                    "Mountain King": 5
+                }
+            },
+            "Pivvot": {
+                "Primary Objectives": {
+                    "Pivotologist": 5
+                }
+            },
+            "Super Gravity Ball": {
+                "Primary Objectives": {
+                    "Falling Up, Up, Down, Down, Left, Right, Left, Right": 5
+                }
+            },
+            "Master Spy": {
+                "Primary Objectives": {
+                    "Entry-Level Espionage": 5
+                }
+            },
+            "Prologue for a Vacant Kingdom": {
+                "Primary Objectives": {
+                    "What's Yet to Come": 5
+                }
+            },
+            "Vectronom": {
+                "Primary Objectives": {
+                    "Blocked Rhythms": 5
+                }
+            },
+            "Spectraball": {
+                "Primary Objectives": {
+                    "This Is For All the Marbles": 5
+                }
+            },
+            "Peggle Extreme": {
+                "Primary Objectives": {
+                    "Peggle Novice": 5
+                }
+            },
+            "Pictopix": {
+                "Primary Objectives": {
+                    "Coloring Pixels": 5
+                }
+            },
+            "oO": {
+                "Primary Objectives": {
+                    "RoOlling": 5
+                },
+                "Community Objectives": {
+                    "Endless HangoOver": true
+                }
+            },
+            "Nekuia": {
+                "Primary Objectives": {
+                    "Bolt of Light": 5
+                }
+            },
+            "You Have to Win the Game": {
+                "Primary Objectives": {
+                    "You Have to Wear the Sunglasses": 5
+                }
+            },
+            "Radial Flow": {
+                "Primary Objectives": {
+                    "Arc Flow": 5
+                }
+            },
+            "Milli & Greg": {
+                "Primary Objectives": {
+                    "Cat Fanatic": 5
+                }
+            },
+            "Flem": {
+                "Primary Objectives": {
+                    "Apophlegmatism": 5
+                }
+            },
+            "Ellipsis": {
+                "Primary Objectives": {
+                    "Ellipsis": 5
+                }
+            },
+            "Tile Tale": {
+                "Primary Objectives": {
+                    "Squarespace": 5
+                }
+            },
+            "Super Pig X": {
+                "Primary Objectives": {
+                    "Blood Tofu": 5
+                }
+            },
+            "SPINGUN": {
+                "Primary Objectives": {
+                    "Two Buttons Is Plenty": 5
+                }
+            },
+            "The Treehouse Man": {
+                "Primary Objectives": {
+                    "The Silence": 5
+                }
+            },
+            "panGEMic": {
+                "Primary Objectives": {
+                    "The Skeleton Appears": 5
+                }
+            },
+            "Ascent": {
+                "Primary Objectives": {
+                    "Snowy Mountain King": 5
+                }
+            },
+            "Philophobia: The Fear of Love": {
+                "Primary Objectives": {
+                    "What Is Love?": 5
+                }
+            },
+            "Evergarden": {
+                "Primary Objectives": {
+                    "Flora and Fauna": 5
+                }
+            },
+            "Super Mega Zero": {
+                "Primary Objectives": {
+                    "The Tastiest Number": 5
+                }
+            },
+            "Tetradecagon": {
+                "Primary Objectives": {
+                    "Pogtagon": 5
+                }
+            },
+            "Slay the Spire": {},
+            "Rabi-Ribi": {},
+            "Circa Infinity": {},
+            "Shovel Knight: Treasure Trove": {},
+            "Raven's Hike": {},
+            "Overture": {},
+            "Sayonara Umihara Kawase": {},
+            "Eggcelerate!": {},
+            "All Day Dying": {},
+            "Baldi's Basics Classic Remastered": {},
+            "Momodora: Reverie Under The Moonlight": {},
+            "Devil Daggers": {},
+            "Overpass": {},
+            "APE OUT": {},
+            "Open Hexagon": {},
+            "Descenders": {},
+            "Despotism 3k": {},
+            "Tanuki Justice": {},
+            "One Finger Death Punch": {},
+            "Hayfever": {},
+            "SteamWorld Dig 2": {},
+            "OmniBus": {},
+            "Pogostuck: Rage With Your Friends": {},
+            "Thumper": {},
+            "Skybolt Zack": {},
+            "Electronic Super Joy": {},
+            "SpeedRunners": {},
+            "Petal Crash": {},
+            "The King's Bird": {},
+            "Hades": {},
+            "Cloudbuilt": {},
+            "Paint the Town Red": {},
+            "Super Multitasking": {},
+            "Peggle Deluxe": {},
+            "\u6771\u65b9\u50ac\u72d0\u8b5a \uff5e Servants of Harvest Wish": {},
+            "Super Magbot": {},
+            "Wuppo: Definitive Edition": {},
+            "Arcane Golf": {},
+            "XCOM: Enemy Unknown": {},
+            "Canabalt": {},
+            "Inside My Radio": {},
+            "BETON BRUTAL": {},
+            "Squidlit": {},
+            "Hell is Other Demons": {},
+            "World of Goo": {},
+            "Umbral Omen": {},
+            "Little Nightmares": {},
+            "Blazing Chrome": {},
+            "Will You Snail?": {},
+            "Eagle Island Twist": {},
+            "Super Cloudbuilt": {},
+            "Dispersio": {},
+            "Duke Dashington Remastered": {},
+            "One Way Heroics": {},
+            "Lovely Planet Arcade": {},
+            "How I learned to Skate": {},
+            "Jigoku Kisetsukan: Sense of the Seasons": {},
+            "Enter the Gungeon": {},
+            "Chessplosion": {},
+            "Soft Body": {},
+            "Bob Was Hungry": {},
+            "Curvatron": {},
+            "Castle Crashers\u00ae": {},
+            "Beat Blast": {},
+            "Touhou Fantasia / \u4e1c\u65b9\u68a6\u60f3\u66f2": {},
+            "Tightrope Theatre": {},
+            "E.Z": {},
+            "Hot Lava": {},
+            "-SPROUT-": {},
+            "Super Hiking League DX": {},
+            "Lethal League Blaze": {},
+            "Geometry Wars\u2122 3: Dimensions Evolved": {},
+            "Hoppup!": {},
+            "Guacamelee! 2": {},
+            "High Hell": {},
+            "1001 Spikes": {},
+            "STAY": {},
+            "I wanna be The Cat": {},
+            "Stardew Valley": {},
+            "LOVE 3": {},
+            "Cloak and Dasher": {},
+            "Fury Unleashed": {},
+            "Rogue Legacy": {},
+            "PogoChamp": {},
+            "Umihara Kawase": {},
+            "Crimzon Clover WORLD IGNITION": {},
+            "Dark Old Sun": {},
+            "Khimera: Destroy All Monster Girls": {},
+            "Cyber Hook": {},
+            "Cook, Serve, Delicious! 2!!": {},
+            "Typoman": {},
+            "Yousei Daisensou ~ Touhou Sangetsusei - Great Fairy Wars": {},
+            "BattleBlock Theater\u00ae": {},
+            "Unrailed!": {},
+            "Sayonara Wild Hearts": {},
+            "Rifter": {},
+            "DUNKYPUNG": {},
+            "The Textorcist: The Story of Ray Bibbia": {},
+            "LOVE 2: kuso": {},
+            "METAL GEAR RISING: REVENGEANCE": {},
+            "Super Puzzle Platformer Deluxe": {},
+            "Scoot Kaboom and the Tomb of Doom": {},
+            "Stickit": {},
+            "Boomerang X": {},
+            "RUN: The world in-between": {},
+            "Hollow Knight": {},
+            "Sound Slide": {},
+            "Pawnbarian": {},
+            "Tinertia": {},
+            "BIT.TRIP RUNNER": {},
+            "Super Meat Boy Forever": {},
+            "DeadCore": {},
+            "Risk of Rain": {},
+            "Super High Ball: Pinball Platformer": {},
+            "Tile Runner": {},
+            "Duet": {},
+            "Vacuum Pilot": {},
+            "Going Under": {},
+            "Keep Talking and Nobody Explodes": {},
+            "Duck Game": {},
+            "Dead Cells": {},
+            "JMPR": {},
+            "Trials Fusion\u2122": {},
+            "HoPiKo": {},
+            "Super House of Dead Ninjas": {},
+            "Eraser": {},
+            "Deepest Sword": {},
+            "Umihara Kawase Shun": {},
+            "Giana Sisters: Twisted Dreams": {},
+            "Touhou Nemuri Sekai ~ Wonderful Waking World": {},
+            "Rhythm Doctor": {},
+            "Life Goes On: Done to Death": {},
+            "Super Monkey Ball Banana Mania": {},
+            "JUMPGRID": {},
+            "Titan Souls": {},
+            "DEADBOLT": {},
+            "10 Second Ninja X": {},
+            "Light Fall": {},
+            "- \u200ePuzzle Games -": {
+                "Community Objectives": {
+                    "Antichamber": true
+                }
+            },
+            "Lovely Planet 2: April Skies": {},
+            "A Hat in Time": {},
+            "EDGE": {},
+            "Ori and the Will of the Wisps": {},
+            "Neon White": {},
+            "Elasto Mania Remastered": {},
+            "Axolotl is Dry": {},
+            "THOTH": {},
+            "Blind Drive": {},
+            "HackyZack": {},
+            "Pix the Cat": {},
+            "Snake Pass": {},
+            "Drink More Glurp": {},
+            "La-Mulana": {},
+            "Atomicrops": {},
+            "Portal": {},
+            "Muck": {},
+            "Kreedz Climbing": {},
+            "Lovely Planet": {},
+            "Cheese Game": {},
+            "Blasphemous": {},
+            "Dark Devotion": {},
+            "SteamWorld Heist": {},
+            "Angry Video Game Nerd Adventures": {},
+            "Rage in Peace": {},
+            "Fist's Elimination Tower": {},
+            "KILLRUN": {},
+            "Bleed": {},
+            "Hyper Light Drifter": {},
+            "Laserboy": {},
+            "Hotline Miami": {},
+            "Giana Sisters: Twisted Dreams - Rise of the Owlverlord": {},
+            "Speed Limit": {},
+            "Extricate": {},
+            "BADLAND: Game of the Year Edition": {},
+            "Absolute Drift": {},
+            "Hotline Miami 2: Wrong Number": {},
+            "clown town 1443": {},
+            "Spelunky": {},
+            "Waveform": {},
+            "Straima": {},
+            "System Purge": {},
+            "XCOM\u00ae 2": {},
+            "FTL: Faster Than Light": {},
+            "Speedgunner Ultra": {},
+            "They Bleed Pixels": {},
+            "Phantom Jump": {},
+            "Dig Dog": {},
+            "Anarcute": {},
+            "Colt Canyon": {},
+            "Bouncing Hero": {},
+            "A Night at the Races": {},
+            "Peggle\u2122 Nights": {},
+            "Balancelot": {},
+            "UBERMOSH:OMEGA": {},
+            "Crucible": {},
+            "Argus Panoptes": {},
+            "Spin Rhythm XD": {},
+            "Paperball": {},
+            "MagiCat": {},
+            "Katana ZERO": {},
+            "Garfield Kart - Furious Racing": {},
+            "Trials\u00ae Rising": {},
+            "Race The Sun": {},
+            "Spitkiss": {},
+            "The Next Penelope": {},
+            "Bananner Nababber": {},
+            "Ninja Senki DX": {},
+            "Primal Light": {},
+            "Umihara Kawase Fresh!": {},
+            "Dandara: Trials of Fear Edition": {},
+            "Binaries": {},
+            "Chameleon Run Deluxe Edition": {},
+            "Buck Up And Drive!": {},
+            "BLUE REVOLVER": {},
+            "\u6771\u65b9\u5e55\u83ef\u796d \u6625\u96ea\u7bc7 \uff5e Fantastic Danmaku Festival Part II": {},
+            "Ori and the Blind Forest: Definitive Edition": {},
+            "NOISZ": {},
+            "BUTCHER": {},
+            "Blitz Breaker": {},
+            "Avoid - Sensory Overload": {},
+            "Point Perfect": {},
+            "Zombie Rollerz: Pinball Heroes": {},
+            "Slime-san: Superslime Edition": {},
+            "BLACKHOLE": {},
+            "Stealth Bastard Deluxe": {},
+            "Lorera": {},
+            "Shotgun King: The Final Checkmate": {},
+            "RAYZE": {},
+            "Savant - Ascent": {},
+            "Plug Me": {},
+            "Surgeon Simulator": {},
+            "Sullen": {},
+            "Runner3": {},
+            "Save the Reactor": {},
+            "OVERWHELM": {},
+            "Akane": {},
+            "Stay Safe": {},
+            "SUPERHOT": {},
+            "TrackMania Nations Forever": {},
+            "Star of Providence / Monolith": {},
+            "RIVE: Wreck, Hack, Die, Retry!": {},
+            "TowerFall Ascension": {},
+            "Nowhere Patrol": {},
+            "No Parachute": {},
+            "Elasto Mania II": {},
+            "Tormentor\u274cPunisher": {},
+            "Dicey Dungeons": {},
+            "Miles & Kilo": {},
+            "Trackmania": {},
+            "Old School Musical": {},
+            "You Have 10 Seconds (2023)": {},
+            "Reverse x Reverse": {},
+            "I am Bread": {},
+            "Wings of Vi": {},
+            "Bladed Fury": {},
+            "Sockventure": {},
+            "Muse Dash": {},
+            "Sonic Mania": {},
+            "The Messenger": {},
+            "Fork Parker's Holiday Profit Hike": {},
+            "- Challenge Enthusiasts -": {
+                "Community Objectives": {
+                    "Insert Tired Old Meme Here": true,
+                    "\"I'll add it to the backlog.\"": true,
+                    "That Belongs In A Museum!": true,
+                    "Happy Anniversary": true,
+                    "Intro Quest": true
+                }
+            },
+            "BIT.TRIP BEAT": {},
+            "Braid": {},
+            "Everhood": {},
+            "Project Rhombus": {},
+            "Spirit of Shotgun": {},
+            "Mega Man Legacy Collection / \u30ed\u30c3\u30af\u30de\u30f3 \u30af\u30e9\u30b7\u30c3\u30af\u30b9 \u30b3\u30ec\u30af\u30b7\u30e7\u30f3": {},
+            "Bleed 2": {},
+            "64.0": {},
+            "Lethal League": {},
+            "HUNTDOWN": {},
+            "The Sun and Moon": {},
+            "Witcheye": {},
+            "Splasher": {},
+            "Ikaruga": {},
+            "Desktop Dungeons": {},
+            "vridniX": {},
+            "RFLEX": {},
+            "Rhythm Journey": {},
+            "Eat Colors": {},
+            "Dino Run DX": {},
+            "WaveLand": {},
+            "Velocity Noodle": {},
+            "Unravel Two": {},
+            "Nuclear Throne": {},
+            "Grapple": {},
+            "Verlet Swing": {},
+            "GoNNER": {},
+            "Sunblaze": {},
+            "DESYNC": {},
+            "You Suck at Parking\u2122": {},
+            "I Am Fish": {},
+            "Super Lumi Live": {},
+            "Sonic Adventure 2": {},
+            "A Robot Named Fight!": {},
+            "Pool Panic": {},
+            "Shot in the Dark": {},
+            "pureya": {},
+            "Downwell": {},
+            "Eternal Cave Escape": {},
+            "Octahedron: Transfixed Edition": {},
+            "Chroma Squad": {},
+            "Hyperun": {},
+            "SwordBounce": {},
+            "Cybarian: The Time Travelling Warrior": {}
+        },
+        "Cooldowns": {},
+        "Current Rolls": [],
+        "Completed Rolls": []
     }
 }

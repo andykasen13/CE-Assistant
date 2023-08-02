@@ -9,6 +9,7 @@ import requests
 
 
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
+ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
 
 
 # ------------------------------------------------ CREATE MULTI EMBED ------------------------------------------------------------ #
@@ -118,7 +119,11 @@ def getEmbed(game_name, authorID):
     gameDescription = jsonData[correct_app_id]['data']['short_description']
     if(jsonData[correct_app_id]['data']['is_free']) : 
         gamePrice = "Free"
-    else: gamePrice = jsonData[correct_app_id]['data']['price_overview']['final_formatted']
+    
+    elif('price_overview' in list(jsonData[correct_app_id]['data'].keys())) :
+        gamePrice = jsonData[correct_app_id]['data']['price_overview']['final_formatted']
+    else :
+        gamePrice = "No price listed."
     gameNameWithLinkFormat = game_name.replace(" ", "_")
 
 # --- CREATE EMBED ---
@@ -136,7 +141,7 @@ def getEmbed(game_name, authorID):
     embed.set_image(url=imageLink)
     embed.set_thumbnail(url=ce_mountain_icon)
     embed.set_footer(text="CE Assistant",
-        icon_url=ce_mountain_icon)
+        icon_url=ce_james_icon)
     embed.add_field(name="Requested by", value = "<@" + str(authorID) + ">", inline=True)
     if game_name in database_name.keys() :
         for objective in database_name[game_name]["Primary Objectives"] :
