@@ -52,7 +52,7 @@ with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 discord_token = localJSONData['discord_token']
-guild_ID = localJSONData['guild_ID']
+guild_ID = localJSONData['other_guild_ID']
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
@@ -267,7 +267,7 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
         print("Recieved request for Triple Threat")
 
         # ----- Grab all the games -----
-        embed = discord.Embed(title=("triple threat"))
+        embed = discord.Embed(title=("⚠️Roll still under construction...⚠️"), description="Please select your genre.")
 
         await get_genre_buttons(view, 40, 20, "Tier 3", "Triple Threat", 28, 84, 3, interaction.user.id)
 
@@ -415,7 +415,12 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
     # Make sure both users are registered in the database
     if interaction_user_data == "" : return await interaction.followup.send("You are not registered in the CE Assistant database.")
     if target_user_data == "" : return await interaction.followup.send(f"<@{partner.id}> is not registered in the CE Assistant database.")
-    
+
+    # Make sure both users aren't currently participating in the event
+    for roll in interaction_user_data['Current Rolls'] :
+        if(roll['Event Name'] == event) : return await interaction.followup.send("You are currently participating in {}!".format(event))
+    for roll in target_user_data['Current Rolls'] :
+        if(roll['Event Name'] == event) : return await interaction.followup.send("Your partner is currently participating in {}!".format(event))
 
     # ----------------------------------------------- Destiny Alignment ---------------------------------------------------
     if(event == "Destiny Alignment") :
@@ -544,6 +549,7 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
             return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
         agree_button.callback = agree_callback
         deny_button.callback = deny_callback
+    
     # --------------------------------------------- Soul Mates ---------------------------------------------------------
     elif(event == "Soul Mates") :
         embed = discord.Embed(title="Soul Mates", timestamp=datetime.datetime.now())
@@ -571,8 +577,8 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
         async def soulmate_callback(interaction : discord.Interaction, tier_num) :
             await interaction.response.defer()
             if interaction.user.id != interaction_user_data['Discord ID'] : return
-            view.clear_items()
 
+            view.clear_items()
             await interaction.followup.edit_message(embed=discord.Embed(title="Working..."), message_id=interaction.message.id, view=view)
 
             # ----- Make sure the other user doesn't have any points in the game they rolled -----
@@ -604,9 +610,10 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
             async def agree_callback(interaction) :
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data['Discord ID'] : return
+
                 view.clear_items()
                 embed = getEmbed(game, interaction.user.id)
-                embed.add_field(name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
+                embed.set_field_at(index=1, name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
                 embed.add_field(name="Tier", value=database_name[game]["Tier"])
 
                 times = {"Tier 1" : timedelta(days=2),
@@ -651,7 +658,7 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 
 
             # Set up embed for user B
-            embed = discord.Embed(title="Do you accept?", timestamp=datetime.datetime.now())
+            embed = discord.Embed(title="Do you accept?", description='{} chosen by <@{}>.'.format(tier_num, interaction_user_data['Discord ID']), timestamp=datetime.datetime.now())
             await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=view)
 
         buttons[0].callback = t1_callback
@@ -669,6 +676,7 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
             - game must be rerolled if either user has any points in the game
 
         """
+    
     # -------------------------------------------- Teamwork Makes the Dream Work -------------------------------------------
     elif(event == "Teamwork Makes the Dream Work") :
         # Send confirmation embed
@@ -723,6 +731,11 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 
             # Get embeds
             embeds = create_multi_embed("Teamwork Makes the Dream Work", 28, games, (28*3), interaction)
+
+            i = 1
+            while i < 5 :
+                embeds[i].set_field_at(index=1, name="Rolled by", value="<@{}> and <@{}>".format(interaction_user_data['Discord ID'], target_user_data['Discord ID']))
+                i+=1
 
             # Get page buttons
             await get_buttons(view, embeds)
@@ -928,6 +941,8 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
                 if interaction.user.id != target_user_data["Discord ID"] : return
 
                 view.clear_items()
+
+                await interaction.followup.edit_message(message_id=interaction.message.id, view=view, embed=discord.Embed(title="Working..."))
                 
 
                 # ----- Make sure the target user doesn't have any points in the game they rolled -----

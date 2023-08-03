@@ -221,6 +221,76 @@
                 "Event Name": "Winner Takes All",
                 "Games": "World of Goo",
                 "Partner": "67bce20e-3306-4b83-8027-d6894d474740"
+            },
+            {
+                "Event Name": "Teamwork Makes the Dream Work",
+                "End Time": 1693584957,
+                "Games": [
+                    "Eggcelerate!",
+                    "LOST BUBBLES: Sweet mates",
+                    "Zuma's Revenge!",
+                    "I Am Fish"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Teamwork Makes the Dream Work",
+                "End Time": 1693584957,
+                "Games": [
+                    "Eggcelerate!",
+                    "LOST BUBBLES: Sweet mates",
+                    "Zuma's Revenge!",
+                    "I Am Fish"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Teamwork Makes the Dream Work",
+                "End Time": 1693585465,
+                "Games": [
+                    "ScourgeBringer",
+                    "Super Magbot",
+                    "Going Under",
+                    "Murasaki"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Teamwork Makes the Dream Work",
+                "End Time": 1693585465,
+                "Games": [
+                    "ScourgeBringer",
+                    "Super Magbot",
+                    "Going Under",
+                    "Murasaki"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Game Theory",
+                "Games": "Plug Me",
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Game Theory",
+                "Games": "Fury Unleashed",
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Soul Mates",
+                "End Time": 1691207707,
+                "Games": [
+                    "Evergarden"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Soul Mates",
+                "End Time": 1691207707,
+                "Games": [
+                    "Evergarden"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
             }
         ],
         "Completed Rolls": [

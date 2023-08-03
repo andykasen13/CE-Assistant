@@ -114,7 +114,6 @@ def getEmbed(game_name, authorID):
     jsonData = json.loads(response.text)
     
     # Save important information
-    game_name = jsonData[correct_app_id]['data']['name']
     imageLink = jsonData[correct_app_id]['data']['header_image']
     gameDescription = jsonData[correct_app_id]['data']['short_description']
     if(jsonData[correct_app_id]['data']['is_free']) : 
