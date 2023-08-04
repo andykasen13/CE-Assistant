@@ -149,7 +149,6 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
 
     # ...or if the event is currently active.
     for eventInfo in userInfo[target_user]['Current Rolls'] :
-        print(eventInfo)
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking") : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
     
     # Open the databases.
@@ -1085,7 +1084,7 @@ async def scrape(interaction):
     updates = await scrape_thread_call() #all_game_data(client)
     await interaction.channel.send("scraped")
 
-    correctChannel = client.get_channel(1135993275162050690)
+    correctChannel = client.get_channel(1128742486416834570) #1135993275162050690
     for dict in updates[0]:
             await correctChannel.send(file=dict['Image'], embed=dict['Embed'])
 
@@ -1270,8 +1269,10 @@ async def color(interaction) :
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="test", description="test", guild=discord.Object(id=guild_ID))
-async def test(interaction : discord.Interaction) :
+async def test(interaction : discord.Interaction, role : discord.Role) :
     await interaction.response.defer()
+    return await interaction.followup.send(embed=discord.Embed(title="this is the test command"))
+    print(role.id)
     casino_channel = client.get_channel(811286469251039333)
     embed = discord.Embed(title="__Celeste__ has been updadted on the site", description="' ∀MAZING' increased from 120 :CE_points: ➡ 125 :CE_points: points: Achievements '∀NOTHER ONE', and '∀DVENTED' removed New Primary Objective '∀WOKEN' added: 30 points :CE_points: Clear the Pandemonic Nightmare stage, and clear Hymeno Striker on AKASCHIC+RM difficulty.")
     embed.set_thumbnail(url=ce_hex_icon)

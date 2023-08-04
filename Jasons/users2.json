@@ -161,25 +161,6 @@
                 ]
             },
             {
-                "Event Name": "One Hell of a Week",
-                "End Time": 1691100380,
-                "Games": [
-                    "Chameleon Run Deluxe Edition",
-                    "Drive!Drive!Drive!",
-                    "VECTORLORD",
-                    "Taimumari",
-                    "Spelldash"
-                ]
-            },
-            {
-                "Event Name": "One Hell of a Day",
-                "End Time": 1690826282,
-                "Games": [
-                    "Darkour"
-                ],
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
-            },
-            {
                 "Event Name": "Teamwork Makes the Dream Work",
                 "End Time": 1693529267,
                 "Games": [
@@ -221,6 +202,13 @@
                 "Event Name": "Winner Takes All",
                 "Games": "World of Goo",
                 "Partner": "67bce20e-3306-4b83-8027-d6894d474740"
+            },
+            {
+                "Event Name": "One Hell of a Day",
+                "End Time": 1691201565,
+                "Games": [
+                    "Get-A-Grip Chip"
+                ]
             }
         ],
         "Completed Rolls": [
