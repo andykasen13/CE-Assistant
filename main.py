@@ -637,9 +637,7 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
                 if(tier_num != "Tier 5") : fake_dict_2.update({"End Time" : int(time.mktime((datetime.datetime.now()+times[tier_num]).timetuple()))})
                 fake_dict_2.update({"Games" : [game],
                                     "Partner": username_target})
-                    
-
-                    
+                         
 
                 database_user[username_interaction]["Current Rolls"].append(fake_dict_1)
                 database_user[username_target]["Current Rolls"].append(fake_dict_2)
@@ -1100,7 +1098,7 @@ async def scrape(interaction):
     updates = await scrape_thread_call() #all_game_data(client)
     await interaction.channel.send("scraped")
 
-    correctChannel = client.get_channel(1135993275162050690)
+    correctChannel = client.get_channel(1128742486416834570)
     for dict in updates[0]:
             await correctChannel.send(file=dict['Image'], embed=dict['Embed'])
 
