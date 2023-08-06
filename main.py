@@ -145,10 +145,11 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
 
     # Check if the event is on cooldown...
     if(event in list(userInfo[target_user]['Cooldowns'])) :
-        return await interaction.response.followup(embed=discord.Embed(title="Cooldown", description=f"You are currently on cooldown for {event}."))
+        return await interaction.followup.send(embed=discord.Embed(title="Cooldown", description=f"You are currently on cooldown for {event}."))
 
     # ...or if the event is currently active.
     for eventInfo in userInfo[target_user]['Current Rolls'] :
+        if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('uh uh uh!')
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking") : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
     
     # Open the databases.
@@ -249,11 +250,6 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
         embed.set_author(name="Never Lucky", url="https://example.com")
         embed.add_field(name="Rolled by", value = "<@" + str(interaction.user.id) + ">", inline=True)
         embed.set_thumbnail(url=interaction.user.avatar)
-        for objective in database_name[games[0]]["Primary Objectives"] :
-            total_points += int(database_name[games[0]]["Primary Objectives"][objective]["Point Value"])
-        embed.add_field(name="CE Status", value=f"{total_points} Points", inline=True)
-        embed.add_field(name="CE Owners", value="[insert]", inline=True)
-        embed.add_field(name="CE Completions", value="[insert]", inline=True)
         embed.add_field(name="Roll Requirements", value = 
             "There is no time limit on " + embed.title + "."
             + "\nNever Lucky has a one week cooldown."
@@ -264,6 +260,19 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
     elif event == "Triple Threat" :
         # three t3s
         print("Recieved request for Triple Threat")
+        
+        for x_roll in userInfo[target_user]['Current Rolls'] :
+            if(x_roll['Event Name'] == event and x_roll['Games'] == ['pending...']) :
+                return await interaction.followup.send('hang on their buster')
+        
+        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
+        print(userInfo[target_user])
+
+        with open('Jasons/users2.json', 'w') as f :
+            json.dump(userInfo, f, indent=4)
+
+        with open('Jasons/users2.json', 'r') as f :
+            userInfo = json.load(f)
 
         # ----- Grab all the games -----
         embed = discord.Embed(title=("⚠️Roll still under construction...⚠️"), description="Please select your genre.")
@@ -1098,6 +1107,7 @@ async def scrape(interaction):
     await interaction.channel.send("scraped")
 
     correctChannel = client.get_channel(1128742486416834570) #1135993275162050690
+    await correctChannel.send('----------------------------------------- begin things --------------------------------------------')
     for dict in updates[0]:
             await correctChannel.send(file=dict['Image'], embed=dict['Embed'])
 
@@ -1284,9 +1294,15 @@ async def color(interaction) :
 @tree.command(name="test", description="test", guild=discord.Object(id=guild_ID))
 async def test(interaction : discord.Interaction, role : discord.Role) :
     await interaction.response.defer()
+
+    casino_channel = client.get_channel(811286469251039333)
+    
+    await roll_failed(ended_roll_name='Triple Threat', casino_channel=casino_channel, user_name='d7cb0869-5ed9-465c-87bf-0fb95aaebbd5')
+
+
     return await interaction.followup.send(embed=discord.Embed(title="this is the test command"))
     print(role.id)
-    casino_channel = client.get_channel(811286469251039333)
+    
     embed = discord.Embed(title="__Celeste__ has been updadted on the site", description="' ∀MAZING' increased from 120 :CE_points: ➡ 125 :CE_points: points: Achievements '∀NOTHER ONE', and '∀DVENTED' removed New Primary Objective '∀WOKEN' added: 30 points :CE_points: Clear the Pandemonic Nightmare stage, and clear Hymeno Striker on AKASCHIC+RM difficulty.")
     embed.set_thumbnail(url=ce_hex_icon)
     embed.set_image(url="https://media.discordapp.net/attachments/1128742486416834570/1133903990090895440/image.png?width=1083&height=542")

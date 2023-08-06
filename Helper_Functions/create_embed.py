@@ -141,7 +141,7 @@ def getEmbed(game_name, authorID):
     embed.set_thumbnail(url=ce_mountain_icon)
     embed.set_footer(text="CE Assistant",
         icon_url=ce_james_icon)
-    embed.add_field(name="Requested by", value = "<@" + str(authorID) + ">", inline=True)
+    embed.add_field(name="Rolled by", value = "<@" + str(authorID) + ">", inline=True)
     if game_name in database_name.keys() :
         for objective in database_name[game_name]["Primary Objectives"] :
             total_points += int(database_name[game_name]["Primary Objectives"][objective]["Point Value"])

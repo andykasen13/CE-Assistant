@@ -153,76 +153,56 @@
         "Cooldowns": {},
         "Current Rolls": [
             {
-                "Event Name": "Two Week T2 Streak",
-                "End Time": 1691705069,
-                "Games": [
-                    "TWWWR",
-                    "WITCH-BOT MEGLILO"
-                ]
-            },
-            {
-                "Event Name": "Teamwork Makes the Dream Work",
-                "End Time": 1693529267,
-                "Games": [
-                    "Zuma's Revenge!",
-                    "Skybolt Zack",
-                    "Furi",
-                    "Hot Lava"
-                ],
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
-            },
-            {
-                "Event Name": "Teamwork Makes the Dream Work",
-                "End Time": 1693529267,
-                "Games": [
-                    "Zuma's Revenge!",
-                    "Skybolt Zack",
-                    "Furi",
-                    "Hot Lava"
-                ],
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
-            },
-            {
-                "Event Name": "Fourward Thinking",
-                "End Time": 1690942415,
-                "Games": []
-            },
-            {
-                "Event Name": "Teamwork Makes the Dream Work",
-                "End Time": 1693536400,
-                "Games": [
-                    "Eryi's Action",
-                    "Blind Drive",
-                    "Super High Ball: Pinball Platformer",
-                    "Super High Ball: Pinball Platformer"
-                ],
-                "Partner": "75875716-9a2e-44c1-bca4-0ba3aeb7f927"
-            },
-            {
-                "Event Name": "Winner Takes All",
-                "Games": "World of Goo",
-                "Partner": "67bce20e-3306-4b83-8027-d6894d474740"
-            },
-            {
                 "Event Name": "One Hell of a Day",
-                "End Time": 1691201565,
+                "End Time": 1691333704,
                 "Games": [
-                    "Get-A-Grip Chip"
+                    "Big FLAPPY Tower VS Tiny Square"
                 ]
+            },
+            {
+                "Event Name": "Two Week T2 Streak",
+                "End Time": 1692456916,
+                "Games": [
+                    "Leo\u2019s Fortune - HD Edition",
+                    "Velocibox"
+                ]
+            },
+            {
+                "Event Name": "One Hell of a Week",
+                "End Time": 1691871548,
+                "Games": [
+                    "Charge Kid",
+                    "Lovely Planet Arcade",
+                    "Run Turn Die",
+                    "Wraithslayer",
+                    "PuPaiPo Space Deluxe"
+                ]
+            },
+            {
+                "Event Name": "Never Lucky",
+                "End Time": 1691267036,
+                "Games": [
+                    "Eggcelerate! to the Tropics"
+                ]
+            },
+            {
+                "Event Name": "Soul Mates",
+                "End Time": 1691440470,
+                "Games": [
+                    "Super Impossible Road"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
+            },
+            {
+                "Event Name": "Soul Mates",
+                "End Time": 1691440470,
+                "Games": [
+                    "Super Impossible Road"
+                ],
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
             }
         ],
-        "Completed Rolls": [
-            {
-                "Event Name": "One Hell of a Day"
-            },
-            {
-                "Event Name": "One Hell of a Day",
-                "End Time": 1690826282,
-                "Games": [
-                    "GoNNER"
-                ]
-            }
-        ]
+        "Completed Rolls": []
     },
     "67bce20e-3306-4b83-8027-d6894d474740": {
         "CE ID": "67bce20e-3306-4b83-8027-d6894d474740",

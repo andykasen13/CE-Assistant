@@ -49,6 +49,9 @@ async def roll_completed(ended_roll_name : str, casino_channel : discord.channel
         json.dump(database_user, f, indent=4)
 
 async def roll_failed(ended_roll_name : str, casino_channel : discord.channel, user_name : str) :
+
+    #TODO: if the game is 'pending...', then don't report it. it just means that they can rewrite the command again.
+
     cooldowns = {
         "One Hell of a Day" : timedelta(14),
         #"One Hell of a Week" : monthdelta(1),
@@ -85,6 +88,17 @@ async def roll_failed(ended_roll_name : str, casino_channel : discord.channel, u
     # TODO: update the user's information. if they still have failed the roll, continue on. 
     # if it turns out that they actually did complete the roll but just forgot to update their profile, 
     # run the function above.
+
+    if database_user[user_name]["Current Rolls"][roll_num]["Games"] == ['pending...'] :
+        print('silly!!')
+        del database_user[user_name]["Current Rolls"][roll_num]
+        await casino_channel.send('you can now roll {} again. sorry if your message got deltelhfjdsl lol'.format(ended_roll_name))
+
+        with open('Jasons/users2.json', 'w') as f :
+            json.dump(database_user, f, indent=4)
+
+        return
+
 
     await casino_channel.send(f"<@{database_user[user_name]['Discord ID']}>, you have failed {ended_roll_name}."
                               + f" Your cooldown will end in {cooldowns_str[ended_roll_name]}" 

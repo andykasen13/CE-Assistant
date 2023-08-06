@@ -1,3 +1,4 @@
+import time
 import discord
 from Helper_Functions.create_embed import create_multi_embed
 from Helper_Functions.rollable_games import get_rollable_game
@@ -67,11 +68,17 @@ async def get_genre_buttons(view, completion_time, price_limit, tier_number, eve
         await interaction.response.defer()
         
         if interaction.user.id != user_id : return
+
+        view.clear_items()
+        
+        await interaction.followup.edit_message(embed=discord.Embed(title="working..."), view=view, message_id=interaction.message.id)
+
         i=0
         while i < num_of_games :
             games.append(get_rollable_game(completion_time, price_limit, tier_number, specific_genre =genre_name))
             i+=1
-        view.clear_items()
+       
+
         embeds = create_multi_embed(event_name, time_limit, games, cooldown_time, interaction)
         await get_buttons(view, embeds)
         await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
@@ -83,9 +90,15 @@ async def get_genre_buttons(view, completion_time, price_limit, tier_number, eve
             if(database_user[user]['Discord ID'] == user_id) : 
                 target_user = user
                 break
+        
+        roll_num = 0
+        
+        for current_roll in database_user[target_user]["Current Rolls"] :
+            if current_roll["Event Name"] == event_name : break
+            roll_num +=1
 
-        database_user[target_user]["Current Rolls"].append({"Event Name" : event_name, 
-                                                    "End Time" : "" + (datetime.datetime.now()+timedelta(time_limit)).strftime("%Y-%m-%d %H:%M:%S"),
+        database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
+                                                    "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple())),
                                                     "Games" : games})
         
 
