@@ -4,8 +4,6 @@ import json
 import datetime
 
 def update_p(user_id : int) :
-
-
     # Open the database
     with open('Jasons/users2.json', 'r') as dbU :
         database_user = json.load(dbU)

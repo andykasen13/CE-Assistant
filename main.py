@@ -117,11 +117,11 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
     times = {
         "One Hell of a Day" : timedelta(1),
         "One Hell of a Week" : timedelta(7),
-        "One Hell of a Month" : monthdelta(1),
+        "One Hell of a Month" : timedelta(28),
         "Two Week T2 Streak" : timedelta(14),
         "Two 'Two Week T2 Streak' Streak" : timedelta(28),
         "Never Lucky" : timedelta(0),
-        "Triple Threat" : monthdelta(1),
+        "Triple Threat" : timedelta(28),
         "Let Fate Decide" : timedelta(0),
         "Fourward Thinking" : timedelta(0),
         "Russian Roulette" :timedelta(0)
