@@ -545,7 +545,8 @@ def get_completion_data(steam_id):
                     time = str(a.parent)[56:end:]
         except:
             continue
-
+    
+    time.replace(",", "")
     return time
 
 

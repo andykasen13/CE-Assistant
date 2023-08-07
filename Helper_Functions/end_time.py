@@ -50,6 +50,7 @@ async def roll_completed(ended_roll_name : str, casino_channel : discord.channel
 
 async def roll_failed(ended_roll_name : str, casino_channel : discord.channel, user_name : str) :
 
+
     #TODO: if the game is 'pending...', then don't report it. it just means that they can rewrite the command again.
 
     cooldowns = {
@@ -110,3 +111,12 @@ async def roll_failed(ended_roll_name : str, casino_channel : discord.channel, u
 
     with open('Jasons/users2.json', 'w') as f :
         json.dump(database_user, f, indent=4)
+
+
+async def check_if_done(user_name : str) :
+    with open('Jasons/users2.json', 'r') as f:
+        database_user = json.load(f)
+    
+    for cu_roll in database_user[user_name]["Current Rolls"] :
+        if("End Time" not in cu_roll) : print('end ime not in roll')
+        elif(cu_roll['End Time'] > int(time.mktime((datetime.datetime.now()).timetuple()))) : print("{} is joever".format(cu_roll['Event Name']))

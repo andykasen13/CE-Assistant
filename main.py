@@ -1521,6 +1521,18 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
     # and send a response to the original interaction
     await interaction.response.send_message("worked", ephemeral=True)
 
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# -------------------------------------------------------- REROLL COMMAND----------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+with open('Jasons/users2.json', 'r') as f:
+    database_user = json.load()
+
+@tree.command(name='reroll', description='Reroll any of your current rolls', guild=discord.Object(id=guild_ID))
+async def reroll(interaction : discord.Interaction, event : events_solo + events_co_op) :
+    x=0
+
 
 
 # ----------------------------------- LOG IN ----------------------------
