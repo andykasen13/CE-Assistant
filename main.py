@@ -51,8 +51,8 @@ intents.message_content = True
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-discord_token = localJSONData['discord_token']
-guild_ID = localJSONData['other_guild_ID']
+discord_token = localJSONData['discord_token']  
+guild_ID = localJSONData['guild_ID']
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
