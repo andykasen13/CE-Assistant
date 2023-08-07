@@ -71,21 +71,21 @@ def game_list():
 
     # icons for CE emoji
     icons = {   #TODO change these to CE emojis
-        "Tier 0" : '<:tier0:1133560874464985139>', #<:tier0:1126268390605070426>',
-        "Tier 1" : '<:tier1:1133560876381773846>', #'<:tier1:1126268393725644810>',
-        "Tier 2" : '<:tier2:1133560878294372432>', #'<:tier2:1126268395483037776>',
-        "Tier 3" : '<:tier3:1133560879544291469>', #'<:tier3:1126268398561677364>',
-        "Tier 4" : '<:tier4:1133560881356226650>', #'<:tier4:1126268402596585524>',
-        "Tier 5" : '<:tier5:1133560882291548323>', #'<:tier5:1126268404781809756>',
-        "Tier 6" : '<:tier6:1133540654983688324>', #'<:tier6:1126268408116285541>',
-        "Tier 7" : '<:tier7:1133540655981920347>', #'<:tier7:1126268411220074547>',
+        "Tier 0" : '<:tier0:1126268390605070426>',
+        "Tier 1" : '<:tier1:1126268393725644810>',
+        "Tier 2" : '<:tier2:1126268395483037776>',
+        "Tier 3" : '<:tier3:1126268398561677364>',
+        "Tier 4" : '<:tier4:1126268402596585524>',
+        "Tier 5" : '<:tier5:1126268404781809756>',
+        "Tier 6" : '<:tier6:1126268408116285541>',
+        "Tier 7" : '<:tier7:1126268411220074547>',
 
-        "Action" : '<:CE_action:1133558549990088734>', #'<:CE_action:1126326215356198942>',
-        "Arcade" : '<:CE_arcade:1133558574287683635>', #'<:CE_arcade:1126326209983291473>',
-        "Bullet Hell" : '<:CE_bullethell:1133558610530676757>', #'<:CE_bullethell:1126326205642190848>',
-        "First-Person" : '<:CE_firstperson:1133558611898015855>', #'<:CE_firstperson:1126326202102186034>',
-        "Platformer" : '<:CE_platformer:1133558613705769020>', #'<:CE_platformer:1126326197983383604>',
-        "Strategy" : '<:CE_strategy:1133558616536915988>', #'<:CE_strategy:1126326195915591690>'
+        "Action" : '<:CE_action:1126326215356198942>',
+        "Arcade" : '<:CE_arcade:1126326209983291473>',
+        "Bullet Hell" : '<:CE_bullethell:1126326205642190848>',
+        "First-Person" : '<:CE_firstperson:1126326202102186034>',
+        "Platformer" : '<:CE_platformer:1126326197983383604>',
+        "Strategy" : '<:CE_strategy:1126326195915591690>'
     }
 
     # game loop adding updated parts
@@ -241,7 +241,7 @@ def objective_update(type, new_game, old_game):
                 if objective + " (UNCLEARED)" in list(old_game['{} Objectives'.format(type)].keys()):
                     update += update_embed(new_game, old_game, objective, type, cleared=False)
                 elif type == 'Primary':
-                    update += "\n- New Primary Objective '**{}**' added:\n\t- {} points <:CE_points:1133558614867587162>\n  - {}".format(objective, new_game['{} Objectives'.format(type)][objective]['Point Value'], new_game['{} Objectives'.format(type)][objective]['Description'])
+                    update += "\n- New Primary Objective '**{}**' added:\n\t- {} points <:CE_points:1128420207329816597>\n  - {}".format(objective, new_game['{} Objectives'.format(type)][objective]['Point Value'], new_game['{} Objectives'.format(type)][objective]['Description'])
                 else:
                     update += "\n- New Community Objective '**{}**' added:\n\t  - {}".format(objective, new_game['{} Objectives'.format(type)][objective]['Description'])
 
@@ -274,15 +274,15 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
     # ------------------- check points -------------------
     # points increased
     if not cleared and type == 'Primary':
-        update += "\n- **{}** cleared, valued at {} points <:CE_points:1133558614867587162>".format(objective, new['Point Value'])
+        update += "\n- **{}** cleared, valued at {} points <:CE_points:1128420207329816597>".format(objective, new['Point Value'])
     elif type == 'Primary':
         if new['Point Value'] > old['Point Value']:
-            update += "\n- '**{}**' increased from {} <:CE_points:1133558614867587162> ➡ {} points <:CE_points:1133558614867587162>".format(objective, old['Point Value'], new['Point Value'])
+            update += "\n- '**{}**' increased from {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(objective, old['Point Value'], new['Point Value'])
                                 #<:CE_points:1128420207329816597>
 
         # points decreased
         elif new['Point Value'] < old['Point Value']:
-            update += "\n- '**{}**' decreased from {} <:CE_points:1133558614867587162> ➡ {} points <:CE_points:1133558614867587162>".format(objective, old['Point Value'], new['Point Value'])
+            update += "\n- '**{}**' decreased from {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(objective, old['Point Value'], new['Point Value'])
         
         # points unchanged
         else:
@@ -297,7 +297,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
     # ------------------- check requirements -------------------
     # requirements are new
     if 'Requirements' in list(new.keys()) and not 'Requirements' in list(old.keys()):
-        update += "\n\t- Requirement '{}' added".format(new['Requirements'])
+        update += "\n\t- Requirements added"
     
     # requirements deleted
     elif 'Requirements' in list(old.keys()) and not 'Requirements' in list(new.keys()):
@@ -305,7 +305,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
     
     # requirements changed
     elif 'Requirements' in list(new.keys()) and new['Requirements'] != old['Requirements']:
-        update += "\n\t- Requirements updated from '{}' ➡ '{}'".format(old['Requirements'], new['Requirements'])
+        update += "\n\t- Requirements updated"
     
 
     # ------------------- check achievements -------------------
@@ -566,6 +566,10 @@ def get_image(number, CE_ID, driver, new_data={}):
         except :
             print("I'm a doodoo head")
             get_image(number, CE_ID, driver, new_data)
+
+        primary_table = driver.find_element(By.CLASS_NAME, "css-c4zdq5")
+        objective_lst = primary_table.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+
         top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
         bottom_right = objective_lst[len(objective_lst)-2].location
         size = objective_lst[len(objective_lst)-2].size
