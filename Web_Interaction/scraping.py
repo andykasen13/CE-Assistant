@@ -110,6 +110,9 @@ def game_list():
             new_data[game['name']] = get_game(game)
 
         # if game is new
+        elif game['tier'] == 0:
+            new_game = get_game(game)
+            new_data[game['name']] = new_game
         elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
             get_image(number, game['id'], driver)
             new_game = get_game(game)
