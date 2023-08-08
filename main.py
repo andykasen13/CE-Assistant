@@ -52,7 +52,7 @@ with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 discord_token = localJSONData['discord_token']  
-guild_ID = localJSONData['guild_ID']
+guild_ID = localJSONData['other_guild_ID']
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
@@ -1526,13 +1526,49 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 # -------------------------------------------------------- REROLL COMMAND----------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-with open('Jasons/users2.json', 'r') as f:
-    database_user = json.load()
+events_total = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+          "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
+          "Russian Roulette", "Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
+          "Winner Takes All", "Game Theory"]
 
 @tree.command(name='reroll', description='Reroll any of your current rolls', guild=discord.Object(id=guild_ID))
-async def reroll(interaction : discord.Interaction, event : events_solo + events_co_op) :
-    x=0
+@app_commands.describe(event="The event you'd like to re-roll")
+async def reroll(interaction : discord.Interaction, event : events_total) :
+    # defer the message
+    await interaction.response.defer()
 
+    # Open the database
+    with open('Jasons/users2.json', 'r') as f:
+        database_user = json.load(f)
+
+    # Check if user is in the database
+    user_name = -1
+    for c_user in database_user :
+        if(database_user[c_user]['Discord ID'] == interaction.user.id) :
+            user_name = c_user
+            break
+    if user_name == -1 : return await interaction.followup.send('You are not currently in the user database! Please use /register.')
+
+    # Check if the user is participating in the event
+    roll_num = -1
+    for c_roll in database_user[user_name]["Current Rolls"] :
+        roll_num+=1
+        if(c_roll["Event Name"] == event) : break
+        
+    if roll_num == -1 : return await interaction.followup.send('You are not currently participating in {}!'.format(event))
+
+    await interaction.followup.send('You are eligible to reroll {}.'.format(event))
+
+    confirm_embed = discord.Embed(
+        title="Are you sure?",
+        timestamp=datetime.datetime.now(),
+        description="You are asking to reroll {}. Your game(s) will switch from {} to other game(s).".format(event, database_user[user_name]["Current Rolls"][roll_num]["Games"])
+        + " You will not recieve any additional time to complete this roll - and your deadline is still <t:{}>.".format(database_user[user_name]["Current Rolls"][roll_num]["End Time"])
+    )
+
+    view = 0
+
+    
 
 
 # ----------------------------------- LOG IN ----------------------------
