@@ -52,7 +52,7 @@ with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 discord_token = localJSONData['discord_token']  
-guild_ID = localJSONData['other_guild_ID']
+guild_ID = localJSONData['test_guild_ID']
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
@@ -1551,10 +1551,13 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
 
     # Check if the user is participating in the event
     roll_num = -1
-    for c_roll in database_user[user_name]["Current Rolls"] :
-        roll_num+=1
-        if(c_roll["Event Name"] == event) : break
-        
+    for index, c_roll in enumerate(database_user[user_name]["Current Rolls"]) :
+        if(c_roll["Event Name"] == event) : 
+            roll_num = index
+            break
+    
+    print(roll_num)
+
     if roll_num == -1 : return await interaction.followup.send('You are not currently participating in {}!'.format(event))
 
     await interaction.followup.send('You are eligible to reroll {}.'.format(event))
@@ -1565,8 +1568,43 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
         description="You are asking to reroll {}. Your game(s) will switch from {} to other game(s).".format(event, database_user[user_name]["Current Rolls"][roll_num]["Games"])
         + " You will not recieve any additional time to complete this roll - and your deadline is still <t:{}>.".format(database_user[user_name]["Current Rolls"][roll_num]["End Time"])
     )
+    
+    await interaction.followup.send(embed=confirm_embed)
+    
 
-    view = 0
+    
+    # class RerollView(discord.ui.View):
+    #     def __init__(self):
+    #         super().__init__(timeout=3)
+    #         self.value = None
+    #         self.current_page = 0
+    #         self.pages = 10
+
+    #     async def on_timeout(self):
+    #         print("test")
+    #         self.clear_items()
+
+    #     @discord.ui.button(label="Previous", style=discord.ButtonStyle.grey, disabled=True)
+    #     async def menu1(self, interaction: discord.Interaction, button: discord.ui.Button):
+    #         self.current_page -= 1
+    #         if self.current_page == 0:
+    #             button.disabled = True
+    #             print("previous should be disabled")
+    #         self.children[-1].disabled = False
+
+    #         await interaction.response.edit_message(
+    #             content=f"{self.current_page}", view=self
+    #         )
+
+    #     @discord.ui.button(label="Next", style=discord.ButtonStyle.green)
+    #     async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
+    #         self.current_page += 1
+    #         if self.current_page == self.pages - 1:
+    #             button.disabled = True
+    #         self.children[0].disabled = False
+    #         await interaction.response.edit_message(
+    #             content=f"{self.current_page}", view=self
+    #         )
 
     
 
