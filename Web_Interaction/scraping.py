@@ -96,23 +96,36 @@ def game_list():
         icon = game['icon']
 
         # if game is updated
-        if updated_time > current_newest and game['name'] in list(new_data.keys()):
+        # TODO
+        if updated_time > current_newest and game['tier'] == 0:
             game_tracker.remove(game['name'])
             test_old = new_data[game['name']]
-            test_new = get_game(game)
+            to_keep = get_game(game)
+            test_new = to_keep
             del test_new['Full Completions']
             del test_new['Total Owners']
             del test_old['Full Completions']
             del test_old['Total Owners']
             if test_old != test_new:
-                updated_games.append(update(game, new_data[game['name']], driver, number, icon, icons))
+                updated_games.extend(special_update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
                 number += 1
-            new_data[game['name']] = get_game(game)
+            new_data[game['name']] = to_keep
+
+        elif updated_time > current_newest and game['name'] in list(new_data.keys()):
+            game_tracker.remove(game['name'])
+            test_old = new_data[game['name']]
+            to_keep = get_game(game)
+            test_new = to_keep
+            del test_new['Full Completions']
+            del test_new['Total Owners']
+            del test_old['Full Completions']
+            del test_old['Total Owners']
+            if test_old != test_new:
+                updated_games.append(update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
+                number += 1
+            new_data[game['name']] = to_keep
 
         # if game is new
-        elif game['tier'] == 0:
-            new_game = get_game(game)
-            new_data[game['name']] = new_game
         elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
             get_image(number, game['id'], driver)
             new_game = get_game(game)
@@ -186,10 +199,10 @@ def game_list():
 
 
 # updates for games
-def update(game, old_game, driver, number, icon, icons):
+def update(new_game, old_game, driver, number, icon, icons, name):
         
     # get game info and image
-    new_game = get_game(game)
+    #new_game = get_game(game)
     get_image(number, new_game['CE ID'], driver, new_data=new_game)
 
     # initialize the embed description
@@ -212,7 +225,7 @@ def update(game, old_game, driver, number, icon, icons):
     # ------------------- make final embed -------------------
     embed = {
         'Embed' : discord.Embed(
-            title="__" + game['name'] + "__ updated on the site:",
+            title="__" + name + "__ updated on the site:",
             colour= 0xefd839,
             timestamp=datetime.now(),
             description=update.strip()
@@ -227,6 +240,16 @@ def update(game, old_game, driver, number, icon, icons):
 
     # return :)
     return embed
+
+
+def special_update(new_game, old_game, driver, number, icon, icons, name):
+    update = ""
+
+    update += objective_update('Primary', new_game, old_game)
+    update += objective_update('Community', new_game, old_game)
+
+
+    return []
 
 
 # updates for each objective
@@ -567,24 +590,44 @@ def get_image(number, CE_ID, driver, new_data={}):
             while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
                 objective_lst = []
                 objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+
+            
         except :
             print("I'm a doodoo head")
             get_image(number, CE_ID, driver, new_data)
 
         primary_table = driver.find_element(By.CLASS_NAME, "css-c4zdq5")
         objective_lst = primary_table.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
-
+        title = driver.find_element(By.TAG_NAME, "h1")
         top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
+        title_size = title.size['width']
+        title_location = title.location['x']
+
+
         bottom_right = objective_lst[len(objective_lst)-2].location
         size = objective_lst[len(objective_lst)-2].size
+
         header_elements = [
             'bp4-navbar',
-            'tr-fadein'
+            'tr-fadein',
+            'css-1ugviwv'
         ]
+
         border_width = 15
-        ob = Screenshot(bottom_right['y']+size['height']+border_width)
+
+        top_left_x = top_left['x'] - border_width
+        top_left_y = top_left['y'] - border_width
+        bottom_right_y = bottom_right['y'] + size['height'] + border_width
+
+        if title_location + title_size > bottom_right['x'] + size['width']:
+            bottom_right_x = title_location + title_size + border_width
+        else:
+            bottom_right_x = bottom_right['x'] + size['width'] + border_width
+
+        
+        ob = Screenshot(bottom_right_y)
         im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
         
         im = Image.open('Pictures/ss{}.png'.format(number))
-        im = im.crop((top_left['x']-border_width, top_left['y']-border_width, bottom_right['x']+size['width']+border_width, bottom_right['y']+size['height']+border_width)) # defines crop points
+        im = im.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y)) # defines crop points
         im.save('Pictures/ss{}.png'.format(number))
