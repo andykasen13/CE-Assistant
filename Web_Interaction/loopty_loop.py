@@ -108,7 +108,7 @@ times = [
   datetime.time(hour=23, minute=15, tzinfo=utc),
   datetime.time(hour=23, minute=30, tzinfo=utc),
   datetime.time(hour=23, minute=45, tzinfo=utc),
-  datetime.time(hour=4, minute=34, tzinfo=utc)
+  datetime.time(hour=4, minute=42, tzinfo=utc)
 ]
 
 

@@ -1664,9 +1664,9 @@
                 "Description": "Complete Boss Rush mode. / Reach layer 25 in Infinity Drive mode. / Earn an S+ ranking on all campaign levels.",
                 "Point Value": 20,
                 "Achievements": {
-                    "561a27ee-bf43-4795-837c-7f3f9f6e5b15": "Out Of Your Depth",
                     "e2259540-deb2-434c-b139-5c1c3601b102": "Assault Android Awesome",
-                    "c2b94d1b-bd23-4b14-b1fc-01b65bce5f0f": "I Am Become Death"
+                    "c2b94d1b-bd23-4b14-b1fc-01b65bce5f0f": "I Am Become Death",
+                    "561a27ee-bf43-4795-837c-7f3f9f6e5b15": "Out Of Your Depth"
                 }
             },
             "Assault Android Awesome+ (UNCLEARED)": {
@@ -5054,8 +5054,6 @@
         "Steam ID": "1388770",
         "Tier": "Tier 2",
         "Genre": "First-Person",
-        "Full Completions": 5,
-        "Total Owners": 52,
         "Primary Objectives": {
             "CEO Mindset": {
                 "Description": "Separately, get an S rank everywhere obtainable and complete every mission with Punishment modifier.",
@@ -16921,8 +16919,7 @@
                 "Point Value": 50,
                 "Achievements": {
                     "bab5085d-793d-4733-95b7-8a857cafba02": "So Medal"
-                },
-                "Requirements": "Video(s) of \"Sailor's Speedway\", \"Cascade Court\", and \"Earth's Edge\", showing gameplay options after each level. Use of any assist options is disallowed."
+                }
             }
         },
         "Community Objectives": {
