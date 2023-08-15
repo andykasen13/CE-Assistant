@@ -36,6 +36,26 @@ def get_games():
     get_by_tier()
     return fin
 
+
+def single_scrape():
+    api_response = requests.get('https://cedb.me/api/games')
+    json_response = json.loads(api_response.text)
+
+    current_dict = json.loads(open("./Jasons/curator_count.json").read())
+    current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
+    with open('Jasons/curator_count.json', 'w') as f:
+        json.dump(current_dict, f, indent=4)
+
+    database_name = {}
+
+    for game in json_response:
+        database_name[game['name']] = get_game(game)
+
+    with open('Jasons/database_name.json', 'w') as f:
+        json.dump(database_name, f, indent=4)
+
+    get_by_tier()
+
     
 
 def game_list():
@@ -193,7 +213,6 @@ def game_list():
     with open('./Jasons/database_name.json', 'w') as f :
         json.dump(new_data, f, indent=4)
 
-    print('done')
     return [updated_games, number]
 
 
@@ -202,7 +221,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
         
     # get game info and image
     #new_game = get_game(game)
-    get_image(number, new_game['CE ID'], driver, new_data=new_game)
+    get_image(number, new_game['CE ID'], driver)
 
     # initialize the embed description
     update = ""

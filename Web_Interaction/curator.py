@@ -8,20 +8,27 @@ import requests
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
 
 
-async def single_run(client, requested_reviews):
+async def single_run(client, requested_reviews=0):
     if requested_reviews > 0:
         data = json.loads(open("./Jasons/curator_count.json").read())
-        data['Curator Count'] = await checkCuratorCount(client)
-        print(data)
+        curation = checkCuratorCount()
+        data['Curator Count'] = curation[0]
+        embeds=[]
+        if len(curation) > 1:
+            embeds = curation[1]
 
         with open("./Jasons/curator_count.json", "w") as jsonFile:
             json.dump(data, jsonFile, indent=4)
     else:
-        curatorUpdate(requested_reviews, client)
+        embeds = curatorUpdate(requested_reviews)
+
+    for embed in embeds:
+        correctChannel = client.get_channel(1128742486416834570)
+        await correctChannel.send(embed=embed)
 
 
 
-async def getCuratorCount():
+def getCuratorCount():
     veggies = {'cc': 'us', 'l' : 'english'}
     broth = requests.get("https://store.steampowered.com/curator/36185934/", params=veggies)
     soup = BeautifulSoup(broth.text, features="html.parser")
@@ -35,40 +42,18 @@ async def getCuratorCount():
     return number
 
 
-async def checkCuratorCount(client):
-    number = await getCuratorCount()
-    current_count = json.loads(open("./Jasons/curator_count.json").read())['Current Reviews']
+def checkCuratorCount():
+    number = getCuratorCount()
+    current_count = json.loads(open("./Jasons/curator_count.json").read())['Curator Count']
     if number != current_count:
-        await curatorUpdate(int(number)-int(current_count), client)
-        return number
+        embeds = curatorUpdate(int(number)-int(current_count))
+        return [number, embeds]
     else:
-        return number
+        return [number]
     
 
-utc = datetime.timezone.utc
-times = [
-    datetime.time(hour=3, tzinfo=utc),
-    datetime.time(hour=6, tzinfo=utc),
-    datetime.time(hour=9, tzinfo=utc),
-    datetime.time(hour=12, tzinfo=utc),
-    datetime.time(hour=15, tzinfo=utc),
-    datetime.time(hour=18, tzinfo=utc),
-    datetime.time(hour=21, tzinfo=utc),
-    datetime.time(hour=0, tzinfo=utc)
-]
 
-
-@tasks.loop(time = times)
-async def loop(client):
-    data = json.loads(open("./Jasons/curator_count.json").read())
-    data['Curator Count'] = await checkCuratorCount(client)
-    print(data)
-
-    with open("./Jasons/curator_count.json", "w") as jsonFile:
-        json.dump(data, jsonFile, indent=4)
-
-
-async def curatorUpdate(num: int, client) :
+def curatorUpdate(num: int) :
     payload = {'cc': 'us', 'l' : 'english'}
     response = requests.get("https://store.steampowered.com/curator/36185934/", params=payload)
     html = BeautifulSoup(response.text, features="html.parser")
@@ -97,15 +82,17 @@ async def curatorUpdate(num: int, client) :
     del app_ids[num:]
 
 
-    embed = discord.Embed(
-        title="CE Curator",
-        color=0x000000,
-        timestamp=datetime.datetime.now()
-    )
 
+    embeds = []
 
     x = 0
     while x < len(descriptions):
+        embed = discord.Embed(
+            title="CE Curator",
+            color=0x000000,
+            timestamp=datetime.datetime.now()
+        )
+
     #TODO: add the link to the full review
         correctAppID = app_ids[x]
 
@@ -138,9 +125,11 @@ async def curatorUpdate(num: int, client) :
         embed.set_footer(text="CE Assistant",
             icon_url=ce_james_icon)
         embed.set_author(name="New game added to curator!", url="https://store.steampowered.com/curator/36185934/")
-    
-        correctChannel = client.get_channel(1128742486416834570)
-        await correctChannel.send(embed=embed)
+
+
+        embeds.append(embed)
         x+=1
+
+    return embeds
 
     

@@ -3,8 +3,6 @@ import asyncio
 from datetime import datetime, timedelta
 import datetime
 import functools
-import os
-import shutil
 import time
 import typing
 from monthdelta import monthdelta
@@ -28,8 +26,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
 # --------- other file imports ---------
-from Web_Interaction.curator import loop, single_run
-from Web_Interaction.scraping import get_games, get_completion_data
+from Web_Interaction.loopty_loop import master_loop, thread_curate
+from Web_Interaction.curator import single_run
+from Web_Interaction.scraping import single_scrape
 from Helper_Functions.rollable_games import get_rollable_game, get_rollable_game_from_list
 from Helper_Functions.create_embed import create_multi_embed, getEmbed
 from Helper_Functions.roll_string import get_roll_string
@@ -837,38 +836,39 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @to_thread
 def scrape_thread_call():
-    return get_games()
+    single_scrape()
 
-@tree.command(name="scrape", description="run through each game in the CE database and grab the corresponding data", guild=discord.Object(id=guild_ID))
-async def scrape(interaction):
-    await interaction.response.send_message("scraping...")
-    updates = await scrape_thread_call() #all_game_data(client)
-    await interaction.channel.send("scraped")
+# @tree.command(name="scrape", description="run through each game in the CE database and grab the corresponding data", guild=discord.Object(id=guild_ID))
+# async def scrape(interaction):
+#     await interaction.response.send_message("scraping...")
+#     updates = await scrape_thread_call() #all_game_data(client)
+#     await interaction.channel.send("scraped")
 
-    correctChannel = client.get_channel(1128742486416834570) #1135993275162050690
-    await correctChannel.send('----------------------------------------- begin things --------------------------------------------')
-    for dict in updates[0]:
-            await correctChannel.send(file=dict['Image'], embed=dict['Embed'])
+#     correctChannel = client.get_channel(1128742486416834570) #1135993275162050690
+#     await correctChannel.send('----------------------------------------- begin things --------------------------------------------')
+#     for dict in updates[0]:
+#             await correctChannel.send(file=dict['Image'], embed=dict['Embed'])
 
     
-    shutil.rmtree('./Pictures')
-    os.mkdir('./Pictures')
-
+#     shutil.rmtree('./Pictures')
+#     os.mkdir('./Pictures')
+@tree.command(name="scrape", description="I think this is needed?", guild=discord.Object(id=guild_ID))
+async def scrape(interaction):
+    await interaction.response.send_message('scraping...')
+    await scrape_thread_call()
+    await interaction.channel.send('scraped')
 
 @tree.command(name="get_times", description="I think this is needed?", guild=discord.Object(id=guild_ID))
 async def get_times(interaction):
     await interaction.response.send_message('times...')
     fin = "times = ["
     for i in range(0, 24):
-        for j in range(0, 3):
+        for j in range(0, 4):
             fin += "\n  datetime.time(hour={}, minute={}, tzinfo=utc),".format(i,j*15)
 
     fin = fin[:-1:] + "\n]"
-    current_dict = json.loads(open("./Jasons/curator_count.json").read())
-    current_dict['times'] = ''
-    with open('./Jasons/curator_count.json', 'w') as f :
-        json.dump(current_dict, f, indent=4)
 
+    print(fin)
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
@@ -1388,6 +1388,6 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
     print("Ready!")
-    await loop.start(client)
+    await master_loop.start(client)
 
 client.run(discord_token)
