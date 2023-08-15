@@ -1659,6 +1659,8 @@
         "Steam ID": "250110",
         "Tier": "Tier 2",
         "Genre": "Bullet Hell",
+        "Full Completions": 10,
+        "Total Owners": 50,
         "Primary Objectives": {
             "Assault Battery Charge": {
                 "Description": "Complete Boss Rush mode. / Reach layer 25 in Infinity Drive mode. / Earn an S+ ranking on all campaign levels.",
@@ -5054,6 +5056,8 @@
         "Steam ID": "1388770",
         "Tier": "Tier 2",
         "Genre": "First-Person",
+        "Full Completions": 10,
+        "Total Owners": 50,
         "Primary Objectives": {
             "CEO Mindset": {
                 "Description": "Separately, get an S rank everywhere obtainable and complete every mission with Punishment modifier.",

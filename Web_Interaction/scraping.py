@@ -1,39 +1,55 @@
-from asyncio import to_thread
+
+
+#-----------------------------------------------------------------------------------------#
+#                                                                                         #
+"                                    DATA SCRAPER                                         "
+#                                                                                         #
+#               updates both databases (tier and name) every 15 minutes                   #      
+#                    and sends update logs to the desired channel                         #
+#                                                                                         #
+#-----------------------------------------------------------------------------------------#
+
+
+# the basics
 import json
 from datetime import datetime
-import re
 import time
-# import screenshot
-from .Screenshot import Screenshot
-from bs4 import BeautifulSoup
 import discord
 import requests
+
+# web shit (like spiderman!)
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+
+# pictures
+from .Screenshot import Screenshot
 from PIL import Image
-from deepdiff import DeepDiff
-from pprint import pprint
-from selenium.webdriver.support.color import Color
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
+# set basic icons
 ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
 
 
 
 # Grab information from json file
-with open('Jasons/secret_info.json') as f :
-    localJSONData = json.load(f)
+# with open('Jasons/secret_info.json') as f :
+#     localJSONData = json.load(f)
 
-steam_api_key = localJSONData['steam_API_key']
+# steam_api_key = localJSONData['steam_API_key']
 
 
 def get_games():
+
+    # create our returnable and update database_name
     fin = game_list()
+
+    # use database_name to update database_tier
     get_by_tier()
+
+    # return embeds
     return fin
 
 
@@ -90,7 +106,7 @@ def game_list():
 
 
     # icons for CE emoji
-    icons = {   #TODO change these to CE emojis
+    icons = {
         "Tier 0" : '<:tier0:1126268390605070426>',
         "Tier 1" : '<:tier1:1126268393725644810>',
         "Tier 2" : '<:tier2:1126268395483037776>',
@@ -115,30 +131,44 @@ def game_list():
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
         icon = game['icon']
 
-        # if game is updated
-        # TODO
+        # if game is a T0 and updated
         if updated_time > current_newest and game['tier'] == 0:
+            # update game tracker
             game_tracker.remove(game['name'])
+
+            # get old data
             test_old = new_data[game['name']]
+
+            # get new data that wont be mutated
             to_keep = get_game(game)
+
+            #create maluable data
             test_new = to_keep
-            del test_new['Full Completions']
-            del test_new['Total Owners']
-            del test_old['Full Completions']
-            del test_old['Total Owners']
+
+            # remove completion data for comparisons
+            test_new.pop('Full Completions')
+            test_new.pop('Total Owners')
+            test_old.pop('Full Completions')
+            test_old.pop('Total Owners')
+
+            # compare old and new data excluding completion data
             if test_old != test_new:
                 updated_games.extend(special_update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
                 number += 1
+
+            # update data
             new_data[game['name']] = to_keep
+
+        # if game is updated
         elif updated_time > current_newest and game['name'] in list(new_data.keys()):
             game_tracker.remove(game['name'])
             test_old = new_data[game['name']]
             to_keep = get_game(game)
             test_new = to_keep
-            del test_new['Full Completions']
-            del test_new['Total Owners']
-            del test_old['Full Completions']
-            del test_old['Total Owners']
+            test_new.pop('Full Completions')
+            test_new.pop('Total Owners')
+            test_old.pop('Full Completions')
+            test_old.pop('Total Owners')
             if test_old != test_new:
                 updated_games.append(update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
                 number += 1
@@ -173,7 +203,7 @@ def game_list():
             # make embed
             embed = {
                 'Embed' : discord.Embed(
-                    title="__" + game['name'] + "__ added to the site", # TODO make it fill out more info (tier, genre, num of objectives for _ points)
+                    title="__" + game['name'] + "__ added to the site", 
                     colour= 0x48b474,
                     timestamp=datetime.now(),
                     description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)

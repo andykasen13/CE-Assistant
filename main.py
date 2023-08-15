@@ -828,7 +828,6 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 
 
 
-
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- SCRAPING --------------------------------------------------------------- #
@@ -838,27 +837,14 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 def scrape_thread_call():
     single_scrape()
 
-# @tree.command(name="scrape", description="run through each game in the CE database and grab the corresponding data", guild=discord.Object(id=guild_ID))
-# async def scrape(interaction):
-#     await interaction.response.send_message("scraping...")
-#     updates = await scrape_thread_call() #all_game_data(client)
-#     await interaction.channel.send("scraped")
 
-#     correctChannel = client.get_channel(1128742486416834570) #1135993275162050690
-#     await correctChannel.send('----------------------------------------- begin things --------------------------------------------')
-#     for dict in updates[0]:
-#             await correctChannel.send(file=dict['Image'], embed=dict['Embed'])
-
-    
-#     shutil.rmtree('./Pictures')
-#     os.mkdir('./Pictures')
-@tree.command(name="scrape", description="I think this is needed?", guild=discord.Object(id=guild_ID))
+@tree.command(name="scrape", description="Force update every game without creating embeds. DO NOT RUN UNLESS NECESSARY.", guild=discord.Object(id=guild_ID))
 async def scrape(interaction):
     await interaction.response.send_message('scraping...')
     await scrape_thread_call()
     await interaction.channel.send('scraped')
 
-@tree.command(name="get_times", description="I think this is needed?", guild=discord.Object(id=guild_ID))
+@tree.command(name="get_times", description="Prints out a table of times fifteen minutes apart in UTC", guild=discord.Object(id=guild_ID))
 async def get_times(interaction):
     await interaction.response.send_message('times...')
     fin = "times = ["
@@ -875,7 +861,7 @@ async def get_times(interaction):
 # ---------------------------------------------------------- CURATE ---------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-@tree.command(name="curate", description="manually activate the curator check", guild=discord.Object(id=guild_ID))
+@tree.command(name="curate", description="Sends as many of the latest curator messages as requested or the latest if none specified.", guild=discord.Object(id=guild_ID))
 @app_commands.describe(num="Number of previous curator entries to pull")
 async def curate(interaction, num : int = 0):
     await interaction.response.defer()

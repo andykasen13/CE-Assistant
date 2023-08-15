@@ -1,9 +1,23 @@
-from discord.ext import tasks
+
+
+#-----------------------------------------------------------------------------------------#
+#                                                                                         #
+"                                  CURATOR KEEPER                                         "
+#                                                                                         #
+#     sends new curator messages and keeps an up to date number of curator reviews        #      
+#                                                                                         #
+#-----------------------------------------------------------------------------------------#
+
+
+# the basics
 import datetime
 import json
-from bs4 import BeautifulSoup
 import discord
 import requests
+
+# web interaction
+from bs4 import BeautifulSoup
+
 
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
 
