@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import datetime
 import functools
 import os
+import shutil
 import time
 import typing
 from monthdelta import monthdelta
@@ -849,9 +850,24 @@ async def scrape(interaction):
     for dict in updates[0]:
             await correctChannel.send(file=dict['Image'], embed=dict['Embed'])
 
-    for i in range(0, updates[1]):
-        os.remove('Pictures/ss{}.png'.format(i))
+    
+    shutil.rmtree('./Pictures')
+    os.mkdir('./Pictures')
 
+
+@tree.command(name="get_times", description="I think this is needed?", guild=discord.Object(id=guild_ID))
+async def get_times(interaction):
+    await interaction.response.send_message('times...')
+    fin = "times = ["
+    for i in range(0, 24):
+        for j in range(0, 3):
+            fin += "\n  datetime.time(hour={}, minute={}, tzinfo=utc),".format(i,j*15)
+
+    fin = fin[:-1:] + "\n]"
+    current_dict = json.loads(open("./Jasons/curator_count.json").read())
+    current_dict['times'] = ''
+    with open('./Jasons/curator_count.json', 'w') as f :
+        json.dump(current_dict, f, indent=4)
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #

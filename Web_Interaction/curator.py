@@ -54,8 +54,7 @@ times = [
     datetime.time(hour=15, tzinfo=utc),
     datetime.time(hour=18, tzinfo=utc),
     datetime.time(hour=21, tzinfo=utc),
-    datetime.time(hour=0, tzinfo=utc),
-    datetime.time(hour=18, minute=55)
+    datetime.time(hour=0, tzinfo=utc)
 ]
 
 
