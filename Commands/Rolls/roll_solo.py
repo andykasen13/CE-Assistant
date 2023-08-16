@@ -59,7 +59,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # ...or if the event is currently active.
     for eventInfo in userInfo[target_user]['Current Rolls'] :
         #TODO: have different errors if someone tries to go again during pending and if someone tries to reroll while pending
-        if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('uh uh uh!')
+        if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('Please wait 10 minutes in between rolling for the same event!')
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
     
     # Open the databases.
@@ -158,12 +158,10 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         total_points = 0
         embed = getEmbed(games[0], interaction.user.id)
         embed.set_author(name="Never Lucky", url="https://example.com")
-        embed.add_field(name="Rolled by", value = "<@" + str(interaction.user.id) + ">", inline=True)
-        embed.set_thumbnail(url=interaction.user.avatar)
         embed.add_field(name="Roll Requirements", value = 
             "There is no time limit on " + embed.title + "."
             + "\nNever Lucky has a one week cooldown."
-            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+monthdelta(1)).timetuple())))
+            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple())))
             + f">\nhttps://cedb.me/game/{database_name[embed.title]['CE ID']}/", inline=False)
 
     # -------------------------------------------- Triple Threat --------------------------------------------
@@ -176,7 +174,6 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 return await interaction.followup.send('hang on their buster')
         
         userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
-        print(userInfo[target_user])
 
         with open('Jasons/users2.json', 'w') as f :
             json.dump(userInfo, f, indent=4)
@@ -187,7 +184,14 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # ----- Grab all the games -----
         embed = discord.Embed(title=("⚠️Roll still under construction...⚠️"), description="Please select your genre.")
 
-        await get_genre_buttons(view, 40, 20, "Tier 3", "Triple Threat", 28, 84, 3, interaction.user.id)
+        with open('Jasons/users2.json', 'w') as f :
+            json.dump(userInfo, f, indent=4)
+
+        with open('Jasons/users2.json', 'r') as f :
+            userInfo = json.load(f)
+
+            
+        await get_genre_buttons(view, 40, 20, "Tier 3", "Triple Threat", 28, 84, 3, interaction.user.id, reroll=reroll)
 
         dont_save = True
          
@@ -196,8 +200,11 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # one t4
         print("Recieved request for Let Fate Decide")
 
+        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
+
+
         embed = discord.Embed(title=("let fate decide"))
-        await get_genre_buttons(view, 40, 20, "Tier 4", event, 1, 84, 1, interaction.user.id)
+        await get_genre_buttons(view, 40, 20, "Tier 4", event, 1, 84, 1, interaction.user.id, reroll=reroll)
         dont_save = True
         ends = False
 
@@ -274,11 +281,27 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
     # ------------------------------------ CONTINUE ON ---------------------------------------------------
 
-    if dont_save is False :
+    if (dont_save is False) and (not reroll) :
         # append the roll to the user's current rolls array
         userInfo[target_user]["Current Rolls"].append({"Event Name" : event, 
                                                     "End Time" :  int(time.mktime((datetime.datetime.now()+times[event]).timetuple())),
                                                     "Games" : games})
+
+    elif (dont_save is False) and (reroll) :
+        c_num = -1
+        for index, c_roll in enumerate(userInfo[target_user]["Current Rolls"]) :
+            if c_roll["Event Name"] == event :
+                c_num = index
+                break
+        
+        if c_num == -1 : return await interaction.followup.send('you havent rolled this game. except i should have cleared that already. something is wrong')
+
+        userInfo[target_user]['Current Rolls'][c_num] = ({
+            "Event Name" : event,
+            "End Time" : userInfo[target_user]["Current Rolls"][c_num]["End Time"],
+            "Games" : games
+        })
+
 
     # dump the info
     with open('Jasons/users2.json', 'w') as f :

@@ -154,62 +154,62 @@
         "Current Rolls": [
             {
                 "Event Name": "One Hell of a Day",
-                "End Time": 1691333704,
+                "End Time": 1692123531,
                 "Games": [
-                    "Big FLAPPY Tower VS Tiny Square"
-                ]
-            },
-            {
-                "Event Name": "Two Week T2 Streak",
-                "End Time": 1692456916,
-                "Games": [
-                    "Leo\u2019s Fortune - HD Edition",
-                    "Velocibox"
+                    "Ellipsis"
                 ]
             },
             {
                 "Event Name": "One Hell of a Week",
-                "End Time": 1691871548,
+                "End Time": 1692643671,
                 "Games": [
-                    "Charge Kid",
-                    "Lovely Planet Arcade",
-                    "Run Turn Die",
-                    "Wraithslayer",
-                    "PuPaiPo Space Deluxe"
+                    "Blast Rush Classic",
+                    "High Hell",
+                    "FEWAR-DVD",
+                    "Only Up!",
+                    "Cyjin: The Cyborg Ninja"
+                ]
+            },
+            {
+                "Event Name": "Two Week T2 Streak",
+                "End Time": 1693248499,
+                "Games": [
+                    "Frost",
+                    "GUNBIRD 2"
+                ]
+            },
+            {
+                "Event Name": "Two 'Two Week T2 Streak' Streak",
+                "End Time": 1694458144,
+                "Games": [
+                    "Remnants of Naezith",
+                    "Xeno Crisis",
+                    "Just Shapes & Beats",
+                    "Witcheye"
                 ]
             },
             {
                 "Event Name": "Never Lucky",
-                "End Time": 1691267036,
+                "End Time": 1692039055,
                 "Games": [
-                    "Eggcelerate! to the Tropics"
+                    "Hypnocult"
                 ]
             },
             {
-                "Event Name": "Soul Mates",
-                "End Time": 1691440470,
+                "Event Name": "Triple Threat",
+                "End Time": 1694458316,
                 "Games": [
-                    "Super Impossible Road"
-                ],
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
-            },
-            {
-                "Event Name": "Soul Mates",
-                "End Time": 1691440470,
-                "Games": [
-                    "Super Impossible Road"
-                ],
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5"
-            },
-            {
-                "Event Name": "One Hell of a Day",
-                "End Time": 1691893490,
-                "Games": [
-                    "Donut Dodo"
+                    "ARMED SEVEN",
+                    "Maiden and Spell",
+                    "DANMAKAI: Red Forbidden Fruit"
                 ]
             }
         ],
-        "Completed Rolls": []
+        "Completed Rolls": [
+            {
+                "Event Name": "Two Week T2 Streak"
+            }
+        ]
     },
     "67bce20e-3306-4b83-8027-d6894d474740": {
         "CE ID": "67bce20e-3306-4b83-8027-d6894d474740",

@@ -37,7 +37,7 @@ async def getCuratorCount():
 
 async def checkCuratorCount(client):
     number = await getCuratorCount()
-    current_count = json.loads(open("./Jasons/curator_count.json").read())['Current Reviews']
+    current_count = json.loads(open("./Jasons/curator_count.json").read())['Curator Count']
     if number != current_count:
         await curatorUpdate(int(number)-int(current_count), client)
         return number

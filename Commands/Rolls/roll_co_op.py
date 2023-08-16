@@ -6,8 +6,7 @@ from Helper_Functions.create_embed import *
 from Helper_Functions.buttons import *
 
 
-async def roll_co_op_command(interaction, event, partner) :
-    x=0
+async def co_op_command(interaction : discord.Interaction, event, partner : discord.User, reroll : bool) :
     await interaction.response.defer()
 
     # Open the user database

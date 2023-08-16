@@ -46,7 +46,7 @@ async def get_buttons(view : discord.ui.View, embeds):
 
     view.on_timeout = disable()
 
-async def get_genre_buttons(view, completion_time, price_limit, tier_number, event_name, time_limit, cooldown_time, num_of_games, user_id) :
+async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit, tier_number, event_name, time_limit, cooldown_time, num_of_games, user_id, reroll : bool) :
     games = []
     genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
     buttons = []
@@ -64,7 +64,7 @@ async def get_genre_buttons(view, completion_time, price_limit, tier_number, eve
     async def PF_callback(interaction) : return await callback(interaction, "Platformer")
     async def ST_callback(interaction) : return await callback(interaction, "Strategy")
 
-    async def callback(interaction, genre_name):
+    async def callback(interaction : discord.Interaction, genre_name):
         await interaction.response.defer()
         
         if interaction.user.id != user_id : return
@@ -97,10 +97,25 @@ async def get_genre_buttons(view, completion_time, price_limit, tier_number, eve
             if current_roll["Event Name"] == event_name : break
             roll_num +=1
 
-        database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
+        if not reroll : 
+            database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
                                                     "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple())),
                                                     "Games" : games})
         
+        elif reroll :
+            c_num = -1
+            for index, c_roll in enumerate(database_user[target_user]["Current Rolls"]) :
+                if c_roll["Event Name"] == event_name :
+                    c_num = index
+                    break
+            
+            if c_num == -1 : return await interaction.followup.send('you havent rolled this game. except i should have cleared that already. something is wrong')
+
+            database_user[target_user]['Current Rolls'][c_num] = ({
+                "Event Name" : event_name,
+                "End Time" : database_user[target_user]["Current Rolls"][c_num]["End Time"],
+                "Games" : games
+            })
 
         # dump the info
         with open('Jasons/users2.json', 'w') as f :
