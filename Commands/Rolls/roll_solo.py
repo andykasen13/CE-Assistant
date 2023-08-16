@@ -6,8 +6,6 @@ import time
 import monthdelta
 
 # --------- other file imports ---------
-from Web_Interaction.curator import loop, single_run
-from Web_Interaction.scraping import get_games, get_completion_data
 from Helper_Functions.rollable_games import get_rollable_game, get_rollable_game_from_list
 from Helper_Functions.create_embed import create_multi_embed, getEmbed
 from Helper_Functions.roll_string import get_roll_string

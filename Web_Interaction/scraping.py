@@ -1,40 +1,76 @@
-from asyncio import to_thread
+
+
+#-----------------------------------------------------------------------------------------#
+#                                                                                         #
+"                                    DATA SCRAPER                                         "
+#                                                                                         #
+#               updates both databases (tier and name) every 15 minutes                   #      
+#                    and sends update logs to the desired channel                         #
+#                                                                                         #
+#-----------------------------------------------------------------------------------------#
+
+
+# the basics
 import json
 from datetime import datetime
-import re
 import time
-# import screenshot
-from .Screenshot import Screenshot
-from bs4 import BeautifulSoup
 import discord
 import requests
+
+# web shit (like spiderman!)
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+
+# pictures
+from .Screenshot import Screenshot
 from PIL import Image
-from deepdiff import DeepDiff
-from pprint import pprint
-from selenium.webdriver.support.color import Color
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
+# set basic icons
 ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
 
 
 
 # Grab information from json file
-with open('Jasons/secret_info.json') as f :
-    localJSONData = json.load(f)
+# with open('Jasons/secret_info.json') as f :
+#     localJSONData = json.load(f)
 
-steam_api_key = localJSONData['steam_API_key']
+# steam_api_key = localJSONData['steam_API_key']
 
 
 def get_games():
+
+    # create our returnable and update database_name
     fin = game_list()
+
+    # use database_name to update database_tier
     get_by_tier()
+
+    # return embeds
     return fin
+
+
+def single_scrape():
+    api_response = requests.get('https://cedb.me/api/games')
+    json_response = json.loads(api_response.text)
+
+    current_dict = json.loads(open("./Jasons/curator_count.json").read())
+    current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
+    with open('Jasons/curator_count.json', 'w') as f:
+        json.dump(current_dict, f, indent=4)
+
+    database_name = {}
+
+    for game in json_response:
+        database_name[game['name']] = get_game(game)
+
+    with open('Jasons/database_name.json', 'w') as f:
+        json.dump(database_name, f, indent=4)
+
+    get_by_tier()
 
     
 
@@ -70,7 +106,7 @@ def game_list():
 
 
     # icons for CE emoji
-    icons = {   #TODO change these to CE emojis
+    icons = {
         "Tier 0" : '<:tier0:1126268390605070426>',
         "Tier 1" : '<:tier1:1126268393725644810>',
         "Tier 2" : '<:tier2:1126268395483037776>',
@@ -95,24 +131,50 @@ def game_list():
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
         icon = game['icon']
 
+        # if game is a T0 and updated
+        if updated_time > current_newest and game['tier'] == 0:
+            # update game tracker
+            game_tracker.remove(game['name'])
+
+            # get old data
+            test_old = new_data[game['name']]
+
+            # get new data that wont be mutated
+            to_keep = get_game(game)
+
+            #create maluable data
+            test_new = to_keep
+
+            # remove completion data for comparisons
+            test_new.pop('Full Completions')
+            test_new.pop('Total Owners')
+            test_old.pop('Full Completions')
+            test_old.pop('Total Owners')
+
+            # compare old and new data excluding completion data
+            if test_old != test_new:
+                updated_games.extend(special_update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
+                number += 1
+
+            # update data
+            new_data[game['name']] = to_keep
+
         # if game is updated
-        if updated_time > current_newest and game['name'] in list(new_data.keys()):
+        elif updated_time > current_newest and game['name'] in list(new_data.keys()):
             game_tracker.remove(game['name'])
             test_old = new_data[game['name']]
-            test_new = get_game(game)
-            del test_new['Full Completions']
-            del test_new['Total Owners']
-            del test_old['Full Completions']
-            del test_old['Total Owners']
+            to_keep = get_game(game)
+            test_new = to_keep
+            test_new.pop('Full Completions')
+            test_new.pop('Total Owners')
+            test_old.pop('Full Completions')
+            test_old.pop('Total Owners')
             if test_old != test_new:
-                updated_games.append(update(game, new_data[game['name']], driver, number, icon, icons))
+                updated_games.append(update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
                 number += 1
-            new_data[game['name']] = get_game(game)
+            new_data[game['name']] = to_keep
 
         # if game is new
-        elif game['tier'] == 0:
-            new_game = get_game(game)
-            new_data[game['name']] = new_game
         elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
             get_image(number, game['id'], driver)
             new_game = get_game(game)
@@ -141,7 +203,7 @@ def game_list():
             # make embed
             embed = {
                 'Embed' : discord.Embed(
-                    title="__" + game['name'] + "__ added to the site", # TODO make it fill out more info (tier, genre, num of objectives for _ points)
+                    title="__" + game['name'] + "__ added to the site", 
                     colour= 0x48b474,
                     timestamp=datetime.now(),
                     description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
@@ -170,27 +232,26 @@ def game_list():
                 colour= 0xce4e2c,
                 timestamp=datetime.now()
             ),
-            'Image' : discord.File("Pictures/removed.png".format(number), filename="image.png")
+            'Image' : discord.File("removed.png".format(number), filename="image.png")
         }
         embed['Embed'].set_image(url='attachment://image.png')
         updated_games.append(embed)
         del new_data[game]
 
-    # with open('Jasons/curator_count.json', 'w') as f:
-    #     json.dump(current_dict, f, indent=4)
-    # with open('./Jasons/database_name.json', 'w') as f :
-    #     json.dump(new_data, f, indent=4)
+    with open('Jasons/curator_count.json', 'w') as f:
+        json.dump(current_dict, f, indent=4)
+    with open('./Jasons/database_name.json', 'w') as f :
+        json.dump(new_data, f, indent=4)
 
-    print('done')
     return [updated_games, number]
 
 
 # updates for games
-def update(game, old_game, driver, number, icon, icons):
+def update(new_game, old_game, driver, number, icon, icons, name):
         
     # get game info and image
-    new_game = get_game(game)
-    get_image(number, new_game['CE ID'], driver, new_data=new_game)
+    #new_game = get_game(game)
+    get_image(number, new_game['CE ID'], driver)
 
     # initialize the embed description
     update = ""
@@ -206,13 +267,13 @@ def update(game, old_game, driver, number, icon, icons):
 
 
     # ------------------- check objectives -------------------
-    update += objective_update('Primary', new_game, old_game)
-    update += objective_update('Community', new_game, old_game)
+    update += objective_update('Primary', new_game, old_game).replace('🧑‍🦲😼💀😩🥵', '')
+    update += objective_update('Community', new_game, old_game).replace('🧑‍🦲😼💀😩🥵', '')
 
     # ------------------- make final embed -------------------
     embed = {
         'Embed' : discord.Embed(
-            title="__" + game['name'] + "__ updated on the site:",
+            title="__" + name + "__ updated on the site:",
             colour= 0xefd839,
             timestamp=datetime.now(),
             description=update.strip()
@@ -229,6 +290,48 @@ def update(game, old_game, driver, number, icon, icons):
     return embed
 
 
+def special_update(new_game, old_game, driver, number, icon, icons, name):
+    update = ""
+    decimal = 0
+    embeds = []
+
+    update += objective_update('Primary', new_game, old_game)
+    update += objective_update('Community', new_game, old_game)
+
+
+    objective_list = update.split("🧑‍🦲😼💀😩🥵")
+
+    if len(objective_list) > 0:
+        objective_list.pop(0)
+
+
+    for objective_info in objective_list:
+        objective = objective_info[objective_info.find("'")+3:objective_info.rfind("'")-2:]
+        special_image(number, decimal, new_game['CE ID'], driver, objective)
+
+        embed = {
+        'Embed' : discord.Embed(
+            title="__" + name + "__ updated on the site:",
+            colour= 0xefd839,
+            timestamp=datetime.now(),
+            description=objective_info.strip()
+        ),
+        'Image' : discord.File("Pictures/ss{}.png".format(str(number) + '-' + str(decimal)), filename="image.png")
+        }
+        embed['Embed'].set_image(url='attachment://image.png')
+        embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
+        embed['Embed'].set_thumbnail(url=ce_hex_icon)
+        embed['Embed'].set_footer(text="CE Assistant",
+            icon_url=ce_james_icon)
+        
+        decimal += 1
+
+        embeds.append(embed)
+
+
+    return embeds
+
+
 # updates for each objective
 def objective_update(type, new_game, old_game):
 
@@ -241,6 +344,7 @@ def objective_update(type, new_game, old_game):
 
             # if objective is new
             if objective in list(new_game['{} Objectives'.format(type)].keys()) and not objective in list(old_game['{} Objectives'.format(type)].keys()):
+                update += "🧑‍🦲😼💀😩🥵"
                 if objective + " (UNCLEARED)" in list(old_game['{} Objectives'.format(type)].keys()):
                     update += update_embed(new_game, old_game, objective, type, cleared=False)
                 elif type == 'Primary':
@@ -251,11 +355,13 @@ def objective_update(type, new_game, old_game):
 
             # if objective is updated
             elif objective in list(old_game['{} Objectives'.format(type)].keys()) and old_game['{} Objectives'.format(type)][objective] != new_game['{} Objectives'.format(type)][objective]:
+                update += "🧑‍🦲😼💀😩🥵"
                 update += update_embed(new_game, old_game, objective, type)
 
             # if objective is removed
             elif objective in list(old_game['{} Objectives'.format(type)].keys()) and not objective in list(new_game['{} Objectives'.format(type)].keys()):
-                update += "{} was removed from the site".format(objective)
+                update += "🧑‍🦲😼💀😩🥵"
+                update += "'**{}**' was removed from the site".format(objective)
     
 
     return update
@@ -277,7 +383,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
     # ------------------- check points -------------------
     # points increased
     if not cleared and type == 'Primary':
-        update += "\n- **{}** cleared, valued at {} points <:CE_points:1128420207329816597>".format(objective, new['Point Value'])
+        update += "\n- '**{}**' cleared, valued at {} points <:CE_points:1128420207329816597>".format(objective, new['Point Value'])
     elif type == 'Primary':
         if new['Point Value'] > old['Point Value']:
             update += "\n- '**{}**' increased from {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(objective, old['Point Value'], new['Point Value'])
@@ -288,8 +394,8 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
             update += "\n- '**{}**' decreased from {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(objective, old['Point Value'], new['Point Value'])
         
         # points unchanged
-        else:
-            update += "\n- '**{}**' updated".format(objective)
+    else:
+        update += "\n- '**{}**' updated".format(objective)
 
 
     # ------------------- check description -------------------
@@ -554,37 +660,101 @@ def get_completion_data(steam_id):
 
 
 
-def get_image(number, CE_ID, driver, new_data={}):
-
-    if 'Tier' in new_data and new_data['Tier'] == 'Tier 0':
-        pic = Image.open('Pictures/fix_later.png')
-        pic.save('Pictures/ss{}.png'.format(number))
-    else:
-        try:
-            url = 'https://cedb.me/game/' + CE_ID
-            driver.get(url)
+def get_image(number, CE_ID, driver):
+    try:
+        url = 'https://cedb.me/game/' + CE_ID
+        driver.get(url)
+        objective_lst = []
+        while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
             objective_lst = []
-            while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
-                objective_lst = []
-                objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
-        except :
-            print("I'm a doodoo head")
-            get_image(number, CE_ID, driver, new_data)
+            objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
 
-        primary_table = driver.find_element(By.CLASS_NAME, "css-c4zdq5")
-        objective_lst = primary_table.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
-
-        top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
-        bottom_right = objective_lst[len(objective_lst)-2].location
-        size = objective_lst[len(objective_lst)-2].size
-        header_elements = [
-            'bp4-navbar',
-            'tr-fadein'
-        ]
-        border_width = 15
-        ob = Screenshot(bottom_right['y']+size['height']+border_width)
-        im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
         
-        im = Image.open('Pictures/ss{}.png'.format(number))
-        im = im.crop((top_left['x']-border_width, top_left['y']-border_width, bottom_right['x']+size['width']+border_width, bottom_right['y']+size['height']+border_width)) # defines crop points
-        im.save('Pictures/ss{}.png'.format(number))
+    except :
+        print("I'm a doodoo head")
+        get_image(number, CE_ID, driver)
+
+    primary_table = driver.find_element(By.CLASS_NAME, "css-c4zdq5")
+    objective_lst = primary_table.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+    title = driver.find_element(By.TAG_NAME, "h1")
+    top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
+    title_size = title.size['width']
+    title_location = title.location['x']
+
+
+    bottom_right = objective_lst[len(objective_lst)-2].location
+    size = objective_lst[len(objective_lst)-2].size
+
+    header_elements = [
+        'bp4-navbar',
+        'tr-fadein',
+        'css-1ugviwv'
+    ]
+
+    border_width = 15
+
+    top_left_x = top_left['x'] - border_width
+    top_left_y = top_left['y'] - border_width
+    bottom_right_y = bottom_right['y'] + size['height'] + border_width
+
+    if title_location + title_size > bottom_right['x'] + size['width']:
+        bottom_right_x = title_location + title_size + border_width
+    else:
+        bottom_right_x = bottom_right['x'] + size['width'] + border_width
+
+    
+    ob = Screenshot(bottom_right_y)
+    im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
+    
+    im = Image.open('Pictures/ss{}.png'.format(number))
+    im = im.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y)) # defines crop points
+    im.save('Pictures/ss{}.png'.format(number))
+
+
+
+
+def special_image(number, decimal, CE_ID, driver, objective_name):
+    try:
+        url = 'https://cedb.me/game/' + CE_ID
+        driver.get(url)
+        objective_lst = []
+        while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
+            objective_lst = []
+            objective_lst = driver.find_elements(By.TAG_NAME, "tr")
+
+        
+    except :
+        print("I'm a doodoo head")
+        special_image(number, decimal, CE_ID, driver, objective_name)
+
+
+    for objective in objective_lst:
+        if objective_name == objective.find_element(By.TAG_NAME, "h3").text:
+            target_objective = objective
+            break
+    
+    top_left = target_objective.location
+    bottom_right = target_objective.location
+    size = target_objective.size
+
+    header_elements = [
+        'bp4-navbar',
+        'tr-fadein',
+        'css-1ugviwv'
+    ]
+
+    border_width = 15
+
+    top_left_x = top_left['x'] - border_width
+    top_left_y = top_left['y'] - border_width
+    bottom_right_y = bottom_right['y'] + size['height'] + border_width
+    bottom_right_x = bottom_right['x'] + size['width'] + border_width
+
+    
+    ob = Screenshot(bottom_right_y)
+    im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(str(number) + '-' + str(decimal)), is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
+    im = Image.open('Pictures/ss{}.png'.format(str(number) + '-' + str(decimal)))
+    im = im.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y)) # defines crop points
+    im.save('Pictures/ss{}.png'.format(str(number) + '-' + str(decimal)))
+
+    return
