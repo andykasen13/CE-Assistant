@@ -160,7 +160,6 @@
             "Getting Over It with Bennett Foddy",
             "Golfing Over It with Alva Majo",
             "Goscurry",
-            "Gravity",
             "Happenlance",
             "Happiness Drops!",
             "Heavenly Bodies",
@@ -589,6 +588,7 @@
             "Elasto Mania II",
             "GAUGE",
             "Golf Gang",
+            "Gravity",
             "Heck Deck",
             "I am Bread",
             "Inertial Drift",
@@ -846,7 +846,6 @@
             "They Bleed Pixels",
             "Titan Souls",
             "Vanquish",
-            "Voidigo",
             "Ys: The Oath in Felghana",
             "Yumori Forest"
         ],
@@ -1091,7 +1090,8 @@
             "APE OUT",
             "Hollow Knight",
             "Katana ZERO",
-            "Tanuki Justice"
+            "Tanuki Justice",
+            "Voidigo"
         ],
         "Arcade": [
             "A Dance of Fire and Ice",

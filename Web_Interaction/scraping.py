@@ -78,7 +78,7 @@ def game_list():
     # Set selenium driver and preferences
     options = Options()
     options.add_argument('headless')
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Edge(options=options)
     driver.set_window_size(width=1440, height=8*2000)
 
     # grab first game to get color on the rest of them
@@ -142,14 +142,14 @@ def game_list():
             # get new data that wont be mutated
             to_keep = get_game(game)
 
-            #create maluable data
+            # create maluable data
             test_new = to_keep
 
             # remove completion data for comparisons
-            test_new.pop('Full Completions')
-            test_new.pop('Total Owners')
-            test_old.pop('Full Completions')
-            test_old.pop('Total Owners')
+            test_new['Full Completions'] = None
+            test_new['Total Owners'] = None
+            test_old['Full Completions'] = None
+            test_old['Total Owners'] = None
 
             # compare old and new data excluding completion data
             if test_old != test_new:
@@ -157,7 +157,7 @@ def game_list():
                 number += 1
 
             # update data
-            new_data[game['name']] = to_keep
+            new_data[game['name']] = get_game(game)
 
         # if game is updated
         elif updated_time > current_newest and game['name'] in list(new_data.keys()):
@@ -165,14 +165,14 @@ def game_list():
             test_old = new_data[game['name']]
             to_keep = get_game(game)
             test_new = to_keep
-            test_new.pop('Full Completions')
-            test_new.pop('Total Owners')
-            test_old.pop('Full Completions')
-            test_old.pop('Total Owners')
+            test_new['Full Completions'] = None
+            test_new['Total Owners'] = None
+            test_old['Full Completions'] = None
+            test_old['Total Owners'] = None
             if test_old != test_new:
                 updated_games.append(update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
                 number += 1
-            new_data[game['name']] = to_keep
+            new_data[game['name']] = get_game(game)
 
         # if game is new
         elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
@@ -394,6 +394,8 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
             update += "\n- '**{}**' decreased from {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(objective, old['Point Value'], new['Point Value'])
         
         # points unchanged
+        else:
+            update += "\n- '**{}**' updated".format(objective)
     else:
         update += "\n- '**{}**' updated".format(objective)
 

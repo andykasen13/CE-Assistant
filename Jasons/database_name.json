@@ -1659,16 +1659,16 @@
         "Steam ID": "250110",
         "Tier": "Tier 2",
         "Genre": "Bullet Hell",
-        "Full Completions": 10,
-        "Total Owners": 50,
+        "Full Completions": 0,
+        "Total Owners": 93,
         "Primary Objectives": {
             "Assault Battery Charge": {
                 "Description": "Complete Boss Rush mode. / Reach layer 25 in Infinity Drive mode. / Earn an S+ ranking on all campaign levels.",
                 "Point Value": 20,
                 "Achievements": {
-                    "e2259540-deb2-434c-b139-5c1c3601b102": "Assault Android Awesome",
                     "c2b94d1b-bd23-4b14-b1fc-01b65bce5f0f": "I Am Become Death",
-                    "561a27ee-bf43-4795-837c-7f3f9f6e5b15": "Out Of Your Depth"
+                    "561a27ee-bf43-4795-837c-7f3f9f6e5b15": "Out Of Your Depth",
+                    "e2259540-deb2-434c-b139-5c1c3601b102": "Assault Android Awesome"
                 }
             },
             "Assault Android Awesome+ (UNCLEARED)": {
@@ -9819,19 +9819,19 @@
     "Gravity": {
         "CE ID": "ff73f8f0-e5c6-4c90-9702-add88b698e03",
         "Steam ID": "1333090",
-        "Tier": "Tier 1",
+        "Tier": "Tier 2",
         "Genre": "Arcade",
-        "Full Completions": 0,
-        "Total Owners": 96,
+        "Full Completions": 1,
+        "Total Owners": 98,
         "Primary Objectives": {
             "Gravitron": {
-                "Description": "Complete all official level packs besides the Zeta Pack.",
+                "Description": "Complete all other official level packs.",
                 "Point Value": 15,
                 "Requirements": "Screenshots of level select menu."
             },
-            "Space-Time Anomaly (UNCLEARED)": {
+            "Space-Time Anomaly": {
                 "Description": "Complete the Zeta Pack.",
-                "Point Value": 1,
+                "Point Value": 15,
                 "Requirements": "Screenshot of level select menu."
             }
         },
@@ -27678,39 +27678,39 @@
     "Voidigo": {
         "CE ID": "7c564583-401b-418e-85d7-705696a1d29d",
         "Steam ID": "1304680",
-        "Tier": "Tier 3",
+        "Tier": "Tier 5",
         "Genre": "Action",
-        "Full Completions": 0,
-        "Total Owners": 34,
+        "Full Completions": 1,
+        "Total Owners": 35,
         "Primary Objectives": {
+            "Champion of the Antivoid": {
+                "Description": "Complete the Final Run on \"Impossible\" difficulty.",
+                "Point Value": 140,
+                "Achievements": {
+                    "340c5c1e-3439-4beb-99c2-a83b04254ca8": "An Impossible End"
+                },
+                "Requirements": "Video of the run. "
+            },
             "Darkness Looming": {
-                "Description": "Complete a run on Impossible difficulty. ",
+                "Description": "Complete a run on \"Impossible\" difficulty. ",
                 "Point Value": 30,
                 "Achievements": {
                     "1da52e35-40fd-4ac4-875b-bf32b817ccc1": "Champion of the Antivoid"
                 }
             },
             "D\u00e9j\u00e0 Void": {
-                "Description": "Complete Loop 3 on Impossible difficulty. ",
+                "Description": "Complete Loop 3 on \"Impossible\" difficulty. ",
                 "Point Value": 20,
                 "Achievements": {
                     "58bcab3d-2619-43b4-ac57-d763cbe4b5dc": "Void Loop"
                 }
             },
             "Corruption Begins": {
-                "Description": "Complete a run on Brutal difficulty.",
+                "Description": "Complete a run on \"Brutal\" difficulty.",
                 "Point Value": 10,
                 "Achievements": {
                     "7a089a57-4dbb-4c0d-8463-c9672a2bf39d": "Conqueror"
                 }
-            },
-            "Champion of the Antivoid (UNVALUED) ": {
-                "Description": "Complete the Final Run on Impossible difficulty.",
-                "Point Value": 1,
-                "Achievements": {
-                    "340c5c1e-3439-4beb-99c2-a83b04254ca8": "An Impossible End"
-                },
-                "Requirements": "Video of the run. "
             }
         },
         "Community Objectives": {}
