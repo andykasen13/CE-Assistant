@@ -6,6 +6,8 @@ from datetime import timedelta
 import monthdelta
 import time
 
+from Helper_Functions.update import update_p
+
 async def roll_completed(ended_roll_name : str, casino_channel : discord.channel, user_name : str) :
 
     with open('Jasons/users2.json', 'r') as dbU:
@@ -48,11 +50,12 @@ async def roll_completed(ended_roll_name : str, casino_channel : discord.channel
     with open('Jasons/users2.json', 'w') as f :
         json.dump(database_user, f, indent=4)
 
-async def roll_failed(ended_roll_name : str, casino_channel : discord.channel, user_name : str) :
+async def roll_failed(ended_roll_name : str, casino_channel : discord.channel, user_name : str, log_channel : discord.TextChannel) :
 
 
     #TODO: if the game is 'pending...', then don't report it. it just means that they can rewrite the command again.
 
+    # Set up the cooldowns
     cooldowns = {
         "One Hell of a Day" : timedelta(14),
         #"One Hell of a Week" : monthdelta(1),
@@ -78,9 +81,11 @@ async def roll_failed(ended_roll_name : str, casino_channel : discord.channel, u
         "Russian Roulette" : "six months"
     }
 
+    # Open the database
     with open('Jasons/users2.json', 'r') as dbU:
         database_user = json.load(dbU)
     
+    # Find the roll in the user's database
     roll_num = 0
     for roll in database_user[user_name]["Current Rolls"] :
         if roll["Event Name"] == ended_roll_name : break
@@ -90,17 +95,24 @@ async def roll_failed(ended_roll_name : str, casino_channel : discord.channel, u
     # if it turns out that they actually did complete the roll but just forgot to update their profile, 
     # run the function above.
 
+    # - - - - - The roll is 'pending...' - - - - - 
     if database_user[user_name]["Current Rolls"][roll_num]["Games"] == ['pending...'] :
-        print('silly!!')
+        print('pending... was removed. ')
         del database_user[user_name]["Current Rolls"][roll_num]
         await casino_channel.send('you can now roll {} again. sorry if your message got deltelhfjdsl lol'.format(ended_roll_name))
+        await log_channel.send('{} can now roll {} again.'.format(database_user[user_name]["Discord ID"], ended_roll_name))
 
         with open('Jasons/users2.json', 'w') as f :
             json.dump(database_user, f, indent=4)
 
         return
+    
+    # Update the user's database to see if the roll was completed or not
+    await update_p(user_name)
+    
+    # - - - - - The user completed the roll - - - - -
 
-
+    # - - - - - The user has failed the roll - - - - - 
     await casino_channel.send(f"<@{database_user[user_name]['Discord ID']}>, you have failed {ended_roll_name}."
                               + f" Your cooldown will end in {cooldowns_str[ended_roll_name]}" 
                               + f" (<t:{int(time.mktime((datetime.datetime.now()+cooldowns[ended_roll_name]).timetuple()))}>).")

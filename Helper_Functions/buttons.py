@@ -103,13 +103,20 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
                                                     "Games" : games})
         
         elif reroll :
-            c_num = -1
+            c_nums = []
             for index, c_roll in enumerate(database_user[target_user]["Current Rolls"]) :
                 if c_roll["Event Name"] == event_name :
-                    c_num = index
-                    break
+                    c_nums.append(index)
+                    
+
+            print(c_nums)
             
-            if c_num == -1 : return await interaction.followup.send('you havent rolled this game. except i should have cleared that already. something is wrong')
+            if c_nums == [] : return await interaction.followup.send('you havent rolled this game. except i should have cleared that already. something is wrong')
+
+            if len(c_nums) > 1 : 
+                del database_user[target_user]["Current Rolls"][c_nums[1]]
+
+            c_num = c_nums[0]
 
             database_user[target_user]['Current Rolls'][c_num] = ({
                 "Event Name" : event_name,

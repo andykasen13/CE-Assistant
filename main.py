@@ -608,6 +608,9 @@ async def update(interaction : discord.Interaction) :
 @app_commands.describe(embed_id="The message ID of the embed you'd like to change the reason of")
 async def reason(interaction : discord.Interaction, reason : str, embed_id : str) :
 
+    # defer and make ephemeral
+    await interaction.response.defer(ephemeral=True)
+
     # grab the site additions channel
     # TODO: update this in the CE server
     site_additions_channel = client.get_channel(1128742486416834570)
@@ -618,7 +621,7 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 
     # if it errors, message is not in the site-additions channel
     except :
-        return await interaction.response.send_message("This message is not in the <#1128742486416834570> channel.")
+        return await interaction.followup.send("This message is not in the <#1128742486416834570> channel.")
     
     # grab the embed
     embed = message.embeds[0]
@@ -636,7 +639,7 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
     await message.edit(embed=embed)
 
     # and send a response to the original interaction
-    await interaction.response.send_message("worked", ephemeral=True)
+    await interaction.followup.send("worked", ephemeral=True)
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
@@ -687,29 +690,36 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
         if(c_roll["Event Name"] == event) : 
             roll_num = index
         
-    
-    print(roll_num)
-
+    # if the user isn't participating in the event
     if roll_num == -1 : return await interaction.followup.send('You are not currently participating in {}!'.format(event))
 
+    # the user is ready to participate in the event
     await interaction.followup.send('You are eligible to reroll {}.'.format(event))
 
+    # set up confirmation embed
     confirm_embed = discord.Embed(
         title="Are you sure?",
         timestamp=datetime.datetime.now(),
         description="You are asking to reroll {}. Your game(s) will switch from {} to other game(s).".format(event, database_user[user_name]["Current Rolls"][roll_num]["Games"])
         + " You will not recieve any additional time to complete this roll - and your deadline is still <t:{}>.".format(database_user[user_name]["Current Rolls"][roll_num]["End Time"])
     )
-    
+
+    # add buttons
+
+
+    # send confirmation button  
     await interaction.followup.send(embed=confirm_embed)
 
+    # run solo command if solo event
     if event in local_events_solo :
         await solo_command(interaction, event, reroll = True)
 
+    # run co op command if co op event
     elif event in local_events_co_op :
         return await interaction.followup.send('Co-op and PvP rerolls coming soon!')
         await roll_co_op_command(interaction, event)
     
+    # what happened here
     else : await interaction.followup.send('something has gone horribly horribly wrong. please let andy know')
     
 
@@ -756,6 +766,6 @@ async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
     print("Ready!")
     # await get_tasks()
-    await master_loop.start(client)
+    # await master_loop.start(client)
 
 client.run(discord_token)

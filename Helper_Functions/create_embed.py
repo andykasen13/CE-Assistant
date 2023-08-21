@@ -115,7 +115,7 @@ def getEmbed(game_name, authorID):
     
     # Save important information
     imageLink = jsonData[correct_app_id]['data']['header_image']
-    gameDescription = jsonData[correct_app_id]['data']['short_description']
+    gameDescription = str(jsonData[correct_app_id]['data']['short_description']).replace('&amp;', '&').replace('&quot;', '\"')
     if(jsonData[correct_app_id]['data']['is_free']) : 
         gamePrice = "Free"
     

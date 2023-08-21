@@ -98,6 +98,26 @@ def update_p(user_id : int) :
     user_dict[ce_id]["Cooldowns"] = database_user[user]["Cooldowns"]
     user_dict[ce_id]["Casino Score"] = database_user[user]["Casino Score"]
 
+    with open('Jasons/database_name.json', 'r') as ff :
+        database_name = json.load(ff)
+
+    # Check if any rolls have been completed
+    for current_roll in user_dict[ce_id]['Current Rolls'] :
+        roll_completed = True
+
+        for game in current_roll["Games"] :
+            del database_name[game]["Community Objectives"]
+            print(user_dict[ce_id]["Owned Games"][game]["Primary Objectives"])
+            del database_name[game]["Achievements"]
+            del database_name[game]["Description"]
+            print(database_name[game]["Primary Objectives"])
+            if not (game in user_dict[ce_id]["Owned Games"] and user_dict[ce_id]["Owned Games"][game] == database_name[game]) : roll_completed = False
+        
+        if not roll_completed : continue
+        else :
+            print(f'{current_roll["Event Name"]} completed')
+
+
     # Add the user file to the database
     database_user.update(user_dict)
 

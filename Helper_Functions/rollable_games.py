@@ -136,15 +136,13 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
                 gamePrice = 999999
             
             # ----- Grab SteamHunters completion time -----
-            print("getting completions data'")
             completion_time = get_completion_data(gameID)
             if(completion_time == "none") :
                 print(f"No completion data for {returned_game}.") 
                 continue
             else : completion_time = int(completion_time)
 
-            print(f"Game price is {gamePrice}... {gamePrice < price_limit}")
-            print(f"Game completion time is {completion_time}... {completion_time < avg_completion_time_limit}")
+            print(f"Game price is {gamePrice}... {gamePrice < price_limit}" + f"Game completion time is {completion_time}... {completion_time < avg_completion_time_limit}")
 
             # ----- Check to see if rollable -----
             if(gamePrice < price_limit and completion_time < avg_completion_time_limit) :
