@@ -238,7 +238,7 @@ def game_list():
         updated_games.append(embed)
         del new_data[game]
 
-    with open('Jasons/curator_count.json', 'w') as f:
+    with open('./Jasons/curator_count.json', 'w') as f:
         json.dump(current_dict, f, indent=4)
     with open('./Jasons/database_name.json', 'w') as f :
         json.dump(new_data, f, indent=4)
