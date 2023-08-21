@@ -17,17 +17,17 @@
         "Reroll Tickets": 0,
         "Casino Score": 0,
         "Owned Games": {
+            "Hollow Knight": {
+                "Primary Objectives": {
+                    "Void Given Focus": 30,
+                    "Cloak and Nail": 20
+                }
+            },
             "Neon White": {
                 "Primary Objectives": {
                     "Demon Exterminator": 35,
                     "Rocket League": 10,
                     "Heaven's Janitor": 5
-                }
-            },
-            "Hollow Knight": {
-                "Primary Objectives": {
-                    "Void Given Focus": 30,
-                    "Cloak and Nail": 20
                 }
             },
             "Teenage Mutant Ninja Turtles: Shredder's Revenge": {
@@ -45,14 +45,14 @@
                     "Seeing is Believing": 20
                 }
             },
-            "Celeste": {
-                "Primary Objectives": {
-                    "Mountain Climber": 20
-                }
-            },
             "Deepest Sword": {
                 "Primary Objectives": {
                     "Sword in the Hole": 20
+                }
+            },
+            "Celeste": {
+                "Primary Objectives": {
+                    "Mountain Climber": 20
                 }
             },
             "Haiku, the Robot": {
@@ -60,19 +60,14 @@
                     "Anti-Corruption Protocol": 15
                 }
             },
-            "Garfield Kart - Furious Racing": {
-                "Primary Objectives": {
-                    "Lasagna Fuel": 10
-                }
-            },
             "Death's Door": {
                 "Primary Objectives": {
                     "Knocking on..": 10
                 }
             },
-            "GoNNER": {
+            "Garfield Kart - Furious Racing": {
                 "Primary Objectives": {
-                    "Slick Ikk": 5
+                    "Lasagna Fuel": 10
                 }
             },
             "Clustertruck": {
@@ -80,14 +75,14 @@
                     "Mothertrucker": 5
                 }
             },
-            "TUNIC": {
-                "Primary Objectives": {
-                    "Action Over": 5
-                }
-            },
             "Untitled Goose Game": {
                 "Primary Objectives": {
                     "Agent of Chaos": 5
+                }
+            },
+            "TUNIC": {
+                "Primary Objectives": {
+                    "Action Over": 5
                 }
             },
             "Cuphead": {
@@ -100,24 +95,36 @@
                     "Cat Fanatic": 5
                 }
             },
-            "Hextech Mayhem: A League of Legends Story\u2122": {},
-            "ibb & obb": {},
-            "Dead Cells": {},
-            "The Witness": {},
-            "Ultimate Custom Night": {},
-            "ZeroRanger": {},
-            "Raw Data": {},
-            "Gunborg: Dark Matters": {},
-            "Crash Bandicoot\u2122 N. Sane Trilogy": {},
+            "GoNNER": {
+                "Primary Objectives": {
+                    "Slick Ikk": 5
+                }
+            },
+            "Lone Fungus": {},
             "Little Nightmares": {},
-            "Stardew Valley": {},
-            "Cyber Hook": {},
-            "Unrailed!": {},
-            "Neon Boost": {},
-            "You Have to Win the Game": {},
+            "ibb & obb": {},
+            "Hextech Mayhem: A League of Legends Story\u2122": {},
+            "The Witness": {},
             "Clone Drone in the Danger Zone": {},
+            "Dead Cells": {},
+            "Ultimate Custom Night": {},
+            "You Have to Win the Game": {},
+            "Neon Boost": {},
+            "Unrailed!": {},
+            "Cyber Hook": {},
+            "Stardew Valley": {},
+            "Crash Bandicoot\u2122 N. Sane Trilogy": {},
+            "Gunborg: Dark Matters": {},
+            "Raw Data": {},
             "Enter the Gungeon": {},
             "Crashlands": {},
+            "- Challenge Enthusiasts -": {
+                "Community Objectives": {
+                    "Intro Quest": true,
+                    "One Hell of a Day": true
+                }
+            },
+            "Blasphemous": {},
             "Muck": {},
             "Portal": {},
             "- \u200ePuzzle Games -": {
@@ -134,18 +141,14 @@
             "Overcooked! 2": {},
             "Sifu": {},
             "PAYDAY 2": {},
-            "- Challenge Enthusiasts -": {
-                "Community Objectives": {
-                    "Intro Quest": true,
-                    "One Hell of a Day": true
-                }
-            },
+            "Rain World": {},
             "TowerFall Ascension": {},
             "The Messenger": {},
             "Sonic Mania": {},
             "Pacify": {},
             "Lorera": {},
             "Halo: The Master Chief Collection": {},
+            "ZeroRanger": {},
             "DOOM Eternal": {},
             "Rise of the Tomb Raider\u2122": {},
             "Getting Over It with Bennett Foddy": {}
@@ -153,55 +156,10 @@
         "Cooldowns": {},
         "Current Rolls": [
             {
-                "Event Name": "One Hell of a Day",
-                "End Time": 1692123531,
-                "Games": [
-                    "Ellipsis"
-                ]
-            },
-            {
-                "Event Name": "One Hell of a Week",
-                "End Time": 1692643671,
-                "Games": [
-                    "Blast Rush Classic",
-                    "High Hell",
-                    "FEWAR-DVD",
-                    "Only Up!",
-                    "Cyjin: The Cyborg Ninja"
-                ]
-            },
-            {
-                "Event Name": "Two Week T2 Streak",
-                "End Time": 1693248499,
-                "Games": [
-                    "Frost",
-                    "GUNBIRD 2"
-                ]
-            },
-            {
-                "Event Name": "Two 'Two Week T2 Streak' Streak",
-                "End Time": 1694458144,
-                "Games": [
-                    "Remnants of Naezith",
-                    "Xeno Crisis",
-                    "Just Shapes & Beats",
-                    "Witcheye"
-                ]
-            },
-            {
                 "Event Name": "Never Lucky",
                 "End Time": 1692039055,
                 "Games": [
-                    "Hypnocult"
-                ]
-            },
-            {
-                "Event Name": "Triple Threat",
-                "End Time": 1694458316,
-                "Games": [
-                    "ARMED SEVEN",
-                    "Maiden and Spell",
-                    "DANMAKAI: Red Forbidden Fruit"
+                    "UNSIGHTED"
                 ]
             }
         ],
