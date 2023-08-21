@@ -106,12 +106,18 @@ def update_p(user_id : int) :
         roll_completed = True
 
         for game in current_roll["Games"] :
+            # remove COs from the equation
             del database_name[game]["Community Objectives"]
-            print(user_dict[ce_id]["Owned Games"][game]["Primary Objectives"])
-            del database_name[game]["Achievements"]
-            del database_name[game]["Description"]
-            print(database_name[game]["Primary Objectives"])
-            if not (game in user_dict[ce_id]["Owned Games"] and user_dict[ce_id]["Owned Games"][game] == database_name[game]) : roll_completed = False
+
+            # format database_name like users2.json
+            for dbN_objective in database_name[game]["Primary Objectives"] :
+               if("Achievements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Achievements"]
+               if("Requirements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Requirements"]
+               del database_name[game]["Primary Objectives"][dbN_objective]["Description"]
+               database_name[game]["Primary Objectives"][dbN_objective] = database_name[game]["Primary Objectives"][dbN_objective]["Point Value"]
+            
+
+            if (game not in user_dict[ce_id]["Owned Games"] or user_dict[ce_id]["Owned Games"][game] != database_name[game]) : roll_completed = False
         
         if not roll_completed : continue
         else :
