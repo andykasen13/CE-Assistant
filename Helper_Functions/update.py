@@ -1,9 +1,10 @@
+import time
 import discord
 import requests
 import json
 import datetime
 
-def update_p(user_id : int) :
+async def update_p(user_id : int, log_channel : discord.TextChannel, casino_channel : discord.TextChannel) :
     # Open the database
     with open('Jasons/users2.json', 'r') as dbU :
         database_user = json.load(dbU)
@@ -102,7 +103,7 @@ def update_p(user_id : int) :
         database_name = json.load(ff)
 
     # Check if any rolls have been completed
-    for current_roll in user_dict[ce_id]['Current Rolls'] :
+    for index, current_roll in enumerate(user_dict[ce_id]['Current Rolls']) :
         roll_completed = True
 
         for game in current_roll["Games"] :
@@ -117,11 +118,21 @@ def update_p(user_id : int) :
                database_name[game]["Primary Objectives"][dbN_objective] = database_name[game]["Primary Objectives"][dbN_objective]["Point Value"]
             
 
-            if (game not in user_dict[ce_id]["Owned Games"] or user_dict[ce_id]["Owned Games"][game] != database_name[game]) : roll_completed = False
+            if (game not in user_dict[ce_id]["Owned Games"] or user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"]) : roll_completed = False
+            else : print('{} complete'.format(game))
         
         if not roll_completed : continue
-        else :
-            print(f'{current_roll["Event Name"]} completed')
+        
+        print(f'{current_roll["Event Name"]} completed')
+
+        current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
+
+        user_dict[ce_id]["Completed Rolls"].append(current_roll)
+
+        del user_dict[ce_id]["Current Rolls"][index]
+
+        await log_channel.send("<@{}>, you have completed {}! Congratulations!".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+        
 
 
     # Add the user file to the database

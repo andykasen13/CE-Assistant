@@ -578,7 +578,10 @@ async def update(interaction : discord.Interaction) :
     # Defer the message
     await interaction.response.defer()
 
-    str = update_p(interaction.user.id)
+    log_channel = client.get_channel(1141886539157221457)
+    casino_channel = client.get_channel(811286469251039333)
+
+    str = await update_p(interaction.user.id, log_channel, casino_channel)
 
     if str == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
     elif(str == "Updated") :
