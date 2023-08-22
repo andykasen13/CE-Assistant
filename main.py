@@ -24,7 +24,7 @@ from selenium import webdriver
 from PIL import Image
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from Helper_Functions.Scheduler import get_tasks
+from Helper_Functions.Scheduler import get_tasks, process_schedule
 
 # --------- other file imports ---------
 from Web_Interaction.loopty_loop import master_loop, thread_curate
@@ -766,6 +766,7 @@ async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
     print("Ready!")
     # await get_tasks()
-    # await master_loop.start(client)
+    await process_schedule.start()
+    await master_loop.start(client)
 
 client.run(discord_token)
