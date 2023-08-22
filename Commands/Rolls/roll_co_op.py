@@ -7,7 +7,6 @@ from Helper_Functions.buttons import *
 
 
 async def co_op_command(interaction : discord.Interaction, event, partner : discord.User, reroll : bool) :
-    await interaction.response.defer()
 
     # Open the user database
     with open('Jasons/users2.json', 'r') as dbU:
@@ -26,8 +25,12 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
     # Grab the information for both users
     for user in database_user :
-        if database_user[user]["Discord ID"] == interaction.user.id : interaction_user_data = database_user[user]
-        if database_user[user]["Discord ID"] == partner.id : target_user_data = database_user[user]
+        if database_user[user]["Discord ID"] == interaction.user.id : 
+            interaction_user_data = database_user[user]
+            int_user_id = user
+        if database_user[user]["Discord ID"] == partner.id : 
+            target_user_data = database_user[user]
+            part_user_id = user
     
     # Make sure both users are registered in the database
     if interaction_user_data == "" : return await interaction.followup.send("You are not registered in the CE Assistant database.")
@@ -135,6 +138,21 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             # Get page buttons
             await get_buttons(view, embeds)
+            
+            database_user[int_user_id]["Current Rolls"].append({
+                "Event Name" : event,
+                "Partner" : target_user_data["CE ID"],
+                "Games" : [target_user_selected_game]
+            })
+
+            database_user[part_user_id]["Current Rolls"].append({
+                "Event Name" : event,
+                "Partner" : interaction_user_data["CE ID"],
+                "Games" : [interaction_user_selected_game]
+            })
+
+            with open('Jasons/users2.json', 'w') as dbU :
+                json.dump(database_user, dbU, indent=4)
 
             # and edit the message.
             return await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
