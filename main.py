@@ -73,10 +73,27 @@ async def help(interaction : discord.Interaction) :
     # Defer the message
     await interaction.response.defer()
 
+    class HelpSelect(discord.ui.Select):
+        def __init__(self):
+            options=[
+                discord.SelectOption(label="Rolls",emoji="🎲",description="This is option 1!"),
+                discord.SelectOption(label="Check Rolls",emoji="📖",description="This is option 2!"),
+                discord.SelectOption(label="Site Additions",emoji="🤭",description="This is option 3!"),
+                discord.SelectOption(label="Curator", emoji="🤓", description="This is option 4!")
+            ]
+            super().__init__(placeholder="Select an option",max_values=1,min_values=1,options=options)
+        async def callback(self, interaction: discord.Interaction):
+            await interaction.response.edit_message(content=f"Your choice is {self.values[0]}!",ephemeral=True)
+
+    class HelpSelectView(discord.ui.View):
+        def __init__(self, *, timeout = 180):
+            super().__init__(timeout=timeout)
+            self.add_item(HelpSelect())
+
     # Create the view (will be used for buttons later)
     view = discord.ui.View(timeout=600)
 
-    return await interaction.followup.send('Help command coming soon!')
+    return await interaction.followup.send('Help command coming soon!', view=HelpSelectView(), ephemeral=True)
 
     helpInfo = {
         "Rolls" : "This bot has the ability to roll random games for any event in the Challenge Enthusiast server. P.S. andy reminder to get autofill to work!",
@@ -403,6 +420,7 @@ async def color(interaction) :
 
 
 
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------TEST COMMAND-------------------------------------------------------------------- #
@@ -411,6 +429,10 @@ async def color(interaction) :
 @tree.command(name="test", description="test", guild=discord.Object(id=guild_ID))
 async def test(interaction : discord.Interaction, role : discord.Role) :
     await interaction.response.defer()
+
+    await interaction.followup.send("Menus!")
+
+    return
 
     casino_channel = client.get_channel(811286469251039333)
     
