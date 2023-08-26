@@ -23,10 +23,14 @@ def get_tasks():
                 "User CE ID": user["CE ID"]
             }
 
-            datetimes.append(datetime.time.utcfromtimestamp(int(current_roll["End Time"])))
+            datetimes.append(datetime.datetime.utcfromtimestamp(int(current_roll["End Time"])).time())
 
-    with open("./Jasons/tasks.json", "w") as f:
-        json.dump(fin, f, indent=4)
+    # with open("./Jasons/tasks.json", "w") as f:
+    #     json.dump(fin, f, indent=4)
+
+    print("Scheduled")
+    print(datetimes)
+    print(datetimes[0])
 
     return datetimes
     
