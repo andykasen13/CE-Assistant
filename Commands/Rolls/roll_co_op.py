@@ -163,14 +163,24 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             # Get page buttons
             await get_buttons(view, embeds)
+
+            i_num = 0
+            for roll_i in database_user[int_user_id]["Current Rolls"] :
+                if(roll_i["Games"] == ['pending...']) : break
+                i_num += 1
             
-            database_user[int_user_id]["Current Rolls"].append({
+            t_num = 0
+            for roll_t in database_user[int_user_id]["Current Rolls"] :
+                if(roll_t["Games"] == ['pending...']) : break
+                t_num += 1
+            
+            database_user[int_user_id]["Current Rolls"][i_num] = ({
                 "Event Name" : event,
                 "Partner" : target_user_data["CE ID"],
                 "Games" : [target_user_selected_game]
             })
 
-            database_user[part_user_id]["Current Rolls"].append({
+            database_user[part_user_id]["Current Rolls"][t_num] = ({
                 "Event Name" : event,
                 "Partner" : interaction_user_data["CE ID"],
                 "Games" : [interaction_user_selected_game]
@@ -271,34 +281,44 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     "Tier 4" : timedelta(56)
                 }
 
+                i_num = 0
+                for roll_i in database_user[int_user_id]["Current Rolls"] :
+                    if(roll_i["Games"] == ['pending...']) : break
+                    i_num += 1
+                
+                t_num = 0
+                for roll_t in database_user[int_user_id]["Current Rolls"] :
+                    if(roll_t["Games"] == ['pending...']) : break
+                    t_num += 1
+
                 if(tier_num == "Tier 5") : 
 
-                    database_user[int_user_id]["Current Rolls"].append({
+                    database_user[int_user_id]["Current Rolls"][i_num] = ({
                         "Event Name" : event,
                         "Partner" : target_user_data["CE ID"],
                         "Games" : [game]
                     })
 
-                    database_user[part_user_id]["Current Rolls"].append({
+                    database_user[part_user_id]["Current Rolls"][t_num] = ({
                         "Event Name" : event,
                         "Partner" : interaction_user_data["CE ID"],
                         "Games" : [game]
                     })
+
                 
                 else :
                 
-                    database_user[int_user_id]["Current Rolls"].append({
+                    database_user[int_user_id]["Current Rolls"][i_num] = ({
                         "Event Name" : event,
                         "Partner" : target_user_data["CE ID"],
                         "End Time" : int(time.mktime((datetime.datetime.now()+end_db[tier_num]).timetuple())),
                         "Games" : [game]
                     })
 
-                    database_user[part_user_id]["Current Rolls"].append({
+                    database_user[part_user_id]["Current Rolls"][t_num] = ({
                         "Event Name" : event,
                         "Partner" : interaction_user_data["CE ID"],
                         "End Time" : int(time.mktime((datetime.datetime.now()+end_db[tier_num]).timetuple())),
-
                         "Games" : [game]
                     })
 
@@ -405,13 +425,23 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             # ------ Get page buttons -------
             await get_buttons(view, embeds)
 
-            database_user[int_user_id]["Current Rolls"].append({
+            i_num = 0
+            for roll_i in database_user[int_user_id]["Current Rolls"] :
+                if(roll_i["Games"] == ['pending...']) : break
+                i_num += 1
+            
+            t_num = 0
+            for roll_t in database_user[int_user_id]["Current Rolls"] :
+                if(roll_t["Games"] == ['pending...']) : break
+                t_num += 1
+
+            database_user[int_user_id]["Current Rolls"][i_num] = ({
                 "Event Name" : event,
                 "Partner" : target_user_data["CE ID"],
                 "Games" : games
             })
 
-            database_user[part_user_id]["Current Rolls"].append({
+            database_user[part_user_id]["Current Rolls"][t_num] = ({
                 "Event Name" : event,
                 "Partner" : interaction_user_data["CE ID"],
                 "Games" : games
@@ -502,13 +532,23 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 embed.add_field(name="Tier", value=database_name[game]["Tier"])
                 embed.add_field(name="Completion", value="When you have completed, submit your proof to <#811286469251039333>. The first to do so wins.")
 
-                database_user[int_user_id]["Current Rolls"].append({
+                i_num = 0
+                for roll_i in database_user[int_user_id]["Current Rolls"] :
+                    if(roll_i["Games"] == ['pending...']) : break
+                    i_num += 1
+                
+                t_num = 0
+                for roll_t in database_user[int_user_id]["Current Rolls"] :
+                    if(roll_t["Games"] == ['pending...']) : break
+                    t_num += 1
+
+                database_user[int_user_id]["Current Rolls"][i_num] = ({
                     "Event Name" : event,
                     "Partner" : target_user_data["CE ID"],
                     "Games" : [game]
                 })
 
-                database_user[part_user_id]["Current Rolls"].append({
+                database_user[part_user_id]["Current Rolls"][t_num] = ({
                     "Event Name" : event,
                     "Partner" : interaction_user_data["CE ID"],
                     "Games" : [game]
