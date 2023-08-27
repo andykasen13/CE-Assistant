@@ -1,4 +1,3 @@
-from discord.ext import tasks
 import json
 import time
 import datetime
@@ -10,8 +9,16 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 sched = BackgroundScheduler()
 
-def test(arg1, arg2, arg4, arg3):
-    print("yaya")
+def test(arg1, arg2, arg4, arg3, arg5):
+    tasks = json.loads(open("./Jasons/tasks.json").read())
+    # roll_failed(arg1, arg2, arg4, arg3)
+    if arg5 == -1:
+        return
+    tasks.pop(arg5)
+    with open("./Jasons/tasks.json", "w") as f:
+        json.dump(tasks, f, indent=4)
+
+
 
 def get_tasks(client):
     users = json.loads(open("./Jasons/users2.json").read())
@@ -30,8 +37,9 @@ def get_tasks(client):
                 "CE ID": user["CE ID"]
             })
 
-    # with open("./Jasons/tasks.json", "w") as f:
-    #     json.dump(fin, f, indent=4)
+    
+    with open("./Jasons/tasks.json", "w") as f:
+        json.dump(fin, f, indent=4)
 
     create_schedule(client)
 
@@ -41,12 +49,26 @@ def create_schedule(client):
     casino_channel = client.get_channel(811286469251039333)
 
     tasks = json.loads(open("./Jasons/tasks.json").read())
-    #read roles from other thing then do shit with those
-    for task in tasks:
+    indices = []
 
-        date_time = datetime.datetime.utcfromtimestamp(int(task["End Time"]-14400))
+    #read roles from other thing then do shit with those
+    for index, task in enumerate(tasks):
         event_name = task["Event Name"]
         user_id = task["CE ID"]
-        sched.add_job(test, 'date', run_date = date_time, args = [event_name, casino_channel, user_id, log_channel])
+        
+        if task['End Time'] <= int(time.mktime((datetime.datetime.now()).timetuple())):
+            test(event_name, casino_channel, user_id, log_channel, -1)
+            indices.insert(0, index)
+            continue
+
+        date_time = datetime.datetime.utcfromtimestamp(int(task["End Time"]-14400))
+        
+        sched.add_job(test, 'date', run_date = date_time, args = [event_name, casino_channel, user_id, log_channel, index])
+
+    for indice in indices:
+        tasks.pop(indice)
+
+    with open("./Jasons/tasks.json", "w") as f:
+        json.dump(tasks, f, indent=4)
 
     sched.start()

@@ -7,7 +7,9 @@
         "Arcade": [],
         "Bullet Hell": [],
         "First-Person": [],
-        "Platformer": [],
+        "Platformer": [
+            "And Yet It Moves"
+        ],
         "Strategy": [
             "- \u200ePuzzle Games -"
         ]
@@ -235,7 +237,9 @@
             "Wormatozoa",
             "You Died but a Necromancer revived you",
             "You Suck at Parking\u00ae",
-            "Yuppie Psycho: Executive Edition"
+            "Yuppie Psycho: Executive Edition",
+            "Radium",
+            "Strikey Sisters"
         ],
         "Bullet Hell": [
             "#Snake2 DX: Reawakening",
@@ -407,7 +411,6 @@
             "Nihilumbra",
             "Oddworld: New 'n' Tasty",
             "One Gun Guy",
-            "Only Up!",
             "Overclocked",
             "Pain Party",
             "panGEMic",
@@ -455,7 +458,8 @@
             "Velocity Noodle",
             "vridniX",
             "Wunderling DX",
-            "You Have to Win the Game"
+            "You Have to Win the Game",
+            "DuckTales: Remastered"
         ],
         "Strategy": [
             "A Healer Only Lives Twice",
@@ -644,7 +648,6 @@
         ],
         "Bullet Hell": [
             "A2 Zygon",
-            "Assault Android Cactus+",
             "ASSAULT SHELL",
             "Astebreed: Definitive Edition",
             "Azure Reflections / \u821e\u83ef\u84bc\u9b54\u93e1",
@@ -895,6 +898,7 @@
         "Bullet Hell": [
             "ALLTYNEX Second",
             "ARMED SEVEN",
+            "Assault Android Cactus+",
             "Castle of Shikigami",
             "CometStriker DX",
             "DANMAKAI: Red Forbidden Fruit",
@@ -1065,7 +1069,6 @@
             "Phantom Jump",
             "Rage in Peace",
             "Rotund Rebound",
-            "RUN: The world in-between",
             "Scoot Kaboom and the Tomb of Doom",
             "Splasher",
             "Sunblaze",
@@ -1141,6 +1144,7 @@
             "MineRalph",
             "N++ (NPLUSPLUS)",
             "Never Give Up",
+            "RUN: The world in-between",
             "Super Rude Bear Resurrection",
             "The End Is Nigh"
         ],

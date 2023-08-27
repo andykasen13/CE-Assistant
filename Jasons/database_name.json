@@ -228,7 +228,7 @@
             }
         }
     },
-    "- Puzzle Games -": {
+    "- \u200ePuzzle Games -": {
         "CE ID": "27578157-10b2-4f29-acee-452c2dc59477",
         "Steam ID": "1485250",
         "Tier": "Tier 0",
@@ -1657,11 +1657,16 @@
     "Assault Android Cactus+": {
         "CE ID": "bc6f75f4-aa1e-49f4-b6ed-cda881e165db",
         "Steam ID": "250110",
-        "Tier": "Tier 2",
+        "Tier": "Tier 3",
         "Genre": "Bullet Hell",
         "Full Completions": 0,
         "Total Owners": 93,
         "Primary Objectives": {
+            "Assault Android Awesome+": {
+                "Description": "Earn an S+ ranking on all Campaign+ levels",
+                "Point Value": 20,
+                "Requirements": "Video showing all levels with S+ at level select."
+            },
             "Assault Battery Charge": {
                 "Description": "Complete Boss Rush mode. / Reach layer 25 in Infinity Drive mode. / Earn an S+ ranking on all campaign levels.",
                 "Point Value": 20,
@@ -1671,20 +1676,15 @@
                     "e2259540-deb2-434c-b139-5c1c3601b102": "Assault Android Awesome"
                 }
             },
-            "Assault Android Awesome+ (UNCLEARED)": {
-                "Description": "Earn an S+ ranking on all Campaign+ levels",
-                "Point Value": 1,
-                "Requirements": "Video showing all levels with S+ at level select."
+            "Oppenheimer": {
+                "Description": "Earn an S+ rank on Boss Rush",
+                "Point Value": 10,
+                "Requirements": "Screenshot of results screen or leaderboard."
             },
             "Duracell Delver (UNCLEARED)": {
                 "Description": "Complete Infinity Drive Mode.",
                 "Point Value": 1,
-                "Requirements": "Screenshot of the leaderboard or results screen."
-            },
-            "Oppenheimer (UNCLEARED)": {
-                "Description": "Earn an S+ rank on Boss Rush",
-                "Point Value": 1,
-                "Requirements": "Video of the run or screenshot of leaderboard."
+                "Requirements": "Screenshot of results screen or leaderboard. "
             }
         },
         "Community Objectives": {}
@@ -6800,16 +6800,16 @@
         "Tier": "Tier 4",
         "Genre": "Bullet Hell",
         "Full Completions": 10,
-        "Total Owners": 160,
+        "Total Owners": 164,
         "Primary Objectives": {
             "Biggus Discus": {
                 "Description": "Complete all challenges without using assist mode.",
-                "Point Value": 60,
-                "Requirements": "Screenshot of the challenge page. No asterisks should be present."
+                "Point Value": 65,
+                "Requirements": "Screenshot of the challenge page. No asterisks should be present. +Video of the \"Never play a room twice\" Challenge (Must be played at 60fps)"
             },
             "Sawwy": {
                 "Description": "Survive 10 seconds in every hard room. / Survive 20 seconds in every room. / Explore all \"????\" rooms.",
-                "Point Value": 20,
+                "Point Value": 15,
                 "Achievements": {
                     "88cf7dac-28b5-42c7-9adc-e16b29403978": "I AM THE DISC",
                     "ff1eaf8c-ced0-4b60-8ffa-b3c06ba1d53b": "I AM THE ZONE",
@@ -14507,31 +14507,31 @@
         "Tier": "Tier 1",
         "Genre": "Platformer",
         "Full Completions": 0,
-        "Total Owners": 21,
+        "Total Owners": 23,
         "Primary Objectives": {
+            "Undercover Virtuoso": {
+                "Description": "Complete the game on Master difficulty or above.",
+                "Point Value": 10,
+                "Requirements": "Screenshot of final results."
+            },
             "Entry-Level Espionage": {
-                "Description": "Complete the game and all VR levels on Operative mode or above (level select is allowed).",
+                "Description": "Complete the game and all VR levels on Operative difficulty or above (level select is allowed).",
                 "Point Value": 5,
                 "Requirements": "Screenshot of final results. / Video of level select."
             },
             "Stealth Master (UNCLEARED)": {
-                "Description": "Complete each individual mission with a Master rank on Operative mode or above (level select is allowed).",
+                "Description": "Complete each individual mission with a Master rank on Operative difficulty or above (level select is allowed).",
                 "Point Value": 1,
                 "Requirements": "Video(s) of each mission. If using level select: you must beat each mission in level order in a row without getting caught and with your sum of times satisfying the \"A+\" speed grade (1:30 for Mission 1, 8:00 otherwise)."
-            },
-            "Undercover Virtuoso (UNCLEARED)": {
-                "Description": "Complete the game on Master mode or above.",
-                "Point Value": 1,
-                "Requirements": "Screenshot of final results."
             }
         },
         "Community Objectives": {
             "Memory Mastermind": {
-                "Description": "Complete the game on Blind Master mode.",
+                "Description": "Complete the game on Blind Master difficulty.",
                 "Requirements": "Screenshot of final results."
             },
             "Mission: Impossible": {
-                "Description": "Start a new game and complete every mission with a Master rank on Operative mode or above.",
+                "Description": "Start a new game and complete every mission with a Master rank on Operative difficulty or above.",
                 "Requirements": "Video of the run."
             }
         }
@@ -16565,24 +16565,6 @@
                     "36abad9e-ba2b-433a-8f6a-76a9434bc546": "Secret Ending",
                     "396e8089-abf7-4cb9-9be7-d909b2ea5afe": "Boss Rush",
                     "a879a39d-65cb-47b5-8656-b5cc4b72db28": "Time Trial 5"
-                }
-            }
-        },
-        "Community Objectives": {}
-    },
-    "Only Up!": {
-        "CE ID": "967534be-f8c8-4f8a-a6a9-c984c101b76b",
-        "Steam ID": "2381590",
-        "Tier": "Tier 1",
-        "Genre": "Platformer",
-        "Full Completions": 20,
-        "Total Owners": 46,
-        "Primary Objectives": {
-            "High, Higher, Yet Higher": {
-                "Description": "Reach the top.",
-                "Point Value": 5,
-                "Achievements": {
-                    "7f0bf7a6-c047-4e16-a1e3-a6628ec03032": "ONLY UP! WINNER!"
                 }
             }
         },
@@ -20184,18 +20166,34 @@
     "RUN: The world in-between": {
         "CE ID": "ec0a8f17-0960-4b02-b0f5-70e345812c1c",
         "Steam ID": "1548940",
-        "Tier": "Tier 4",
+        "Tier": "Tier 5",
         "Genre": "Platformer",
         "Full Completions": 0,
         "Total Owners": 54,
         "Primary Objectives": {
             "RUN Like Hell": {
-                "Description": "Finish Speedrun mode in less than 25 minutes.",
+                "Description": "Finish Speedrun Mode in less than 25 minutes (with cutscenes), or in less than 20 minutes (without cutscenes).",
                 "Point Value": 80,
                 "Achievements": {
                     "c448bf67-9839-4cf1-876f-c4e9117b105e": "Light speed"
                 },
-                "Requirements": "Video of the run."
+                "Requirements": "Video of the run. Partial points awarded for using set seed."
+            },
+            "Endless Nightmare": {
+                "Description": "Score 150 points in Infinite Mode.",
+                "Point Value": 50,
+                "Achievements": {
+                    "1d1f7c1d-8128-4aec-ba5e-1eab27e9c9ee": "Ethereal"
+                },
+                "Requirements": "Screenshot of high score."
+            },
+            "Immortal Runner": {
+                "Description": "Complete the game without dying.",
+                "Point Value": 50,
+                "Achievements": {
+                    "e217d29a-93a0-4324-be7c-0bb9d5fb36c4": "Immortal"
+                },
+                "Requirements": "Video of the run. Set seed and ZEN mode are disallowed."
             },
             "Absolution": {
                 "Description": "Finish Nightmare Mode.",
@@ -20204,23 +20202,20 @@
                     "53d861ff-8dca-4832-b928-9d35205c0472": "Finish line"
                 }
             },
-            "Endless Nightmare": {
+            "Enter the Infinite": {
                 "Description": "Score 50 in Infinite Mode.",
                 "Point Value": 15,
                 "Achievements": {
                     "f2597649-331b-4614-a5da-bedc45a0a6ca": "Invincible"
                 }
-            },
-            "Immortal Runner (UNCLEARED)": {
-                "Description": "Complete the game without dying.",
-                "Point Value": 1,
-                "Achievements": {
-                    "e217d29a-93a0-4324-be7c-0bb9d5fb36c4": "Immortal"
-                },
-                "Requirements": "Video of the run. ZEN mode is disallowed."
             }
         },
-        "Community Objectives": {}
+        "Community Objectives": {
+            "Legacy Runner": {
+                "Description": "Finish Speedrun Mode in less than 25 minutes (with cutscenes), or less than 18:45 (without cutscenes)",
+                "Requirements": "Video of the run. Set seed is disallowed."
+            }
+        }
     },
     "Runner3": {
         "CE ID": "5d05aaf6-dcab-413c-bf55-486853afd0c9",
@@ -23954,22 +23949,22 @@
         "Steam ID": "1710830",
         "Tier": "Tier 1",
         "Genre": "Bullet Hell",
-        "Full Completions": 0,
+        "Full Completions": 1,
         "Total Owners": 8,
         "Primary Objectives": {
+            "Infinite Parry": {
+                "Description": "Clear the first loop of Infinite mode on Black Hole difficulty.",
+                "Point Value": 15,
+                "Achievements": {
+                    "82f9eb73-53ec-471f-becd-383a67b93e65": "Infinite Void"
+                }
+            },
             "Supermassive": {
                 "Description": "Finish story mode on \"Black Hole\" difficulty. / Clear stage 3 of Infinite mode on \"Black Hole\" difficulty.",
                 "Point Value": 10,
                 "Achievements": {
                     "b0d60735-8ce5-48e5-900e-cdc275b05819": "Pro Gamer",
                     "34af3ea2-d4fd-4036-a55c-3cff7c27a4d5": "Black Hole Sun"
-                }
-            },
-            "Infinite Void (UNCLEARED)": {
-                "Description": "Clear Infinite mode.",
-                "Point Value": 1,
-                "Achievements": {
-                    "82f9eb73-53ec-471f-becd-383a67b93e65": "Infinite Void"
                 }
             }
         },
@@ -29323,5 +29318,79 @@
                 "Requirements": "Video of the replay."
             }
         }
+    },
+    "And Yet It Moves": {
+        "CE ID": "86e6b955-83dd-4007-a86c-1f243bc5a7e5",
+        "Steam ID": "18700",
+        "Tier": "Tier 0",
+        "Genre": "Platformer",
+        "Full Completions": 0,
+        "Total Owners": 9,
+        "Primary Objectives": {
+            "Crazy Little Thing Called Move": {
+                "Description": "",
+                "Point Value": 30,
+                "Achievements": {
+                    "52ed08ad-2bcf-489d-884f-06f869ea0fd3": "Crazy"
+                },
+                "Requirements": "Jarvis was here"
+            }
+        },
+        "Community Objectives": {}
+    },
+    "DuckTales: Remastered": {
+        "CE ID": "15c76d0d-8105-4610-88f7-6aba244a386c",
+        "Steam ID": "237630",
+        "Tier": "Tier 1",
+        "Genre": "Platformer",
+        "Full Completions": 4,
+        "Total Owners": 16,
+        "Primary Objectives": {
+            "We Have Pogo at Home": {
+                "Description": "Prove yourself.",
+                "Point Value": 10,
+                "Achievements": {
+                    "f6ebc629-3f65-4d4f-804e-68e6336e5d93": "Look Ma, No Spats!",
+                    "c8dee299-4b69-42e5-b935-5036882ed33e": "Smarter Than The Smarties"
+                }
+            }
+        },
+        "Community Objectives": {}
+    },
+    "Radium": {
+        "CE ID": "8dbcbd75-1add-4b8d-8f67-57d2dc5aa74d",
+        "Steam ID": "355410",
+        "Tier": "Tier 1",
+        "Genre": "Arcade",
+        "Full Completions": 1,
+        "Total Owners": 3,
+        "Primary Objectives": {
+            "Tractor Beaming": {
+                "Description": "Obtain a 3-star rank on all 130 levels.",
+                "Point Value": 5,
+                "Requirements": "Video of level select."
+            }
+        },
+        "Community Objectives": {}
+    },
+    "Strikey Sisters": {
+        "CE ID": "256ec130-6f8c-46f6-b0e3-d690b9ea9f92",
+        "Steam ID": "643880",
+        "Tier": "Tier 1",
+        "Genre": "Arcade",
+        "Full Completions": 2,
+        "Total Owners": 8,
+        "Primary Objectives": {
+            "Brick Breaker Siblings": {
+                "Description": "Prove yourself.",
+                "Point Value": 10,
+                "Achievements": {
+                    "6d13a165-8f8f-467c-a884-95a142c0ec2c": "All Stars",
+                    "aa0cb9d1-1e01-41a8-85cc-bff933da3235": "Full Booty",
+                    "e91363c9-8a7c-4c93-9a29-b81a93753519": "Little Loan Sharks"
+                }
+            }
+        },
+        "Community Objectives": {}
     }
 }

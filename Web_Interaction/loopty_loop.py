@@ -130,8 +130,8 @@ times = [
   datetime.time(hour=23, minute=0, tzinfo=utc),
   datetime.time(hour=23, minute=15, tzinfo=utc),
   datetime.time(hour=23, minute=30, tzinfo=utc),
-  datetime.time(hour=23, minute=45, tzinfo=utc),
-  datetime.time(hour=3, minute=12, tzinfo=utc)
+  datetime.time(hour=23, minute=45, tzinfo=utc)
+  ,datetime.time(hour=17, minute=31, tzinfo=utc)
 ]
 
 
@@ -190,7 +190,7 @@ async def scrape(channel):
 
     # thread call scraping the new data
     updates = await thread_scrape() #asyncio.to_thread(thread_scrape)
-
+    print('here')
     # send out each update
     for dict in updates[0]:
         await channel.send(file=dict['Image'], embed=dict['Embed'])

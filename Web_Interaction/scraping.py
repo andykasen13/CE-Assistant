@@ -29,7 +29,7 @@ from PIL import Image
 
 
 # set basic icons
-ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
+ce_hex_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
 
 
@@ -45,10 +45,8 @@ def get_games():
 
     # create our returnable and update database_name
     fin = game_list()
-
     # use database_name to update database_tier
     get_by_tier()
-
     # return embeds
     return fin
 
@@ -223,7 +221,6 @@ def game_list():
         elif game['name'] in game_tracker:
             game_tracker.remove(game['name'])
 
-
     # games removed
     for game in game_tracker:
         embed = {
@@ -232,7 +229,7 @@ def game_list():
                 colour= 0xce4e2c,
                 timestamp=datetime.now()
             ),
-            'Image' : discord.File("removed.png".format(number), filename="image.png")
+            'Image' : discord.File("Web_Interaction/removed.png", filename="image.png")
         }
         embed['Embed'].set_image(url='attachment://image.png')
         updated_games.append(embed)
@@ -248,7 +245,6 @@ def game_list():
 
 # updates for games
 def update(new_game, old_game, driver, number, icon, icons, name):
-        
     # get game info and image
     #new_game = get_game(game)
     get_image(number, new_game['CE ID'], driver)
@@ -369,7 +365,6 @@ def objective_update(type, new_game, old_game):
 
 # final touches for objective updates
 def update_embed(new_game, old_game, objective, type, cleared=True):
-
     update = ""
 
     # initialize some shit

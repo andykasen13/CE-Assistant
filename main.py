@@ -1,16 +1,13 @@
 # ---------- time imports -----------
 import asyncio
-from datetime import datetime, timedelta
+from datetime import datetime
 import datetime
 import functools
-import time
 import typing
-from monthdelta import monthdelta
 
 # ----------- discord imports ---------
 import discord
 from discord import app_commands
-import random
 from typing import Literal
 
 # ----------- json imports ------------
@@ -18,22 +15,16 @@ import json
 
 # --------- web imports ---------
 import requests
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from PIL import Image
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-from Helper_Functions.Scheduler import create_schedule, get_tasks
+from Helper_Functions.Scheduler import get_tasks
 
 # --------- other file imports ---------
-from Web_Interaction.loopty_loop import master_loop, thread_curate
+from Web_Interaction.loopty_loop import master_loop
 from Web_Interaction.curator import single_run
 from Web_Interaction.scraping import single_scrape
-from Helper_Functions.rollable_games import get_rollable_game, get_rollable_game_from_list
-from Helper_Functions.create_embed import create_multi_embed, getEmbed
+from Helper_Functions.create_embed import getEmbed
 from Helper_Functions.roll_string import get_roll_string
-from Helper_Functions.buttons import get_buttons, get_genre_buttons
-from Helper_Functions.end_time import roll_completed, roll_failed
+from Helper_Functions.buttons import get_buttons
+from Helper_Functions.end_time import roll_failed
 from Helper_Functions.update import update_p
 
 # ---------- command imports --------------
