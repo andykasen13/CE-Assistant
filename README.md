@@ -50,30 +50,24 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 - check on female empowerment or zookeeper status
 
 ## housekeeping reminders
-- reminder to myself that t0 games must have separate announcements
+- ~~reminder to myself that t0 games must have separate announcements~~
 - reminder to myself that upon booting up the bot, it should go through all of the users in the server and update their information in my `users.json` file
 - also reminder to myself to fix the price to check if it's on sale right now
 - reminder to try and incorporate buttons to ask if they want to use a reroll ticket
-- once an hour, i need to parse through the website and determine if there are any new games to add to my list of rollable games - and also check to see if all info i have currently checks out, in case i need to take something off the rollable games list
-- reminder that if someone tries to roll an event that they have running already or are on cooldown for, DON'T LET THEM.
-- reminder to use beautifulsoup to check steamhunters.com for eligibility!
-- reminder to also use beautifulsoup to get the curator thing to work :)
-- make buttons work
-- make the gamebyappID an array
-- create JSON modules for all users in server
-- if the user does not exist, don't try and send them the `/check_rolls` or shit will error a lot
-- decide if you want to include objectives in the initial roll message (current me thinks no but should be included in the `/check_rolls` command)
+- ~~once an hour, i need to parse through the website and determine if there are any new games to add to my list of rollable games - and also check to see if all info i have currently checks out, in case i need to take something off the rollable games list~~
+- ~~reminder that if someone tries to roll an event that they have running already~~ or are on cooldown for, DON'T LET THEM.
+- ~~reminder to use beautifulsoup to check steamhunters.com for eligibility!~~
+- ~~reminder to also use beautifulsoup to get the curator thing to work :)~~
+- ~~make buttons work~~
+- ~~create JSON modules for all users in server~~
+- ~~if the user does not exist, don't try and send them the `/check_rolls` or shit will error a lot~~
+- ~~decide if you want to include objectives in the initial roll message (current me thinks no but should be included in the `/check_rolls` command)~~
 - co-op rolls 😩
 - indicate if the game is on sale
 - think about switching the icon of the `/roll` command to the user's avatar
 - make sure that you don't roll the same game for any multi-game rolls
 - add error checking. this will be so so annoying but will be great for preventing the bot from just shutting down
-- currently the bot keeps track of if someone has completed a game in the `users.json` file but will eventually do that on its own in an 'owned_games' section in the same file. make sure that when that happens you switch it.
-- `/check_rolls` should go through each roll 
-- for each roll, it should go through each game
-- for each game, it should go to the user's file in `users.json`, check if they own the game
-- if they don't own the game, just print all of the objectives
-- if they DO own the game, go through the user's progress on each (and be sure not to send back the COs)
+- ~~currently the bot keeps track of if someone has completed a game in the `users.json` file but will eventually do that on its own in an 'owned_games' section in the same file. make sure that when that happens you switch it.~~
 
 ## checking on rolls
 ### if the user completes the roll:
