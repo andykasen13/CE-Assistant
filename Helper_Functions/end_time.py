@@ -58,15 +58,15 @@ async def roll_failed(ended_roll_name : str, casino_channel : discord.channel, u
     # Set up the cooldowns
     cooldowns = {
         "One Hell of a Day" : timedelta(14),
-        #"One Hell of a Week" : monthdelta(1),
-        #"One Hell of a Month" : monthdelta(3),
+        "One Hell of a Week" : timedelta(28),
+        "One Hell of a Month" : timedelta(28*3),
         "Two Week T2 Streak" : 0,
         "Two 'Two Week T2 Streak' Streak" : timedelta(7),
-        #"Never Lucky" : monthdelta(1),
-        #"Triple Threat" : monthdelta(3),
-        #"Let Fate Decide" : monthdelta(3),
+        "Never Lucky" : timedelta(28),
+        "Triple Threat" : timedelta(28*3),
+        "Let Fate Decide" : timedelta(28*3),
         "Fourward Thinking" : 0,
-        #"Russian Roulette" : monthdelta(6)
+        "Russian Roulette" : timedelta(28*6)
     }
     cooldowns_str = {
         "One Hell of a Day" : "two weeks",
@@ -108,7 +108,8 @@ async def roll_failed(ended_roll_name : str, casino_channel : discord.channel, u
         return
     
     # Update the user's database to see if the roll was completed or not
-    await update_p(user_name)
+    silly = await update_p(user_name)
+    print(silly)
     
     # - - - - - The user completed the roll - - - - -
 

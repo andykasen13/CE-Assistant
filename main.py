@@ -428,24 +428,26 @@ async def color(interaction) :
 async def test(interaction : discord.Interaction, role : discord.Role) :
     await interaction.response.defer()
 
-    await interaction.followup.send("Menus!")
+    await update_p(user_id=413427677522034727, log_channel=client.get_channel(1141886539157221457), casino_channel=client.get_channel(811286469251039333))
 
-    return
-
-    casino_channel = client.get_channel(811286469251039333)
     
-    await roll_failed(ended_roll_name='Triple Threat', casino_channel=casino_channel, user_name='d7cb0869-5ed9-465c-87bf-0fb95aaebbd5')
 
-
-    return await interaction.followup.send(embed=discord.Embed(title="this is the test command"))
-    print(role.id)
     
-    embed = discord.Embed(title="__Celeste__ has been updadted on the site", description="' ∀MAZING' increased from 120 :CE_points: ➡ 125 :CE_points: points: Achievements '∀NOTHER ONE', and '∀DVENTED' removed New Primary Objective '∀WOKEN' added: 30 points :CE_points: Clear the Pandemonic Nightmare stage, and clear Hymeno Striker on AKASCHIC+RM difficulty.")
-    embed.set_thumbnail(url=ce_hex_icon)
-    embed.set_image(url="https://media.discordapp.net/attachments/1128742486416834570/1133903990090895440/image.png?width=1083&height=542")
-    embed.set_author(name="Challenge Enthusiasts", icon_url="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/504230/04cb7aa0b497a3962e6b1655b7fd81a2cc95d18b.jpg")
 
-    return await interaction.followup.send(embed=embed)
+    #casino_channel = client.get_channel(811286469251039333)
+    
+    #await roll_failed(ended_roll_name='Triple Threat', casino_channel=casino_channel, user_name='d7cb0869-5ed9-465c-87bf-0fb95aaebbd5')
+
+
+    #return await interaction.followup.send(embed=discord.Embed(title="this is the test command"))
+    #print(role.id)
+    
+    # embed = discord.Embed(title="__Celeste__ has been updadted on the site", description="' ∀MAZING' increased from 120 :CE_points: ➡ 125 :CE_points: points: Achievements '∀NOTHER ONE', and '∀DVENTED' removed New Primary Objective '∀WOKEN' added: 30 points :CE_points: Clear the Pandemonic Nightmare stage, and clear Hymeno Striker on AKASCHIC+RM difficulty.")
+    # embed.set_thumbnail(url=ce_hex_icon)
+    # embed.set_image(url="https://media.discordapp.net/attachments/1128742486416834570/1133903990090895440/image.png?width=1083&height=542")
+    # embed.set_author(name="Challenge Enthusiasts", icon_url="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/504230/04cb7aa0b497a3962e6b1655b7fd81a2cc95d18b.jpg")
+
+    # return await interaction.followup.send(embed=embed)
 
 
 
