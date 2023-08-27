@@ -40,12 +40,12 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     # check to see if either are pending or if either are currently participating...
     for eventInfo in database_user[int_user_id]['Current Rolls'] :
         #TODO: have different errors if someone tries to go again during pending and if someone tries to reroll while pending
-        if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('Please wait 10 minutes in between rolling for the same event!')
+        if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('You recently tried to participate in {}. Please wait 10 minutes in between rolling for the same event!'.format(event))
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
     
     for eventInfo in database_user[part_user_id]['Current Rolls'] :
         #TODO: have different errors if someone tries to go again during pending and if someone tries to reroll while pending
-        if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('Please wait 10 minutes in between rolling for the same event!')
+        if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('Your partner recently tried to participate in {}. Please wait 10 minutes in between rolling for the same event!'.format(event))
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
 
     database_user[int_user_id]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
@@ -237,8 +237,13 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
         async def soulmate_callback(interaction, tier_num) :
             await interaction.response.defer()
+
+            
+
             if interaction.user.id != interaction_user_data['Discord ID'] : return
             view.clear_items()
+
+            await interaction.followup.edit_message(message_id=interaction.message.id, embed=discord.Embed(title="Working..."), view=view)
 
             # ----- Make sure the other user doesn't have any points in the game they rolled -----
             target_user_owns_game = True
@@ -264,14 +269,15 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             # ----- Set up agreement buttons for User B -----
             agree_button = discord.ui.Button(label="Agree", style=discord.ButtonStyle.success)
             deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
-            view.add_item(agree_button)
             view.add_item(deny_button)
+            view.add_item(agree_button)
+            
             async def agree_callback(interaction) :
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data['Discord ID'] : return
                 view.clear_items()
                 embed = getEmbed(game, interaction.user.id)
-                embed.add_field(name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
+                embed.set_field_at(index=1, name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
                 embed.add_field(name="Tier", value=database_name[game]["Tier"])
 
                 end_db = {
@@ -330,13 +336,25 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data['Discord ID'] : return
                 view.clear_items()
-                return await interaction.followup.edit_message(message_id=interaction.message.id, embed=discord.Embed(title="Roll denied."))
+                return await interaction.followup.edit_message(message_id=interaction.message.id, embed=discord.Embed(title="Roll denied."), view=view)
             agree_button.callback = agree_callback
             deny_button.callback = deny_callback
+
+            shmilly = {
+                "Tier 1" : "two days",
+                "Tier 2" : "ten days",
+                "Tier 3" : "one month (28 days)",
+                "Tier 4" : "two months (56 days)"
+            }
 
 
             # Set up embed for user B
             embed = discord.Embed(title="Do you accept?", timestamp=datetime.datetime.now())
+            embed.add_field(name="Tier", value="<@{}> has chosen {}. Do you agree to participate in Soul Mates with them?".format(interaction_user_data["Discord ID"], tier_num))
+            if tier_num != "Tier 5" : embed.add_field(name="Time Limit", value="You will have a time limit of {}.".format(shmilly[tier_num]))
+            embed.set_thumbnail(url=ce_mountain_icon)
+            embed.set_footer(text="CE Assistant",icon_url=final_ce_icon)
+
             await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=view)
 
         buttons[0].callback = t1_callback
@@ -369,8 +387,9 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         # ----- Set up buttons -----
         agree_button = discord.ui.Button(label = "Agree", style = discord.ButtonStyle.success)
         deny_button = discord.ui.Button(label = "Deny", style = discord.ButtonStyle.danger)
-        view.add_item(agree_button)
+        
         view.add_item(deny_button)
+        view.add_item(agree_button)
 
 
         # --------------------------------------- Agree Button --------------------------------
@@ -422,6 +441,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             # ----------- Get embeds ---------------------
             embeds = create_multi_embed("Teamwork Makes the Dream Work", 28, games, (28*3), interaction)
 
+            embeds[0].set_thumbnail(url = ce_mountain_icon)
+
             # ------ Get page buttons -------
             await get_buttons(view, embeds)
 
@@ -438,12 +459,14 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             database_user[int_user_id]["Current Rolls"][i_num] = ({
                 "Event Name" : event,
                 "Partner" : target_user_data["CE ID"],
+                "End Time" :  int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple())),
                 "Games" : games
             })
 
             database_user[part_user_id]["Current Rolls"][t_num] = ({
                 "Event Name" : event,
                 "Partner" : interaction_user_data["CE ID"],
+                "End Time" :  int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple())),
                 "Games" : games
             })
 
@@ -492,10 +515,12 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         async def t4_callback(interaction) : return await soulmate_callback(interaction, "Tier 4")
         async def t5_callback(interaction) : return await soulmate_callback(interaction, "Tier 5")
 
-        async def soulmate_callback(interaction, tier_num) :
+        async def soulmate_callback(interaction : discord.Interaction, tier_num) :
             await interaction.response.defer()
             if interaction.user.id != interaction_user_data['Discord ID'] : return
             view.clear_items()
+
+            await interaction.followup.edit_message(message_id=interaction.message.id, embed=discord.Embed(title="Working..."), view=view)
 
             # ----- Make sure the other user doesn't have any points in the game they rolled -----
             target_user_owns_game = True
@@ -521,8 +546,9 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             # ----- Set up agreement buttons for User B -----
             agree_button = discord.ui.Button(label="Agree", style=discord.ButtonStyle.success)
             deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
-            view.add_item(agree_button)
             view.add_item(deny_button)
+            view.add_item(agree_button)
+            
             async def agree_callback(interaction) :
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data['Discord ID'] : return
@@ -530,7 +556,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 embed = getEmbed(game, interaction.user.id)
                 embed.set_field_at(index=1, name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
                 embed.add_field(name="Tier", value=database_name[game]["Tier"])
-                embed.add_field(name="Completion", value="When you have completed, submit your proof to <#811286469251039333>. The first to do so wins.")
+                embed.add_field(name="Completion", value="When you have completed, submit your proof to <#747384873320448082>. The first to do so wins.")
 
                 i_num = 0
                 for roll_i in database_user[int_user_id]["Current Rolls"] :
@@ -538,9 +564,10 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     i_num += 1
                 
                 t_num = 0
-                for roll_t in database_user[int_user_id]["Current Rolls"] :
+                for roll_t in database_user[part_user_id]["Current Rolls"] :
                     if(roll_t["Games"] == ['pending...']) : break
                     t_num += 1
+
 
                 database_user[int_user_id]["Current Rolls"][i_num] = ({
                     "Event Name" : event,
@@ -569,6 +596,10 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             # Set up embed for user B
             embed = discord.Embed(title="Do you accept?", timestamp=datetime.datetime.now())
+            embed.add_field(name="Winner Takes All", value="<@{}>, you have been challenged to Winner Takes All by <@{}>. Do you agree to participate with them?".format(target_user_data["Discord ID"], interaction_user_data["Discord ID"]))
+            embed.add_field(name="Tier", value="<@{}> has chosen {}.".format(interaction_user_data["Discord ID"], tier_num))
+            embed.set_thumbnail(url=ce_mountain_icon)
+            embed.set_footer(text="CE Assistant",icon_url=final_ce_icon)
             await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=view)
 
         buttons[0].callback = t1_callback
@@ -624,6 +655,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         buttons[3].callback = fps_callback
         buttons[4].callback = platformer_callback
         buttons[5].callback = strategy_callback
+        buttons[5].disabled = target_user_data
 
         async def game_theory_callback_1(interaction : discord.Interaction, targets_genre) :
             await interaction.response.defer()
@@ -654,13 +686,58 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             buttons[3].callback = fps_callback1
             buttons[4].callback = platformer_callback1
             buttons[5].callback = strategy_callback1
+            buttons[5].disabled = True
+
+            int_avatar = interaction.user.avatar
 
             async def game_theory_callback_2(interaction : discord.Interaction, interactions_genre) :
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data["Discord ID"] : return
 
+                # Clear items from the view
                 view.clear_items()
+
+                # Check if both users chose the same genre,
+                # then put them on punishment if so.
+                if(targets_genre == interactions_genre) : 
+                    embed = discord.Embed(
+                        title="Uh oh!",
+                        description="You both chose {}. You are now both on cooldown for a week :)".format(targets_genre)
+                    )
+                    embed.set_footer(text="hahahahahahaha")
+                    await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=view)
+                     
+
+                    i_num = 0
+                    for roll_i in database_user[int_user_id]["Current Rolls"] :
+                        if(roll_i["Games"] == ['pending...']) : break
+                        i_num += 1
+                    
+                    t_num = 0
+                    for roll_t in database_user[part_user_id]["Current Rolls"] :
+                        if(roll_t["Games"] == ['pending...']) : break
+                        t_num += 1
+
+
+                    database_user[int_user_id]["Current Rolls"][i_num] = ({
+                        "Event Name" : event,
+                        "End Time" :  int(time.mktime((datetime.datetime.now()+timedelta(7)).timetuple())),
+                        "Games" : ["andy's cool epic fun time balloons yay"]
+                    })
+
+                    database_user[part_user_id]["Current Rolls"][t_num] = ({
+                        "Event Name" : event,
+                        "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(7)).timetuple())),
+                        "Games" : ["andy's cool epic fun time balloons yay"]
+                    })
+
+                    with open('Jasons/users2.json', 'w') as dbU :
+                        json.dump(database_user, dbU, indent=4)
+
+                    return
                 
+                # Remove the items
+                await interaction.followup.edit_message(message_id=interaction.message.id, embed=discord.Embed(title="Working..."), view=view)
 
                 # ----- Make sure the target user doesn't have any points in the game they rolled -----
                 target_user_owns_game = True
@@ -696,10 +773,13 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 # Edit the embeds to Game Theory's specific needs
                 embeds[0].set_field_at(index=0, name="Rolled Games",
                                       value=f"<@{interaction_user_data['Discord ID']}>: {interaction_user_selected_game} ({interactions_genre})"
-                                      + f"\n<@{target_user_data['Discord ID']}>: {target_user_selected_game} ({targets_genre})")
-                embeds[0].set_field_at(index=0, name="Roll Requirements",
+                                      + f"\n<@{target_user_data['Discord ID']}>: {target_user_selected_game} ({targets_genre})", inline=False)
+                embeds[0].set_field_at(index=1, name="Roll Requirements",
                                        value="Whoever completes their roll first will win Game Theory."
                                        + "\nGame Theory has a cooldown of one month.")
+                embeds[0].set_thumbnail(url=ce_mountain_icon)
+                embeds[1].set_thumbnail(url=int_avatar)
+                embeds[1].set_field_at(index=1, name="Rolled by", value="<@{}>".format(interaction_user_data["Discord ID"]))
                 embeds[2].set_field_at(index=1, name="Rolled by", value=f"<@{target_user_data['Discord ID']}>")
                 embeds[2].set_thumbnail(url=partner.display_avatar)
 
@@ -707,13 +787,24 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 # Get the buttons
                 await get_buttons(view, embeds)
 
-                database_user[int_user_id]["Current Rolls"].append({
+                i_num = 0
+                for roll_i in database_user[int_user_id]["Current Rolls"] :
+                    if(roll_i["Games"] == ['pending...']) : break
+                    i_num += 1
+                
+                t_num = 0
+                for roll_t in database_user[part_user_id]["Current Rolls"] :
+                    if(roll_t["Games"] == ['pending...']) : break
+                    t_num += 1
+
+
+                database_user[int_user_id]["Current Rolls"][i_num] = ({
                     "Event Name" : event,
                     "Partner" : target_user_data["CE ID"],
                     "Games" : [interaction_user_selected_game]
                 })
 
-                database_user[part_user_id]["Current Rolls"].append({
+                database_user[part_user_id]["Current Rolls"][t_num] = ({
                     "Event Name" : event,
                     "Partner" : interaction_user_data["CE ID"],
                     "Games" : [target_user_selected_game]

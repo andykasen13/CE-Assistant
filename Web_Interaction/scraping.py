@@ -31,6 +31,7 @@ from PIL import Image
 # set basic icons
 ce_hex_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
+final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
 
 
@@ -212,7 +213,7 @@ def game_list():
             embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
             embed['Embed'].set_thumbnail(url=ce_hex_icon)
             embed['Embed'].set_footer(text="CE Assistant",
-                icon_url=ce_james_icon)
+                icon_url=final_ce_icon)
            
             updated_games.append(embed)
             number += 1
@@ -280,7 +281,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
     embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
     embed['Embed'].set_thumbnail(url=ce_hex_icon)
     embed['Embed'].set_footer(text="CE Assistant",
-        icon_url=ce_james_icon)
+        icon_url=final_ce_icon)
 
     # return :)
     return embed
@@ -318,7 +319,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
         embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
         embed['Embed'].set_thumbnail(url=ce_hex_icon)
         embed['Embed'].set_footer(text="CE Assistant",
-            icon_url=ce_james_icon)
+            icon_url=final_ce_icon)
         
         decimal += 1
 
@@ -645,7 +646,7 @@ def get_completion_data(steam_id):
                 end = str(a.parent)[1::].find('m')+1
                 time = str(a.parent)[56:end:]
                 if len(time) <= 2 :
-                    time = 0
+                    time = "-"
                 else :
                     end = str(a.parent)[1::].find('h')+1
                     time = str(a.parent)[56:end:]
