@@ -20,6 +20,7 @@ from bs4 import BeautifulSoup
 
 
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
+final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
 
 async def single_run(client, requested_reviews=0):
@@ -137,7 +138,7 @@ def curatorUpdate(num: int) :
         embed.add_field(name="CE Link", value=f"[Click here]({links[x]})", inline=True)
         embed.set_image(url=imageLink)
         embed.set_footer(text="CE Assistant",
-            icon_url=ce_james_icon)
+            icon_url=final_ce_icon)
         embed.set_author(name="New game added to curator!", url="https://store.steampowered.com/curator/36185934/")
 
 

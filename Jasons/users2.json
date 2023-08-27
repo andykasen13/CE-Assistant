@@ -3434,7 +3434,7 @@
     "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5": {
         "CE ID": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
         "Discord ID": 413427677522034727,
-        "Rank": "Rank C",
+        "Rank": "Rank E",
         "Reroll Tickets": 0,
         "Casino Score": 0,
         "Owned Games": {
@@ -3578,64 +3578,28 @@
         "Current Rolls": [
             {
                 "Event Name": "Destiny Alignment",
-                "Partner": "835afaad-0059-4e39-b24f-24b2c76b1d08",
+                "Partner": "e816f094-38de-4494-b52f-681b5915e518",
                 "Games": [
-                    "Mr. Bree+"
+                    "Getting Over It with Bennett Foddy"
                 ]
             },
             {
-                "Event Name": "One Hell of a Day",
-                "End Time": 1692906958,
+                "Event Name": "Soul Mates",
+                "Partner": "e816f094-38de-4494-b52f-681b5915e518",
+                "End Time": 1693274120,
                 "Games": [
-                    "Charge Kid"
-                ]
-            },
-            {
-                "Event Name": "Teamwork Makes the Dream Work",
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
-                "Games": [
-                    "Hyperun",
-                    "Maiden and Spell",
-                    "Hyperun",
-                    "All Day Dying"
+                    "Fortix"
                 ]
             },
             {
                 "Event Name": "Teamwork Makes the Dream Work",
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+                "Partner": "e816f094-38de-4494-b52f-681b5915e518",
+                "End Time": 1695521478,
                 "Games": [
-                    "Hyperun",
-                    "Maiden and Spell",
-                    "Hyperun",
-                    "All Day Dying"
-                ]
-            },
-            {
-                "Event Name": "Winner Takes All",
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
-                "Games": [
-                    "Soft Body"
-                ]
-            },
-            {
-                "Event Name": "Winner Takes All",
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
-                "Games": [
-                    "Soft Body"
-                ]
-            },
-            {
-                "Event Name": "Winner Takes All",
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
-                "Games": [
-                    "That Flipping Mountain"
-                ]
-            },
-            {
-                "Event Name": "Winner Takes All",
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
-                "Games": [
-                    "That Flipping Mountain"
+                    "Zuma's Revenge!",
+                    "BETON BRUTAL",
+                    "Yumori Forest",
+                    "Vanquish"
                 ]
             }
         ],
@@ -3644,6 +3608,56 @@
                 "Event Name": "One Hell of a Day"
             }
         ]
+    },
+    "e816f094-38de-4494-b52f-681b5915e518": {
+        "CE ID": "e816f094-38de-4494-b52f-681b5915e518",
+        "Discord ID": 688037250537095296,
+        "Rank": "Rank E",
+        "Reroll Tickets": 0,
+        "Casino Score": 0,
+        "Owned Games": {
+            "Getting Over It with Bennett Foddy": {
+                "Primary Objectives": {
+                    "Got Over It": 10
+                }
+            },
+            "Risk of Rain 2": {},
+            "Muck": {},
+            "Deep Rock Galactic": {},
+            "Clone Drone in the Danger Zone": {},
+            "ibb & obb": {},
+            "Hollow Knight": {}
+        },
+        "Cooldowns": {},
+        "Current Rolls": [
+            {
+                "Event Name": "Destiny Alignment",
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+                "Games": [
+                    "Clustertruck"
+                ]
+            },
+            {
+                "Event Name": "Soul Mates",
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+                "End Time": 1693274120,
+                "Games": [
+                    "Fortix"
+                ]
+            },
+            {
+                "Event Name": "Teamwork Makes the Dream Work",
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+                "End Time": 1695521478,
+                "Games": [
+                    "Zuma's Revenge!",
+                    "BETON BRUTAL",
+                    "Yumori Forest",
+                    "Vanquish"
+                ]
+            }
+        ],
+        "Completed Rolls": []
     },
     "835afaad-0059-4e39-b24f-24b2c76b1d08": {
         "CE ID": "835afaad-0059-4e39-b24f-24b2c76b1d08",

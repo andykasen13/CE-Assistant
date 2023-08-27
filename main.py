@@ -58,9 +58,11 @@ with open('Jasons/secret_info.json') as f :
 
 discord_token = localJSONData['discord_token']  
 guild_ID = localJSONData['test_guild_ID']
+
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
+final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
@@ -201,7 +203,7 @@ async def checkRolls(interaction, user: discord.Member=None) :
     embed.add_field(name="Completed Rolls", value=completed_roll_str, inline=False)
     embed.set_thumbnail(url=user.avatar.url)
     embed.set_footer(text="CE Assistant",
-        icon_url=ce_james_icon)
+        icon_url=final_ce_icon)
 
     # send the embed
     await interaction.followup.send(embed=embed)
@@ -582,7 +584,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
                     + f". You may now use all aspects of this bot.")
     embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
     embed.set_footer(text="CE Assistant",
-        icon_url=ce_james_icon)
+        icon_url=final_ce_icon)
     embed.set_thumbnail(url=interaction.user.avatar)
 
     registered_role = discord.utils.get(interaction.guild.roles, name = "registered")
@@ -616,7 +618,7 @@ async def update(interaction : discord.Interaction) :
         embed.add_field(name="Information", value=f"Your information has been updated in the CE Assistant database.")
         embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
         embed.set_footer(text="CE Assistant",
-            icon_url=ce_james_icon)
+            icon_url=final_ce_icon)
         embed.set_thumbnail(url=interaction.user.avatar)
 
         # Send a confirmation message

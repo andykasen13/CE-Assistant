@@ -10,6 +10,7 @@ import requests
 
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
+final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
 
 # ------------------------------------------------ CREATE MULTI EMBED ------------------------------------------------------------ #
@@ -26,7 +27,7 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
         title=event_name,
         timestamp=datetime.datetime.now()
     ))
-    embeds[0].set_footer(text=f"Page 1 of {str(len(game_list) + 1)}")
+    embeds[0].set_footer(text=f"Page 1 of {str(len(game_list) + 1)}", icon_url = final_ce_icon)
     embeds[0].set_author(name="Challenge Enthusiasts")
 
     # ----- Add all games to the embed -----
@@ -52,7 +53,7 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
         total_points = 0
         embeds.append(getEmbed(selected_game, interaction.user.id))
         embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"),
-                                icon_url=ce_mountain_icon)
+                                icon_url=final_ce_icon)
         embeds[i+1].set_author(name="Challenge Enthusiasts")
         embeds[i+1].set_thumbnail(url=interaction.user.avatar)
         for objective in database_name[selected_game]["Primary Objectives"] :
@@ -140,7 +141,7 @@ def getEmbed(game_name, authorID):
     embed.set_image(url=imageLink)
     embed.set_thumbnail(url=ce_mountain_icon)
     embed.set_footer(text="CE Assistant",
-        icon_url=ce_james_icon)
+        icon_url=final_ce_icon)
     embed.add_field(name="Rolled by", value = "<@" + str(authorID) + ">", inline=True)
     if game_name in database_name.keys() :
         for objective in database_name[game_name]["Primary Objectives"] :
