@@ -12,6 +12,7 @@
 # basics
 from datetime import datetime
 import datetime
+import functools
 import json
 
 # file management
@@ -20,6 +21,7 @@ import shutil
 
 # thread management
 import asyncio
+import typing
 from discord.ext import tasks
 
 # other local files
@@ -154,7 +156,7 @@ async def curate(channel):
     print('curating...')
 
     # thread call getting the latest curator stuff
-    curation = await asyncio.to_thread(thread_curate) 
+    curation = await thread_curate() #await asyncio.to_thread(thread_curate) 
 
     # get the current curator page and update its curator count
     data = json.loads(open("./Jasons/curator_count.json").read())
@@ -170,7 +172,14 @@ async def curate(channel):
             await channel.send(embed=embed)
     
 
-# @to_thread
+def to_thread(func: typing.Callable) -> typing.Coroutine:
+    @functools.wraps(func)
+    async def wrapper(*args, **kwargs):
+        return await asyncio.to_thread(func, *args, **kwargs)
+    return wrapper
+
+
+@to_thread
 def thread_curate():
     # call to the curator file
     return checkCuratorCount()
@@ -180,7 +189,7 @@ async def scrape(channel):
     print('scraping...')
 
     # thread call scraping the new data
-    updates = await asyncio.to_thread(thread_scrape)
+    updates = await thread_scrape() #asyncio.to_thread(thread_scrape)
 
     # send out each update
     for dict in updates[0]:
@@ -191,7 +200,7 @@ async def scrape(channel):
     os.mkdir('./Pictures')
 
 
-# @to_thread
+@to_thread
 def thread_scrape():
     # call to the scrape file
     return get_games()

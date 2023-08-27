@@ -132,7 +132,7 @@ def game_list():
         icon = game['icon']
 
         # if game is a T0 and updated
-        if updated_time > current_newest and game['tier'] == 0:
+        if updated_time > current_newest and game['tier'] == 0 and game['name'] in list(new_data.keys()):
             # update game tracker
             game_tracker.remove(game['name'])
 

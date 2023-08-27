@@ -10,15 +10,12 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 sched = BackgroundScheduler()
 
+def test(arg1, arg2, arg4, arg3):
+    print("yaya")
 
-def test(this, that):
-    print(this + " and " + that)
-
-
-def get_tasks():
+def get_tasks(client):
     users = json.loads(open("./Jasons/users2.json").read())
-    fin = {}
-    datetimes = []
+    fin = []
 
     for user_str in users:
         user = users[user_str]
@@ -27,50 +24,29 @@ def get_tasks():
             if not 'End Time' in list(current_roll):
                 continue
 
-            fin[current_roll["End Time"]] = {
+            fin.append({
+                "End Time" : current_roll["End Time"],
                 "Event Name" : current_roll["Event Name"],
-                "User CE ID": user["CE ID"]
-            }
+                "CE ID": user["CE ID"]
+            })
+
+    # with open("./Jasons/tasks.json", "w") as f:
+    #     json.dump(fin, f, indent=4)
+
+    create_schedule(client)
 
 
+def create_schedule(client):
+    log_channel = client.get_channel(1141886539157221457)
+    casino_channel = client.get_channel(811286469251039333)
 
-    # # with open("./Jasons/tasks.json", "w") as f:
-    # #     json.dump(fin, f, indent=4)
-
-    # print("Scheduled")
-    # print(datetimes)
-    # print(datetimes[0])
-
-
-def create_schedule():
-                
+    tasks = json.loads(open("./Jasons/tasks.json").read())
     #read roles from other thing then do shit with those
-    
-    #         date_time = datetime.datetime.utcfromtimestamp(int(current_roll["End Time"]))
-    #         this = "this"
-    #         that = "that"
-    #         sched.add_job(test, 'date', run_date = date_time, args = [this,that])
+    for task in tasks:
 
-    # sched.start()
-    return
+        date_time = datetime.datetime.utcfromtimestamp(int(task["End Time"]-14400))
+        event_name = task["Event Name"]
+        user_id = task["CE ID"]
+        sched.add_job(test, 'date', run_date = date_time, args = [event_name, casino_channel, user_id, log_channel])
 
-# task_dict = json.loads(open("./Jasons/tasks.json").read())
-# task_list = get_tasks()
-
-
-
-# @tasks.loop(time=task_list)
-# async def process_schedule():
-#     current_time = int(time.time())
-#     current_dict = task_dict[current_time]
-
-#     print(current_dict['Event Name'])
-#     print(current_dict['User CE ID'])
-#     # roll_failed(task_list[current_time]['Event Name'], task_list[current_time]['User CE ID'])
-
-
-
-
-
-
-    
+    sched.start()
