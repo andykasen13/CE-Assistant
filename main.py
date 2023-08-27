@@ -62,51 +62,57 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="help", description="help", guild=discord.Object(id=guild_ID))
 async def help(interaction : discord.Interaction) :
-    # Defer the message
-    await interaction.response.defer()
+    await interaction.response.defer(ephemeral=True)
+
+    page_data = json.loads(open("./Jasons/help_embed_data.json").read())
+    selections = []
+    print(page_data)
+
+    for option in page_data:
+        selections.append(discord.SelectOption(label=page_data[option]["Name"],emoji="\N{grinning face}",description=page_data[option]["Description"]))
+    # # Defer the message
+    # await interaction.response.defer()
 
     class HelpSelect(discord.ui.Select):
         def __init__(self):
-            options=[
-                discord.SelectOption(label="Rolls",emoji="🎲",description="This is option 1!"),
-                discord.SelectOption(label="Check Rolls",emoji="📖",description="This is option 2!"),
-                discord.SelectOption(label="Site Additions",emoji="🤭",description="This is option 3!"),
-                discord.SelectOption(label="Curator", emoji="🤓", description="This is option 4!")
-            ]
+            options=selections
             super().__init__(placeholder="Select an option",max_values=1,min_values=1,options=options)
         async def callback(self, interaction: discord.Interaction):
-            await interaction.response.edit_message(content=f"Your choice is {self.values[0]}!",ephemeral=True)
+            await interaction.response.edit_message(content=page_data[self.values[0]]['Content'])
 
     class HelpSelectView(discord.ui.View):
         def __init__(self, *, timeout = 180):
             super().__init__(timeout=timeout)
             self.add_item(HelpSelect())
 
+        async def on_timeout(self):
+            self.disable_all_items()
+
     # Create the view (will be used for buttons later)
     view = discord.ui.View(timeout=600)
 
     return await interaction.followup.send('Help command coming soon!', view=HelpSelectView(), ephemeral=True)
 
-    helpInfo = {
-        "Rolls" : "This bot has the ability to roll random games for any event in the Challenge Enthusiast server. P.S. andy reminder to get autofill to work!",
-        "/get_rolls" : "Use this command to see your current (and past) rolls, or the rolls of any other user in the server.",
-        "steam_test" : "Get general information about any STEAM game.",
-        "Curator" : "The bot will automatically check to see if any new entries have been added to the CE curator (within three hours)."
-    }
+    # helpInfo = {
+    #     "Rolls" : "This bot has the ability to roll random games for any event in the Challenge Enthusiast server. P.S. andy reminder to get autofill to work!",
+    #     "/get_rolls" : "Use this command to see your current (and past) rolls, or the rolls of any other user in the server.",
+    #     "steam_test" : "Get general information about any STEAM game.",
+    #     "Curator" : "The bot will automatically check to see if any new entries have been added to the CE curator (within three hours)."
+    # }
 
-    embeds=[]
-    pageNum = 1
+    # embeds=[]
+    # pageNum = 1
     
-    for page in list(helpInfo):
-        embed=discord.Embed(color=0x000000, title=page, description=helpInfo[page])
-        embed.set_footer(text=(f"Page {pageNum} of {len(list(helpInfo))}"))
-        embed.timestamp=datetime.datetime.now()
-        embeds.append(embed)
-        pageNum+=1
+    # for page in list(helpInfo):
+    #     embed=discord.Embed(color=0x000000, title=page, description=helpInfo[page])
+    #     embed.set_footer(text=(f"Page {pageNum} of {len(list(helpInfo))}"))
+    #     embed.timestamp=datetime.datetime.now()
+    #     embeds.append(embed)
+    #     pageNum+=1
 
-    await get_buttons(view, embeds)
+    # await get_buttons(view, embeds)
 
-    await interaction.followup.send(embed=embeds[0], view=view)
+    # await interaction.followup.send(embed=embeds[0], view=view)
 
 
 

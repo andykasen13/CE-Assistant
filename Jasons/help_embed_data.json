@@ -1,0 +1,20 @@
+{
+    "Registration" : {
+        "Name" : "Registration",
+        "Emoji" : "<:tier5:1133560882291548323>",
+        "Description" : "Register for future use of the CE Assistant!",
+        "Content" : "here lies this shit"
+    },
+    "Rolls" : {
+        "Name" : "Rolls",
+        "Emoji" : "🧻",
+        "Description" : "Learn how to roll and about different rolls!",
+        "Content" : "more shit"
+    },
+    "Update" : {
+        "Name" : "Update",
+        "Emoji" : "📈",
+        "Description" : "Learn how to update your profile!",
+        "Content" : "hehehaha"
+    }
+}

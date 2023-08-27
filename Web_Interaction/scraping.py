@@ -257,6 +257,17 @@ def update(new_game, old_game, driver, number, icon, icons, name):
     if new_game['Tier'] != old_game['Tier']:
         update += "\n- {} ➡ {}".format(icons[old_game['Tier']], icons[new_game['Tier']])
 
+    # ------------------- check points -----------------
+    new_points = 0
+    for objective in new_game['Primary Objectives']:
+        new_points += new_game['Primary Objectives'][objective]['Point Value']
+
+    old_points = 0
+    for objective in old_game['Primary Objectives']:
+        old_points += old_game['Primary Objectives'][objective]['Point Value']
+
+    if new_points != old_points:
+        update += "\n- {} ➡ {}".format(old_points, new_points)
 
     # ------------------- check Genre -------------------
     if new_game['Genre'] != old_game['Genre']:
@@ -404,15 +415,15 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
     # ------------------- check requirements -------------------
     # requirements are new
     if 'Requirements' in list(new.keys()) and not 'Requirements' in list(old.keys()):
-        update += "\n\t- Requirements added"
+        update += "\n  - Requirements added"
     
     # requirements deleted
     elif 'Requirements' in list(old.keys()) and not 'Requirements' in list(new.keys()):
-        update += "\n\t- Requirements removed"
+        update += "\n  - Requirements removed"
     
     # requirements changed
     elif 'Requirements' in list(new.keys()) and new['Requirements'] != old['Requirements']:
-        update += "\n\t- Requirements updated"
+        update += "\n  - Requirements updated"
     
 
     # ------------------- check achievements -------------------
@@ -420,7 +431,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
     if 'Achievements' in list(new.keys()) and not 'Achievements' in list(old.keys()):
         
         # initialize added achievement message
-        stand_in = "\n\t- "
+        stand_in = "\n  - "
 
         # achievement loop
         for achievement in new['Achievements']:
@@ -438,7 +449,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
 
     # no more achievements
     elif 'Achievements' in list(old.keys()) and not 'Achievements' in list(new.keys()):
-        update += "\n\t- All achievements removed"
+        update += "\n  - All achievements removed"
     
 
     # achievements changed

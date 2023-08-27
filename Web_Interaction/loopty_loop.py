@@ -190,7 +190,7 @@ async def scrape(channel):
 
     # thread call scraping the new data
     updates = await thread_scrape() #asyncio.to_thread(thread_scrape)
-    print('here')
+
     # send out each update
     for dict in updates[0]:
         await channel.send(file=dict['Image'], embed=dict['Embed'])

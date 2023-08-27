@@ -228,131 +228,6 @@
             }
         }
     },
-    "- \u200ePuzzle Games -": {
-        "CE ID": "27578157-10b2-4f29-acee-452c2dc59477",
-        "Steam ID": "1485250",
-        "Tier": "Tier 0",
-        "Genre": "Strategy",
-        "Full Completions": 88,
-        "Total Owners": 88,
-        "Primary Objectives": {
-            "Page Description": {
-                "Description": "This page serves as a list of puzzle games on Steam curated by CE. Each game listed will require you to either complete all or specific achievements within the game, or complete all in-game puzzles offered. The difficulty of these objectives are gauged on a three-tier system, ranging from Moderate (\ud83d\udfe8), to Challenging (\ud83d\udfe5), to Extreme (\u2b1b). A specialized potentials list for puzzle games can be found here: <https://tinyurl.com/Puzzle-Games>. Games are added to this list through a voting system within the CE Discord server\u2014if you wish to participate in the voting system, ask any of the Discord mods for the \"@Puzzle Enthusiast\" role. Please remember that objectives on this game do not count toward CO-related roles.",
-                "Point Value": 0,
-                "Requirements": "How to submit proof for each game: Steam profile link for achievements, screenshot/video for everything else."
-            },
-            "To Claim Your Objectives": {
-                "Description": "To be eligible for these achievements, please add the associated game \"Frame of Mind\" to your library, and then update your profile. You should then show up in the full completions after a while and can post your proof. Please remember that objectives on this game do not count toward CO-related roles.",
-                "Point Value": 0
-            }
-        },
-        "Community Objectives": {
-            "7 Billion Humans": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/792100/7_Billion_Humans/"
-            },
-            "A Monster's Expedition": {
-                "Description": "\u2b1b Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/1052990/A_Monsters_Expedition/"
-            },
-            "Antichamber": {
-                "Description": "\ud83d\udfe8 Find all map locations and signs.",
-                "Requirements": "https://store.steampowered.com/app/219890/Antichamber/"
-            },
-            "Baba Is You": {
-                "Description": "\u2b1b Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/736260/Baba_Is_You/"
-            },
-            "Cats Organized Neatly + Dogs Organized Neatly": {
-                "Description": "\ud83d\udfe8 Earn all achievements in both games.",
-                "Requirements": "https://store.steampowered.com/app/1369340/Cats_Organized_Neatly/\nhttps://store.steampowered.com/app/1597730/Dogs_Organized_Neatly/"
-            },
-            "Cosmic Express": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/583270/Cosmic_Express/"
-            },
-            "Cypher": {
-                "Description": "\ud83d\udfe5 Complete all in-game puzzles.",
-                "Requirements": "https://store.steampowered.com/app/746710/Cypher/"
-            },
-            "Divide By Sheep": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/252130/Divide_By_Sheep/"
-            },
-            "EXAPUNKS": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/716490/EXAPUNKS/"
-            },
-            "FEZ": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/224760/FEZ/"
-            },
-            "Human Resource Machine": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/375820/Human_Resource_Machine/"
-            },
-            "Infinifactory": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/300570/Infinifactory/"
-            },
-            "KAMI": {
-                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
-                "Requirements": "https://store.steampowered.com/app/272040/KAMI/"
-            },
-            "Opus Magnum": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/558990/Opus_Magnum/"
-            },
-            "Patrick's Parabox": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/1260520/Patricks_Parabox/"
-            },
-            "Portal 2": {
-                "Description": "\ud83d\udfe8 Earn the achievements related to completing all single-player and co-op campaign levels.",
-                "Requirements": "https://store.steampowered.com/app/620/Portal_2/"
-            },
-            "SHENZHEN I/O": {
-                "Description": "\u2b1b Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/504210/SHENZHEN_IO/"
-            },
-            "Snakebird": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/357300/Snakebird/"
-            },
-            "SpaceChem": {
-                "Description": "\u2b1b Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/92800/SpaceChem/"
-            },
-            "Stephen's Sausage Roll": {
-                "Description": "\u2b1b Complete all in-game puzzles.",
-                "Requirements": "https://store.steampowered.com/app/353540/Stephens_Sausage_Roll/"
-            },
-            "Taiji": {
-                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
-                "Requirements": "https://store.steampowered.com/app/1141580/Taiji/"
-            },
-            "Tametsi": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/709920/Tametsi/"
-            },
-            "The Case of the Golden Idol": {
-                "Description": "\ud83d\udfe8 Earn all achievements. For an optimal experience, minimize usage of in-game hints.",
-                "Requirements": "https://store.steampowered.com/app/1677770/The_Case_of_the_Golden_Idol/"
-            },
-            "The Cat Machine": {
-                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
-                "Requirements": "https://store.steampowered.com/app/386900/The_Cat_Machine/"
-            },
-            "The Talos Principle": {
-                "Description": "\ud83d\udfe8 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/257510/The_Talos_Principle/"
-            },
-            "TIS-100": {
-                "Description": "\ud83d\udfe5 Earn all achievements.",
-                "Requirements": "https://store.steampowered.com/app/370360/TIS100/"
-            }
-        }
-    },
     "-KLAUS-": {
         "CE ID": "1e8565aa-b9f2-4b41-9578-22e4c2a5436b",
         "Steam ID": "729370",
@@ -29392,5 +29267,130 @@
             }
         },
         "Community Objectives": {}
+    },
+    "- Puzzle Games -": {
+        "CE ID": "27578157-10b2-4f29-acee-452c2dc59477",
+        "Steam ID": "1485250",
+        "Tier": "Tier 0",
+        "Genre": "Strategy",
+        "Full Completions": 94,
+        "Total Owners": 94,
+        "Primary Objectives": {
+            "Page Description": {
+                "Description": "This page serves as a list of puzzle games on Steam curated by CE. Each game listed will require you to either complete all or specific achievements within the game, or complete all in-game puzzles offered. The difficulty of these objectives are gauged on a three-tier system, ranging from Moderate (\ud83d\udfe8), to Challenging (\ud83d\udfe5), to Extreme (\u2b1b). A specialized potentials list for puzzle games can be found here: <https://tinyurl.com/Puzzle-Games>. Games are added to this list through a voting system within the CE Discord server\u2014if you wish to participate in the voting system, ask any of the Discord mods for the \"@Puzzle Enthusiast\" role. Please remember that objectives on this game do not count toward CO-related roles.",
+                "Point Value": 0,
+                "Requirements": "How to submit proof for each game: Steam profile link for achievements, screenshot/video for everything else."
+            },
+            "To Claim Your Objectives": {
+                "Description": "To be eligible for these achievements, please add the associated game \"Frame of Mind\" to your library, and then update your profile. You should then show up in the full completions after a while and can post your proof. Please remember that objectives on this game do not count toward CO-related roles.",
+                "Point Value": 0
+            }
+        },
+        "Community Objectives": {
+            "7 Billion Humans": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/792100/7_Billion_Humans/"
+            },
+            "A Monster's Expedition": {
+                "Description": "\u2b1b Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/1052990/A_Monsters_Expedition/"
+            },
+            "Antichamber": {
+                "Description": "\ud83d\udfe8 Find all map locations and signs.",
+                "Requirements": "https://store.steampowered.com/app/219890/Antichamber/"
+            },
+            "Baba Is You": {
+                "Description": "\u2b1b Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/736260/Baba_Is_You/"
+            },
+            "Cats Organized Neatly + Dogs Organized Neatly": {
+                "Description": "\ud83d\udfe8 Earn all achievements in both games.",
+                "Requirements": "https://store.steampowered.com/app/1369340/Cats_Organized_Neatly/\nhttps://store.steampowered.com/app/1597730/Dogs_Organized_Neatly/"
+            },
+            "Cosmic Express": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/583270/Cosmic_Express/"
+            },
+            "Cypher": {
+                "Description": "\ud83d\udfe5 Complete all in-game puzzles.",
+                "Requirements": "https://store.steampowered.com/app/746710/Cypher/"
+            },
+            "Divide By Sheep": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/252130/Divide_By_Sheep/"
+            },
+            "EXAPUNKS": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/716490/EXAPUNKS/"
+            },
+            "FEZ": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/224760/FEZ/"
+            },
+            "Human Resource Machine": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/375820/Human_Resource_Machine/"
+            },
+            "Infinifactory": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/300570/Infinifactory/"
+            },
+            "KAMI": {
+                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
+                "Requirements": "https://store.steampowered.com/app/272040/KAMI/"
+            },
+            "Opus Magnum": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/558990/Opus_Magnum/"
+            },
+            "Patrick's Parabox": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/1260520/Patricks_Parabox/"
+            },
+            "Portal 2": {
+                "Description": "\ud83d\udfe8 Earn the achievements related to completing all single-player and co-op campaign levels.",
+                "Requirements": "https://store.steampowered.com/app/620/Portal_2/"
+            },
+            "SHENZHEN I/O": {
+                "Description": "\u2b1b Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/504210/SHENZHEN_IO/"
+            },
+            "Snakebird": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/357300/Snakebird/"
+            },
+            "SpaceChem": {
+                "Description": "\u2b1b Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/92800/SpaceChem/"
+            },
+            "Stephen's Sausage Roll": {
+                "Description": "\u2b1b Complete all in-game puzzles.",
+                "Requirements": "https://store.steampowered.com/app/353540/Stephens_Sausage_Roll/"
+            },
+            "Taiji": {
+                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
+                "Requirements": "https://store.steampowered.com/app/1141580/Taiji/"
+            },
+            "Tametsi": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/709920/Tametsi/"
+            },
+            "The Case of the Golden Idol": {
+                "Description": "\ud83d\udfe8 Earn all achievements. For an optimal experience, minimize usage of in-game hints.",
+                "Requirements": "https://store.steampowered.com/app/1677770/The_Case_of_the_Golden_Idol/"
+            },
+            "The Cat Machine": {
+                "Description": "\ud83d\udfe8 Complete all in-game puzzles.",
+                "Requirements": "https://store.steampowered.com/app/386900/The_Cat_Machine/"
+            },
+            "The Talos Principle": {
+                "Description": "\ud83d\udfe8 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/257510/The_Talos_Principle/"
+            },
+            "TIS-100": {
+                "Description": "\ud83d\udfe5 Earn all achievements.",
+                "Requirements": "https://store.steampowered.com/app/370360/TIS100/"
+            }
+        }
     }
 }
