@@ -107,6 +107,8 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
         roll_completed = True
 
         for game in current_roll["Games"] :
+        
+            # --------------------------------- standardize the game dictionary ---------------------------------
             # remove COs from the equation
             del database_name[game]["Community Objectives"]
 
@@ -116,8 +118,49 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                if("Requirements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Requirements"]
                del database_name[game]["Primary Objectives"][dbN_objective]["Description"]
                database_name[game]["Primary Objectives"][dbN_objective] = database_name[game]["Primary Objectives"][dbN_objective]["Point Value"]
+
+            # --------------------------------- co op rolls :sob: ---------------------------------
+            # destiny alignment
+            if current_roll["Event Name"] == "Destiny Alignment" : 
+
+                for other_roll in user_dict[current_roll["Partner"]]["Current Rolls"] :
+                    if other_roll["Event Name"] == "Destiny Alignment" : 
+                        other_game = other_roll["Games"[0]]
+                        break
+                
+                if("Achievements" in database_name[other_game]["Primary Objectives"][dbN_objective]) : del database_name[other_game]["Primary Objectives"][dbN_objective]["Achievements"]
+                if("Requirements" in database_name[other_game]["Primary Objectives"][dbN_objective]) : del database_name[other_game]["Primary Objectives"][dbN_objective]["Requirements"]
+                del database_name[other_game]["Primary Objectives"][dbN_objective]["Description"]
+                database_name[other_game]["Primary Objectives"][dbN_objective] = database_name[other_game]["Primary Objectives"][dbN_objective]["Point Value"]
+
+                if ((game not in user_dict[ce_id]["Owned Games"])
+                    or
+                    (user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"])
+                    or
+                    (other_game not in user_dict[current_roll["Partner"]]["Owned Games"])
+                    or
+                    (user_dict[current_roll["Partner"]]["Owned Games"][other_game]["Primary Objectives"] != database_name[other_game]["Primary Objectives"])) : 
+                    
+                        roll_completed = False
+            # end of destiny alignment
+            
+            
+            # soul mates
+            if current_roll["Event Name"] == "Soul Mates" :
+                if ((game not in user_dict[ce_id]["Owned Games"])
+                        or
+                        (user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"])
+                        or
+                        (game not in user_dict[current_roll["Partner"]]["Owned Games"])
+                        or
+                        (user_dict[current_roll["Partner"]]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"])) : roll_completed = False
+            # end of soul mates
+
+
             
 
+            
+            # --------- check to see if games that aren't weird are done ---------
             if (game not in user_dict[ce_id]["Owned Games"] or user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"]) : roll_completed = False
             else : print('{} complete'.format(game))
         

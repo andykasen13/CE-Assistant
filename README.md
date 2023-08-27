@@ -91,14 +91,12 @@ obviously mods like folkius (ily folkius) should still be able to send announcem
 
 You will need to `pip install` the following:
 
-- `discord`
-- `selenium`
-- `pillow`
-- `deepdiff`
-- `monthdelta`
-- `psutil`
-- `requests`
-- `bs4`
+- `discord` (discord)
+- `selenium` (web interaction)
+- `pillow` (picture taking)
+- `requests` (steam and CE api access)
+- `bs4` (html sorting)
+- `apscheduler` (scheduling roll-ends)
 
 
 # CE-Assistant

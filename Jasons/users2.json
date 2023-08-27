@@ -3601,6 +3601,20 @@
                     "Yumori Forest",
                     "Vanquish"
                 ]
+            },
+            {
+                "Event Name": "Winner Takes All",
+                "Partner": "835afaad-0059-4e39-b24f-24b2c76b1d08",
+                "Games": [
+                    "Sprinter"
+                ]
+            },
+            {
+                "Event Name": "Game Theory",
+                "Partner": "835afaad-0059-4e39-b24f-24b2c76b1d08",
+                "Games": [
+                    "Hoppup!"
+                ]
             }
         ],
         "Completed Rolls": [
@@ -3654,6 +3668,13 @@
                     "BETON BRUTAL",
                     "Yumori Forest",
                     "Vanquish"
+                ]
+            },
+            {
+                "Event Name": "Winner Takes All",
+                "End Time": 1693104224,
+                "Games": [
+                    "pending..."
                 ]
             }
         ],
@@ -3927,6 +3948,20 @@
                 "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
                 "Games": [
                     "Haiku, the Robot"
+                ]
+            },
+            {
+                "Event Name": "Winner Takes All",
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+                "Games": [
+                    "Sprinter"
+                ]
+            },
+            {
+                "Event Name": "Game Theory",
+                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
+                "Games": [
+                    "Vanquish"
                 ]
             }
         ],
