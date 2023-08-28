@@ -3438,17 +3438,18 @@
         "Reroll Tickets": 0,
         "Casino Score": 0,
         "Owned Games": {
+            "Neon White": {
+                "Primary Objectives": {
+                    "Demon Exterminator": 35,
+                    "\"I just keep getting better and better.\"": 20,
+                    "Rocket League": 10,
+                    "Heaven's Janitor": 5
+                }
+            },
             "Hollow Knight": {
                 "Primary Objectives": {
                     "Void Given Focus": 30,
                     "Cloak and Nail": 20
-                }
-            },
-            "Neon White": {
-                "Primary Objectives": {
-                    "Demon Exterminator": 35,
-                    "Rocket League": 10,
-                    "Heaven's Janitor": 5
                 }
             },
             "Teenage Mutant Ninja Turtles: Shredder's Revenge": {
@@ -3545,8 +3546,8 @@
             "Crashlands": {},
             "- Challenge Enthusiasts -": {
                 "Community Objectives": {
-                    "Intro Quest": true,
-                    "One Hell of a Day": true
+                    "One Hell of a Day": true,
+                    "Intro Quest": true
                 }
             },
             "Blasphemous": {},
@@ -3608,10 +3609,34 @@
                 ]
             },
             {
-                "Event Name": "Game Theory",
-                "Partner": "835afaad-0059-4e39-b24f-24b2c76b1d08",
+                "Event Name": "One Hell of a Month",
+                "End Time": 1695670288,
                 "Games": [
-                    "Hoppup!"
+                    "METAL SLUG X",
+                    "Void Prison",
+                    "Alien Shooter",
+                    "GoNNER",
+                    "Mega Serval",
+                    "SUPER FLAIL",
+                    "Sullen",
+                    "Dr. Fetus' Mean Meat Machine",
+                    "Aliens Go Home Run",
+                    "Cosmophony",
+                    "DSY: Don't Shoot Yourself",
+                    "The Treehouse Man",
+                    "DSY: Don't Shoot Yourself",
+                    "Marimoth",
+                    "Jet Buster",
+                    "Neon Boost",
+                    "Cyber Hook",
+                    "Alien Removal Division",
+                    "God Damn The Garden",
+                    "Transpire",
+                    "XANDO: Xtreme & Over the Top",
+                    "A Healer Only Lives Twice",
+                    "A Healer Only Lives Twice",
+                    "The Ouroboros King",
+                    "A Healer Only Lives Twice"
                 ]
             }
         ],
@@ -3626,6 +3651,14 @@
                     "UNSIGHTED"
                 ],
                 "End Time": 1693173387
+            },
+            {
+                "Event Name": "Game Theory",
+                "Partner": "835afaad-0059-4e39-b24f-24b2c76b1d08",
+                "Games": [
+                    "Neon White"
+                ],
+                "End Time": 1693247467
             }
         ]
     },
@@ -3948,7 +3981,8 @@
             "Getting Over It with Bennett Foddy": {}
         },
         "Cooldowns": {
-            "Winner Takes All": 1700434587
+            "Winner Takes All": 1700434587,
+            "Game Theory": 1695666667
         },
         "Current Rolls": [
             {
@@ -3956,13 +3990,6 @@
                 "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
                 "Games": [
                     "Haiku, the Robot"
-                ]
-            },
-            {
-                "Event Name": "Game Theory",
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
-                "Games": [
-                    "Vanquish"
                 ]
             }
         ],

@@ -5,7 +5,7 @@ import json
 import datetime
 from datetime import timedelta
 
-async def update_p(user_id : int, log_channel : discord.TextChannel, casino_channel : discord.TextChannel, es_hora_de_over : bool) :
+async def update_p(user_id : int, log_channel : discord.TextChannel, casino_channel : discord.TextChannel, es_hora_de_over : bool = False) :
     
     # Open the database
     with open('Jasons/users2.json', 'r') as dbU :
@@ -234,11 +234,13 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
             elif not bool_1 and bool_2 :
                 winner = 2
             elif not bool_1 and not bool_2 :
+                print('fail')
                 continue
             elif bool_1 and bool_2 :
                 winner = 1
             # user 1 wins
             if winner == 1 :
+                print('andy wins')
                 # update user 1 database
                 current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
                 user_dict[ce_id]["Completed Rolls"].append(current_roll)
@@ -254,6 +256,7 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                 continue
             # user 2 wins
             elif winner == 2:
+                print('brooks wins')
                 # update user 2 database
                 for index, other_roll in enumerate(database_user[current_roll["Partner"]]["Current Rolls"]) :
                     if other_roll["Event Name"] == "Winner Takes All" : 
@@ -294,6 +297,8 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                 if("Requirements" in database_name[int_game]["Primary Objectives"][dbN_objective]) : del database_name[int_game]["Primary Objectives"][dbN_objective]["Requirements"]
                 del database_name[int_game]["Primary Objectives"][dbN_objective]["Description"]
                 database_name[int_game]["Primary Objectives"][dbN_objective] = database_name[int_game]["Primary Objectives"][dbN_objective]["Point Value"]
+            print(database_name[int_game]["Primary Objectives"])
+            print(user_dict[ce_id]["Owned Games"][int_game]["Primary Objectives"])
             # formatting part game
             for dbN_objective in database_name[other_game]["Primary Objectives"] :
                 if(type(database_name[other_game]["Primary Objectives"][dbN_objective]) is int) : continue
@@ -304,17 +309,19 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
             # figure out who completed what game
             winner = ""
             bool_1 = int_game in user_dict[ce_id]["Owned Games"] and "Primary Objectives" in user_dict[ce_id]["Owned Games"][int_game] and user_dict[ce_id]["Owned Games"][int_game]["Primary Objectives"] == database_name[int_game]["Primary Objectives"]
-            bool_2 = other_game in database_user[ce_id]["Owned Games"] and "Primary Objectives" in database_user[current_roll["Partner"]]["Owned Games"][other_game] and database_user[current_roll["Partner"]]["Owned Games"][other_game]["Primary Objectives"] == database_name[other_game]["Primary Objectives"]
+            bool_2 = other_game in database_user[current_roll["Partner"]]["Owned Games"] and "Primary Objectives" in database_user[current_roll["Partner"]]["Owned Games"][other_game] and database_user[current_roll["Partner"]]["Owned Games"][other_game]["Primary Objectives"] == database_name[other_game]["Primary Objectives"]
             if bool_1 and not bool_2 :
                 winner = 1
             elif not bool_1 and bool_2 :
                 winner = 2
             elif not bool_1 and not bool_2 :
+                print('fail')
                 continue
             elif bool_1 and bool_2 :
                 winner = 1
             # user 1 wins
             if winner == 1 :
+                print('andy wins')
                 # update user 1 database
                 current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
                 user_dict[ce_id]["Completed Rolls"].append(current_roll)
@@ -330,6 +337,7 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                 continue
             # user 2 wins
             elif winner == 2:
+                print('brooks wins')
                 # update user 2 database
                 for index, other_roll in enumerate(database_user[current_roll["Partner"]]["Current Rolls"]) :
                     if other_roll["Event Name"] == "Game Theory" : 
@@ -355,7 +363,7 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
 
 
         # one hell of a month #
-        if current_roll["Event Name"] == "One Hell of a Month" :
+        elif current_roll["Event Name"] == "One Hell of a Month" :
             "one "
 
             "?}{}"

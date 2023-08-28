@@ -1,3 +1,4 @@
+import random
 import discord
 import datetime
 from datetime import timedelta
@@ -121,9 +122,15 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         embed = discord.Embed(title=f"⚠️Roll still under construction!⚠️")
         print("One Hell of a Month")
 
+        # select a random genre to remove
+        random_num = random.randint(0, 5)
+        genres.remove(genres[random_num])
+
         for ggenre in genres :
+            i=0
             while(i < 5) :
                 games.append(get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre))
+                i+=1
         embeds = create_multi_embed("One Hell of a Month", 28, games, 28*3, interaction)
         embed = embeds[0]
         await get_buttons(view, embeds)
