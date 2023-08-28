@@ -119,7 +119,15 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     elif event == "One Hell of a Month" : 
         # five t1s from each category
         embed = discord.Embed(title=f"⚠️Roll still under construction!⚠️")
-        dont_save = True
+        print("One Hell of a Month")
+
+        for ggenre in genres :
+            while(i < 5) :
+                games.append(get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre))
+        embeds = create_multi_embed("One Hell of a Month", 28, games, 28*3, interaction)
+        embed = embeds[0]
+        await get_buttons(view, embeds)
+
 
     # -------------------------------------------- Two "Two Week T2 Streak" Streak ---------------------------------------------
     elif event == "Two 'Two Week T2 Streak' Streak" :

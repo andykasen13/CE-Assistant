@@ -3545,8 +3545,8 @@
             "Crashlands": {},
             "- Challenge Enthusiasts -": {
                 "Community Objectives": {
-                    "One Hell of a Day": true,
-                    "Intro Quest": true
+                    "Intro Quest": true,
+                    "One Hell of a Day": true
                 }
             },
             "Blasphemous": {},
@@ -3579,15 +3579,21 @@
             "PAYDAY 2": {},
             "Getting Over It with Bennett Foddy": {}
         },
-        "Cooldowns": {
-            "Winner Takes All": 1700431373
-        },
+        "Cooldowns": {},
         "Current Rolls": [
             {
                 "Event Name": "Destiny Alignment",
                 "Partner": "e816f094-38de-4494-b52f-681b5915e518",
                 "Games": [
                     "Getting Over It with Bennett Foddy"
+                ]
+            },
+            {
+                "Event Name": "Soul Mates",
+                "Partner": "e816f094-38de-4494-b52f-681b5915e518",
+                "End Time": 1693274120,
+                "Games": [
+                    "Fortix"
                 ]
             },
             {
@@ -3602,13 +3608,6 @@
                 ]
             },
             {
-                "Event Name": "Winner Takes All",
-                "Partner": "835afaad-0059-4e39-b24f-24b2c76b1d08",
-                "Games": [
-                    "Geometry Dash"
-                ]
-            },
-            {
                 "Event Name": "Game Theory",
                 "Partner": "835afaad-0059-4e39-b24f-24b2c76b1d08",
                 "Games": [
@@ -3619,6 +3618,14 @@
         "Completed Rolls": [
             {
                 "Event Name": "One Hell of a Day"
+            },
+            {
+                "Event Name": "Winner Takes All",
+                "Partner": "835afaad-0059-4e39-b24f-24b2c76b1d08",
+                "Games": [
+                    "UNSIGHTED"
+                ],
+                "End Time": 1693173387
             }
         ]
     },
@@ -3940,7 +3947,9 @@
             "RAYZE": {},
             "Getting Over It with Bennett Foddy": {}
         },
-        "Cooldowns": {},
+        "Cooldowns": {
+            "Winner Takes All": 1700434587
+        },
         "Current Rolls": [
             {
                 "Event Name": "Destiny Alignment",
@@ -3960,14 +3969,6 @@
         "Completed Rolls": [
             {
                 "Event Name": "Never Lucky"
-            },
-            {
-                "Event Name": "Winner Takes All",
-                "Partner": "d7cb0869-5ed9-465c-87bf-0fb95aaebbd5",
-                "Games": [
-                    "Geometry Dash"
-                ],
-                "End Time": 1693170173
             }
         ]
     }

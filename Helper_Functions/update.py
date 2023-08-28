@@ -5,7 +5,7 @@ import json
 import datetime
 from datetime import timedelta
 
-async def update_p(user_id : int, log_channel : discord.TextChannel, casino_channel : discord.TextChannel) :
+async def update_p(user_id : int, log_channel : discord.TextChannel, casino_channel : discord.TextChannel, es_hora_de_over : bool) :
     
     # Open the database
     with open('Jasons/users2.json', 'r') as dbU :
@@ -121,7 +121,7 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
     remove_indexes = []
 
     # Check if any rolls have been completed
-    for index, current_roll in enumerate(user_dict[ce_id]['Current Rolls']) :
+    for m_index, current_roll in enumerate(user_dict[ce_id]['Current Rolls']) :
         roll_completed = True
 
         print("checking {}".format(current_roll["Event Name"]))
@@ -214,11 +214,10 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
 
 
 
-        # winner takes all
+        # ----- winner takes all ------
         elif current_roll["Event Name"] == "Winner Takes All":
             # set the game
             game = current_roll["Games"][0]
-
             # formatting
             for dbN_objective in database_name[game]["Primary Objectives"] :
                 if(type(database_name[game]["Primary Objectives"][dbN_objective]) is int) : continue
@@ -226,28 +225,24 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                 if("Requirements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Requirements"]
                 del database_name[game]["Primary Objectives"][dbN_objective]["Description"]
                 database_name[game]["Primary Objectives"][dbN_objective] = database_name[game]["Primary Objectives"][dbN_objective]["Point Value"]
-
             # figure out who completed what game
             winner = ""
             bool_1 = game in user_dict[ce_id]["Owned Games"] and "Primary Objectives" in user_dict[ce_id]["Owned Games"][game] and user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] == database_name[game]["Primary Objectives"]
             bool_2 = game in database_user[ce_id]["Owned Games"] and "Primary Objectives" in database_user[current_roll["Partner"]]["Owned Games"][game] and database_user[current_roll["Partner"]]["Owned Games"][game]["Primary Objectives"] == database_name[game]["Primary Objectives"]
             if bool_1 and not bool_2 :
                 winner = 1
-                await log_channel.send("<@{}> has beaten <@{}> in Winner Takes All.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
             elif not bool_1 and bool_2 :
                 winner = 2
-                await log_channel.send("<@{}> has beaten <@{}> in Winner Takes All.".format(database_user[current_roll["Partner"]]["Discord ID"], user_dict[ce_id]["Discord ID"]))
             elif not bool_1 and not bool_2 :
                 continue
             elif bool_1 and bool_2 :
                 winner = 1
-            
             # user 1 wins
             if winner == 1 :
                 # update user 1 database
                 current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
                 user_dict[ce_id]["Completed Rolls"].append(current_roll)
-                remove_indexes.append(index)
+                remove_indexes.append(m_index)
                 # update user 2 database
                 for index, other_roll in enumerate(database_user[current_roll["Partner"]]["Current Rolls"]) :
                     if other_roll["Event Name"] == "Winner Takes All" : 
@@ -255,8 +250,8 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                         break
                 database_user[current_roll["Partner"]]["Cooldowns"]["Winner Takes All"] = int(time.mktime((datetime.datetime.now()+timedelta(28*3)).timetuple()))
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
+                await log_channel.send("<@{}> has beaten <@{}> in Winner Takes All.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
                 continue
-
             # user 2 wins
             elif winner == 2:
                 # update user 2 database
@@ -269,35 +264,126 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
                 # update user 1 database
                 user_dict[ce_id]["Cooldowns"]["Winner Takes All"]  = int(time.mktime((datetime.datetime.now()+timedelta(28*3)).timetuple()))
-                remove_indexes.append(index)
+                remove_indexes.append(m_index)
+                await log_channel.send("<@{}> has beaten <@{}> in Winner Takes All.".format(database_user[current_roll["Partner"]]["Discord ID"], user_dict[ce_id]["Discord ID"]))
                 continue
-
-
+            # something goes awry
             else :
                 print('something is wrongf')
+                await log_channel.send("Something went wrong with <@{}> and <@{}>'s Winner Takes All roll. Please contact andy for help :)".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
                 continue
+            # ----- winner takes all -----
 
+
+
+        # game theory
+        elif(current_roll["Event Name"] == "Game Theory") :
+            "game theory"
+            int_game = current_roll["Games"][0]
+            for other_roll in database_user[current_roll["Partner"]]["Current Rolls"] :
+                if other_roll["Event Name"] == "Game Theory" : 
+                    other_game = other_roll["Games"][0]
+                    break
+            if other_game == None : 
+                await log_channel.send("Error! <@{}>'s Game Theory partner, <@{}>, does not have Game Theory registered! Please contact andy about this.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
+                continue
+            # formatting int game
+            for dbN_objective in database_name[int_game]["Primary Objectives"] :
+                if(type(database_name[int_game]["Primary Objectives"][dbN_objective]) is int) : continue
+                if("Achievements" in database_name[int_game]["Primary Objectives"][dbN_objective]) : del database_name[int_game]["Primary Objectives"][dbN_objective]["Achievements"]
+                if("Requirements" in database_name[int_game]["Primary Objectives"][dbN_objective]) : del database_name[int_game]["Primary Objectives"][dbN_objective]["Requirements"]
+                del database_name[int_game]["Primary Objectives"][dbN_objective]["Description"]
+                database_name[int_game]["Primary Objectives"][dbN_objective] = database_name[int_game]["Primary Objectives"][dbN_objective]["Point Value"]
+            # formatting part game
+            for dbN_objective in database_name[other_game]["Primary Objectives"] :
+                if(type(database_name[other_game]["Primary Objectives"][dbN_objective]) is int) : continue
+                if("Achievements" in database_name[other_game]["Primary Objectives"][dbN_objective]) : del database_name[other_game]["Primary Objectives"][dbN_objective]["Achievements"]
+                if("Requirements" in database_name[other_game]["Primary Objectives"][dbN_objective]) : del database_name[other_game]["Primary Objectives"][dbN_objective]["Requirements"]
+                del database_name[other_game]["Primary Objectives"][dbN_objective]["Description"]
+                database_name[other_game]["Primary Objectives"][dbN_objective] = database_name[other_game]["Primary Objectives"][dbN_objective]["Point Value"]
+            # figure out who completed what game
+            winner = ""
+            bool_1 = int_game in user_dict[ce_id]["Owned Games"] and "Primary Objectives" in user_dict[ce_id]["Owned Games"][int_game] and user_dict[ce_id]["Owned Games"][int_game]["Primary Objectives"] == database_name[int_game]["Primary Objectives"]
+            bool_2 = other_game in database_user[ce_id]["Owned Games"] and "Primary Objectives" in database_user[current_roll["Partner"]]["Owned Games"][other_game] and database_user[current_roll["Partner"]]["Owned Games"][other_game]["Primary Objectives"] == database_name[other_game]["Primary Objectives"]
+            if bool_1 and not bool_2 :
+                winner = 1
+            elif not bool_1 and bool_2 :
+                winner = 2
+            elif not bool_1 and not bool_2 :
+                continue
+            elif bool_1 and bool_2 :
+                winner = 1
+            # user 1 wins
+            if winner == 1 :
+                # update user 1 database
+                current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
+                user_dict[ce_id]["Completed Rolls"].append(current_roll)
+                remove_indexes.append(m_index)
+                # update user 2 database
+                for index, other_roll in enumerate(database_user[current_roll["Partner"]]["Current Rolls"]) :
+                    if other_roll["Event Name"] == "Game Theory" : 
+                        other_location = index
+                        break
+                database_user[current_roll["Partner"]]["Cooldowns"]["Game Theory"] = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
+                del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
+                await log_channel.send("<@{}> has beaten <@{}> in Game Theory.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
+                continue
+            # user 2 wins
+            elif winner == 2:
+                # update user 2 database
+                for index, other_roll in enumerate(database_user[current_roll["Partner"]]["Current Rolls"]) :
+                    if other_roll["Event Name"] == "Game Theory" : 
+                        other_location = index
+                        break
+                database_user[current_roll["Partner"]]["Current Rolls"][other_location]["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
+                database_user[current_roll["Partner"]]["Completed Rolls"].append(database_user[current_roll["Partner"]]["Current Rolls"][other_location])
+                del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
+                # update user 1 database
+                user_dict[ce_id]["Cooldowns"]["Game Theory"]  = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
+                remove_indexes.append(m_index)
+                await log_channel.send("<@{}> has beaten <@{}> in Game Theory.".format(database_user[current_roll["Partner"]]["Discord ID"], user_dict[ce_id]["Discord ID"]))
+                continue
+            # something goes awry
+            else :
+                print('something is wrongf')
+                await log_channel.send("Something went wrong with <@{}> and <@{}>'s Game Theory roll. Please contact andy for help :)".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
+                continue
+        # game theory
+
+
+
+
+
+        # one hell of a month #
+        if current_roll["Event Name"] == "One Hell of a Month" :
+            "one "
+
+            "?}{}"
+
+            genrepoints = {
+                "Action" : 0,
+                "Arcade" : 0,
+                "Bullet Hell" : 0,
+                "First-Person" : 0,
+                "Platformer" : 0,
+                "Strategy" : 0
+            }
+
+            for game in current_roll["Games"] :
+                # formatting
+                for dbN_objective in database_name[game]["Primary Objectives"] :
+                    if(type(database_name[game]["Primary Objectives"][dbN_objective]) is int) : continue
+                    if("Achievements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Achievements"]
+                    if("Requirements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Requirements"]
+                    del database_name[game]["Primary Objectives"][dbN_objective]["Description"]
+                    database_name[game]["Primary Objectives"][dbN_objective] = database_name[game]["Primary Objectives"][dbN_objective]["Point Value"]
                 
-                
-                    
-
-            """
-            1. is the user done with the game?
-            2. is their partner done with the game?
-            if 1 not 2, they win
-            if 2 not 1, they win
-            if 1 and 1, ah man
-                go through cedb.me/user/user1/game/gameID/objectives and grab the most recent updated time
-                go through cedb.me/user/user2/game/gameID/objectives and grab the most recent updated time
-                whoever's is later wins!
+                if game in user_dict[ce_id]["Owned Games"] and "Primary Objectives" in user_dict[ce_id]["Owned Games"][game] and user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] == database_name[game]["Primary Objectives"]: 
+                    genrepoints[database_name[game]["Genre"]] += 1
             
-            move winners to completed rolls
-            move losers to cooldowns
+            print(genrepoints)
+
             
-            """
-
-            time.mktime(datetime.datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
-
 
 
 
@@ -321,19 +407,30 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
 
                 # ---------- check to see if the games are equal ----------
                 if (game not in user_dict[ce_id]["Owned Games"] or user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"]) : roll_completed = False
-                else : print('{} complete'.format(game))
+
+
+            # you;ve now gotten to the end. 
+            # if roll completed is false then the roll was failed. 
+            # if roll completed is true then they succeeded
             
+
             if not roll_completed : continue
             
-            print(f'{current_roll["Event Name"]} completed')
-
+            # if it's a co-op roll, send it to the log channel
+            if(current_roll["Event Name"] in ["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work"]) :
+                await log_channel.send("<@{}> and <@{}> have completed {}!".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"], current_roll["Event Name"]))
+            # if it's a solo roll, send it to the log channel
+            else:
+                await log_channel.send("<@{}>, you have completed {}! Congratulations!".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+            
+            # edit the roll that was completed
             current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
-
             user_dict[ce_id]["Completed Rolls"].append(current_roll)
 
-            del user_dict[ce_id]["Current Rolls"][index]
+            # add this index to the ones that need to be removed
+            remove_indexes.append(m_index)
 
-            await log_channel.send("<@{}>, you have completed {}! Congratulations!".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+            
         
     for indexx in remove_indexes :
         del user_dict[ce_id]["Current Rolls"][indexx]
