@@ -322,6 +322,7 @@ def update_p(user_id : int, es_hora_de_over : bool = False) :
                 winner = 2
             elif not bool_1 and not bool_2 :
                 print('fail')
+                if current_roll["End Time"] < int(time.mktime((datetime.datetime.now()).timetuple())) : returns.append("log: " + "<@{}> and <@{}> ")
                 continue
             elif bool_1 and bool_2 :
                 winner = 1
@@ -423,26 +424,33 @@ def update_p(user_id : int, es_hora_de_over : bool = False) :
                 if (game not in user_dict[ce_id]["Owned Games"] or user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"]) : roll_completed = False
 
 
-            # you;ve now gotten to the end. 
-            # if roll completed is false then the roll was failed. 
-            # if roll completed is true then they succeeded
-            
+        # you;ve now gotten to the end. 
+        # if roll completed is false then the roll was failed. 
+        # if roll completed is true then they succeeded
+        
+        # we now have to determine if the roll has ended or not. 
+        # it could be that this function was called because the roll has ended, 
+        # or because it is just being updated.
+        if not roll_completed : 
+            if "End Time" in current_roll and current_roll["End Time"] < int(time.mktime((datetime.datetime.now()).timetuple())) :
+                returns.append()
+                if "Partner" in current_roll : returns.append("casino: " + "<@{}> and <@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"], current_roll["Event Name"]))
+                else : returns.append("casino: " + "<@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+            continue
+        
+        # if it's a co-op roll, send it to the log channel
+        if(current_roll["Event Name"] in ["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work"]) :
+            returns.append("log: " + "<@{}> and <@{}> have completed {}!".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"], current_roll["Event Name"]))
+        # if it's a solo roll, send it to the log channel
+        else:
+            returns.append("log: " + "<@{}>, you have completed {}! Congratulations!".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+        
+        # edit the roll that was completed
+        current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
+        user_dict[ce_id]["Completed Rolls"].append(current_roll)
 
-            if not roll_completed : continue
-            
-            # if it's a co-op roll, send it to the log channel
-            if(current_roll["Event Name"] in ["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work"]) :
-                returns.append("log: " + "<@{}> and <@{}> have completed {}!".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"], current_roll["Event Name"]))
-            # if it's a solo roll, send it to the log channel
-            else:
-                returns.append("log: " + "<@{}>, you have completed {}! Congratulations!".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
-            
-            # edit the roll that was completed
-            current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
-            user_dict[ce_id]["Completed Rolls"].append(current_roll)
-
-            # add this index to the ones that need to be removed
-            remove_indexes.append(m_index)
+        # add this index to the ones that need to be removed
+        remove_indexes.append(m_index)
 
             
         

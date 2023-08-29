@@ -597,7 +597,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
 @tree.command(name="update", description="Update your stats in the CE Assistant database.", guild=discord.Object(id=guild_ID))
 async def update(interaction : discord.Interaction) :
     # Defer the message
-    await interaction.response.defer()
+    await interaction.response.defer(ephemeral=True)
 
     log_channel = client.get_channel(1141886539157221457)
     casino_channel = client.get_channel(811286469251039333)
@@ -617,7 +617,7 @@ async def update(interaction : discord.Interaction) :
 
     # actually update the user's database 
     # and store anything we need to report
-    returns = await update_p(interaction.user.id, log_channel, casino_channel)
+    returns = update_p(interaction.user.id, False)
 
     if returns == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
 
@@ -640,6 +640,8 @@ async def update(interaction : discord.Interaction) :
             await interaction.followup.send(embed=embed)
 
         # change the rank
+        # TODO: maybe get folkius to give theron points to test this out? 
+        # TODO: given that i have no way of knowing if it works rn
         elif return_value[:5:] == "rank:" :
             for rankrole in rankroles :
                 if rankrole in interaction.user.roles :
@@ -650,6 +652,18 @@ async def update(interaction : discord.Interaction) :
                 for rankrole in rankroles :
                     if rankrole in interaction.user.roles : interaction.user.remove_roles(roles=rankrole)
                     if rankrole.name == return_value[6::] : interaction.user.add_roles(roles=rankrole)
+        
+        # log channel shit
+        elif return_value[:4:] == "log:" :
+            await log_channel.send(return_value[5::])
+
+        # casino channel shit
+        elif return_value[:7:] == "casino:":
+            await casino_channel.send(return_value[8::])
+
+        # else
+        else :
+            await log_channel.send("BOT ERROR: recieved unrecognized update code: \n'{}'".format(return_value))
             
     
 
