@@ -112,13 +112,12 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
                 continue
                 
             # ----- Check if the game has already been rolled -----
-            if games != [] and returned_game in games :
+            if returned_game in games :
                 print("{} already rolled! Continuing...".format(returned_game))
                 continue
 
             # ---- Check to see if the user has already completed the game -----
             if(user_info != -1) :
-                print("Seeing if the user has already completed the game...")
                 if((returned_game in list(user_info["Owned Games"].keys())) 
                 and "Primary Objectives" in list(user_info["Owned Games"][returned_game].keys())
                 and user_info["Owned Games"][returned_game]["Primary Objectives"].keys() == database_name[returned_game]["Primary Objectives"].keys()) :

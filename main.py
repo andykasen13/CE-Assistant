@@ -596,31 +596,62 @@ async def register(interaction : discord.Interaction, ce_id: str) :
 
 @tree.command(name="update", description="Update your stats in the CE Assistant database.", guild=discord.Object(id=guild_ID))
 async def update(interaction : discord.Interaction) :
-
     # Defer the message
     await interaction.response.defer()
 
     log_channel = client.get_channel(1141886539157221457)
     casino_channel = client.get_channel(811286469251039333)
+    
+    # rank silliness
+    ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]
+    rankroles = []
+    rankroles.append(ex_rank_role = discord.utils.get(interaction.guild.roles, name = "EX Rank"))
+    rankroles.append(sss_rank_role = discord.utils.get(interaction.guild.roles, name = "SSS Rank"))
+    rankroles.append(ss_rank_role = discord.utils.get(interaction.guild.roles, name = "SS Rank"))
+    rankroles.append(s_rank_role = discord.utils.get(interaction.guild.roles, name = "S Rank"))
+    rankroles.append(a_rank_role = discord.utils.get(interaction.guild.roles, name = "A Rank"))
+    rankroles.append(b_rank_role = discord.utils.get(interaction.guild.roles, name = "B Rank"))
+    rankroles.append(c_rank_role = discord.utils.get(interaction.guild.roles, name = "C Rank"))
+    rankroles.append(d_rank_role = discord.utils.get(interaction.guild.roles, name = "D Rank"))
+    rankroles.append(e_rank_role = discord.utils.get(interaction.guild.roles, name = "E Rank"))
 
-    str = await update_p(interaction.user.id, log_channel, casino_channel)
+    # actually update the user's database 
+    # and store anything we need to report
+    returns = await update_p(interaction.user.id, log_channel, casino_channel)
 
-    if str == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
-    elif(str == "Updated") :
-        # Create confirmation embed
-        embed = discord.Embed(
-            title="Updated!",
-            color=0x000000,
-            timestamp=datetime.datetime.now()
-        )
-        embed.add_field(name="Information", value=f"Your information has been updated in the CE Assistant database.")
-        embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
-        embed.set_footer(text="CE Assistant",
-            icon_url=final_ce_icon)
-        embed.set_thumbnail(url=interaction.user.avatar)
+    if returns == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
 
-        # Send a confirmation message
-        await interaction.followup.send(embed=embed)
+    for return_value in returns :
+        # you've reached the end
+        if return_value == "Updated" :
+            # Create confirmation embed
+            embed = discord.Embed(
+                title="Updated!",
+                color=0x000000,
+                timestamp=datetime.datetime.now()
+            )
+            embed.add_field(name="Information", value=f"Your information has been updated in the CE Assistant database.")
+            embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
+            embed.set_footer(text="CE Assistant",
+                icon_url=final_ce_icon)
+            embed.set_thumbnail(url=interaction.user.avatar)
+
+            # Send a confirmation message
+            await interaction.followup.send(embed=embed)
+
+        # change the rank
+        elif return_value[:5:] == "rank:" :
+            for rankrole in rankroles :
+                if rankrole in interaction.user.roles :
+                    role = rankrole
+                    break
+            if role.name == return_value[6::] : continue
+            else :
+                for rankrole in rankroles :
+                    if rankrole in interaction.user.roles : interaction.user.remove_roles(roles=rankrole)
+                    if rankrole.name == return_value[6::] : interaction.user.add_roles(roles=rankrole)
+            
+    
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
@@ -719,7 +750,6 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
     if roll_num == -1 : return await interaction.followup.send('You are not currently participating in {}!'.format(event))
 
     # the user is ready to participate in the event
-    await interaction.followup.send('You are eligible to reroll {}.'.format(event))
 
     # set up confirmation embed
     confirm_embed = discord.Embed(
@@ -730,6 +760,9 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
     )
 
     # add buttons
+    view = discord.ui.View(timeout=600)
+    yes_button = discord.ui.Button(label="Yes", style=discord.ButtonStyle.green)
+    no_button = discord.ui.Button(label="No", style=discord.ButtonStyle.danger)
 
 
     # send confirmation button  

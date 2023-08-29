@@ -5,7 +5,7 @@ import json
 import datetime
 from datetime import timedelta
 
-async def update_p(user_id : int, log_channel : discord.TextChannel, casino_channel : discord.TextChannel, es_hora_de_over : bool = False) :
+def update_p(user_id : int, es_hora_de_over : bool = False) :
     
     # Open the database
     with open('Jasons/users2.json', 'r') as dbU :
@@ -43,6 +43,9 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
             "Completed Rolls" : []
         }
     }
+
+    # Create an array of returnable items
+    returns = []
 
     # Grab user info from CE API
     response = requests.get(f"https://cedb.me/api/user/{ce_id}")
@@ -88,15 +91,18 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
 
     # Get the user's rank
     rank = ""
-    if total_points < 50 : rank = "Rank E"
-    elif total_points < 250 : rank = "Rank D"
-    elif total_points < 500 : rank = "Rank C"
-    elif total_points < 1000 : rank = "Rank B"
-    elif total_points < 2500 : rank = "Rank A"
-    elif total_points < 5000 : rank = "Rank S"
-    elif total_points < 7500 : rank = "Rank SS"
-    elif total_points < 10000 : rank = "Rank SSS"
-    else : rank = "Rank EX"
+    if total_points <= 50 : rank = "E Rank"
+    elif total_points <= 250 : rank = "D Rank"
+    elif total_points <= 500 : rank = "C Rank"
+    elif total_points <= 1000 : rank = "B Rank"
+    elif total_points <= 2500 : rank = "A Rank"
+    elif total_points <= 5000 : rank = "S Rank"
+    elif total_points <= 7500 : rank = "SS Rank"
+    elif total_points <= 10000 : rank = "SSS Rank"
+    else : rank = "EX Rank"
+
+    returns.append("rank: {}".format(rank))
+
 
     user_dict[ce_id]["Rank"] = rank
 
@@ -252,7 +258,7 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                         break
                 database_user[current_roll["Partner"]]["Cooldowns"]["Winner Takes All"] = int(time.mktime((datetime.datetime.now()+timedelta(28*3)).timetuple()))
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
-                await log_channel.send("<@{}> has beaten <@{}> in Winner Takes All.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
+                returns.append("log: " + "<@{}> has beaten <@{}> in Winner Takes All.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
                 continue
             # user 2 wins
             elif winner == 2:
@@ -268,12 +274,12 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                 # update user 1 database
                 user_dict[ce_id]["Cooldowns"]["Winner Takes All"]  = int(time.mktime((datetime.datetime.now()+timedelta(28*3)).timetuple()))
                 remove_indexes.append(m_index)
-                await log_channel.send("<@{}> has beaten <@{}> in Winner Takes All.".format(database_user[current_roll["Partner"]]["Discord ID"], user_dict[ce_id]["Discord ID"]))
+                returns.append("log: " + "<@{}> has beaten <@{}> in Winner Takes All.".format(database_user[current_roll["Partner"]]["Discord ID"], user_dict[ce_id]["Discord ID"]))
                 continue
             # something goes awry
             else :
                 print('something is wrongf')
-                await log_channel.send("Something went wrong with <@{}> and <@{}>'s Winner Takes All roll. Please contact andy for help :)".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
+                returns.append("log: " + "Something went wrong with <@{}> and <@{}>'s Winner Takes All roll. Please contact andy for help :)".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
                 continue
             # ----- winner takes all -----
 
@@ -288,7 +294,7 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                     other_game = other_roll["Games"][0]
                     break
             if other_game == None : 
-                await log_channel.send("Error! <@{}>'s Game Theory partner, <@{}>, does not have Game Theory registered! Please contact andy about this.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
+                returns.append("log: " + "Error! <@{}>'s Game Theory partner, <@{}>, does not have Game Theory registered! Please contact andy about this.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
                 continue
             # formatting int game
             for dbN_objective in database_name[int_game]["Primary Objectives"] :
@@ -333,7 +339,7 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                         break
                 database_user[current_roll["Partner"]]["Cooldowns"]["Game Theory"] = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
-                await log_channel.send("<@{}> has beaten <@{}> in Game Theory.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
+                returns.append("log: " + "<@{}> has beaten <@{}> in Game Theory.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
                 continue
             # user 2 wins
             elif winner == 2:
@@ -349,12 +355,12 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
                 # update user 1 database
                 user_dict[ce_id]["Cooldowns"]["Game Theory"]  = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
                 remove_indexes.append(m_index)
-                await log_channel.send("<@{}> has beaten <@{}> in Game Theory.".format(database_user[current_roll["Partner"]]["Discord ID"], user_dict[ce_id]["Discord ID"]))
+                returns.append("log: " + "<@{}> has beaten <@{}> in Game Theory.".format(database_user[current_roll["Partner"]]["Discord ID"], user_dict[ce_id]["Discord ID"]))
                 continue
             # something goes awry
             else :
                 print('something is wrongf')
-                await log_channel.send("Something went wrong with <@{}> and <@{}>'s Game Theory roll. Please contact andy for help :)".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
+                returns.append("log: " + "Something went wrong with <@{}> and <@{}>'s Game Theory roll. Please contact andy for help :)".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
                 continue
         # game theory
 
@@ -426,10 +432,10 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
             
             # if it's a co-op roll, send it to the log channel
             if(current_roll["Event Name"] in ["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work"]) :
-                await log_channel.send("<@{}> and <@{}> have completed {}!".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"], current_roll["Event Name"]))
+                returns.append("log: " + "<@{}> and <@{}> have completed {}!".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"], current_roll["Event Name"]))
             # if it's a solo roll, send it to the log channel
             else:
-                await log_channel.send("<@{}>, you have completed {}! Congratulations!".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+                returns.append("log: " + "<@{}>, you have completed {}! Congratulations!".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
             
             # edit the roll that was completed
             current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
@@ -449,6 +455,8 @@ async def update_p(user_id : int, log_channel : discord.TextChannel, casino_chan
     # Dump the data
     with open('Jasons/users2.json', 'w') as f :
         json.dump(database_user, f, indent=4)
+    
+    returns.append("Updated")
 
-    return "Updated"
+    return returns
 

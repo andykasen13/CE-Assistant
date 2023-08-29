@@ -129,7 +129,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         for ggenre in genres :
             i=0
             while(i < 5) :
-                games.append(get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre))
+                games.append(get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre, games=games))
                 i+=1
         embeds = create_multi_embed("One Hell of a Month", 28, games, 28*3, interaction)
         embed = embeds[0]
