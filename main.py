@@ -64,21 +64,38 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 async def help(interaction : discord.Interaction) :
     await interaction.response.defer(ephemeral=True)
 
-    page_data = json.loads(open("./Jasons/help_embed_data.json").read())
+    page_data = json.loads(open("./Jasons/help_embed_data.json").read())        
     selections = []
-    print(page_data)
+
+    embed = discord.Embed(
+                title="Help",
+                colour= 0x036ffc,
+                timestamp=datetime.datetime.now(),
+                description="Here you can use the drop down menu to learn about various features CE Assistant can help you with."
+            )
+    embed.set_thumbnail(url=ce_mountain_icon)
+
 
     for option in page_data:
-        selections.append(discord.SelectOption(label=page_data[option]["Name"],emoji="\N{grinning face}",description=page_data[option]["Description"]))
-    # # Defer the message
-    # await interaction.response.defer()
+        selections.append(discord.SelectOption(label=page_data[option]["Name"],emoji=page_data[option]['Emoji'],description=page_data[option]["Description"]))
+
 
     class HelpSelect(discord.ui.Select):
         def __init__(self):
             options=selections
             super().__init__(placeholder="Select an option",max_values=1,min_values=1,options=options)
         async def callback(self, interaction: discord.Interaction):
-            await interaction.response.edit_message(content=page_data[self.values[0]]['Content'])
+            embed = self.get_embed()
+            await interaction.response.edit_message(embed=embed)
+        def get_embed(self):
+            embed = discord.Embed(
+                title=page_data[self.values[0]]['Name'],
+                colour= 0x036ffc,
+                timestamp=datetime.datetime.now(),
+                description=page_data[self.values[0]]['Content']
+            )
+            embed.set_thumbnail(url=ce_mountain_icon)
+            return embed
 
     class HelpSelectView(discord.ui.View):
         def __init__(self, *, timeout = 180):
@@ -86,33 +103,9 @@ async def help(interaction : discord.Interaction) :
             self.add_item(HelpSelect())
 
         async def on_timeout(self):
-            self.disable_all_items()
+            self.clear_items()
 
-    # Create the view (will be used for buttons later)
-    view = discord.ui.View(timeout=600)
-
-    return await interaction.followup.send('Help command coming soon!', view=HelpSelectView(), ephemeral=True)
-
-    # helpInfo = {
-    #     "Rolls" : "This bot has the ability to roll random games for any event in the Challenge Enthusiast server. P.S. andy reminder to get autofill to work!",
-    #     "/get_rolls" : "Use this command to see your current (and past) rolls, or the rolls of any other user in the server.",
-    #     "steam_test" : "Get general information about any STEAM game.",
-    #     "Curator" : "The bot will automatically check to see if any new entries have been added to the CE curator (within three hours)."
-    # }
-
-    # embeds=[]
-    # pageNum = 1
-    
-    # for page in list(helpInfo):
-    #     embed=discord.Embed(color=0x000000, title=page, description=helpInfo[page])
-    #     embed.set_footer(text=(f"Page {pageNum} of {len(list(helpInfo))}"))
-    #     embed.timestamp=datetime.datetime.now()
-    #     embeds.append(embed)
-    #     pageNum+=1
-
-    # await get_buttons(view, embeds)
-
-    # await interaction.followup.send(embed=embeds[0], view=view)
+    return await interaction.followup.send(embed=embed, view=HelpSelectView(), ephemeral=True)
 
 
 

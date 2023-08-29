@@ -16135,18 +16135,18 @@
                 "Description": "Master the base game.",
                 "Point Value": 70,
                 "Achievements": {
-                    "1ed4c67e-64e3-40d6-8879-08e8671f31d0": "Story C Master",
                     "29481dd4-66d4-4664-afe3-ef43258c45e1": "Ultimate NOISZ Master",
-                    "704940d5-3554-4fad-bc26-a736d3d60a32": "Lore Master"
+                    "704940d5-3554-4fad-bc26-a736d3d60a32": "Lore Master",
+                    "1ed4c67e-64e3-40d6-8879-08e8671f31d0": "Story C Master"
                 }
             },
             "Gaiusified (UNCLEARED)": {
                 "Description": "Master the Episode G DLC.",
                 "Point Value": 1,
                 "Achievements": {
-                    "bb758a18-f04b-44cd-80d5-4e75085149d1": "One Over Zero",
                     "1e2cad60-08a0-4708-9f30-fa5cf675bd2c": "GM3 Terror-Instinct",
-                    "ad5b7074-5311-45a6-8eba-40705f5c0250": "Story G Master"
+                    "ad5b7074-5311-45a6-8eba-40705f5c0250": "Story G Master",
+                    "bb758a18-f04b-44cd-80d5-4e75085149d1": "One Over Zero"
                 }
             }
         },
