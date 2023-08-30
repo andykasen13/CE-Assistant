@@ -1,50 +1,67 @@
 {
-    "Registration": {
-        "Name": "Registration",
-        "Emoji": "\ud83e\udd2f",
-        "Description": "Register for future use of the CE Assistant!",
-        "Content": "here lies this shit"
+    "Commands" : {
+        "Registration": {
+            "Name": "Registration",
+            "Emoji": "\ud83e\udd2f",
+            "Description": "Register for future use of the CE Assistant!",
+            "Content": "here lies this shit"
+        },
+        "Rolls": {
+            "Name": "Rolls",
+            "Emoji": "\ud83e\uddfb",
+            "Description": "Learn how to roll and about different rolls!",
+            "Content": "more shit"
+        },
+        "Rerolls": {
+            "Name": "Rerolls",
+            "Emoji": "\u267b\ufe0f",
+            "Description": "Learn how to reroll and about reroll tokens!",
+            "Content": "more shit"
+        },
+        "Update": {
+            "Name": "Update",
+            "Emoji": "\ud83d\udcc8",
+            "Description": "Learn how to update your profile!",
+            "Content": "hehehaha"
+        },
+        "Steam Game": {
+            "Name": "Steam Game",
+            "Emoji": "\ud83c\udfae",
+            "Description": "Learn how to roll and about different rolls!",
+            "Content": "more shit"
+        },
+        "Admin Options": {
+            "Name": "Admin Options",
+            "Emoji": "\ud83e\udd2b",
+            "Description": "Learn how to roll and about different rolls!",
+            "Content": "more shit"
+        },
+        "Color Editing": {
+            "Name": "Color Editing",
+            "Emoji": "\ud83c\udfa8",
+            "Description": "Learn how to roll and about different rolls!",
+            "Content": "more shit"
+        },
+        "Curator Automation": {
+            "Name": "Curator Automation",
+            "Emoji": "\ud83e\udd16",
+            "Description": "Learn how to roll and about different rolls!",
+            "Content": "more shit"
+        }
     },
-    "Rolls": {
-        "Name": "Rolls",
-        "Emoji": "\ud83e\uddfb",
-        "Description": "Learn how to roll and about different rolls!",
-        "Content": "more shit"
-    },
-    "Rerolls": {
-        "Name": "Rerolls",
-        "Emoji": "\u267b\ufe0f",
-        "Description": "Learn how to reroll and about reroll tokens!",
-        "Content": "more shit"
-    },
-    "Update": {
-        "Name": "Update",
-        "Emoji": "\ud83d\udcc8",
-        "Description": "Learn how to update your profile!",
-        "Content": "hehehaha"
-    },
-    "Steam Game": {
-        "Name": "Steam Game",
-        "Emoji": "\ud83c\udfae",
-        "Description": "Learn how to roll and about different rolls!",
-        "Content": "more shit"
-    },
-    "Admin Options": {
-        "Name": "Admin Options",
-        "Emoji": "\ud83e\udd2b",
-        "Description": "Learn how to roll and about different rolls!",
-        "Content": "more shit"
-    },
-    "Color Editing": {
-        "Name": "Color Editing",
-        "Emoji": "\ud83c\udfa8",
-        "Description": "Learn how to roll and about different rolls!",
-        "Content": "more shit"
-    },
-    "Curator Automation": {
-        "Name": "Curator Automation",
-        "Emoji": "\ud83e\udd16",
-        "Description": "Learn how to roll and about different rolls!",
-        "Content": "more shit"
+
+    "Rolls" : {
+        "One Hell of a Day" :{
+            "Name" : "One Hell of a Day",
+            "Content" : "explain here pls"
+        },
+        "One Hell of a Week" :{
+            "Name" : "One Hell of a Week",
+            "Content" : "explain here pls"
+        },
+        "One Hell of a Month" :{
+            "Name" : "One Hell of a Month",
+            "Content" : "explain here pls"
+        }
     }
 }

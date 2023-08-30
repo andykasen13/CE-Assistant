@@ -64,7 +64,7 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 async def help(interaction : discord.Interaction) :
     await interaction.response.defer(ephemeral=True)
 
-    page_data = json.loads(open("./Jasons/help_embed_data.json").read())        
+    page_data = json.loads(open("./Jasons/help_embed_data.json").read())['Commands']        
     selections = []
 
     embed = discord.Embed(
