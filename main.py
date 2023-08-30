@@ -68,11 +68,11 @@ async def help(interaction : discord.Interaction) :
     selections = []
 
     embed = discord.Embed(
-                title="Help",
-                colour= 0x036ffc,
-                timestamp=datetime.datetime.now(),
-                description="Here you can use the drop down menu to learn about various features CE Assistant can help you with."
-            )
+        title="Help",
+        colour= 0x036ffc,
+        timestamp=datetime.datetime.now(),
+        description="Here you can use the drop down menu to learn about various features CE Assistant can help you with."
+    )
     embed.set_thumbnail(url=ce_mountain_icon)
 
 
@@ -659,7 +659,66 @@ async def update(interaction : discord.Interaction) :
             await log_channel.send("BOT ERROR: recieved unrecognized update code: \n'{}'".format(return_value))
             
     
+@tree.command(name="calculate-cr", description="Calculate your CR for each individual genre!", guild=discord.Object(id=guild_ID))
+async def cr(interaction : discord.Interaction) :
+    await interaction.response.defer()
 
+    with open('Jasons/users2.json', 'r') as dbU :
+        database_user = json.load(dbU)
+
+    with open('Jasons/database_name.json', 'r') as dbN :
+        database_name = json.load(dbN)
+    
+    # find them in the users2.json
+    ce_id = ""
+    for user in database_user :
+        if database_user[user]["Discord ID"] == interaction.user.id :
+            ce_id = user
+            break
+    
+    # if not found, stop
+    if ce_id == "" : return await interaction.followup.send('You have not registered with CE Assistant! Please use /register with the link to your personal CE page :)')
+
+    # set up grouping
+    groups = {"Action" : [], "Arcade" : [], "Bullet Hell" : [], "First-Person" : [], "Platformer" : [], "Strategy" : []}
+
+    # go through all of their games
+    for game in database_user[ce_id]["Owned Games"] :
+
+        points_in_game = 0
+
+        # does the user have any points in the game?
+        if "Primary Objectives" in database_user[ce_id]["Owned Games"][game] :
+
+            # go through all of their objectives
+            for obj in database_user[ce_id]["Owned Games"][game]["Primary Objectives"] :
+
+                # add up all of their points
+                points_in_game += database_user[ce_id]["Owned Games"][game]["Primary Objectives"][obj]
+        
+        if points_in_game != 0 :
+            groups[database_name[game]["Genre"]].append(points_in_game)
+        else : continue
+
+
+    # now that we have all the values, 
+    # go through each category and actually calculate the CR
+    total_cr = 0.0
+    for genre in groups :
+        genre_value = 0.0
+        for index, value in enumerate(groups[genre]) :
+            genre_value += (0.85**index)*(float(value))
+        groups[genre] = round(genre_value, 2)
+        total_cr += genre_value
+    
+    embed = discord.Embed(title="CR Values", description="The calculation of all of your (<@{}>'s) CRs!".format(interaction.user.id), timestamp=datetime.datetime.now(), color=0x000000)
+    embed.add_field(name="Total CR", value=str(round(total_cr, 2)), inline=False)
+
+    for genre in groups :
+        embed.add_field(name=str(genre) + " CR", value=str(groups[genre]), inline=True)
+    
+
+    return await interaction.followup.send(embed=embed)
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
