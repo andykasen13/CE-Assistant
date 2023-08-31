@@ -1,67 +1,50 @@
 {
-    "Commands" : {
-        "Registration": {
-            "Name": "Registration",
-            "Emoji": "\ud83e\udd2f",
-            "Description": "Register for future use of the CE Assistant!",
-            "Content": "here lies this shit"
-        },
-        "Rolls": {
-            "Name": "Rolls",
-            "Emoji": "\ud83e\uddfb",
-            "Description": "Learn how to roll and about different rolls!",
-            "Content": "more shit"
-        },
-        "Rerolls": {
-            "Name": "Rerolls",
-            "Emoji": "\u267b\ufe0f",
-            "Description": "Learn how to reroll and about reroll tokens!",
-            "Content": "more shit"
-        },
-        "Update": {
-            "Name": "Update",
-            "Emoji": "\ud83d\udcc8",
-            "Description": "Learn how to update your profile!",
-            "Content": "hehehaha"
-        },
-        "Steam Game": {
-            "Name": "Steam Game",
-            "Emoji": "\ud83c\udfae",
-            "Description": "Learn how to roll and about different rolls!",
-            "Content": "more shit"
-        },
-        "Admin Options": {
-            "Name": "Admin Options",
-            "Emoji": "\ud83e\udd2b",
-            "Description": "Learn how to roll and about different rolls!",
-            "Content": "more shit"
-        },
-        "Color Editing": {
-            "Name": "Color Editing",
-            "Emoji": "\ud83c\udfa8",
-            "Description": "Learn how to roll and about different rolls!",
-            "Content": "more shit"
-        },
-        "Curator Automation": {
-            "Name": "Curator Automation",
-            "Emoji": "\ud83e\udd16",
-            "Description": "Learn how to roll and about different rolls!",
-            "Content": "more shit"
-        }
+    "Registration": {
+        "Name": "Registration",
+        "Emoji": "\ud83e\udd2f",
+        "Description": "Register for future use of the CE Assistant!",
+        "Content": "Registration is key to accessing the functions of CE Assistant. You need to register to use any roll-related commands, check your CR, or update your color! Please use /register with the link to your personal CE page."
     },
-
-    "Rolls" : {
-        "One Hell of a Day" :{
-            "Name" : "One Hell of a Day",
-            "Content" : "explain here pls"
-        },
-        "One Hell of a Week" :{
-            "Name" : "One Hell of a Week",
-            "Content" : "explain here pls"
-        },
-        "One Hell of a Month" :{
-            "Name" : "One Hell of a Month",
-            "Content" : "explain here pls"
-        }
+    "Rolls": {
+        "Name": "Rolls",
+        "Emoji": "\ud83e\uddfb",
+        "Description": "Learn how to roll and about different rolls!",
+        "Content": "Rolling is a fun way to try new games! Click below to find out more about all of the solo and co-op roll events!"
+    },
+    "Rerolls": {
+        "Name": "Rerolls",
+        "Emoji": "\u267b\ufe0f",
+        "Description": "Learn how to reroll and about reroll tokens!",
+        "Content": "With each roll event you complete, you'll earn a certain amount of reroll tokens. These one-time use tokens allow you to reroll any roll event you're currently participating in - but be sure that's what you want, because some events come with additional cool-down times should you fail a rerolled event!"
+    },
+    "Update": {
+        "Name": "Update",
+        "Emoji": "\ud83d\udcc8",
+        "Description": "Learn how to update your profile!",
+        "Content": "Updating your profile is simple and quick. Type in /update and within seconds CE Assistant will grab all of your new, updated data from your CE page. P.S. be sure to use this command whenever you complete a rolled game!"
+    },
+    "Steam Game": {
+        "Name": "Steam Game",
+        "Emoji": "\ud83c\udfae",
+        "Description": "Learn about /steam-game!",
+        "Content": "/steam-game is a very simple functoin that just takes in the name of a game and returns information about it from steam and CE. Give it a try with your favorite game!"
+    },
+    "Admin Options": {
+        "Name": "Admin Options",
+        "Emoji": "\ud83e\udd2b",
+        "Description": "Ssh! This is the secret admin command :)",
+        "Content": "As an admin, you have access to more commands than regular users. /add-reason will add any text you provide to it to the bottom of any message sent by CE Assistant in <#949482536726298666>. This is meant as a way to explain any changes made to games (including removal)."
+    },
+    "Color Editing": {
+        "Name": "Color Editing",
+        "Emoji": "\ud83c\udfa8",
+        "Description": "Learn how to change your color!",
+        "Content": "Try /set-color to adjust the color of your name to any unlocked color you have! For example, B Rank users would have access to blue (B), green (C), brown (D), and grey (E)."
+    },
+    "Check Rolls" : {
+        "Name" : "Check Rolls",
+        "Emoji" : "\ud83c\udfa8",
+        "Description" : "Learn how to check your rolls!",
+        "Content" : "To check your progress on your current (and completed) rolls, try /check-rolls - see what comes up!"
     }
 }

@@ -14,6 +14,8 @@ from Helper_Functions.buttons import get_buttons, get_genre_buttons
 from Helper_Functions.end_time import roll_completed, roll_failed
 from Helper_Functions.update import update_p
 
+final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
+
 async def solo_command(interaction : discord.Interaction, event : str, reroll : bool) :
     
 
@@ -103,6 +105,13 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # t1s from each category
         print("Recieved request for One Hell of a Week")
 
+        can_continue = False
+        for completed_roll in userInfo[target_user]["Completed Rolls"] :
+            if completed_roll["Event Name"] == "One Hell of a Day": can_continue = True
+        
+        if not can_continue : return await interaction.followup.send("You must complete One Hell of a Day in order to roll One Hell of a Week!")
+                
+
         # ----- Grab all the games -----
         genres.remove("Strategy")
         i = 0
@@ -119,8 +128,14 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # -------------------------------------------- One Hell of a Month --------------------------------------------
     elif event == "One Hell of a Month" : 
         # five t1s from each category
-        embed = discord.Embed(title=f"⚠️Roll still under construction!⚠️")
         print("One Hell of a Month")
+
+        can_continue = False
+        for completed_roll in userInfo[target_user]["Completed Rolls"] :
+            if completed_roll["Event Name"] == "One Hell of a Week": can_continue = True
+        
+        if not can_continue : return await interaction.followup.send("You must complete One Hell of a Week in order to roll One Hell of a Month!")
+             
 
         # select a random genre to remove
         random_num = random.randint(0, 5)
@@ -180,29 +195,30 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # -------------------------------------------- Triple Threat --------------------------------------------
     elif event == "Triple Threat" :
         # three t3s
-        print("Recieved request for Triple Threat")
-        
+
+        # check if pending... and also make sure Never Lucky has been completed
+        can_continue = False
         for x_roll in userInfo[target_user]['Current Rolls'] :
             if(x_roll['Event Name'] == event and x_roll['Games'] == ['pending...']) :
                 return await interaction.followup.send('hang on their buster')
         
+        for roll in userInfo[target_user]['Completed Rolls'] :
+            if(roll["Event Name"] == "Never Lucky") : can_continue = True
+        
+        # Never lucky hasn't been completed
+        if not can_continue : return await interaction.followup.send("You must complete Never Lucky to roll Triple Threat!")
+        
+        # add the pending...
         userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
 
+        # close and reopen users2.json
         with open('Jasons/users2.json', 'w') as f :
             json.dump(userInfo, f, indent=4)
-
         with open('Jasons/users2.json', 'r') as f :
             userInfo = json.load(f)
 
         # ----- Grab all the games -----
-        embed = discord.Embed(title=("⚠️Roll still under construction...⚠️"), description="Please select your genre.")
-
-        with open('Jasons/users2.json', 'w') as f :
-            json.dump(userInfo, f, indent=4)
-
-        with open('Jasons/users2.json', 'r') as f :
-            userInfo = json.load(f)
-
+        embed = discord.Embed(title=("Triple Threat"), description="Please select your genre.")
             
         await get_genre_buttons(view, 40, 20, "Tier 3", "Triple Threat", 28, 84, 3, interaction.user.id, reroll=reroll)
 
@@ -211,15 +227,14 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # -------------------------------------------- Let Fate Decide --------------------------------------------
     elif event == "Let Fate Decide" :
         # one t4
-        print("Recieved request for Let Fate Decide")
 
+        # add pending...
         userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
 
 
-        embed = discord.Embed(title=("let fate decide"))
-        await get_genre_buttons(view, 40, 20, "Tier 4", event, 1, 84, 1, interaction.user.id, reroll=reroll)
+        embed = discord.Embed(title=("Let Fate Decide"), description="A random T4 in a genre of you choosing will be rolled. There is no time limit for Let Fate Decide. You win once you complete all Primary Objectives in your rolled game!")
+        await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, 84, 1, interaction.user.id, reroll=reroll)
         dont_save = True
-        ends = False
 
     # -------------------------------------------- Fourward Thinking --------------------------------------------
     elif event == "Fourward Thinking" :
@@ -237,11 +252,31 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         if(not has_roll) : 
             # Has not rolled Fourward Thinking before
-            embed = discord.Embed(title=("fourward thinking"))
+            embed = discord.Embed(title=("Fourward Thinking"),
+                                  description="You are about to roll Fourward Thinking. This is the most confusing roll event, so buckle in."
+                                  + "\nWhen you roll this event, a T1 in a genre of your choosing will be rolled for you, and you will have one week to do so."
+                                  + "\nIf you manage to complete this T1 in one week, you will now choose a __different__ genre to roll a T2 - and you'll have two weeks."
+                                  + "\nContinue this process through T4 - and if you complete that, you win!",
+                                  timestamp=datetime.datetime.now(),
+                                  color=0x000000)
+            embed.add_field(name="Rerolls",
+                            value="- You will get a reroll token for every game you complete in this event."
+                            + "\n- Using a reroll token will add a month onto your cooldown time, but using one will reset your timer."
+                            + " So, if you have two days left of your T1, you can use a reroll token and you'll get the full week to complete your new T1.")
+            embed.add_field(name="Timing",
+                            value="- Your T1 will not have an average completion time on steamhunters larger than 40. This goes up to 80 for your T2, 120 for T3, and 160 for T4."
+                            + " \n- Your cooldown timer is calculated as such: (num of completed games + 1) * 2 weeks. Failing your T1 nets you a two week cooldown, T4 nets you ten weeks.")
+            embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
+            embed.set_author(name="Challenge Enthusiasts")
+
+            dont_save=True
+
+
         elif (has_roll and "End Time" in list(userInfo[target_user]["Current Rolls"][roll_num].keys())) :
             # Has rolled Fourward Thinking but isn't done with the roll yet.
             embed = discord.Embed(title="You are currently participating in Fourward Thinking!")
             dont_save = True
+
         else : 
             # Has rolled Fourward Thinking and is ready for the next roll
             # OR OR OR is done!
@@ -252,18 +287,18 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             embeds.append(discord.Embed(title=event, timestamp=datetime.datetime.now()))
             if(num_of_games == 1) :
                 # get a game
-                game = get_rollable_game(40, 20, "Tier 2", userInfo[current_user])
+                game = get_rollable_game(80, 20, "Tier 2", userInfo[current_user])
 
                 embeds[0].add_field(name="Roll Status", value="You have rolled your T2. You have two weeks to complete.")
 
             elif(num_of_games == 2):              
                 # get a game
-                game = get_rollable_game(40, 20, "Tier 3", userInfo[current_user])
+                game = get_rollable_game(120, 20, "Tier 3", userInfo[current_user])
 
                 embeds[0].add_field(name="Roll Status", value = "You have rolled your T3. You have three weeks to complete.")
             elif(num_of_games == 3):
                 # get a game
-                game = get_rollable_game(40, 20, "Tier 4", userInfo[current_user])
+                game = get_rollable_game(160, 20, "Tier 4", userInfo[current_user])
                 
                 embeds[0].add_field(name="Roll Status", value = "You have rolled your T4. You have four weeks to complete.")
                 #roll a t4

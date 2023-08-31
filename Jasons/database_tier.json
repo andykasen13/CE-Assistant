@@ -7,9 +7,7 @@
         "Arcade": [],
         "Bullet Hell": [],
         "First-Person": [],
-        "Platformer": [
-            "And Yet It Moves"
-        ],
+        "Platformer": [],
         "Strategy": [
             "- Puzzle Games -"
         ]
@@ -398,7 +396,6 @@
             "Little Nightmares",
             "Lorera",
             "LOVE",
-            "Marble It Up!",
             "MARSUPILAMI - HOOBADVENTURE",
             "Master Spy",
             "Metrico+",
@@ -730,6 +727,7 @@
             "Airscape - The Fall of Gravity",
             "Alwa's Awakening",
             "An Octonaut Odyssey",
+            "And Yet It Moves",
             "Angry Video Game Nerd I & II Deluxe",
             "Angry Video Game Nerd II: ASSimilation",
             "Argus Panoptes",
@@ -980,7 +978,8 @@
             "Tobari and the Night of the Curious Moon",
             "Umihara Kawase Fresh!",
             "Umihara Kawase Shun",
-            "Yooka-Laylee and the Impossible Lair"
+            "Yooka-Laylee and the Impossible Lair",
+            "Marble It Up! Ultra"
         ],
         "Strategy": [
             "Pawnbarian",

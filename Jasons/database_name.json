@@ -1336,18 +1336,18 @@
     "And Yet It Moves": {
         "CE ID": "86e6b955-83dd-4007-a86c-1f243bc5a7e5",
         "Steam ID": "18700",
-        "Tier": "Tier 0",
+        "Tier": "Tier 2",
         "Genre": "Platformer",
-        "Full Completions": 0,
-        "Total Owners": 10,
+        "Full Completions": 1,
+        "Total Owners": 13,
         "Primary Objectives": {
             "Crazy Little Thing Called Move": {
-                "Description": "",
+                "Description": "Earn all gold stamps.",
                 "Point Value": 30,
                 "Achievements": {
                     "52ed08ad-2bcf-489d-884f-06f869ea0fd3": "Crazy"
                 },
-                "Requirements": "Jarvis was here"
+                "Requirements": "Video proof of acquiring the gold stamp in Time Trial mode in each of the four \"Epilog\" levels with the game speed set to 100%."
             }
         },
         "Community Objectives": {}
@@ -14468,36 +14468,6 @@
         },
         "Community Objectives": {}
     },
-    "Marble It Up!": {
-        "CE ID": "e1ab6e97-5528-457b-9fd8-72213b528cfc",
-        "Steam ID": "864060",
-        "Tier": "Tier 1",
-        "Genre": "Platformer",
-        "Full Completions": 6,
-        "Total Owners": 32,
-        "Primary Objectives": {
-            "Diamond Roller": {
-                "Description": "Beat the Diamond time on all levels.",
-                "Point Value": 10,
-                "Achievements": {
-                    "d3e85a49-2843-414d-974d-45d11b927b1e": "We Need a New Clock",
-                    "8171ce91-d2b3-4d99-9f63-5e7293aa845e": "No Notches Left",
-                    "72a432f0-668f-44ea-98ee-1990c76490b1": "This One\u2019s for All the Marbles",
-                    "1955bdfc-4522-4dc4-bef1-8180d41c760c": "Mastered the Basics",
-                    "09f2ab0e-7230-4ceb-8575-af145d334f2d": "Feeling a Bit of Vertigo?",
-                    "2360644f-5570-4283-895b-09493fe46e0d": "The Not-So-Subtle Joy of Diamonds"
-                }
-            }
-        },
-        "Community Objectives": {
-            "High Roller": {
-                "Description": "Be in the top 1% globally on 24 challenge levels.",
-                "Achievements": {
-                    "9cdc63f0-5c9c-4f03-8eee-5cd19204e007": "Conqueror"
-                }
-            }
-        }
-    },
     "Marimoth": {
         "CE ID": "090ee8e9-fdc9-45d3-aa7c-307a406936c9",
         "Steam ID": "1786660",
@@ -22564,16 +22534,16 @@
                 "Description": "Prove yourself.",
                 "Point Value": 30,
                 "Achievements": {
-                    "9993b976-c028-403a-b7ea-b32f33babc64": "Spin Master",
-                    "0febe8ae-8f9d-4398-af8b-033f54797a44": "Up To Eleven (Minutes)",
-                    "a93fcb8e-b0c3-4d39-835a-b96509280624": "Old School",
                     "98a11252-9110-41ea-a097-507d4f9283ac": "Ambispinner",
                     "85c14d45-54b3-47d6-8884-f7bf7b71dc61": "Very Metal",
                     "5375f8f8-54cd-431a-b9d0-a9a640e9577a": "Perfect Full Combo",
                     "90e2e841-0498-472c-b44c-06dd3b85050c": "Platform 9 3/4",
                     "e3cb682c-087a-474b-9902-f4e641ba09be": "Training Bandwidth",
+                    "7a6bc46d-0906-48f9-8475-7e2359619415": "Precision",
                     "f3189fd7-2034-453e-b524-29ddb97a156d": "(Don\u2019t) Let Me Hear That",
-                    "7a6bc46d-0906-48f9-8475-7e2359619415": "Precision"
+                    "9993b976-c028-403a-b7ea-b32f33babc64": "Spin Master",
+                    "0febe8ae-8f9d-4398-af8b-033f54797a44": "Up To Eleven (Minutes)",
+                    "a93fcb8e-b0c3-4d39-835a-b96509280624": "Old School"
                 }
             }
         },
@@ -23448,7 +23418,7 @@
         "Primary Objectives": {
             "Chubby Bunny": {
                 "Description": "Obtain all 150 medals.",
-                "Point Value": 5,
+                "Point Value": 15,
                 "Requirements": "Video/Gif of level select."
             }
         },
@@ -29425,5 +29395,32 @@
                 "Requirements": "Video of the replay."
             }
         }
+    },
+    "Marble It Up! Ultra": {
+        "CE ID": "28c9d825-595c-4ed0-ab98-33cbc0785576",
+        "Steam ID": "864060",
+        "Tier": "Tier 3",
+        "Genre": "Platformer",
+        "Full Completions": 1,
+        "Total Owners": 1,
+        "Primary Objectives": {
+            "Crystal Ball": {
+                "Description": "Obtain the diamond medal on every level.",
+                "Point Value": 40,
+                "Achievements": {
+                    "6665e86b-3a99-427d-99df-80c710219c10": "Unreasonably Ultra",
+                    "0a87a0d5-66c3-4420-a726-7bf201196003": "Pinnacle Performance"
+                },
+                "Requirements": "Video of level select."
+            },
+            "B-Roll": {
+                "Description": "Collect all hidden trophies.",
+                "Point Value": 10,
+                "Achievements": {
+                    "71015b4f-4f63-4cb0-b779-f05b4542cb35": "No Stone Unturned"
+                }
+            }
+        },
+        "Community Objectives": {}
     }
 }

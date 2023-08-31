@@ -3583,66 +3583,111 @@
         "Cooldowns": {},
         "Current Rolls": [
             {
-                "Event Name": "Destiny Alignment",
-                "Partner": "e816f094-38de-4494-b52f-681b5915e518",
+                "Event Name": "One Hell of a Day",
+                "End Time": 1693519925,
                 "Games": [
-                    "Getting Over It with Bennett Foddy"
+                    "Get-A-Grip Chip"
                 ]
             },
             {
-                "Event Name": "Soul Mates",
-                "Partner": "e816f094-38de-4494-b52f-681b5915e518",
-                "End Time": 1693274120,
+                "Event Name": "One Hell of a Week",
+                "End Time": 1694038368,
                 "Games": [
-                    "Fortix"
-                ]
-            },
-            {
-                "Event Name": "Teamwork Makes the Dream Work",
-                "Partner": "e816f094-38de-4494-b52f-681b5915e518",
-                "End Time": 1695521478,
-                "Games": [
-                    "Zuma's Revenge!",
-                    "BETON BRUTAL",
-                    "Yumori Forest",
-                    "Vanquish"
+                    "Radium",
+                    "Super Hamster Ball",
+                    "Wraithslayer",
+                    "Lovely Planet Arcade",
+                    "Prologue for a Vacant Kingdom"
                 ]
             },
             {
                 "Event Name": "One Hell of a Month",
-                "End Time": 1695670288,
+                "End Time": 1695852900,
                 "Games": [
+                    "Dizzy Rogues",
+                    "Apple Slash",
                     "METAL SLUG X",
-                    "Void Prison",
-                    "Alien Shooter",
-                    "GoNNER",
-                    "Mega Serval",
-                    "SUPER FLAIL",
-                    "Sullen",
-                    "Dr. Fetus' Mean Meat Machine",
-                    "Aliens Go Home Run",
-                    "Cosmophony",
-                    "DSY: Don't Shoot Yourself",
-                    "The Treehouse Man",
-                    "DSY: Don't Shoot Yourself",
-                    "Marimoth",
+                    "Cyjin: The Cyborg Ninja",
+                    "Taimumari",
+                    "Sprinter",
+                    "Eggy",
+                    "clutchball",
+                    "Deneb: Across the Stars",
+                    "Crossing Guard Joe",
+                    "RAIN Project",
+                    "GUNBIRD",
+                    "Prologue for a Vacant Kingdom",
                     "Jet Buster",
-                    "Neon Boost",
-                    "Cyber Hook",
-                    "Alien Removal Division",
+                    "Ellipsis",
                     "God Damn The Garden",
-                    "Transpire",
+                    "Lovely Planet Arcade",
+                    "Alien Removal Division",
+                    "Spelldash",
+                    "KILLBUG",
                     "XANDO: Xtreme & Over the Top",
+                    "Fingered",
                     "A Healer Only Lives Twice",
-                    "A Healer Only Lives Twice",
-                    "The Ouroboros King",
-                    "A Healer Only Lives Twice"
+                    "Tile Tale",
+                    "The Ouroboros King"
+                ]
+            },
+            {
+                "Event Name": "Two Week T2 Streak",
+                "End Time": 1694643356,
+                "Games": [
+                    "Lovely Planet 2: April Skies",
+                    "My Friend Pedro"
+                ]
+            },
+            {
+                "Event Name": "Two 'Two Week T2 Streak' Streak",
+                "End Time": 1695853025,
+                "Games": [
+                    "Midnight Fight Express",
+                    "Evergate",
+                    "Astrodogs",
+                    "Last Command"
+                ]
+            },
+            {
+                "Event Name": "Never Lucky",
+                "End Time": 1693433853,
+                "Games": [
+                    "PAWARUMI"
+                ]
+            },
+            {
+                "Event Name": "Triple Threat",
+                "End Time": 1695853192,
+                "Games": [
+                    "Titan Souls",
+                    "Vanquish",
+                    "Little Noah: Scion of Paradise"
+                ]
+            },
+            {
+                "Event Name": "Let Fate Decide",
+                "End Time": 1693520652,
+                "Games": [
+                    "Bleed 2"
                 ]
             }
         ],
         "Completed Rolls": [
             {
+                "Event Name": "Two Week T2 Streak"
+            },
+            {
+                "Event Name": "One Hell of a Week"
+            },
+            {
                 "Event Name": "One Hell of a Day"
+            },
+            {
+                "Event Name": "Never Lucky"
+            },
+            {
+                "Event Name": "Let Fate Decide"
             },
             {
                 "Event Name": "Winner Takes All",

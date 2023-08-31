@@ -64,7 +64,7 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 async def help(interaction : discord.Interaction) :
     await interaction.response.defer(ephemeral=True)
 
-    page_data = json.loads(open("./Jasons/help_embed_data.json").read())['Commands']        
+    page_data = json.loads(open("./Jasons/help_embed_data.json").read())        
     selections = []
 
     embed = discord.Embed(
@@ -587,6 +587,16 @@ async def register(interaction : discord.Interaction, ce_id: str) :
 
 
 
+
+
+
+
+
+
+
+
+
+
 @tree.command(name="update", description="Update your stats in the CE Assistant database.", guild=discord.Object(id=guild_ID))
 async def update(interaction : discord.Interaction) :
     # Defer the message
@@ -658,10 +668,31 @@ async def update(interaction : discord.Interaction) :
         else :
             await log_channel.send("BOT ERROR: recieved unrecognized update code: \n'{}'".format(return_value))
             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 @tree.command(name="calculate-cr", description="Calculate your CR for each individual genre!", guild=discord.Object(id=guild_ID))
-async def cr(interaction : discord.Interaction) :
-    await interaction.response.defer()
+@app_commands.describe(ephemeral="Decide if you want the reply to be visible to you only (ephemeral) or visible to everyone.")
+async def cr(interaction : discord.Interaction, ephemeral : bool) :
+    await interaction.response.defer(ephemeral=ephemeral)
 
     with open('Jasons/users2.json', 'r') as dbU :
         database_user = json.load(dbU)
@@ -745,6 +776,8 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
     except :
         return await interaction.followup.send("This message is not in the <#1128742486416834570> channel.")
     
+    if message.author.id != 1108618891040657438 : return await interaction.followup.send("This message was not sent by the bot!")
+
     # grab the embed
     embed = message.embeds[0]
 
@@ -758,7 +791,7 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
         embed.add_field(name="Reason", value=reason, inline=False)
 
     # edit the message
-    await message.edit(embed=embed)
+    await message.edit(embed=embed, attachments="")
 
     # and send a response to the original interaction
     await interaction.followup.send("worked", ephemeral=True)

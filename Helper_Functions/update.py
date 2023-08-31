@@ -432,10 +432,25 @@ def update_p(user_id : int, es_hora_de_over : bool = False) :
         # it could be that this function was called because the roll has ended, 
         # or because it is just being updated.
         if not roll_completed : 
-            if "End Time" in current_roll and current_roll["End Time"] <= int(time.mktime((datetime.datetime.now()).timetuple())) :
+            # fourward thinking
+            if current_roll["Event Name"] == "Fourward Thinking" :
+                if "End Time" not in current_roll : continue
+                "do something"
+
+            # two week t2 streak
+            elif "End Time" not in current_roll and current_roll["Event Name"] == "Two Week T2 Streak":
+                "do something"
+            
+            # two "two week t2 streak" streak
+            elif "End Time" not in current_roll and current_roll["Event Name"] == "Two 'Two Week T2 Streak' Streak":
+                "do something"
+
+            # regular rolls
+            elif "End Time" in current_roll and current_roll["End Time"] <= int(time.mktime((datetime.datetime.now()).timetuple())) :
                 if current_roll["Games"][0] == "pending..." : returns.append("casino: " + "<@{}>, you can now roll {} again.".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
                 if "Partner" in current_roll : returns.append("casino: " + "<@{}> and <@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"], current_roll["Event Name"]))
                 else : returns.append("casino: " + "<@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+            
             continue
         
         # if it's a co-op roll, send it to the log channel
