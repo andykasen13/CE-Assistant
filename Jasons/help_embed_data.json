@@ -33,7 +33,7 @@
         "Name": "Admin Options",
         "Emoji": "\ud83e\udd2b",
         "Description": "Ssh! This is the secret admin command :)",
-        "Content": "As an admin, you have access to more commands than regular users. /add-reason will add any text you provide to it to the bottom of any message sent by CE Assistant in <#949482536726298666>. This is meant as a way to explain any changes made to games (including removal)."
+        "Content": "As an admin, you have access to more commands than regular users. `/add-reason` will add any text you provide to it to the bottom of any message sent by CE Assistant in <#949482536726298666>. This is meant as a way to explain any changes made to games (including removal)."
     },
     "Color Editing": {
         "Name": "Color Editing",
@@ -43,8 +43,90 @@
     },
     "Check Rolls" : {
         "Name" : "Check Rolls",
-        "Emoji" : "\ud83c\udfa8",
+        "Emoji" : "\uD83E\uDD2F",
         "Description" : "Learn how to check your rolls!",
         "Content" : "To check your progress on your current (and completed) rolls, try /check-rolls - see what comes up!"
+    },
+    "ADMIN DONT ADD TO THING" : {
+        "Curate" : {
+            "Name" : "Curate",
+            "Emoji" : "\uD83C\uDF0A",
+            "Description" : "Learn about /curate!",
+            "Content" : "We designed /curate to return the last n games added to the Steam Curator. This should only be used if for some reason the bot misses a curator addition."
+        },
+        "Add Reason" : {
+            "Name" : "Add Reason",
+            "Emoji" : "\uD83E\uDD14",
+            "Description" : "Learn how to add reasoning to any game change!",
+            "Content" : "The /add-reason command takes in two parameters: the \"reason\" and the embed-id. This command is intended to be used for adding any specific reasoning to any game changes - ideally removals but this command will work with any kind of embed in the site-additions channel. You do have to retrieve the message-id of the embed you are trying to edit. To learn more about that, look up Discord Developer Mode."
+        },
+        "Send File" : {
+            "Name" : "Send File",
+            "Emoji" : "\uD83D\uDCCB",
+            "Description" : "Learn about grabbing CE Assistant files!",
+            "Content" : "CE Assistant keeps three local databases: name, tier, and user. The name database is where all the information about every game on CE is stored. The tier database is to help pull games for rolling purposes. And the user database stores information about all registered users. /send-file will return to you whichever file you request."
+        }
+    },
+    "ROLLS ALSO DONT ADD TO THING" : {
+        "One Hell of a Day" : {
+            "Name" : "One Hell of a Day",
+            "Emoji" : "\u0030\uFE0F\u20E3",
+            "Description" : "",
+            "Content" : ""
+        },
+        "One Hell of a Week" : {
+            "Name" : "One Hell of a Week",
+            "Emoji" : "\u0031\u20E3",
+            "Description" : "",
+            "Content" : ""
+        },
+        "One Hell of a Month" : {
+            "Name" : "One Hell of a Month",
+            "Emoji" : "\u0032\u20E3",
+            "Description" : "",
+            "Content" : ""
+        },
+        "Two Week T2 Streak" : {
+            "Name" : "Two Week T2 Streak",
+            "Emoji" : "\u25B6\uFE0F",
+            "Description" : "",
+            "Content" : ""
+        },
+        "Two 'Two Week T2 Streak' Streak" : {
+            "Name" : "Two 'Two Week T2 Streak' Streak",
+            "Emoji" : "\u23E9",
+            "Description" : "",
+            "Content" : ""
+        },
+        "Never Lucky" : {
+            "Name" : "Never Lucky",
+            "Emoji" : "\uD83C\uDF40",
+            "Description" : "",
+            "Content" : ""
+        },
+        "Triple Threat" : {
+            "Name" : "Triple Threat",
+            "Emoji" : "\u2744\uFE0F",
+            "Description" : "",
+            "Content" : ""
+        },
+        "Let Fate Decide" : {
+            "Name" : "Let Fate Decide",
+            "Emoji" : "\uD83C\uDF3B",
+            "Description" : "",
+            "Content" : ""
+        },
+        "Fourward Thinking" : {
+            "Name" : "Fourward Thinking",
+            "Emoji" : "\uD83D\uDE48",
+            "Description" : "",
+            "Content" : ""
+        },
+        "Russian Roulette" : {
+            "Name" : "Russian Roulette",
+            "Emoji" : "\uD83D\uDCA5",
+            "Description" : "",
+            "Content" : ""
+        }
     }
 }

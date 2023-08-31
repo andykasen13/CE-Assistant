@@ -4,8 +4,6 @@ import datetime
 from datetime import timedelta
 import json
 import time
-import monthdelta
-
 # --------- other file imports ---------
 from Helper_Functions.rollable_games import get_rollable_game, get_rollable_game_from_list
 from Helper_Functions.create_embed import create_multi_embed, getEmbed
