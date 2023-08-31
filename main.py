@@ -64,8 +64,13 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 async def help(interaction : discord.Interaction) :
     await interaction.response.defer(ephemeral=True)
 
-    page_data = json.loads(open("./Jasons/help_embed_data.json").read())        
+    page_data = json.loads(open("./Jasons/help_embed_data.json").read())
+
+    basic_options = page_data['Options']
     selections = []
+
+    roll_options = page_data['Rolls']
+    rolls = []
 
     embed = discord.Embed(
         title="Help",
@@ -76,17 +81,27 @@ async def help(interaction : discord.Interaction) :
     embed.set_thumbnail(url=ce_mountain_icon)
 
 
-    for option in page_data:
-        selections.append(discord.SelectOption(label=page_data[option]["Name"],emoji=page_data[option]['Emoji'],description=page_data[option]["Description"]))
+    for option in basic_options:
+        selections.append(discord.SelectOption(label=basic_options[option]["Name"],emoji=basic_options[option]['Emoji'],description=basic_options[option]["Description"]))
+
+    for option in roll_options:
+        rolls.append(discord.SelectOption(label=roll_options[option]["Name"],emoji=roll_options[option]['Emoji'],description=roll_options[option]["Description"]))
+
 
 
     class HelpSelect(discord.ui.Select):
-        def __init__(self):
-            options=selections
+        def __init__(self, select):
+            options=select
             super().__init__(placeholder="Select an option",max_values=1,min_values=1,options=options)
+
+
         async def callback(self, interaction: discord.Interaction):
             embed = self.get_embed()
-            await interaction.response.edit_message(embed=embed)
+            if self.values[0] == 'Rolls' :
+                await interaction.response.edit_message(embed = embed, view=HelpSelectView(menu=rolls))
+            else:
+                await interaction.response.edit_message(embed=embed, view=HelpSelectView())
+
         def get_embed(self):
             embed = discord.Embed(
                 title=page_data[self.values[0]]['Name'],
@@ -97,10 +112,13 @@ async def help(interaction : discord.Interaction) :
             embed.set_thumbnail(url=ce_mountain_icon)
             return embed
 
+
     class HelpSelectView(discord.ui.View):
-        def __init__(self, *, timeout = 180):
+        def __init__(self, *, timeout = 180, menu=""):
             super().__init__(timeout=timeout)
-            self.add_item(HelpSelect())
+            self.add_item(HelpSelect(selections))
+            if menu != "" :
+                self.add_item(HelpSelect(menu))
 
         async def on_timeout(self):
             self.clear_items()
