@@ -22,6 +22,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+import undetected_chromedriver as uc
 
 # pictures
 from .Screenshot import Screenshot
@@ -75,9 +76,9 @@ def single_scrape():
 
 def game_list():
     # Set selenium driver and preferences
-    options = Options()
+    options = uc.ChromeOptions()
     options.add_argument('headless')
-    driver = webdriver.Chrome(options=options)
+    driver = uc.Chrome(options=options)
     driver.set_window_size(width=1440, height=8*2000)
 
     # grab first game to get color on the rest of them
