@@ -47,7 +47,7 @@ intents.message_content = True
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-discord_token = localJSONData['other_discord_token']  
+discord_token = localJSONData['discord_token']  
 guild_ID = localJSONData['test_guild_ID']
 
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
@@ -956,10 +956,11 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
 
     # send files
 @tree.command(name="send-file", description="Send any of the three local CE Assistant files", guild=discord.Object(id=guild_ID))
-async def file(interaction : discord.Interaction, file : Literal["name", "tier", "user"]) :
+async def file(interaction : discord.Interaction, file : Literal["name", "tier", "user", "curator"]) :
     await interaction.response.defer(ephemeral=True)
-    if file != "user" : await interaction.followup.send(file=discord.File("Jasons/database_{}.json"))
-    else : await interaction.followup.send(file=discord.File("Jasons/users2.json"))
+    if file == "curator" : return await interaction.followup.send(file=discord.File("Jasons/curator_count.json"))
+    if file != "user" : return await interaction.followup.send(file=discord.File("Jasons/database_{}.json"))
+    else : return await interaction.followup.send(file=discord.File("Jasons/users2.json"))
 
     
 
