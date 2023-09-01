@@ -11,6 +11,7 @@
 
 
 # the basics
+import os
 import json
 from datetime import datetime
 import time
@@ -22,7 +23,6 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-import undetected_chromedriver as uc
 
 # pictures
 from .Screenshot import Screenshot
@@ -76,9 +76,10 @@ def single_scrape():
 
 def game_list():
     # Set selenium driver and preferences
-    options = uc.ChromeOptions()
+    options = webdriver.ChromeOptions()
+    options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     options.add_argument('headless')
-    driver = uc.Chrome(options=options)
+    driver = webdriver.Chrome(os.environ.get("CHROMEDRIVER_PATH"), options=options)
     driver.set_window_size(width=1440, height=8*2000)
 
     # grab first game to get color on the rest of them
