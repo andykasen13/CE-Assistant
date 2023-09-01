@@ -79,7 +79,7 @@ def game_list():
     options = webdriver.ChromeOptions()
     options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     options.add_argument('headless')
-    driver = webdriver.Chrome(os.environ.get("CHROMEDRIVER_PATH"), options=options)
+    driver = webdriver.Chrome(options=options)
     driver.set_window_size(width=1440, height=8*2000)
 
     # grab first game to get color on the rest of them
