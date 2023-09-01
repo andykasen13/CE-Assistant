@@ -79,6 +79,8 @@ def game_list():
     options = webdriver.ChromeOptions()
     options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     options.add_argument('headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(options=options)
     driver.set_window_size(width=1440, height=8*2000)
 
