@@ -128,6 +128,7 @@ def game_list():
 
         # check if updated since last check
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+        created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
         icon = game['icon']
 
         # if game is a T0 and updated
@@ -174,7 +175,8 @@ def game_list():
             new_data[game['name']] = get_game(game)
 
         # if game is new
-        elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
+        # elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
+        elif created_time > current_newest:
             get_image(number, game['id'], driver)
             new_game = get_game(game)
             new_data[game['name']] = new_game
@@ -221,6 +223,13 @@ def game_list():
         # game is neither new nor updated
         elif game['name'] in game_tracker:
             game_tracker.remove(game['name'])
+        elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
+            for other_game in json_response:
+                if game['id'] == other_game['id']:
+                    game_tracker.remove(other_game['name'])
+                    del(new_data[other_game['name']])
+                    new_data[game['name']] = get_game(game)
+
 
     # games removed
     for game in game_tracker:

@@ -101,17 +101,17 @@ async def help(interaction : discord.Interaction) :
   
 
     class HelpSelect(discord.ui.Select):
-        def __init__(self, select):
+        def __init__(self, select, message="Select an option"):
             options=select
-            super().__init__(placeholder="Select an option",max_values=1,min_values=1,options=options)
+            super().__init__(placeholder=message, max_values=1,min_values=1,options=options)
 
 
         async def callback(self, interaction: discord.Interaction):
             embed = self.get_embed()
             if self.values[0] == 'Rolls' or self.values[0] in list(roll_options.keys()):
-                await interaction.response.edit_message(embed = embed, view=HelpSelectView(menu=rolls))
+                await interaction.response.edit_message(embed = embed, view=HelpSelectView(menu=rolls, message="Rolls"))
             if self.values[0] == 'Admin Options' or self.values[0] in list(admin_options.keys()):
-                await interaction.response.edit_message(embed = embed, view=HelpSelectView(menu=admin))
+                await interaction.response.edit_message(embed = embed, view=HelpSelectView(menu=admin, message="Admin Options"))
             else:
                 await interaction.response.edit_message(embed=embed, view=HelpSelectView())
 
@@ -133,11 +133,11 @@ async def help(interaction : discord.Interaction) :
 
 
     class HelpSelectView(discord.ui.View):
-        def __init__(self, *, timeout = 180, menu=""):
+        def __init__(self, *, timeout = 180, menu="", message="Select an option"):
             super().__init__(timeout=timeout)
             self.add_item(HelpSelect(selections))
             if menu != "" :
-                self.add_item(HelpSelect(menu))
+                self.add_item(HelpSelect(menu, message))
 
         async def on_timeout(self):
             self.clear_items()
