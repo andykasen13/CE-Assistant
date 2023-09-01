@@ -5,7 +5,7 @@ import json
 import datetime
 from datetime import timedelta
 
-def update_p(user_id : int, es_hora_de_over : bool = False) :
+def update_p(user_id : int, roll_ended_name) :
     
     # Open the database
     with open('Jasons/users2.json', 'r') as dbU :
@@ -446,12 +446,22 @@ def update_p(user_id : int, es_hora_de_over : bool = False) :
                 "do something"
 
             # regular rolls
-            elif "End Time" in current_roll and current_roll["End Time"] <= int(time.mktime((datetime.datetime.now()).timetuple())) :
+            elif roll_ended_name == current_roll["Event Name"]: # if the roll was not completed AND the event name is ended_roll_name then they failed
                 if current_roll["Games"][0] == "pending..." : returns.append("casino: " + "<@{}>, you can now roll {} again.".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
                 if "Partner" in current_roll : returns.append("casino: " + "<@{}> and <@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"], current_roll["Event Name"]))
-                else : returns.append("casino: " + "<@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+                else : 
+                    if current_roll["Event Name"] == "Fourward Thinking" : returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
+                    returns.append("casino: " + "<@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+                remove_indexes.append(m_index)
             
             continue
+        
+        # roll was completed
+        if(current_roll["Event Name"] == "Fourward Thinking") :
+            if len(current_roll["Games"] == 4) : returns.append("log: Congratulations <@{}>! You have completed Fourward Thinking!".format(user_dict[ce_id]["Discord ID"]))
+            else: 
+                del current_roll["End Time"]
+                returns.append("casino: <@{}>, you have completed the T{} in your Fourward Thinking roll. Use /solo-roll Fourward Thinking to move to your next stage!".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
         
         # if it's a co-op roll, send it to the log channel
         if(current_roll["Event Name"] in ["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work"]) :
