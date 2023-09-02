@@ -85,7 +85,7 @@ def game_list():
     options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(options=options, service=service)
     print(driver)
-    #driver.set_window_size(width=1440, height=8*2000)
+    driver.set_window_size(width=1440, height=8*2000)
 
     # grab first game to get color on the rest of them
     url = 'https://cedb.me/game/1e8565aa-b9f2-4b41-9578-22e4c2a5436b'
