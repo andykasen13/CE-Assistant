@@ -132,6 +132,8 @@ def game_list():
         "Strategy" : '<:CE_strategy:1126326195915591690>'
     }
 
+    get_image(0, "1e866995-6fec-452e-81ba-1e8f8594f4ea", driver)
+
     # game loop adding updated parts
     for game in json_response:
 
@@ -695,6 +697,7 @@ def get_image(number, CE_ID, driver):
         driver.get(url)
         objective_lst = []
         while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
+            print(objective_lst)
             objective_lst = []
             objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
 
