@@ -739,7 +739,7 @@ def get_image(number, CE_ID, driver):
     print('test 3')
     ob = Screenshot(bottom_right_y)
     print('test 4')
-    im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
+    im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=10, hide_elements=header_elements)
     print('test 5')
 
     im = Image.open('Pictures/ss{}.png'.format(number))
