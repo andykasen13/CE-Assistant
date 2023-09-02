@@ -96,6 +96,7 @@ class Screenshot:
 
             i = 0
             while i < total_height:
+                print('while')
                 ii = 0
                 top_height = i + viewport_height
                 if top_height > total_height:
@@ -108,32 +109,51 @@ class Screenshot:
                     ii = ii + viewport_width
                 i = i + viewport_height
             stitched_image = Image.new('RGB', (total_width, total_height))
+            print('while broken')
             previous = None
             part = 0
 
             for rectangle in rectangles:
+                print('for')
                 if previous is not None:
+                    print('prev not none')
                     driver.execute_script("window.scrollTo({0}, {1})".format(rectangle[0], rectangle[1]))
                     time.sleep(10)
+                print('broke if 1')
 
                 self.hide_elements(driver, hide_elements)
+                print('15')
 
                 file_name = "part_{0}.png".format(part)
+                print('16')
                 driver.get_screenshot_as_file(file_name)
+                print('17')
                 screenshot = Image.open(file_name)
+                print('18')
 
                 if rectangle[1] + viewport_height > total_height:
+                    print('if2')
                     offset = (rectangle[0], total_height - viewport_height)
                 else:
+                    print('else2')
                     offset = (rectangle[0], rectangle[1])
+                print('broke if 2')
 
                 stitched_image.paste(screenshot, offset)
+                print('19')
                 del screenshot
+                print('20')
                 os.remove(file_name)
+                print('21')
                 part = part + 1
+                print('22')
                 previous = rectangle
+                print('23')
+            print('for loop broken')
             save_path = os.path.abspath(os.path.join(save_path, image_name))
+            print('24')
             stitched_image.save(save_path)
+            print('25')
             return save_path
 
     def get_element(self, driver: WebDriver, element: WebElement, save_path: str, image_name: str = 'cropped_screenshot.png', hide_elements: list = None) -> str:
