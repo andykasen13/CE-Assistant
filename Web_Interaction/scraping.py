@@ -707,12 +707,14 @@ def get_image(number, CE_ID, driver):
         get_image(number, CE_ID, driver)
 
     primary_table = driver.find_element(By.CLASS_NAME, "css-c4zdq5")
+    print('test 1')
     objective_lst = primary_table.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
     title = driver.find_element(By.TAG_NAME, "h1")
     top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
     title_size = title.size['width']
     title_location = title.location['x']
 
+    print('test 2')
 
     bottom_right = objective_lst[len(objective_lst)-2].location
     size = objective_lst[len(objective_lst)-2].size
@@ -734,13 +736,18 @@ def get_image(number, CE_ID, driver):
     else:
         bottom_right_x = bottom_right['x'] + size['width'] + border_width
 
-    
+    print('test 3')
     ob = Screenshot(bottom_right_y)
+    print('test 4')
     im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
-    
+    print('test 5')
+
     im = Image.open('Pictures/ss{}.png'.format(number))
+    print('test 6')
     im = im.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y)) # defines crop points
+    print('test 7')
     im.save('Pictures/ss{}.png'.format(number))
+    print('test 8')
 
 
 
