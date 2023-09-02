@@ -186,6 +186,7 @@ def game_list():
         # if game is new
         # elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
         elif created_time > current_newest:
+            print(game['name'])
             get_image(number, game['id'], driver)
             new_game = get_game(game)
             new_data[game['name']] = new_game
