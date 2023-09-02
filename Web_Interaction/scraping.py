@@ -84,14 +84,17 @@ def game_list():
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(options=options, service=service)
-    driver.set_window_size(width=1440, height=8*2000)
+    print(driver)
+    #driver.set_window_size(width=1440, height=8*2000)
 
     # grab first game to get color on the rest of them
     url = 'https://cedb.me/game/1e8565aa-b9f2-4b41-9578-22e4c2a5436b'
     driver.get(url)
+    print(driver.page_source)
     objective_lst = []
     while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
         objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+        print(objective_lst)
 
 
     # set up API requests
