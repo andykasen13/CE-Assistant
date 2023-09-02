@@ -81,11 +81,17 @@ class Screenshot:
         else:
             print('8')
             total_width = driver.execute_script("return document.body.offsetWidth")
+            print('9')
             total_height = driver.execute_script("return document.body.parentNode.scrollHeight")
+            print('10')
             viewport_width = driver.execute_script("return document.body.clientWidth")
+            print('11')
             viewport_height = driver.execute_script("return window.innerHeight")
+            print('12')
             driver.execute_script("window.scrollTo(0, 0)")
+            print('13')
             time.sleep(10)
+            print('14')
             rectangles = []
 
             i = 0
