@@ -77,7 +77,7 @@ class Screenshot:
             viewport_width = driver.execute_script("return document.body.clientWidth")
             viewport_height = driver.execute_script("return window.innerHeight")
             driver.execute_script("window.scrollTo(0, 0)")
-            time.sleep(2)
+            time.sleep(10)
             rectangles = []
 
             i = 0
@@ -100,7 +100,7 @@ class Screenshot:
             for rectangle in rectangles:
                 if previous is not None:
                     driver.execute_script("window.scrollTo({0}, {1})".format(rectangle[0], rectangle[1]))
-                    time.sleep(1)
+                    time.sleep(10)
 
                 self.hide_elements(driver, hide_elements)
 
