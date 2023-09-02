@@ -81,7 +81,7 @@ def game_list():
     options.add_argument('headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(execution_path = "CHROMEDRIVER_PATH",options=options)
     driver.set_window_size(width=1440, height=8*2000)
 
     # grab first game to get color on the rest of them
