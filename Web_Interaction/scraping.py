@@ -80,7 +80,7 @@ def game_list():
     options = webdriver.ChromeOptions()
     service = Service(executable_path=os.environ.get('CHROMEDRIVER_PATH'))
     options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    options.add_argument('headless')
+    options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(options=options, service=service)
