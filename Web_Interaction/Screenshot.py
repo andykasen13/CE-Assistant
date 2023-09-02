@@ -48,6 +48,9 @@ class Screenshot:
         """
         image_name = os.path.abspath(save_path + '/' + image_name)
         print('1')
+        print(save_path)
+        print('image')
+        print(image_name)
 
         # final_page_height = 0
         original_size = driver.get_window_size()
