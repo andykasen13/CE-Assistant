@@ -152,6 +152,7 @@ class Screenshot:
             print('for loop broken')
             save_path = os.path.abspath(os.path.join(save_path, image_name))
             print('24')
+            print(save_path)
             stitched_image.save(save_path)
             print('25')
             return save_path
