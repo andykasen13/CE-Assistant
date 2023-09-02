@@ -47,9 +47,11 @@ class Screenshot:
             str: The image path
         """
         image_name = os.path.abspath(save_path + '/' + image_name)
+        print('1')
 
         # final_page_height = 0
         original_size = driver.get_window_size()
+        print('2')
 
         # if is_load_at_runtime:
         #     while True:
@@ -63,15 +65,21 @@ class Screenshot:
         #             break
 
         self.hide_elements(driver, hide_elements)
+        print('3')
 
         if isinstance(driver, webdriver.Ie):
             required_width = driver.execute_script('return document.body.parentNode.scrollWidth')
+            print('4')
             driver.set_window_size(required_width, self.fph)
+            print('5')
             driver.save_screenshot(image_name)
+            print('6')
             driver.set_window_size(original_size['width'], original_size['height'])
+            print('7')
             return image_name
 
         else:
+            print('8')
             total_width = driver.execute_script("return document.body.offsetWidth")
             total_height = driver.execute_script("return document.body.parentNode.scrollHeight")
             viewport_width = driver.execute_script("return document.body.clientWidth")
