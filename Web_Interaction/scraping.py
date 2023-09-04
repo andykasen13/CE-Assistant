@@ -78,12 +78,10 @@ def single_scrape():
 def game_list():
     # Set selenium driver and preferences
     options = webdriver.ChromeOptions()
-    service = Service(executable_path=os.environ.get('CHROMEDRIVER_PATH'))
-    options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome(options=options, service=service)
+    driver = webdriver.Chrome(options=options)
     print(driver)
     driver.set_window_size(width=1440, height=8*2000)
 
