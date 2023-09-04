@@ -1,6 +1,0 @@
-discord.py
-selenium
-pillow
-requests
-bs4
-apscheduler
