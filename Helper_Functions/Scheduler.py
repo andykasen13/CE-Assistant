@@ -2,16 +2,16 @@ import json
 import time
 import datetime
 
-from Helper_Functions.end_time import roll_failed
+from Helper_Functions.update import update_p
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
 sched = BackgroundScheduler()
 
-def test(arg1, arg2, arg4, arg3, arg5):
+def test(arg1, arg2, arg5):
     tasks = json.loads(open("./Jasons/tasks.json").read())
-    # roll_failed(arg1, arg2, arg4, arg3)
+    update_p(arg1, arg2)
     if arg5 == -1:
         return
     tasks.pop(arg5)
@@ -57,13 +57,13 @@ def create_schedule(client):
         user_id = task["CE ID"]
         
         if task['End Time'] <= int(time.mktime((datetime.datetime.now()).timetuple())):
-            test(event_name, casino_channel, user_id, log_channel, -1)
+            test(user_id, event_name, -1)
             indices.insert(0, index)
             continue
 
         date_time = datetime.datetime.utcfromtimestamp(int(task["End Time"]-14400))
         
-        sched.add_job(test, 'date', run_date = date_time, args = [event_name, casino_channel, user_id, log_channel, index])
+        sched.add_job(test, 'date', run_date = date_time, args = [user_id, event_name])
 
     for indice in indices:
         tasks.pop(indice)
