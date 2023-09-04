@@ -112,11 +112,11 @@ async def help(interaction : discord.Interaction) :
         async def callback(self, interaction: discord.Interaction):
             embed = self.get_embed()
             if self.values[0] == 'Rolls' or self.values[0] in list(roll_options.keys()):
-                await interaction.response.edit_message(embed = embed, view=HelpSelectView(menu=rolls, message="Rolls", message_2=self.values[0]))
+                await interaction.followup.edit_message(embed = embed, view=HelpSelectView(menu=rolls, message="Rolls", message_2=self.values[0]))
             if self.values[0] == 'Admin Options' or self.values[0] in list(admin_options.keys()):
-                await interaction.response.edit_message(embed = embed, view=HelpSelectView(menu=admin, message="Admin Options", message_2=self.values[0]))
+                await interaction.followup.edit_message(embed = embed, view=HelpSelectView(menu=admin, message="Admin Options", message_2=self.values[0]))
             else:
-                await interaction.response.edit_message(embed=embed, view=HelpSelectView(message=self.values[0]))
+                await interaction.followup.edit_message(embed=embed, view=HelpSelectView(message=self.values[0]))
 
         def get_embed(self):
             if self.values[0] in list(roll_options.keys()):
