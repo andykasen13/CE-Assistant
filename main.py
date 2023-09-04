@@ -969,8 +969,8 @@ async def file(interaction : discord.Interaction, file : Literal["name", "tier",
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
     print("Ready!")
-    get_tasks(client)
-    await master_loop.start(client)
+    #get_tasks(client)
+    print(await master_loop.start(client))
     os.mkdir('./Pictures')
 
 client.run(discord_token)
