@@ -129,7 +129,7 @@ class Screenshot:
                 self.hide_elements(driver, hide_elements)
                 print('15')
 
-                file_name = '/Pictures/part_{0}.png'.format(part)
+                file_name = '/home/andrewgarcha/CE-Assistant/Pictures/part_{0}.png'.format(part)
                 print('16')
                 print(driver.get_screenshot_as_file(file_name))
                 print('directory: ' + str(os.listdir('/home/andrewgarcha/CE-Assistant/Pictures')))
