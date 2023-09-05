@@ -131,7 +131,7 @@ class Screenshot:
 
                 file_name = "/Pictures/part_{0}.png".format(part)
                 print('16')
-                driver.get_screenshot_as_file(file_name)
+                print(driver.get_screenshot_as_file(file_name))
                 print('directory: ' + str(os.listdir('/home/andrewgarcha/CE-Assistant/Pictures')))
                 print('17')
                 screenshot = Image.open(file_name)
