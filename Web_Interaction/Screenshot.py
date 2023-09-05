@@ -49,7 +49,7 @@ class Screenshot:
         Returns:
             str: The image path
         """
-        image_name = os.path.abspath(save_path + '/' + image_name)
+        #image_name = os.path.abspath(save_path + '/' + image_name)
         print('1')
         print(save_path)
         print('image')
