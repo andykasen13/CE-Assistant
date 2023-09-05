@@ -67,6 +67,8 @@ def single_scrape():
     database_name = {}
 
     for game in json_response:
+        if(game['genre'] == None or game['genre']['name'] == None) : continue
+        print(game['name'])
         database_name[game['name']] = get_game(game)
 
     with open('Jasons/database_name.json', 'w') as f:
