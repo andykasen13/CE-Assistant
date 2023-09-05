@@ -134,6 +134,7 @@ class Screenshot:
                 path = Path("/home/andrewgarcha/CE-Assistant/Pictures/part{0}.png".format(part))
                 print('16')
                 print(file_name)
+                print(str(path))
 
                 ss = driver.get_screenshot_as_png()
                 print("ss")
