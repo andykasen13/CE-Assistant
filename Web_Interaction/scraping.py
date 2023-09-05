@@ -61,7 +61,7 @@ def single_scrape():
 
     current_dict = json.loads(open("/CE-Assistant/Jasons/curator_count.json").read())
     current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
-    with open('Jasons/curator_count.json', 'w') as f:
+    with open('/CE-Assistant/Jasons/curator_count.json', 'w') as f:
         json.dump(current_dict, f, indent=4)
 
     database_name = {}
