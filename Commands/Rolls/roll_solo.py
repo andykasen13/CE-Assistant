@@ -43,6 +43,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     i = 0
     target_user = ""
     for current_user in userInfo :
+        print(current_user)
         if(userInfo[current_user]["Discord ID"] == interaction.user.id) :
             target_user = current_user
             break
