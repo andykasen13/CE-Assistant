@@ -742,7 +742,10 @@ def get_image(number, CE_ID, driver):
     im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=10, hide_elements=header_elements)
     print('test 5')
 
-    im = Image.open('Pictures/ss{}.png'.format(number))
+    print('Pictures/ss{}.png'.format(number))
+    print('./Pictures/ss{}.png'.format(number))
+
+    im = Image.open('./Pictures/ss{}.png'.format(number))
     print('test 6')
     im = im.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y)) # defines crop points
     print('test 7')
