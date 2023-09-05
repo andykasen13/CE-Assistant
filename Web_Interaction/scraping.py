@@ -746,11 +746,11 @@ def get_image(number, CE_ID, driver):
     print('Pictures/ss{}.png'.format(number))
     print('./Pictures/ss{}.png'.format(number))
 
-    im = Image.open('./Pictures/ss{}.png'.format(number))
+    im = Image.open('/CE-Assistant/Pictures/ss{}.png'.format(number))
     print('test 6')
     im = im.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y)) # defines crop points
     print('test 7')
-    im.save('Pictures/ss{}.png'.format(number))
+    im.save('/CE-Assistant/Pictures/ss{}.png'.format(number))
     print('test 8')
 
 
