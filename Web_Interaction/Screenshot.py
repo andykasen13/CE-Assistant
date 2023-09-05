@@ -135,7 +135,7 @@ class Screenshot:
 
                 ss = driver.get_screenshot_as_png()
                 print(ss)
-                os.makedirs(os.path.dirname(file_name), exist_ok=True)
+                #os.makedirs(os.path.dirname(file_name), exist_ok=True)
                 with open(file_name, "wb") as ss_file:
                     ss_file.write(ss)
                     print("Svreenshot saved")
