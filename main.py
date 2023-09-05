@@ -652,15 +652,16 @@ async def update(interaction : discord.Interaction) :
     # rank silliness
     ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]
     rankroles = []
-    rankroles.append(ex_rank_role = discord.utils.get(interaction.guild.roles, name = "EX Rank"))
-    rankroles.append(sss_rank_role = discord.utils.get(interaction.guild.roles, name = "SSS Rank"))
-    rankroles.append(ss_rank_role = discord.utils.get(interaction.guild.roles, name = "SS Rank"))
-    rankroles.append(s_rank_role = discord.utils.get(interaction.guild.roles, name = "S Rank"))
-    rankroles.append(a_rank_role = discord.utils.get(interaction.guild.roles, name = "A Rank"))
-    rankroles.append(b_rank_role = discord.utils.get(interaction.guild.roles, name = "B Rank"))
-    rankroles.append(c_rank_role = discord.utils.get(interaction.guild.roles, name = "C Rank"))
-    rankroles.append(d_rank_role = discord.utils.get(interaction.guild.roles, name = "D Rank"))
-    rankroles.append(e_rank_role = discord.utils.get(interaction.guild.roles, name = "E Rank"))
+    ex_rank_role = discord.utils.get(interaction.guild.roles, name = "EX Rank")
+    sss_rank_role = discord.utils.get(interaction.guild.roles, name = "SSS Rank")
+    ss_rank_role = discord.utils.get(interaction.guild.roles, name = "SS Rank")
+    s_rank_role = discord.utils.get(interaction.guild.roles, name = "S Rank")
+    a_rank_role = discord.utils.get(interaction.guild.roles, name = "A Rank")
+    b_rank_role = discord.utils.get(interaction.guild.roles, name = "B Rank")
+    c_rank_role = discord.utils.get(interaction.guild.roles, name = "C Rank")
+    d_rank_role = discord.utils.get(interaction.guild.roles, name = "D Rank")
+    e_rank_role = discord.utils.get(interaction.guild.roles, name = "E Rank")
+    rankroles = [a_rank_role, ex_rank_role, sss_rank_role, ss_rank_role, s_rank_role, b_rank_role, c_rank_role, d_rank_role, e_rank_role]
 
     # actually update the user's database 
     # and store anything we need to report
