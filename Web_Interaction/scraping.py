@@ -223,7 +223,7 @@ def game_list():
                     timestamp=datetime.now(),
                     description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
                 ),
-                'Image' : discord.File("Pictures/ss{}.png".format(number), filename="image.png")
+                'Image' : discord.File("/CE-Assistant/Pictures/ss{}.png".format(number), filename="image.png")
             }
             embed['Embed'].set_image(url='attachment://image.png')
             embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
@@ -309,7 +309,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
             timestamp=datetime.now(),
             description=update.strip()
         ),
-        'Image' : discord.File("Pictures/ss{}.png".format(number), filename="image.png")
+        'Image' : discord.File("/CE-Assistant/Pictures/ss{}.png".format(number), filename="image.png")
     }
     embed['Embed'].set_image(url='attachment://image.png')
     embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
@@ -347,7 +347,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
             timestamp=datetime.now(),
             description=objective_info.strip()
         ),
-        'Image' : discord.File("Pictures/ss{}.png".format(str(number) + '-' + str(decimal)), filename="image.png")
+        'Image' : discord.File("/CE-Assistant/Pictures/ss{}.png".format(str(number) + '-' + str(decimal)), filename="image.png")
         }
         embed['Embed'].set_image(url='attachment://image.png')
         embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
@@ -796,8 +796,8 @@ def special_image(number, decimal, CE_ID, driver, objective_name):
     
     ob = Screenshot(bottom_right_y)
     im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(str(number) + '-' + str(decimal)), is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
-    im = Image.open('Pictures/ss{}.png'.format(str(number) + '-' + str(decimal)))
+    im = Image.open('/CE-Assistant/Pictures/ss{}.png'.format(str(number) + '-' + str(decimal)))
     im = im.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y)) # defines crop points
-    im.save('Pictures/ss{}.png'.format(str(number) + '-' + str(decimal)))
+    im.save('/CE-Assistant/Pictures/ss{}.png'.format(str(number) + '-' + str(decimal)))
 
     return
