@@ -45,7 +45,7 @@ tree = app_commands.CommandTree(client)
 intents.message_content = True
 
 # Grab information from json file
-with open('Jasons/secret_info.json') as f :
+with open('/CE-Assistant/Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 discord_token = localJSONData['discord_token']  
@@ -66,7 +66,7 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 async def help(interaction : discord.Interaction) :
     await interaction.response.defer(ephemeral=True)
 
-    page_data = json.loads(open("./Jasons/help_embed_data.json").read())
+    page_data = json.loads(open("/CE-Assistant/Jasons/help_embed_data.json").read())
 
     basic_options = page_data['Options']
     selections = []
@@ -206,10 +206,10 @@ async def checkRolls(interaction, user: discord.Member=None) :
         user = interaction.user
 
     #open the json file and get the data
-    with open('Jasons/users2.json', 'r') as f :
+    with open('/CE-Assistant/Jasons/users2.json', 'r') as f :
         userInfo = json.load(f)
 
-    with open('Jasons/database_name.json', 'r') as g :
+    with open('/CE-Assistant/Jasons/database_name.json', 'r') as g :
         database_name_info = json.load(g)
 
     # iterate through the json file until you find the
@@ -499,7 +499,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
     
     #Open the user database
-    with open('Jasons/users2.json', 'r') as dbU :
+    with open('/CE-Assistant/Jasons/users2.json', 'r') as dbU :
         database_user = json.load(dbU)
 
     # Set up total_points to calculate rank
@@ -604,7 +604,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     database_user.update(user_dict)
 
     # Dump the data
-    with open('Jasons/users2.json', 'w') as f :
+    with open('/CE-Assistant/Jasons/users2.json', 'w') as f :
         json.dump(database_user, f, indent=4)
 
     # Create confirmation embed
@@ -736,10 +736,10 @@ async def update(interaction : discord.Interaction) :
 async def cr(interaction : discord.Interaction, ephemeral : bool) :
     await interaction.response.defer(ephemeral=ephemeral)
 
-    with open('Jasons/users2.json', 'r') as dbU :
+    with open('/CE-Assistant/Jasons/users2.json', 'r') as dbU :
         database_user = json.load(dbU)
 
-    with open('Jasons/database_name.json', 'r') as dbN :
+    with open('/CE-Assistant/Jasons/database_name.json', 'r') as dbN :
         database_name = json.load(dbN)
     
     # find them in the users2.json
@@ -866,7 +866,7 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
     print(event)
 
     # Open the database
-    with open('Jasons/users2.json', 'r') as f:
+    with open('/CE-Assistant/Jasons/users2.json', 'r') as f:
         database_user = json.load(f)
 
     # Check if user is in the database
@@ -960,9 +960,9 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
 @tree.command(name="send-file", description="Send any of the three local CE Assistant files", guild=discord.Object(id=guild_ID))
 async def file(interaction : discord.Interaction, file : Literal["name", "tier", "user", "curator"]) :
     await interaction.response.defer(ephemeral=True)
-    if file == "curator" : return await interaction.followup.send(file=discord.File("Jasons/curator_count.json"))
-    if file != "user" : return await interaction.followup.send(file=discord.File("Jasons/database_{}.json"))
-    else : return await interaction.followup.send(file=discord.File("Jasons/users2.json"))
+    if file == "curator" : return await interaction.followup.send(file=discord.File("/CE-Assistant/Jasons/curator_count.json"))
+    if file != "user" : return await interaction.followup.send(file=discord.File("/CE-Assistant/Jasons/database_{}.json"))
+    else : return await interaction.followup.send(file=discord.File("/CE-Assistant/Jasons/users2.json"))
 
     
 
@@ -973,10 +973,5 @@ async def on_ready():
     print("Ready!")
     #get_tasks(client)
     print(await master_loop.start(client))
-    os.mkdir('./Pictures')
-    f = open("killmyself.txt", "w+")
-    for i in range(10) :
-        f.write("This is line %d\r\n" % (i+1))
-    f.close()
 
 client.run(discord_token)
