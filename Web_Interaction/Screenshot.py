@@ -140,7 +140,7 @@ class Screenshot:
                 print("ss")
                 path.parent.mkdir(parents=True, exist_ok=True)
                 print('makedirs')
-                with open(file_name, "wb") as ss_file:
+                with open(path, "wb") as ss_file:
                     print('with open')
                     ss_file.write(ss)
                     print("Svreenshot saved")
