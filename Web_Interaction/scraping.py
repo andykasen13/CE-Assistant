@@ -71,7 +71,7 @@ def single_scrape():
         print(game['name'])
         database_name[game['name']] = get_game(game)
 
-    with open('Jasons/database_name.json', 'w') as f:
+    with open('/CE-Assistant/Jasons/database_name.json', 'w') as f:
         json.dump(database_name, f, indent=4)
 
     get_by_tier()
