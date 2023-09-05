@@ -130,8 +130,8 @@ class Screenshot:
                 self.hide_elements(driver, hide_elements)
                 print('15')
 
-                file_name = "/Pictures/part{0}.png".format(part)
-                path = Path("/CE-Assistant/Pictures/part{0}.png".format(part))
+                file_name = "part{0}.png".format(part)
+                path = Path("/CE-Assistant/part{0}.png".format(part))
                 print('16')
                 print(file_name)
                 print(str(path))
