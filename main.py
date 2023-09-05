@@ -502,6 +502,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     #Open the user database
     with open('/CE-Assistant/Jasons/users2.json', 'r') as dbU :
         database_user = json.load(dbU)
+        print(database_user)
 
     # Set up total_points to calculate rank
     total_points = 0
