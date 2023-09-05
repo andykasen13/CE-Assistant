@@ -143,7 +143,7 @@ async def master_loop(client):
     correct_channel = client.get_channel(channel_number)
 
     # start the curate function
-    #await curate(correct_channel)
+    await curate(correct_channel)
 
     # start the scrape function
     await scrape(correct_channel)
@@ -159,11 +159,11 @@ async def curate(channel):
     curation = await thread_curate() #await asyncio.to_thread(thread_curate) 
 
     # get the current curator page and update its curator count
-    data = json.loads(open("./Jasons/curator_count.json").read())
+    data = json.loads(open("/CE-Assistant/Jasons/curator_count.json").read())
     data['Curator Count'] = curation[0]
 
     # dump new count
-    with open("./Jasons/curator_count.json", "w") as jsonFile:
+    with open("/CE-Assistant/Jasons/curator_count.json", "w") as jsonFile:
         json.dump(data, jsonFile, indent=4)
 
     # if there were updates send them to the channel
@@ -196,8 +196,8 @@ async def scrape(channel):
         await channel.send(file=dict['Image'], embed=dict['Embed'])
 
     # delete and replace 'Pictures' with an empty folder
-    shutil.rmtree('./Pictures')
-    os.mkdir('./Pictures')
+    shutil.rmtree('/CE-Assistant/Pictures')
+    os.mkdir('/CE-Assistant/Pictures')
 
 
 @to_thread
