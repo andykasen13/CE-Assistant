@@ -168,13 +168,12 @@ class Screenshot:
                 previous = rectangle
                 print('23')
             print('for loop broken')
-            save_path = os.path.abspath(os.path.join(save_path, image_name))
-            path = "/CE-Assistant/Pictures/" + image_name
+            save_path = Path("/CE-Assistant/Pictures/" + image_name)
             print('24')
-            print(path)
-            stitched_image.save(path)
+            print(save_path)
+            stitched_image.save(save_path)
             print('25')
-            return path
+            return save_path
 
     def get_element(self, driver: WebDriver, element: WebElement, save_path: str, image_name: str = 'cropped_screenshot.png', hide_elements: list = None) -> str:
         """
