@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import time
 
 from PIL import Image
@@ -130,12 +131,13 @@ class Screenshot:
                 print('15')
 
                 file_name = "/Pictures/part_{0}.png".format(part)
+                path = Path("/home/andrewgarcha/CE-Assistant/Pictures/part{0}.png".format(part))
                 print('16')
                 print(file_name)
 
                 ss = driver.get_screenshot_as_png()
                 print("ss")
-                os.makedirs(os.path.dirname(file_name), exist_ok=True)
+                path.parent.mkdir(parents=True, exist_ok=True)
                 print('makedirs')
                 with open(file_name, "wb") as ss_file:
                     print('with open')
