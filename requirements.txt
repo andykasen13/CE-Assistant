@@ -1,7 +1,0 @@
-selenium
-discord
-apscheduler
-pillow
-chromedriver-binary
-bs4
-requests
