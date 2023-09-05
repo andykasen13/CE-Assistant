@@ -132,8 +132,8 @@ class Screenshot:
                 file_name = "part_{0}.png".format(part)
                 print('16')
                 print(file_name)
-                print(driver.get_screenshot_as_file(file_name))
-                print('directory: ' + str(os.listdir('/home/andrewgarcha/CE-Assistant')))
+                driver.get_screenshot_as_file(file_name)
+                #print('directory: ' + str(os.listdir('/home/andrewgarcha/CE-Assistant')))
                 print('17')
                 screenshot = Image.open(file_name)
                 print('18')
@@ -144,7 +144,7 @@ class Screenshot:
                 else:
                     print('else2')
                     offset = (rectangle[0], rectangle[1])
-                print('broke if 2')
+                print('broke if 2') 
 
                 stitched_image.paste(screenshot, offset)
                 print('19')
