@@ -95,7 +95,7 @@ class Screenshot:
             print('12')
             driver.execute_script("window.scrollTo(0, 0)")
             print('13')
-            time.sleep(10)
+            time.sleep(3)
             print('14')
             rectangles = []
 
@@ -132,7 +132,7 @@ class Screenshot:
                 file_name = "/Pictures/part_{0}.png".format(part)
                 print('16')
                 driver.get_screenshot_as_file(file_name)
-                print('directory: ' + os.listdir('/home/andrewgarcha/CE-Assistant/Pictures'))
+                print('directory: ' + str(os.listdir('/home/andrewgarcha/CE-Assistant/Pictures')))
                 print('17')
                 screenshot = Image.open(file_name)
                 print('18')
