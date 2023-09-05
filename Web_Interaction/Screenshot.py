@@ -134,7 +134,7 @@ class Screenshot:
                 print(file_name)
 
                 ss = driver.get_screenshot_as_png()
-                print(ss)
+                #print(ss)
                 os.makedirs(os.path.dirname(file_name), exist_ok=True)
                 with open(file_name, "wb") as ss_file:
                     ss_file.write(ss)
