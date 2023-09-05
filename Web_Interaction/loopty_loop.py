@@ -143,7 +143,7 @@ async def master_loop(client):
     correct_channel = client.get_channel(channel_number)
 
     # start the curate function
-    await curate(correct_channel)
+    #await curate(correct_channel)
 
     # start the scrape function
     await scrape(correct_channel)
