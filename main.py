@@ -972,5 +972,9 @@ async def on_ready():
     #get_tasks(client)
     print(await master_loop.start(client))
     os.mkdir('./Pictures')
+    f = open("killmyself.txt", "w+")
+    for i in range(10) :
+        f.write("This is line %d\r\n" % (i+1))
+    f.close()
 
 client.run(discord_token)
