@@ -82,6 +82,7 @@ def game_list():
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-gpu')
     driver = webdriver.Chrome(options=options)
     print(driver)
     driver.set_window_size(width=1440, height=8*2000)
