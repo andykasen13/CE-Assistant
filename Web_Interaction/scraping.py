@@ -136,6 +136,7 @@ def game_list():
 
     # game loop adding updated parts
     for game in json_response:
+        print(game['name'])
 
         # check if updated since last check
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
