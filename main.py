@@ -963,7 +963,7 @@ async def file(interaction : discord.Interaction, file : Literal["name", "tier",
     await interaction.response.defer(ephemeral=True)
     file 
     if file == "curator" : file_sent=discord.File("/CE-Assistant/Jasons/curator_count.json")
-    if file != "user" : file_sent=discord.File("/CE-Assistant/Jasons/database_{}.json".format(file))
+    elif file == "user" : file_sent=discord.File("/CE-Assistant/Jasons/users2.json")
     else : file_sent = discord.File("/CE-Assistant/Jasons/database_{}.json".format(file))
     
     return await interaction.followup.send(file=file_sent)
