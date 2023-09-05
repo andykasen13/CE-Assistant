@@ -171,6 +171,7 @@ def game_list():
 
         # if game is updated
         elif updated_time > current_newest and game['name'] in list(new_data.keys()):
+            print("UPDATED: " + game["name"])
             game_tracker.remove(game['name'])
             test_old = new_data[game['name']]
             to_keep = get_game(game)
@@ -187,7 +188,7 @@ def game_list():
         # if game is new
         # elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
         elif created_time > current_newest:
-            print(game['name'])
+            print("NEW: " + game['name'])
             if game['tier'] == 0 : continue
             get_image(number, game['id'], driver)
             new_game = get_game(game)
