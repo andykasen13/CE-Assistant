@@ -48,7 +48,7 @@ class Screenshot:
         Returns:
             str: The image path
         """
-        image_name = (save_path + image_name)
+        image_name = os.path.abspath(save_path + '/' + image_name)
         print('1')
         print(save_path)
         print('image')
@@ -155,10 +155,10 @@ class Screenshot:
                 previous = rectangle
                 print('23')
             print('for loop broken')
-            save_path = "/" + image_name
+            save_path = os.path.abspath(os.path.join(save_path, image_name))
             print('24')
             print(save_path)
-            stitched_image.save(save_path)
+            stitched_image.save("Pictures/ss0.png")
             print('25')
             return save_path
 
