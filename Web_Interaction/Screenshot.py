@@ -132,7 +132,12 @@ class Screenshot:
                 file_name = "part_{0}.png".format(part)
                 print('16')
                 print(file_name)
-                driver.get_screenshot_as_file(file_name)
+
+                ss = driver.get_screenshot_as_png()
+                os.makedirs(os.path.dirname(file_name), exist_ok=True)
+                with open(file_name, "wb") as ss_file:
+                    ss_file.write(ss)
+                    print("Svreenshot saved")
                 #print('directory: ' + str(os.listdir('/home/andrewgarcha/CE-Assistant')))
                 print('17')
                 screenshot = Image.open(file_name)
