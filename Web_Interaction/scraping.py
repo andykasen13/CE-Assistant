@@ -59,7 +59,7 @@ def single_scrape():
     api_response = requests.get('https://cedb.me/api/games')
     json_response = json.loads(api_response.text)
 
-    current_dict = json.loads(open("./Jasons/curator_count.json").read())
+    current_dict = json.loads(open("/CE-Assistant/Jasons/curator_count.json").read())
     current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
     with open('Jasons/curator_count.json', 'w') as f:
         json.dump(current_dict, f, indent=4)
@@ -104,12 +104,12 @@ def game_list():
     json_response = json.loads(api_response.text)
 
     # grab last updated time
-    current_dict = json.loads(open("./Jasons/curator_count.json").read())
+    current_dict = json.loads(open("/CE-Assistant/Jasons/curator_count.json").read())
     current_newest = current_dict['Updated Time']
     current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
     
     # grab the new data and initialize trackers
-    new_data = json.loads(open("./Jasons/database_name.json").read())
+    new_data = json.loads(open("/CE-Assistant/Jasons/database_name.json").read())
     number = 0
     updated_games = []
     game_tracker = list(new_data.keys())
@@ -265,9 +265,9 @@ def game_list():
         updated_games.append(embed)
         del new_data[game]
 
-    with open('./Jasons/curator_count.json', 'w') as f:
+    with open('/CE-Assistant/Jasons/curator_count.json', 'w') as f:
         json.dump(current_dict, f, indent=4)
-    with open('./Jasons/database_name.json', 'w') as f :
+    with open('/CE-Assistant/Jasons/database_name.json', 'w') as f :
         json.dump(new_data, f, indent=4)
 
     return [updated_games, number]
@@ -615,7 +615,7 @@ def get_objectives(CE_ID):
 
 # categorize by tier
 def get_by_tier():
-    games = json.loads(open("./Jasons/database_name.json").read())
+    games = json.loads(open("/CE-Assistant/Jasons/database_name.json").read())
     tier_based_data = {
         'Tier 0' : {
             'Action' : [],
@@ -670,7 +670,7 @@ def get_by_tier():
     for game in games:
             tier_based_data[games[game]["Tier"]][games[game]["Genre"]].append(game)
 
-    with open('./Jasons/database_tier.json', 'w') as f :
+    with open('/CE-Assistant/Jasons/database_tier.json', 'w') as f :
         json.dump(tier_based_data, f, indent=4)
 
 
@@ -750,7 +750,7 @@ def get_image(number, CE_ID, driver):
     print('test 5')
 
     print('Pictures/ss{}.png'.format(number))
-    print('./Pictures/ss{}.png'.format(number))
+    print('/CE-Assistant/Pictures/ss{}.png'.format(number))
 
     im = Image.open('/CE-Assistant/Pictures/ss{}.png'.format(number))
     print('test 6')
