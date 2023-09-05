@@ -133,7 +133,7 @@ class Screenshot:
                 print('16')
                 driver.get_screenshot_as_file(file_name)
                 print('17')
-                screenshot = Image.open(file_name)
+                screenshot = Image.open("./" + file_name)
                 print('18')
 
                 if rectangle[1] + viewport_height > total_height:
