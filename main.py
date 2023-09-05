@@ -28,6 +28,7 @@ from Helper_Functions.buttons import get_buttons
 from Helper_Functions.end_time import roll_failed
 from Helper_Functions.update import update_p
 
+
 # ---------- command imports --------------
 from Commands.Rolls.roll_solo import solo_command
 from Commands.Rolls.roll_co_op import co_op_command
@@ -460,8 +461,9 @@ async def color(interaction) :
 @tree.command(name="test", description="test", guild=discord.Object(id=guild_ID))
 async def test(interaction : discord.Interaction, role : discord.Role) :
     await interaction.response.defer()
+    await interaction.followup.send('looping....')
 
-    await update_p(user_id=413427677522034727, log_channel=client.get_channel(1141886539157221457), casino_channel=client.get_channel(811286469251039333))
+    await master_loop(client)
 
     
 
