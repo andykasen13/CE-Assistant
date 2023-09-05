@@ -962,7 +962,7 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
 async def file(interaction : discord.Interaction, file : Literal["name", "tier", "user", "curator"]) :
     await interaction.response.defer(ephemeral=True)
     if file == "curator" : return await interaction.followup.send(file=discord.File("/CE-Assistant/Jasons/curator_count.json"))
-    if file != "user" : return await interaction.followup.send(file=discord.File("/CE-Assistant/Jasons/database_{}.json"))
+    if file != "user" : return await interaction.followup.send(file=discord.File("/CE-Assistant/Jasons/database_{}.json".format(file)))
     else : return await interaction.followup.send(file=discord.File("/CE-Assistant/Jasons/users2.json"))
 
     
