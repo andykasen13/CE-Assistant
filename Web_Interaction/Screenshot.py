@@ -146,7 +146,7 @@ class Screenshot:
                     print("Svreenshot saved")
                 #print('directory: ' + str(os.listdir('/home/andrewgarcha/CE-Assistant')))
                 print('17')
-                screenshot = Image.open(file_name)
+                screenshot = Image.open(path)
                 print('18')
 
                 if rectangle[1] + viewport_height > total_height:
@@ -161,7 +161,7 @@ class Screenshot:
                 print('19')
                 del screenshot
                 print('20')
-                os.remove(file_name)
+                os.remove(path)
                 print('21')
                 part = part + 1
                 print('22')
