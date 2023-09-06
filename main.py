@@ -17,6 +17,7 @@ import json
 # --------- web imports ---------
 import requests
 from Helper_Functions.Scheduler import get_tasks
+from pymongo.mongo_client import MongoClient
 
 # --------- other file imports ---------
 from Web_Interaction.loopty_loop import master_loop
@@ -43,6 +44,16 @@ client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
 intents.message_content = True
+
+uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
+
+mongo_client = MongoClient(uri)
+
+try:
+    mongo_client.admin.command('ping')
+    print("pinged!")
+except Exception as e:
+    print(e)
 
 # Grab information from json file
 with open('/CE-Assistant/Jasons/secret_info.json') as f :
