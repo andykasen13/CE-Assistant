@@ -10,7 +10,6 @@ from Helper_Functions.rollable_games import get_rollable_game, get_rollable_game
 from Helper_Functions.create_embed import create_multi_embed, getEmbed
 from Helper_Functions.roll_string import get_roll_string
 from Helper_Functions.buttons import get_buttons, get_genre_buttons
-from Helper_Functions.end_time import roll_completed, roll_failed
 from Helper_Functions.update import update_p
 
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
