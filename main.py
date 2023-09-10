@@ -567,6 +567,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
 
     # Make sure user isn't already registered
     for user in database_user :
+        if user == '_id' : continue
         if(database_user[user]["Discord ID"] == interaction.user.id) : return await interaction.followup.send("You are already registered in the database!")
         elif(database_user[user]["CE ID"] == ce_id) : return await interaction.followup.send(f"This CE-ID is already registered to <@{database_user[user]['Discord ID']}>, silly!")
     
