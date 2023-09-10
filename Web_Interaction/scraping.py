@@ -657,6 +657,7 @@ def get_by_tier(games):
     }
     
     for game in games:
+            if game == "_id" : continue
             tier_based_data[games[game]["Tier"]][games[game]["Genre"]].append(game)
 
     return tier_based_data
