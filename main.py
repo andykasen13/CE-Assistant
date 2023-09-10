@@ -49,8 +49,6 @@ tree = app_commands.CommandTree(client)
 
 intents.message_content = True
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
 uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
 mongo_client = AsyncIOMotorClient(uri)
 
