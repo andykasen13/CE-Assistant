@@ -5,6 +5,8 @@ import datetime
 import functools
 import typing
 import os
+from bson import ObjectId
+import time
 
 # ----------- discord imports ---------
 import discord
@@ -18,6 +20,8 @@ import json
 import requests
 from Helper_Functions.Scheduler import get_tasks
 from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+from motor.motor_asyncio import AsyncIOMotorClient
 
 # --------- other file imports ---------
 from Web_Interaction.loopty_loop import master_loop
@@ -45,18 +49,45 @@ tree = app_commands.CommandTree(client)
 
 intents.message_content = True
 
+asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
+mongo_client = AsyncIOMotorClient(uri)
 
-mongo_client = MongoClient(uri)
+mongo_database = mongo_client['database_name']
 
-try:
-    mongo_client.admin.command('ping')
-    print("pinged!")
-except Exception as e:
-    print(e)
+async def ping_server():
+    try:
+        mongo_client.admin.command('ping')
+        print("pinged!")
+    except Exception as e:  
+        print(e)
+
+async def get_db():
+    try:
+        db = mongo_client['database_name']
+        collection = db['ce-collection']
+        documento = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
+        print(documento['#Snake2 DX: Reawakening'])
+        #print(asyncio.sleep(10))
+        #print(time.sleep(10))
+        #print(documento['140'])
+        print(documento['Descenders'])
+        print()
+        print(documento['140'])
+        documento['1'] = "suck my balls"
+        print()
+        print(documento['1'])
+
+        dump = await collection.replace_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')}, documento)
+        
+        
+    except Exception as e:
+        print(e)
+    
 
 # Grab information from json file
-with open('/CE-Assistant/Jasons/secret_info.json') as f :
+with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 discord_token = localJSONData['discord_token']  
@@ -67,7 +98,24 @@ ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/11335
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
+@tree.command(name="aaaaa", description="afjdals", guild=discord.Object(id=guild_ID))
+async def aaaaa(interaction : discord.Interaction):
+    await interaction.response.defer()
 
+    namedb = mongo_client["database_name"]
+    col = namedb['ce-collection']
+    doc = await col.find_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')})
+
+    curatordb = mongo_client["tasks"]
+    curcol = curatordb['task-collection']
+    curatordoc = await curcol.find_one({'_id' : ObjectId('64f8d6b292d3fe5849c1ba37')})
+
+    result = await namedb['ce-collection'].insert_one(curatordoc)
+
+    print(doc)
+
+
+    await interaction.followup.send('silly!')
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------HELP COMMAND------------------------------------------------------------- #
@@ -475,7 +523,7 @@ async def test(interaction : discord.Interaction, role : discord.Role) :
     await interaction.response.defer()
     await interaction.followup.send('looping....')
 
-    await master_loop(client)
+    await master_loop(client, mongo_client)
 
     
 
@@ -988,6 +1036,6 @@ async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
     print("Ready!")
     #get_tasks(client)
-    print(await master_loop.start(client))
+    print(await master_loop.start(client, mongo_client))
 
 client.run(discord_token)

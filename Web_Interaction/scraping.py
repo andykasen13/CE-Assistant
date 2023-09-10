@@ -45,10 +45,10 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 # steam_api_key = localJSONData['steam_API_key']
 
 
-def get_games():
+def get_games(database_name, curator_count):
 
     # create our returnable and update database_name
-    fin = game_list()
+    fin = game_list(database_name, curator_count)
     # use database_name to update database_tier
     get_by_tier()
     # return embeds
@@ -78,7 +78,7 @@ def single_scrape():
 
     
 
-def game_list():
+def game_list(new_data, current_dict):
     # Set selenium driver and preferences
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
@@ -104,12 +104,10 @@ def game_list():
     json_response = json.loads(api_response.text)
 
     # grab last updated time
-    current_dict = json.loads(open("/CE-Assistant/Jasons/curator_count.json").read())
     current_newest = current_dict['Updated Time']
     current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
     
     # grab the new data and initialize trackers
-    new_data = json.loads(open("/CE-Assistant/Jasons/database_name.json").read())
     number = 0
     updated_games = []
     game_tracker = list(new_data.keys())
@@ -265,12 +263,7 @@ def game_list():
         updated_games.append(embed)
         del new_data[game]
 
-    with open('/CE-Assistant/Jasons/curator_count.json', 'w') as f:
-        json.dump(current_dict, f, indent=4)
-    with open('/CE-Assistant/Jasons/database_name.json', 'w') as f :
-        json.dump(new_data, f, indent=4)
-
-    return [updated_games, number]
+    return [updated_games, number, new_data, current_dict]
 
 
 # updates for games

@@ -22,6 +22,7 @@ import shutil
 # thread management
 import asyncio
 import typing
+from bson import ObjectId
 from discord.ext import tasks
 
 # other local files
@@ -137,22 +138,22 @@ times = [
 
 # big daddy loop that runs every fifteen minutes
 @tasks.loop(time=times)
-async def master_loop(client):
+async def master_loop(client, mongo_client):
     print('loop engaged...')
 
     correct_channel = client.get_channel(channel_number)
 
     # start the curate function
-    await curate(correct_channel)
+    await curate(correct_channel, mongo_client)
 
     # start the scrape function
-    await scrape(correct_channel)
+    await scrape(correct_channel, mongo_client)
 
 
     print('done')
 
 
-async def curate(channel):
+async def curate(channel, mongo_client):
     print('curating...')
 
     # thread call getting the latest curator stuff
@@ -185,11 +186,20 @@ def thread_curate():
     return checkCuratorCount()
 
 
-async def scrape(channel):
+async def scrape(channel, mongo_client):
     print('scraping...')
 
+    collection = mongo_client['database_name']['ce-collection']
+    database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
+    curator_count = await collection.find_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')})
+
     # thread call scraping the new data
-    updates = await thread_scrape() #asyncio.to_thread(thread_scrape)
+    updates = await thread_scrape(database_name, curator_count) #asyncio.to_thread(thread_scrape)
+
+    # dump the data back onto mongodb
+    dump1 = await collection.replace_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')}, updates[2])
+    dump2 = await collection.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, updates[3])
+
 
     # send out each update
     for dict in updates[0]:
@@ -201,6 +211,6 @@ async def scrape(channel):
 
 
 @to_thread
-def thread_scrape():
+def thread_scrape(database_name, curator_count):
     # call to the scrape file
-    return get_games()
+    return get_games(database_name, curator_count)
