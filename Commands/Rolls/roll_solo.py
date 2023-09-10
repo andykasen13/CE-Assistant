@@ -38,10 +38,6 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     dont_save = False
     ends = True
 
-    # find the location of the user
-    with open('Jasons/users2.json', 'r') as u2:
-        userInfo = json.load(u2)
-
     userInfo = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
     
     i = 0
@@ -66,10 +62,6 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         #TODO: have different errors if someone tries to go again during pending and if someone tries to reroll while pending
         if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('Please wait 10 minutes in between rolling for the same event!')
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
-    
-    # Open the databases.
-    with open('Jasons/database_name.json', 'r') as dBN :
-        database_name = json.load(dBN)
 
     database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
 
