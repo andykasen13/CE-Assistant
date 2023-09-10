@@ -199,7 +199,8 @@ async def scrape(channel, mongo_client):
     # dump the data back onto mongodb
     dump1 = await collection.replace_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')}, updates[2])
     dump2 = await collection.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, updates[3])
-
+    updates[4]['_id'] = ObjectId('64f8bc4d094bdbfc3f7d0050')
+    dump3 = await collection.replace_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')}, updates[4])
 
     # send out each update
     for dict in updates[0]:

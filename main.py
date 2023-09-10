@@ -334,10 +334,12 @@ async def scrape(interaction):
 
     # add the id back to database_name
     objects[0]['_id'] = ObjectId('64f8d47f827cce7b4ac9d35b')
+    objects[2]['_id'] = ObjectId('64f8bc4d094bdbfc3f7d0050')
     
     # dump the databases back onto mongoDB
     dump1 = await col.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, objects[1])
     dump2 = await col.replace_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')}, objects[0])
+    dump3 = await col.replace_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')}, objects[2])
 
     await interaction.channel.send('scraped')
 
