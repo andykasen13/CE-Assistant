@@ -50,7 +50,8 @@ def get_games(database_name, curator_count):
     # create our returnable and update database_name
     fin = game_list(database_name, curator_count)
     # use database_name to update database_tier
-    get_by_tier()
+    database_tier = get_by_tier(database_name)
+    fin.append(database_tier)
     # return embeds
     return fin
 
@@ -68,12 +69,9 @@ def single_scrape(curator_count):
         print(game['name'])
         database_name[game['name']] = get_game(game)
 
-    with open('/CE-Assistant/Jasons/database_name.json', 'w') as f:
-        json.dump(database_name, f, indent=4)
+    database_tier = get_by_tier(database_name)
 
-    get_by_tier()
-
-    return [database_name, curator_count]
+    return [database_name, curator_count, database_tier]
 
     
 
@@ -605,8 +603,7 @@ def get_objectives(CE_ID):
 
 
 # categorize by tier
-def get_by_tier():
-    games = json.loads(open("/CE-Assistant/Jasons/database_name.json").read())
+def get_by_tier(games):
     tier_based_data = {
         'Tier 0' : {
             'Action' : [],
@@ -661,8 +658,7 @@ def get_by_tier():
     for game in games:
             tier_based_data[games[game]["Tier"]][games[game]["Genre"]].append(game)
 
-    with open('/CE-Assistant/Jasons/database_tier.json', 'w') as f :
-        json.dump(tier_based_data, f, indent=4)
+    return tier_based_data
 
 
 
