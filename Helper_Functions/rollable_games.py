@@ -1,5 +1,6 @@
 import json
 import random
+from bson import ObjectId
 import requests
 
 from Web_Interaction.scraping import get_completion_data
@@ -162,9 +163,8 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
 # -------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------------------------------------------------------------------------------- #
 
-async def get_rollable_game_from_list(games) :
-    with open('Jasons/database_name.json', 'r') as dbN :
-        database_name = json.load(dbN)
+async def get_rollable_game_from_list(games, collection) :
+    database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
     rollable = False
     while not rollable :
         random_num = random.randint(0, len(games)-1)

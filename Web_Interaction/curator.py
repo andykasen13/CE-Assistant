@@ -12,6 +12,7 @@
 # the basics
 import datetime
 import json
+from bson import ObjectId
 import discord
 import requests
 
@@ -23,17 +24,16 @@ ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
 
-async def single_run(client, requested_reviews=0):
+async def single_run(client, requested_reviews=0, collection=""):
     if requested_reviews > 0:
-        data = json.loads(open("./Jasons/curator_count.json").read())
-        curation = checkCuratorCount()
+        data = await collection.find_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')})
+        curation = checkCuratorCount(data)
         data['Curator Count'] = curation[0]
         embeds=[]
         if len(curation) > 1:
             embeds = curation[1]
 
-        with open("./Jasons/curator_count.json", "w") as jsonFile:
-            json.dump(data, jsonFile, indent=4)
+        dump = await collection.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, data)
     else:
         embeds = curatorUpdate(requested_reviews)
 
@@ -57,9 +57,9 @@ def getCuratorCount():
     return number
 
 
-def checkCuratorCount():
+def checkCuratorCount(curator_count):
     number = getCuratorCount()
-    current_count = json.loads(open("./Jasons/curator_count.json").read())['Curator Count']
+    current_count = curator_count['Curator Count']
     if number != current_count:
         embeds = curatorUpdate(int(number)-int(current_count))
         return [number, embeds]

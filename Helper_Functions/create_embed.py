@@ -14,12 +14,8 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 
 
 # ------------------------------------------------ CREATE MULTI EMBED ------------------------------------------------------------ #
-def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interaction) :
-    with open('Jasons/database_tier.json', 'r') as dB :
-        database_tier = json.load(dB)
-        
-    with open('Jasons/database_name.json', 'r') as dBN :
-        database_name = json.load(dBN)
+def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interaction, database_name) :
+
     # ----- Set up initial embed -----
     embeds = []
     embeds.append(discord.Embed(
