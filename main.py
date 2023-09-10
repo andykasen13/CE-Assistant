@@ -318,14 +318,27 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @to_thread
-def scrape_thread_call():
-    single_scrape()
+def scrape_thread_call(curator_count):
+    return single_scrape(curator_count)
 
 
 @tree.command(name="scrape", description="Force update every game without creating embeds. DO NOT RUN UNLESS NECESSARY.", guild=discord.Object(id=guild_ID))
 async def scrape(interaction):
     await interaction.response.send_message('scraping...')
-    await scrape_thread_call()
+
+    namedb = mongo_client['database_name']
+    col = namedb['ce-collection']
+    curator_count = await col.find_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')})
+
+    objects = await scrape_thread_call(curator_count)
+
+    # add the id back to database_name
+    objects[0]['_id'] = ObjectId('64f8d47f827cce7b4ac9d35b')
+    
+    # dump the databases back onto mongoDB
+    dump1 = await col.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, objects[1])
+    dump2 = await col.replace_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')}, objects[0])
+
     await interaction.channel.send('scraped')
 
 @tree.command(name="get_times", description="Prints out a table of times fifteen minutes apart in UTC", guild=discord.Object(id=guild_ID))
