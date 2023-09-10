@@ -67,14 +67,11 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- GET EMBED FUNCTION ------------------------------------------------------ #
 # ----------------------------------------------------------------------------------------------------------------------------------- #
-def getEmbed(game_name, authorID):
+def getEmbed(game_name, authorID, database_name):
 
     total_points = 0
     #TODO add error exceptions
     #TODO turn this into a class with getters and setters for wider versatility
-
-    with open('Jasons/database_name.json', 'r') as dB :
-        database_name = json.load(dB)
     
     if(game_name in list(database_name)) : 
         correct_app_id = database_name[game_name]["Steam ID"]
