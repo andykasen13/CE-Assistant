@@ -552,7 +552,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
     
     #Open the user database
-    database_user = await collection.find_one({'_id' : ObjectId(mongo_ids["user"])})
+    database_user = await collection.find_one({'_id' : (mongo_ids["user"])})
 
     # Set up total_points to calculate rank
     total_points = 0
@@ -579,7 +579,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     user_dict = {
         ce_id : {
             "CE ID" : ce_id,
-            "Discord ID" : interaction.user.id,
+            "Discord ID" : int(interaction.user.id),
             "Rank" : "",
             "Reroll Tickets" : 0,
             "Casino Score" : 0,
