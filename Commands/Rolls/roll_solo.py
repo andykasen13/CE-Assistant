@@ -94,7 +94,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres))
         
         # ----- Get all the embeds -----s
-        embeds = create_multi_embed("Two Week T2 Streak", 14, games, 0, interaction,)
+        embeds = create_multi_embed("Two Week T2 Streak", 14, games, 0, interaction, database_name)
         embed = embeds[0]
 
         await get_buttons(view, embeds) # Create buttons
@@ -120,7 +120,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             i+=1
 
         # ----- Get all the embeds -----
-        embeds = create_multi_embed("One Hell of a Week", 7, games, 28, interaction)       
+        embeds = create_multi_embed("One Hell of a Week", 7, games, 28, interaction, database_name)       
         embed = embeds[0] # Set the embed to send as the first one
         await get_buttons(view, embeds) # Create buttons
 
@@ -145,7 +145,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             while(i < 5) :
                 games.append(get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre, games=games))
                 i+=1
-        embeds = create_multi_embed("One Hell of a Month", 28, games, 28*3, interaction)
+        embeds = create_multi_embed("One Hell of a Month", 28, games, 28*3, interaction, database_name)
         embed = embeds[0]
         await get_buttons(view, embeds)
 
@@ -170,7 +170,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             i+=1
         
         # ----- Get all the embeds -----
-        embeds = create_multi_embed("Two 'Two Week T2 Streak' Streak", 28, games, 7, interaction)
+        embeds = create_multi_embed("Two 'Two Week T2 Streak' Streak", 28, games, 7, interaction, database_name)
         embed = embeds[0]
         await get_buttons(view, embeds)
 
@@ -217,7 +217,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # ----- Grab all the games -----
         embed = discord.Embed(title=("Triple Threat"), description="Please select your genre.")
             
-        await get_genre_buttons(view, 40, 20, "Tier 3", "Triple Threat", 28, 84, 3, interaction.user.id, reroll=reroll)
+        await get_genre_buttons(view, 40, 20, "Tier 3", "Triple Threat", 28, 84, 3, interaction.user.id, reroll=reroll, collection=collection)
 
         dont_save = True
          
@@ -233,7 +233,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         userInfo = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
 
         embed = discord.Embed(title=("Let Fate Decide"), description="A random T4 in a genre of you choosing will be rolled. There is no time limit for Let Fate Decide. You win once you complete all Primary Objectives in your rolled game!")
-        await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, 84, 1, interaction.user.id, reroll=reroll)
+        await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, 84, 1, interaction.user.id, reroll=reroll, collection=collection)
         dont_save = True
 
     # -------------------------------------------- Fourward Thinking --------------------------------------------

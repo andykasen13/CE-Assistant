@@ -156,16 +156,19 @@ async def master_loop(client, mongo_client):
 async def curate(channel, mongo_client):
     print('curating...')
 
+    collection = mongo_client['database_name']['ce-collection']
+
+    curator_count = await collection.find_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')})
+
     # thread call getting the latest curator stuff
-    curation = await thread_curate() #await asyncio.to_thread(thread_curate) 
+    curation = await thread_curate(curator_count) #await asyncio.to_thread(thread_curate) 
 
     # get the current curator page and update its curator count
-    data = json.loads(open("/CE-Assistant/Jasons/curator_count.json").read())
+    data = await collection.find_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')})
     data['Curator Count'] = curation[0]
 
     # dump new count
-    with open("/CE-Assistant/Jasons/curator_count.json", "w") as jsonFile:
-        json.dump(data, jsonFile, indent=4)
+    dump = await collection.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, data)
 
     # if there were updates send them to the channel
     if len(curation) > 1:
@@ -181,9 +184,9 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 
 
 @to_thread
-def thread_curate():
+def thread_curate(curator_count):
     # call to the curator file
-    return checkCuratorCount()
+    return checkCuratorCount(curator_count)
 
 
 async def scrape(channel, mongo_client):

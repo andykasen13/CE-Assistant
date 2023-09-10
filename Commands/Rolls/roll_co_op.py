@@ -9,10 +9,8 @@ from Helper_Functions.buttons import *
 async def co_op_command(interaction : discord.Interaction, event, partner : discord.User, reroll : bool, collection) :
 
     # Open the user database
-    with open('Jasons/users2.json', 'r') as dbU:
-        database_user = json.load(dbU)
-    with open('Jasons/database_name.json', 'r') as dbN :
-        database_name = json.load(dbN)
+    database_user = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
+    database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
     
     # Set up variables
     interaction_user_data = ""
@@ -51,11 +49,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     database_user[int_user_id]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
     database_user[part_user_id]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
 
-    with open('Jasons/users2.json', 'w') as f :
-        json.dump(database_user, f, indent=4)
-
-    with open('Jasons/users2.json', 'r') as f :
-        database_user = json.load(f)
+    dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
+    database_user = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
 
     # Make sure both users are registered in the database
     if interaction_user_data == "" : return await interaction.followup.send("You are not registered in the CE Assistant database.")
@@ -124,7 +119,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             while target_user_owns_game and target_user_has_points_in_game :
                 # grab a rollable game
-                interaction_user_selected_game = await get_rollable_game_from_list(interaction_user_completed_games)
+                interaction_user_selected_game = await get_rollable_game_from_list(interaction_user_completed_games, collection)
                 # check to see if they own the game and if they have points in the game
                 target_user_owns_game = list(target_user_data["Owned Games"].keys()).count(interaction_user_selected_game) > 0
                 if(target_user_owns_game) : 
@@ -136,7 +131,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             while interaction_user_owns_game and interaction_user_has_points_in_game :
                 # grab a rollable game
-                target_user_selected_game = await get_rollable_game_from_list(target_user_completed_games)
+                target_user_selected_game = await get_rollable_game_from_list(target_user_completed_games, collection)
                 # check to see if they own the game and if they have points in the game
                 interaction_user_owns_game = list(interaction_user_data["Owned Games"].keys()).count(target_user_selected_game) > 0
                 if(interaction_user_owns_game) :
@@ -151,7 +146,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             view.clear_items()
 
             # Grab the embeds you'll need
-            embeds = create_multi_embed("Destiny Alignment", 0, games, 28, interaction)
+            embeds = create_multi_embed("Destiny Alignment", 0, games, 28, interaction, database_name)
 
             # Make adjustments to embeds
             embeds[0].set_field_at(index=0, name="Rolled Games",
@@ -186,8 +181,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 "Games" : [interaction_user_selected_game]
             })
 
-            with open('Jasons/users2.json', 'w') as dbU :
-                json.dump(database_user, dbU, indent=4)
+            dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
 
             # and edit the message.
             return await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
@@ -328,8 +322,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         "Games" : [game]
                     })
 
-                with open('Jasons/users2.json', 'w') as dbU :
-                    json.dump(database_user, dbU, indent=4)
+                dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
 
                 return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
             async def deny_callback(interaction) :
@@ -439,7 +432,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
 
             # ----------- Get embeds ---------------------
-            embeds = create_multi_embed("Teamwork Makes the Dream Work", 28, games, (28*3), interaction)
+            embeds = create_multi_embed("Teamwork Makes the Dream Work", 28, games, (28*3), interaction, database_name)
 
             embeds[0].set_thumbnail(url = ce_mountain_icon)
 
@@ -470,8 +463,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 "Games" : games
             })
 
-            with open('Jasons/users2.json', 'w') as dbU :
-                json.dump(database_user, dbU, indent=4)
+            dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
 
             # ------ and edit the message. ------
             return await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
@@ -581,8 +573,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     "Games" : [game]
                 })
 
-                with open('Jasons/users2.json', 'w') as dbU :
-                    json.dump(database_user, dbU, indent=4)
+                dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
+
 
                 return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
             async def deny_callback(interaction) :
@@ -731,8 +723,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         "Games" : ["andy's cool epic fun time balloons yay"]
                     })
 
-                    with open('Jasons/users2.json', 'w') as dbU :
-                        json.dump(database_user, dbU, indent=4)
+                    dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
+
 
                     return
                 
@@ -768,7 +760,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 games = [interaction_user_selected_game, target_user_selected_game]
 
                 # Get the embeds
-                embeds = create_multi_embed("Game Theory", 0, games, 28, interaction)
+                embeds = create_multi_embed("Game Theory", 0, games, 28, interaction, database_name)
 
                 # Edit the embeds to Game Theory's specific needs
                 embeds[0].set_field_at(index=0, name="Rolled Games",
@@ -810,8 +802,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     "Games" : [target_user_selected_game]
                 })
 
-                with open('Jasons/users2.json', 'w') as dbU :
-                    json.dump(database_user, dbU, indent=4)
+                dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
+
 
                 # Edit the message
                 await interaction.followup.edit_message(message_id=interaction.message.id, view=view, embed=embed)

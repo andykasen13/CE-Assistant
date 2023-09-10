@@ -344,7 +344,7 @@ async def get_times(interaction):
 @app_commands.describe(num="Number of previous curator entries to pull")
 async def curate(interaction, num : int = 0):
     await interaction.response.defer()
-    await single_run(client, num)
+    await single_run(client, num, collection)
 
     if num > 0:
         await interaction.followup.send('Those are the last {} curator reviews!'.format(num))
