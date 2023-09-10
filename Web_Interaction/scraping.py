@@ -55,14 +55,11 @@ def get_games(database_name, curator_count):
     return fin
 
 
-def single_scrape():
+def single_scrape(curator_count):
     api_response = requests.get('https://cedb.me/api/games')
     json_response = json.loads(api_response.text)
 
-    current_dict = json.loads(open("/CE-Assistant/Jasons/curator_count.json").read())
-    current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
-    with open('/CE-Assistant/Jasons/curator_count.json', 'w') as f:
-        json.dump(current_dict, f, indent=4)
+    curator_count['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
 
     database_name = {}
 
@@ -75,6 +72,8 @@ def single_scrape():
         json.dump(database_name, f, indent=4)
 
     get_by_tier()
+
+    return [database_name, curator_count]
 
     
 
@@ -194,7 +193,6 @@ def game_list(new_data, current_dict):
             if game['tier'] == 0 : 
                 print('tier 0')
                 continue
-            if game['name'] == "Orbo's Odyssey" : continue
             get_image(number, game['id'], driver)
             new_game = get_game(game)
             new_data[game['name']] = new_game
