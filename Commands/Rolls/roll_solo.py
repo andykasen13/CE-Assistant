@@ -38,6 +38,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     dont_save = False
     ends = True
 
+    # grab user info
     userInfo = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
     
     i = 0
@@ -63,15 +64,17 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('Please wait 10 minutes in between rolling for the same event!')
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
 
+    # grab both databases (tier needs to be passed to get_rollable_game())
     database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
+    database_tier = await collection.find_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')})
 
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
         # Get one random (rollable) game in Tier 1, non-genre specific
-        games.append(get_rollable_game(10, 10, "Tier 1", userInfo[current_user]))
+        games.append(get_rollable_game(10, 10, "Tier 1", userInfo[current_user], database_name=database_name, database_tier=database_tier))
 
         # Create the embed
-        embed = getEmbed(games[0], interaction.user.id)
+        embed = getEmbed(games[0], interaction.user.id, database_name=database_name)
         embed.add_field(name="Roll Requirements", value = 
             "You have one day to complete " + embed.title + "."    
             + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(1)).timetuple())))
