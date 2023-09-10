@@ -204,7 +204,7 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
 
     await interaction.response.defer()
 
-    await solo_command(interaction, event, reroll = False)
+    await solo_command(interaction, event, reroll = False, collection=collection)
     
 
 
@@ -223,7 +223,7 @@ events_co_op = Literal["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dr
 async def roll_co_op_command(interaction : discord.Interaction, event : events_co_op, partner : discord.User) :
     await interaction.response.defer()
 
-    await co_op_command(interaction, event, partner, reroll = False)
+    await co_op_command(interaction, event, partner, reroll = False, collection=collection)
 
 
 

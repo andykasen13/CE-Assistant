@@ -1,4 +1,5 @@
 import random
+from bson import ObjectId
 import discord
 import datetime
 from datetime import timedelta
@@ -14,7 +15,7 @@ from Helper_Functions.update import update_p
 
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
-async def solo_command(interaction : discord.Interaction, event : str, reroll : bool) :
+async def solo_command(interaction : discord.Interaction, event : str, reroll : bool, collection) :
     
 
     # Set up variables
@@ -40,6 +41,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # find the location of the user
     with open('Jasons/users2.json', 'r') as u2:
         userInfo = json.load(u2)
+
+    userInfo = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
+    
     i = 0
     target_user = ""
     for current_user in userInfo :
@@ -63,10 +67,10 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
     
     # Open the databases.
-    with open('Jasons/database_tier.json', 'r') as dB :
-        database_tier = json.load(dB)
     with open('Jasons/database_name.json', 'r') as dBN :
         database_name = json.load(dBN)
+
+    database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
 
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
@@ -211,10 +215,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
 
         # close and reopen users2.json
-        with open('Jasons/users2.json', 'w') as f :
-            json.dump(userInfo, f, indent=4)
-        with open('Jasons/users2.json', 'r') as f :
-            userInfo = json.load(f)
+        dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, userInfo)
+        userInfo = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
 
         # ----- Grab all the games -----
         embed = discord.Embed(title=("Triple Threat"), description="Please select your genre.")
@@ -230,6 +232,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # add pending...
         userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
 
+        # close and reopen users2.json
+        dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, userInfo)
+        userInfo = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
 
         embed = discord.Embed(title=("Let Fate Decide"), description="A random T4 in a genre of you choosing will be rolled. There is no time limit for Let Fate Decide. You win once you complete all Primary Objectives in your rolled game!")
         await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, 84, 1, interaction.user.id, reroll=reroll)
@@ -351,8 +356,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
 
     # dump the info
-    with open('Jasons/users2.json', 'w') as f :
-        json.dump(userInfo, f, indent=4)
+    dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, userInfo)
 
     # Finally, send the embed
     await interaction.followup.send(embed=embed, view=view)

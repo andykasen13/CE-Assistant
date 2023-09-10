@@ -6,7 +6,7 @@ from Helper_Functions.create_embed import *
 from Helper_Functions.buttons import *
 
 
-async def co_op_command(interaction : discord.Interaction, event, partner : discord.User, reroll : bool) :
+async def co_op_command(interaction : discord.Interaction, event, partner : discord.User, reroll : bool, collection) :
 
     # Open the user database
     with open('Jasons/users2.json', 'r') as dbU:
