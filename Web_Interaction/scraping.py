@@ -108,6 +108,7 @@ def game_list(new_data, current_dict):
     number = 0
     updated_games = []
     game_tracker = list(new_data.keys())
+    game_tracker.remove('_id')
 
 
     # icons for CE emoji
