@@ -579,7 +579,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     user_dict = {
         ce_id : {
             "CE ID" : ce_id,
-            "Discord ID" : int(interaction.user.id),
+            "Discord ID" : interaction.user.id,
             "Rank" : "",
             "Reroll Tickets" : 0,
             "Casino Score" : 0,
@@ -657,7 +657,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     database_user.update(user_dict)
 
     # Dump the data
-    dump = await collection.find_one({'_id' : mongo_ids['user']}, database_user)
+    dump = await collection.replace_one({'_id' : mongo_ids['user']}, database_user)
 
     # Create confirmation embed
     embed = discord.Embed(
