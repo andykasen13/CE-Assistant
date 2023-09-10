@@ -5,11 +5,8 @@ import json
 import datetime
 from datetime import timedelta
 
-def update_p(user_id : int, roll_ended_name) :
+def update_p(user_id : int, roll_ended_name, database_user) :
     
-    # Open the database
-    with open('Jasons/users2.json', 'r') as dbU :
-        database_user = json.load(dbU)
 
     # Set up total-points
     total_points = 0
@@ -486,8 +483,7 @@ def update_p(user_id : int, roll_ended_name) :
     database_user.update(user_dict)
 
     # Dump the data
-    with open('Jasons/users2.json', 'w') as f :
-        json.dump(database_user, f, indent=4)
+    returns.insert(database_user, 0)
     
     returns.append("Updated")
 

@@ -53,39 +53,19 @@ uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.ne
 mongo_client = AsyncIOMotorClient(uri)
 
 mongo_database = mongo_client['database_name']
+collection = mongo_client['database_name']['ce-collection']
 
-async def ping_server():
-    try:
-        mongo_client.admin.command('ping')
-        print("pinged!")
-    except Exception as e:  
-        print(e)
+mongo_ids = {
+    "name" : ObjectId('64f8d47f827cce7b4ac9d35b'),
+    "tier" : ObjectId('64f8bc4d094bdbfc3f7d0050'),
+    "curator" : ObjectId('64f8d63592d3fe5849c1ba35'),
+    "tasks" : ObjectId('64f8d6b292d3fe5849c1ba37'),
+    "user" : ObjectId('64f8bd1b094bdbfc3f7d0051')
+}
 
-async def get_db():
-    try:
-        db = mongo_client['database_name']
-        collection = db['ce-collection']
-        documento = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
-        print(documento['#Snake2 DX: Reawakening'])
-        #print(asyncio.sleep(10))
-        #print(time.sleep(10))
-        #print(documento['140'])
-        print(documento['Descenders'])
-        print()
-        print(documento['140'])
-        documento['1'] = "suck my balls"
-        print()
-        print(documento['1'])
-
-        dump = await collection.replace_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')}, documento)
-        
-        
-    except Exception as e:
-        print(e)
-    
 
 # Grab information from json file
-with open('Jasons/secret_info.json') as f :
+with open('/CE-Assitant/Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 discord_token = localJSONData['discord_token']  
@@ -572,9 +552,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
     
     #Open the user database
-    with open('/CE-Assistant/Jasons/users2.json', 'r') as dbU :
-        database_user = json.load(dbU)
-        print(database_user)
+    database_user = await collection.find_one({'_id' : mongo_ids["user"]})
 
     # Set up total_points to calculate rank
     total_points = 0
@@ -680,6 +658,8 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     # Dump the data
     with open('/CE-Assistant/Jasons/users2.json', 'w') as f :
         json.dump(database_user, f, indent=4)
+    
+    dump = await collection.find_one({'_id' : mongo_ids['user']}, database_user)
 
     # Create confirmation embed
     embed = discord.Embed(
@@ -718,6 +698,8 @@ async def update(interaction : discord.Interaction) :
     # Defer the message
     await interaction.response.defer(ephemeral=True)
 
+    database_user = await collection.find_one({'_id' : mongo_ids["user"]})
+
     log_channel = client.get_channel(1141886539157221457)
     casino_channel = client.get_channel(811286469251039333)
     
@@ -737,9 +719,12 @@ async def update(interaction : discord.Interaction) :
 
     # actually update the user's database 
     # and store anything we need to report
-    returns = update_p(interaction.user.id, False)
+    returns = update_p(interaction.user.id, False, database_user)
 
     if returns == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
+
+    dump = await collection.replace_one({'_id' : mongo_ids['user']}, returns[0])
+    del returns[0]
 
     for return_value in returns :
         # you've reached the end
