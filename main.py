@@ -657,9 +657,6 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     database_user.update(user_dict)
 
     # Dump the data
-    with open('/CE-Assistant/Jasons/users2.json', 'w') as f :
-        json.dump(database_user, f, indent=4)
-    
     dump = await collection.find_one({'_id' : mongo_ids['user']}, database_user)
 
     # Create confirmation embed
