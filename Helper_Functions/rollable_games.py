@@ -54,12 +54,6 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
         rollable = False
         genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
         
-        with open('Jasons/database_tier.json', 'r') as dB :
-            database_tier = json.load(dB)
-        
-        with open('Jasons/database_name.json', 'r') as dBN :
-            database_name = json.load(dBN)
-        
     
         while not rollable :
             # ----- Grab random game -----
