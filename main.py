@@ -30,7 +30,6 @@ from Web_Interaction.scraping import single_scrape
 from Helper_Functions.create_embed import getEmbed
 from Helper_Functions.roll_string import get_roll_string
 from Helper_Functions.buttons import get_buttons
-from Helper_Functions.end_time import roll_failed
 from Helper_Functions.update import update_p
 
 
