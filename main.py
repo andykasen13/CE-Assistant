@@ -86,7 +86,7 @@ async def aaaaa(interaction : discord.Interaction):
 
     curatordb = mongo_client["tasks"]
     curcol = curatordb['task-collection']
-    curatordoc = await curcol.find_one({'_id' : ObjectId('64f8d6b292d3fe5849c1ba37')})
+    curatordoc = await curcol.find_one({'_id' : '64f8d6b292d3fe5849c1ba37'})
 
     result = await namedb['ce-collection'].insert_one(curatordoc)
 
@@ -552,7 +552,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
     
     #Open the user database
-    database_user = await collection.find_one({'_id' : mongo_ids["user"]})
+    database_user = await collection.find_one({'_id' : ObjectId(mongo_ids["user"])})
 
     # Set up total_points to calculate rank
     total_points = 0
