@@ -83,13 +83,11 @@ def game_list(new_data, current_dict):
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--disable-gpu')
     driver = webdriver.Chrome(options=options)
-    print(driver)
     driver.set_window_size(width=1440, height=8000)
 
     # grab first game to get color on the rest of them
     url = 'https://cedb.me/game/1e8565aa-b9f2-4b41-9578-22e4c2a5436b'
     driver.get(url)
-    print(driver.page_source)
     objective_lst = []
     while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
         objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
