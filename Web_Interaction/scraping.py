@@ -11,6 +11,7 @@
 
 
 # the basics
+import io
 import os
 import json
 from datetime import datetime
@@ -130,6 +131,9 @@ def game_list(new_data, current_dict):
 
     get_image(0, "1e866995-6fec-452e-81ba-1e8f8594f4ea", driver)
 
+    # images (sorry theron)
+    images = []
+
     # game loop adding updated parts
     for game in json_response:
         print(game['name'])
@@ -190,7 +194,8 @@ def game_list(new_data, current_dict):
             if game['tier'] == 0 : 
                 print('tier 0')
                 continue
-            get_image(number, game['id'], driver)
+            ss = (get_image(number, game['id'], driver))
+            ss = io.BytesIO(ss)
             new_game = get_game(game)
             new_data[game['name']] = new_game
 
@@ -222,7 +227,7 @@ def game_list(new_data, current_dict):
                     timestamp=datetime.now(),
                     description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
                 ),
-                'Image' : discord.File("/CE-Assistant/Pictures/ss{}.png".format(number), filename="image.png")
+                'Image' : discord.File(ss, filename="image.png")
             }
             embed['Embed'].set_image(url='attachment://image.png')
             embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
@@ -232,6 +237,8 @@ def game_list(new_data, current_dict):
            
             updated_games.append(embed)
             number += 1
+
+            del ss
 
         # game is neither new nor updated
         elif game['name'] in game_tracker:
@@ -265,7 +272,8 @@ def game_list(new_data, current_dict):
 def update(new_game, old_game, driver, number, icon, icons, name):
     # get game info and image
     #new_game = get_game(game)
-    get_image(number, new_game['CE ID'], driver)
+    ss = get_image(number, new_game['CE ID'], driver)
+    ss = io.BytesIO(ss)
 
     # initialize the embed description
     update = ""
@@ -303,13 +311,15 @@ def update(new_game, old_game, driver, number, icon, icons, name):
             timestamp=datetime.now(),
             description=update.strip()
         ),
-        'Image' : discord.File("/CE-Assistant/Pictures/ss{}.png".format(number), filename="image.png")
+        'Image' : discord.File(ss, filename="image.png")
     }
     embed['Embed'].set_image(url='attachment://image.png')
     embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
     embed['Embed'].set_thumbnail(url=ce_hex_icon)
     embed['Embed'].set_footer(text="CE Assistant",
         icon_url=final_ce_icon)
+
+    del ss
 
     # return :)
     return embed
@@ -734,7 +744,17 @@ def get_image(number, CE_ID, driver):
     ob = Screenshot(bottom_right_y)
     print('test 4')
     im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=10, hide_elements=header_elements)
-    #return im
+    
+    im_image = Image.open(im)
+    im_image = im_image.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y))
+
+    imgByteArr = io.BytesIO()
+    im_image.save(imgByteArr, format=im_image.format)
+    imgByteArr = imgByteArr.getvalue()
+    
+    return imgByteArr
+    
+    return im
     print('test 5')
 
     print('Pictures/ss{}.png'.format(number))
