@@ -149,7 +149,8 @@ async def master_loop(client, mongo_client):
     # start the scrape function
     await scrape(correct_channel, mongo_client)
 
-    await correct_channel.send('loop complete')
+    log = client.get_channel(1141886539157221457)
+    await log.send('loop complete')
 
     print('done')
 
