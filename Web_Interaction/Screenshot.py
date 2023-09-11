@@ -131,12 +131,13 @@ class Screenshot:
                 print('15')
 
                 file_name = "part{0}.png".format(part)
-                path = Path("/part{0}.png".format(part))
+                path = Path("/CE-Assistant/part{0}.png".format(part))
                 print('16')
                 print(file_name)
                 print(str(path))
 
                 ss = driver.get_screenshot_as_png()
+                #return ss TODO
                 print("ss")
                 path.parent.mkdir(parents=True, exist_ok=True)
                 print('makedirs')

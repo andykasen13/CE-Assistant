@@ -3,6 +3,7 @@ import asyncio
 from datetime import datetime
 import datetime
 import functools
+import io
 import typing
 import os
 from bson import ObjectId
@@ -26,11 +27,17 @@ from motor.motor_asyncio import AsyncIOMotorClient
 # --------- other file imports ---------
 from Web_Interaction.loopty_loop import master_loop
 from Web_Interaction.curator import single_run
-from Web_Interaction.scraping import single_scrape
+from Web_Interaction.scraping import single_scrape, get_image
 from Helper_Functions.create_embed import getEmbed
 from Helper_Functions.roll_string import get_roll_string
 from Helper_Functions.buttons import get_buttons
 from Helper_Functions.update import update_p
+from Web_Interaction.Screenshot import Screenshot
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from PIL import Image
 
 
 # ---------- command imports --------------
@@ -64,7 +71,7 @@ mongo_ids = {
 
 
 # Grab information from json file
-with open('/home/andrewgarcha/CE-Assistant/Jasons/secret_info.json') as f :
+with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 discord_token = localJSONData['discord_token']  
@@ -77,24 +84,64 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 
 test_log = client.get_channel(1141886539157221457)
 
+
+
+
+
+
+
+
+
+
+
+
 @tree.command(name="aaaaa", description="afjdals", guild=discord.Object(id=guild_ID))
 async def aaaaa(interaction : discord.Interaction):
     await interaction.response.defer()
 
-    namedb = mongo_client["database_name"]
-    col = namedb['ce-collection']
-    doc = await col.find_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')})
-
-    curatordb = mongo_client["tasks"]
-    curcol = curatordb['task-collection']
-    curatordoc = await curcol.find_one({'_id' : '64f8d6b292d3fe5849c1ba37'})
-
-    result = await namedb['ce-collection'].insert_one(curatordoc)
-
-    print(doc)
+    # Set selenium driver and preferences
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-gpu')
+    driver = webdriver.Chrome(options=options)
+    driver.set_window_size(width=1440, height=8000)
 
 
-    await interaction.followup.send('silly!')
+    # grab first game to get color on the rest of them
+    url = 'https://cedb.me/game/1e8565aa-b9f2-4b41-9578-22e4c2a5436b'
+    driver.get(url)
+    objective_lst = []
+    while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
+        objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+        print(objective_lst)
+
+
+
+    ss = get_image(0, "1e866995-6fec-452e-81ba-1e8f8594f4ea", driver)
+
+    screenshot = io.BytesIO(ss)
+    
+    embed = discord.Embed(title="blajaj")
+
+
+
+    await interaction.followup.send(content='silly!', embed=embed, file=discord.File(screenshot, filename="ss.png"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------HELP COMMAND------------------------------------------------------------- #
@@ -191,6 +238,20 @@ async def help(interaction : discord.Interaction) :
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------- SOLO ROLL COMMAND ------------------------------------------------------------ # 
@@ -210,6 +271,23 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------- CO-OP ROLL COMMAND ------------------------------------------------------------ # 
@@ -225,6 +303,25 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
     await interaction.response.defer()
 
     await co_op_command(interaction, event, partner, reroll = False, collection=collection)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -279,6 +376,19 @@ async def checkRolls(interaction, user: discord.Member=None) :
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------------------- THREADING ------------------------------------------------------------ #
@@ -289,6 +399,21 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
     async def wrapper(*args, **kwargs):
         return await asyncio.to_thread(func, *args, **kwargs)
     return wrapper
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -323,6 +448,29 @@ async def scrape(interaction):
 
     await interaction.channel.send('scraped')
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @tree.command(name="get_times", description="Prints out a table of times fifteen minutes apart in UTC", guild=discord.Object(id=guild_ID))
 async def get_times(interaction):
     await interaction.response.send_message('times...')
@@ -334,6 +482,24 @@ async def get_times(interaction):
     fin = fin[:-1:] + "\n]"
 
     print(fin)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
@@ -350,6 +516,22 @@ async def curate(interaction, num : int = 0):
         await interaction.followup.send('Those are the last {} curator reviews!'.format(num))
     else:
         await interaction.followup.send('There are no new curator reviews.')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -381,6 +563,19 @@ async def steam_command(interaction : discord.Interaction, game_name: str):
 
     # And log it
     print("Sent information on requested game " + game_name + ": " + embed.title +"\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -503,6 +698,16 @@ async def color(interaction) :
         
     embed = discord.Embed(title="COLORS", description="choose your colors wisely.")
     await interaction.followup.send(embed=embed, view=view, ephemeral=True)
+
+
+
+
+
+
+
+
+
+
 
 
 
