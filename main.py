@@ -1061,8 +1061,7 @@ async def file(interaction : discord.Interaction, file : Literal["name", "tier",
 @client.event
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
-    test_log.send("Ready!")
-    #get_tasks(client)
+    await test_log.send("Ready!")    #get_tasks(client)
     print(await master_loop.start(client, mongo_client))
 
 client.run(discord_token)

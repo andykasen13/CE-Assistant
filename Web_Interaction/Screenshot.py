@@ -131,7 +131,7 @@ class Screenshot:
                 print('15')
 
                 file_name = "part{0}.png".format(part)
-                path = Path("/CE-Assistant/part{0}.png".format(part))
+                path = Path("/home/andrewgarcha/CE-Assistant/part{0}.png".format(part))
                 print('16')
                 print(file_name)
                 print(str(path))
