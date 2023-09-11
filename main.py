@@ -75,6 +75,8 @@ ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/11335
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
+test_log = client.get_channel(1141886539157221457)
+
 @tree.command(name="aaaaa", description="afjdals", guild=discord.Object(id=guild_ID))
 async def aaaaa(interaction : discord.Interaction):
     await interaction.response.defer()
@@ -1059,7 +1061,7 @@ async def file(interaction : discord.Interaction, file : Literal["name", "tier",
 @client.event
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
-    print("Ready!")
+    test_log.send("Ready!")
     #get_tasks(client)
     print(await master_loop.start(client, mongo_client))
 
