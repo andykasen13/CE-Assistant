@@ -85,8 +85,6 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
             games.append(get_rollable_game(completion_time, price_limit, tier_number, specific_genre =genre_name, database_tier=database_tier, database_name=database_name))
             i+=1
 
-        
-
         embeds = create_multi_embed(event_name, time_limit, games, cooldown_time, interaction, database_name)
         await get_buttons(view, embeds)
         await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
@@ -94,17 +92,20 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
         # Open database_user
         database_user = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
         
+        # grab the target user
         for user in database_user :
+            print(user)
             if(database_user[user]['Discord ID'] == user_id) : 
                 target_user = user
                 break
         
+        # find the roll to replace (from pending...)
         roll_num = 0
-        
         for current_roll in database_user[target_user]["Current Rolls"] :
             if current_roll["Event Name"] == event_name : break
             roll_num +=1
 
+        # update the 
         if not reroll : 
             database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
                                                     "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple())),
