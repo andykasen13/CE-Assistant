@@ -182,7 +182,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         # Create the embed
         total_points = 0
-        embed = getEmbed(games[0], interaction.user.id)
+        embed = getEmbed(games[0], interaction.user.id, database_name)
         embed.set_author(name="Never Lucky", url="https://example.com")
         embed.add_field(name="Roll Requirements", value = 
             "There is no time limit on " + embed.title + "."
@@ -303,7 +303,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 #roll a t4
             
             # get the embed for the new game
-            embeds.append(getEmbed(game, interaction.user.id))
+            embeds.append(getEmbed(game, interaction.user.id, database_name))
 
             # get buttons
             await get_buttons(view, embeds)
