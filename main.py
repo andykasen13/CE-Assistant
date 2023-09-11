@@ -64,7 +64,7 @@ mongo_ids = {
 
 
 # Grab information from json file
-with open('/CE-Assistant/Jasons/secret_info.json') as f :
+with open('CE-Assistant/Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 discord_token = localJSONData['discord_token']  
