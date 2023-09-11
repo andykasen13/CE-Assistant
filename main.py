@@ -251,6 +251,7 @@ async def checkRolls(interaction, user: discord.Member=None) :
     # designated user
     steam_user_name = ""
     for user_name in list(userInfo) :
+        if user_name == "_id" : continue
         if(userInfo[user_name]["Discord ID"] == user.id) :
             steam_user_name = user_name
             break
