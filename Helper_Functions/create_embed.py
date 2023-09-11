@@ -47,7 +47,7 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
     i=0
     for selected_game in game_list :
         total_points = 0
-        embeds.append(getEmbed(selected_game, interaction.user.id))
+        embeds.append(getEmbed(selected_game, interaction.user.id, database_name))
         embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"),
                                 icon_url=final_ce_icon)
         embeds[i+1].set_author(name="Challenge Enthusiasts")

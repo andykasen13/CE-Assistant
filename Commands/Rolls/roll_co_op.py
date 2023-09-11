@@ -270,7 +270,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data['Discord ID'] : return
                 view.clear_items()
-                embed = getEmbed(game, interaction.user.id)
+                embed = getEmbed(game, interaction.user.id, database_name)
                 embed.set_field_at(index=1, name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
                 embed.add_field(name="Tier", value=database_name[game]["Tier"])
 
@@ -545,7 +545,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data['Discord ID'] : return
                 view.clear_items()
-                embed = getEmbed(game, interaction.user.id)
+                embed = getEmbed(game, interaction.user.id, database_name)
                 embed.set_field_at(index=1, name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
                 embed.add_field(name="Tier", value=database_name[game]["Tier"])
                 embed.add_field(name="Completion", value="When you have completed, submit your proof to <#747384873320448082>. The first to do so wins.")
