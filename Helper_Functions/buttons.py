@@ -68,19 +68,24 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
     async def callback(interaction : discord.Interaction, genre_name):
         await interaction.response.defer()
         
+        # only accept buttons from interaction user
         if interaction.user.id != user_id : return
 
+        # clear the view and send a "working" message
         view.clear_items()
-        
         await interaction.followup.edit_message(embed=discord.Embed(title="working..."), view=view, message_id=interaction.message.id)
-
-        i=0
-        while i < num_of_games :
-            games.append(get_rollable_game(completion_time, price_limit, tier_number, specific_genre =genre_name))
-            i+=1
 
         # Open database name
         database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
+        database_tier = await collection.find_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')})
+
+
+        i=0
+        while i < num_of_games :
+            games.append(get_rollable_game(completion_time, price_limit, tier_number, specific_genre =genre_name, database_tier=database_tier, database_name=database_name))
+            i+=1
+
+        
 
         embeds = create_multi_embed(event_name, time_limit, games, cooldown_time, interaction, database_name)
         await get_buttons(view, embeds)
