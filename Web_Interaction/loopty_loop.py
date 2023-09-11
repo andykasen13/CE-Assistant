@@ -210,10 +210,8 @@ async def scrape(channel, mongo_client):
     # send out each update
     for dict in updates[0]:
         await channel.send(file=dict['Image'], embed=dict['Embed'])
-
-    # delete and replace 'Pictures' with an empty folder
-    shutil.rmtree('/CE-Assistant/Pictures')
-    os.mkdir('/CE-Assistant/Pictures')
+    
+    del updates
 
 
 @to_thread

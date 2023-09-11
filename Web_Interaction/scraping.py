@@ -744,15 +744,15 @@ def get_image(number, CE_ID, driver):
     ob = Screenshot(bottom_right_y)
     print('test 4')
     im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=10, hide_elements=header_elements)
-    
+    im = io.BytesIO(im)
     im_image = Image.open(im)
     im_image = im_image.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y))
 
     imgByteArr = io.BytesIO()
-    im_image.save(imgByteArr, format=im_image.format)
-    imgByteArr = imgByteArr.getvalue()
+    im_image.save(imgByteArr, format='PNG')
+    final_im = imgByteArr.getvalue()
     
-    return imgByteArr
+    return final_im
     
     return im
     print('test 5')
