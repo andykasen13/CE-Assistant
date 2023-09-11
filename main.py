@@ -242,12 +242,10 @@ async def checkRolls(interaction, user: discord.Member=None) :
     if user is None :
         user = interaction.user
 
-    #open the json file and get the data
-    with open('/CE-Assistant/Jasons/users2.json', 'r') as f :
-        userInfo = json.load(f)
+    # get mongo data
+    userInfo = await collection.find_one({'_id' : mongo_ids["user"]})
+    database_name_info = await collection.find_one({'_id' : mongo_ids["name"]})
 
-    with open('/CE-Assistant/Jasons/database_name.json', 'r') as g :
-        database_name_info = json.load(g)
 
     # iterate through the json file until you find the
     # designated user
@@ -510,9 +508,10 @@ async def color(interaction) :
 # --------------------------------------------------TEST COMMAND-------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-@tree.command(name="test", description="test", guild=discord.Object(id=guild_ID))
-async def test(interaction : discord.Interaction, role : discord.Role) :
-    await interaction.response.defer()
+@tree.command(name="initiate-loop", description="Initiate the curating and scraping loop. ONLY DO THIS IF NECESSARY.", guild=discord.Object(id=guild_ID))
+async def test(interaction : discord.Interaction) :
+    await interaction.response.defer(ephemeral=True)
+
     await interaction.followup.send('looping....')
 
     await master_loop(client, mongo_client)
@@ -793,11 +792,8 @@ async def update(interaction : discord.Interaction) :
 async def cr(interaction : discord.Interaction, ephemeral : bool) :
     await interaction.response.defer(ephemeral=ephemeral)
 
-    with open('/CE-Assistant/Jasons/users2.json', 'r') as dbU :
-        database_user = json.load(dbU)
-
-    with open('/CE-Assistant/Jasons/database_name.json', 'r') as dbN :
-        database_name = json.load(dbN)
+    database_user = await collection.find_one({'_id' : mongo_ids["user"]})
+    database_name = await collection.find_one({'_id' : mongo_ids['name']})
     
     # find them in the users2.json
     ce_id = ""
@@ -847,8 +843,24 @@ async def cr(interaction : discord.Interaction, ephemeral : bool) :
     for genre in groups :
         embed.add_field(name=str(genre) + " CR", value=str(groups[genre]), inline=True)
     
+    del database_name
+    del database_user
+    
 
     return await interaction.followup.send(embed=embed)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
@@ -895,6 +907,7 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
     # and send a response to the original interaction
     await interaction.followup.send("worked", ephemeral=True)
 
+"""
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------- REROLL COMMAND----------------------------------------------------------- #
@@ -1012,6 +1025,18 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
     #         await interaction.response.edit_message(
     #             content=f"{self.current_page}", view=self
     #         )
+"""
+
+
+
+
+
+
+
+
+
+
+
 
     # send files
 @tree.command(name="send-file", description="Send any of the three local CE Assistant files", guild=discord.Object(id=guild_ID))
