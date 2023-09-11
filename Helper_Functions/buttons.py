@@ -94,7 +94,7 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
         
         # grab the target user
         for user in database_user :
-            print(user)
+            if user == '_id' : continue
             if(database_user[user]['Discord ID'] == user_id) : 
                 target_user = user
                 break
