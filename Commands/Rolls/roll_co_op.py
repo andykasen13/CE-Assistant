@@ -11,6 +11,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     # Open the user database
     database_user = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
     database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
+    database_tier = await collection.find_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')})
     
     # Set up variables
     interaction_user_data = ""
@@ -246,7 +247,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             interaction_user_has_points_in_game = True
             while (target_user_owns_game and target_user_has_points_in_game) or (interaction_user_owns_game and interaction_user_has_points_in_game) :
                 # grab a rollable game
-                game = get_rollable_game(40, 20, tier_num)
+                game = get_rollable_game(40, 20, tier_num, database_tier=database_tier, database_name=database_name)
                 
                 # check to see if user B owns the game and if they have points in the game
                 target_user_owns_game = list(target_user_data["Owned Games"].keys()).count(game) > 0
@@ -408,7 +409,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 interaction_user_has_points_in_game = True
                 while (target_user_owns_game and target_user_has_points_in_game) or (interaction_user_owns_game and interaction_user_has_points_in_game) :
                     # grab a rollable game
-                    game = get_rollable_game(40, 20, "Tier 3")
+                    game = get_rollable_game(40, 20, "Tier 3", database_tier=database_tier, database_name=database_name)
                     
                     # check to see if user B owns the game and if they have points in the game
                     target_user_owns_game = list(target_user_data["Owned Games"].keys()).count(game) > 0
@@ -521,7 +522,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             interaction_user_has_points_in_game = True
             while (target_user_owns_game and target_user_has_points_in_game) or (interaction_user_owns_game and interaction_user_has_points_in_game) :
                 # grab a rollable game
-                game = get_rollable_game(40, 20, tier_num)
+                game = get_rollable_game(40, 20, tier_num, database_name=database_name, database_tier=database_tier)
                 
                 # check to see if user B owns the game and if they have points in the game
                 target_user_owns_game = list(target_user_data["Owned Games"].keys()).count(game) > 0
@@ -737,7 +738,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
                 while target_user_owns_game and target_user_has_points_in_game :
                     # grab a rollable game
-                    target_user_selected_game = get_rollable_game(40, 20, "Tier 3", specific_genre=targets_genre)
+                    target_user_selected_game = get_rollable_game(40, 20, "Tier 3", specific_genre=targets_genre, database_tier=database_tier, database_name=database_name)
 
                     # check to see if they own the game and if they have points in the game
                     target_user_owns_game = list(target_user_data["Owned Games"].keys()).count(target_user_selected_game) > 0
@@ -750,7 +751,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
                 while interaction_user_owns_game and interaction_user_has_points_in_game :
                     # grab a rollable game
-                    interaction_user_selected_game = get_rollable_game(40, 20, "Tier 3", specific_genre=interactions_genre)
+                    interaction_user_selected_game = get_rollable_game(40, 20, "Tier 3", specific_genre=interactions_genre, database_name=database_name, database_tier=database_tier)
                     # check to see if they own the game and if they have points in the game
                     interaction_user_owns_game = list(interaction_user_data["Owned Games"].keys()).count(interaction_user_selected_game) > 0
                     if(interaction_user_owns_game) :
