@@ -798,6 +798,7 @@ async def cr(interaction : discord.Interaction, ephemeral : bool) :
     # find them in the users2.json
     ce_id = ""
     for user in database_user :
+        if user == '_id' : continue
         if database_user[user]["Discord ID"] == interaction.user.id :
             ce_id = user
             break
