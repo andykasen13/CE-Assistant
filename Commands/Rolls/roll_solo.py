@@ -88,9 +88,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         print("received two week t2 streak")
 
         # ----- Grab two random games -----
-        games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user]))
+        games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], database_name=database_name, database_tier=database_tier))
         genres.remove(database_name[games[0]]["Genre"])
-        games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres))
+        games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
         
         # ----- Get all the embeds -----s
         embeds = create_multi_embed("Two Week T2 Streak", 14, games, 0, interaction, database_name)
@@ -114,7 +114,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         genres.remove("Strategy")
         i = 0
         while i < 5:
-            games.append(get_rollable_game(10, 10, "Tier 1", userInfo[current_user], genres))
+            games.append(get_rollable_game(10, 10, "Tier 1", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
             genres.remove(database_name[games[i]]["Genre"])
             i+=1
 
@@ -142,7 +142,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         for ggenre in genres :
             i=0
             while(i < 5) :
-                games.append(get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre, games=games))
+                games.append(get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre, games=games, database_name=database_name, database_tier=database_tier))
                 i+=1
         embeds = create_multi_embed("One Hell of a Month", 28, games, 28*3, interaction, database_name)
         embed = embeds[0]
@@ -164,7 +164,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         genres.remove("Strategy")
         i=0
         while i < 4:
-            games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres))
+            games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
             genres.remove(database_name[games[i]]["Genre"])
             i+=1
         
@@ -176,7 +176,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # -------------------------------------------- Never Lucky --------------------------------------------
     elif event == "Never Lucky" :
         # one t3
-        games.append(get_rollable_game(40, 20, "Tier 3", userInfo[current_user]))
+        games.append(get_rollable_game(40, 20, "Tier 3", userInfo[current_user], database_name=database_name, database_tier=database_tier))
 
         ends = False
 
@@ -286,18 +286,18 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             embeds.append(discord.Embed(title=event, timestamp=datetime.datetime.now()))
             if(num_of_games == 1) :
                 # get a game
-                game = get_rollable_game(80, 20, "Tier 2", userInfo[current_user])
+                game = get_rollable_game(80, 20, "Tier 2", userInfo[current_user], database_name=database_name, database_tier=database_tier)
 
                 embeds[0].add_field(name="Roll Status", value="You have rolled your T2. You have two weeks to complete.")
 
             elif(num_of_games == 2):              
                 # get a game
-                game = get_rollable_game(120, 20, "Tier 3", userInfo[current_user])
+                game = get_rollable_game(120, 20, "Tier 3", userInfo[current_user], database_name=database_name, database_tier=database_tier)
 
                 embeds[0].add_field(name="Roll Status", value = "You have rolled your T3. You have three weeks to complete.")
             elif(num_of_games == 3):
                 # get a game
-                game = get_rollable_game(160, 20, "Tier 4", userInfo[current_user])
+                game = get_rollable_game(160, 20, "Tier 4", userInfo[current_user], database_name=database_name, database_tier=database_tier)
                 
                 embeds[0].add_field(name="Roll Status", value = "You have rolled your T4. You have four weeks to complete.")
                 #roll a t4
