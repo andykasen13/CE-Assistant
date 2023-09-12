@@ -154,6 +154,8 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         updated_time -= 14000
         created_time -= 14000
 
+        del game_json
+
 
 
         # check if updated since last check
