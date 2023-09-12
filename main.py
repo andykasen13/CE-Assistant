@@ -82,7 +82,6 @@ ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/11335
 ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
-test_log = client.get_channel(1141886539157221457)
 
 
 
@@ -128,6 +127,10 @@ async def aaaaa(interaction : discord.Interaction):
 
 
     await interaction.followup.send(content='silly!', embed=embed, file=discord.File(screenshot, filename="ss.png"))
+
+    del ss
+    del screenshot
+    del embed
 
 
 
@@ -373,6 +376,13 @@ async def checkRolls(interaction, user: discord.Member=None) :
     # send the embed
     await interaction.followup.send(embed=embed)
 
+    del current_roll_str
+    del completed_roll_str
+    del embed
+    del database_name_info
+    del user
+    
+
 
 
 
@@ -447,6 +457,12 @@ async def scrape(interaction):
     dump3 = await col.replace_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')}, objects[2])
 
     await interaction.channel.send('scraped')
+
+    del dump3
+    del dump1
+    del dump2
+    del curator_count
+    del objects
 
 
 
@@ -563,6 +579,9 @@ async def steam_command(interaction : discord.Interaction, game_name: str):
 
     # And log it
     print("Sent information on requested game " + game_name + ": " + embed.title +"\n")
+
+    del database_name
+    del embed
 
 
 
@@ -1266,6 +1285,7 @@ async def file(interaction : discord.Interaction, file : Literal["name", "tier",
 @client.event
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
+    test_log = client.get_channel(1141886539157221457)
     await test_log.send("Ready!")    #get_tasks(client)
     print(await master_loop.start(client, mongo_client))
 

@@ -356,3 +356,11 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # Finally, send the embed
     await interaction.followup.send(embed=embed, view=view)
     print("Sent information on rolled game: " + str(games) + "\n")
+
+    del database_name
+    del database_tier
+    del userInfo
+    del embed
+    del embeds
+    del dump
+    
