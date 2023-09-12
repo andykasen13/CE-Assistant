@@ -176,6 +176,12 @@ async def curate(channel, mongo_client):
     if len(curation) > 1:
         for embed in curation[1]:
             await channel.send(embed=embed)
+        
+    del collection
+    del curator_count
+    del curation
+    del data
+
     
 
 def to_thread(func: typing.Callable) -> typing.Coroutine:
@@ -197,24 +203,34 @@ async def scrape(channel, mongo_client):
     collection = mongo_client['database_name']['ce-collection']
     database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
     curator_count = await collection.find_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')})
+    unfinished = await collection.find_one({'_id' : ObjectId('650076a9e35bbc49b06c9881')})
 
     # thread call scraping the new data
-    updates = await thread_scrape(database_name, curator_count) #asyncio.to_thread(thread_scrape)
+    updates = await thread_scrape(database_name, curator_count, unfinished) #asyncio.to_thread(thread_scrape)
 
     # dump the data back onto mongodb
-    dump1 = await collection.replace_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')}, updates[2])
-    dump2 = await collection.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, updates[3])
-    updates[4]['_id'] = ObjectId('64f8bc4d094bdbfc3f7d0050')
-    dump3 = await collection.replace_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')}, updates[4])
+    dump1 = await collection.replace_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')}, updates[2]) # name
+    dump2 = await collection.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, updates[3]) # user
+    dump2andahalf = await collection.replace_one({'_id' : ObjectId('650076a9e35bbc49b06c9881')}, updates[4])
+    updates[5]['_id'] = ObjectId('64f8bc4d094bdbfc3f7d0050')
+    dump3 = await collection.replace_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')}, updates[5]) # tier
 
     # send out each update
     for dict in updates[0]:
         await channel.send(file=dict['Image'], embed=dict['Embed'])
     
     del updates
+    del dump1
+    del dump2
+    del dump2andahalf
+    del dump3
+    del database_name
+    del curator_count
+    del unfinished
+    del collection
 
 
 @to_thread
-def thread_scrape(database_name, curator_count):
+def thread_scrape(database_name, curator_count, unfinished):
     # call to the scrape file
-    return get_games(database_name, curator_count)
+    return get_games(database_name, curator_count, unfinished)
