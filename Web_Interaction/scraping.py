@@ -129,11 +129,6 @@ def game_list(new_data, current_dict):
         "Strategy" : '<:CE_strategy:1126326195915591690>'
     }
 
-    get_image(0, "1e866995-6fec-452e-81ba-1e8f8594f4ea", driver)
-
-    # images (sorry theron)
-    images = []
-
     # game loop adding updated parts
     for game in json_response:
         print(game['name'])
@@ -191,9 +186,6 @@ def game_list(new_data, current_dict):
         # elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
         elif created_time > current_newest:
             print("NEW: " + game['name'])
-            if game['tier'] == 0 : 
-                print('tier 0')
-                continue
             ss = (get_image(number, game['id'], driver))
             ss = io.BytesIO(ss)
             new_game = get_game(game)
@@ -264,6 +256,10 @@ def game_list(new_data, current_dict):
         embed['Embed'].set_image(url='attachment://image.png')
         updated_games.append(embed)
         del new_data[game]
+
+    del json_response
+    del driver
+    del game_tracker
 
     return [updated_games, number, new_data, current_dict]
 

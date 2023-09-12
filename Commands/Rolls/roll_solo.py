@@ -265,6 +265,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             embed.add_field(name="Timing",
                             value="- Your T1 will not have an average completion time on steamhunters larger than 40. This goes up to 80 for your T2, 120 for T3, and 160 for T4."
                             + " \n- Your cooldown timer is calculated as such: (num of completed games + 1) * 2 weeks. Failing your T1 nets you a two week cooldown, T4 nets you ten weeks.")
+            embed.add_field(name="Confirmation",
+                            value="Knowing all this, would you like to begin your Fourward Thinking roll?")
             embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
             embed.set_author(name="Challenge Enthusiasts")
 
@@ -363,4 +365,3 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     del embed
     del embeds
     del dump
-    

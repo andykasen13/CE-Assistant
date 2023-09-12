@@ -1268,17 +1268,6 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
 
 
 
-
-    # send files
-@tree.command(name="send-file", description="Send any of the three local CE Assistant files", guild=discord.Object(id=guild_ID))
-async def file(interaction : discord.Interaction, file : Literal["name", "tier", "user", "curator"]) :
-    await interaction.response.defer(ephemeral=True)
-    if file == "curator" : file_sent=discord.File('/CE-Assistant/Jasons/curator_count.json')
-    elif file == "user" : file_sent=discord.File('/CE-Assistant/Jasons/users2.json')
-    else : file_sent = discord.File('/CE-Assistant/Jasons/database_{}.json'.format(file))
-    
-    return await interaction.followup.send(file=file_sent)
-
     
 
 # ----------------------------------- LOG IN ----------------------------
