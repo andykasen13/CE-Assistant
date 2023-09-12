@@ -128,10 +128,33 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         "Strategy" : '<:CE_strategy:1126326195915591690>'
     }
 
+    unfinished_games['unfinished'].append('1')
+
     # game loop adding updated parts
     for game in json_response:
         print(game['name'])
-         
+
+        # i am so sorry theron
+        game_json = requests.get('https://cedb.me/api/game/' + game['id'])
+        game_json = json.loads(game_json.text)
+
+        updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+        created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+
+        for objective in game_json['objectives'] :
+            # was the objective updated
+            objupdatedtime = time.mktime(datetime.strptime(str(objective['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+            if updated_time < objupdatedtime : updated_time = objupdatedtime
+
+            # was the objective's requirement updated
+            for objrequirement in objective :
+                objrequpdatedtime = time.mktime(datetime.strptime(str(objrequirement['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+                if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
+
+        updated_time -= 14000
+        created_time -= 14000
+
+
 
         # check if updated since last check
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple()) - 14400.0
@@ -165,6 +188,10 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
             # update data
             new_data[game['name']] = get_game(game)
+        
+        elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None):
+            "cry"
+            unfinished_games['unfinished'].append(game['id'])
 
         # if game is updated
         elif updated_time > current_newest and game['name'] in list(new_data.keys()):
@@ -188,6 +215,10 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
         # if game is new
         # elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
+
+        # if a game was updated
+        # ORRRRR
+        # the game is in unfininshed games and is ready to go 
         elif (created_time > current_newest) or (game['id'] in unfinished_games['unfinished'] and (game['tier'] != 0 and game['genre'] != None)):
             print("NEW: " + game['name'])
             ss = (get_image(number, game['id'], driver))
