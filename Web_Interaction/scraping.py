@@ -147,7 +147,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             if updated_time < objupdatedtime : updated_time = objupdatedtime
 
             # was the objective's requirement updated
-            for objrequirement in objective :
+            for objrequirement in objective["objectiveRequirements"] :
                 objrequpdatedtime = time.mktime(datetime.strptime(str(objrequirement['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
                 if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
 
