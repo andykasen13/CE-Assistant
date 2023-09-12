@@ -46,10 +46,10 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 # steam_api_key = localJSONData['steam_API_key']
 
 
-def get_games(database_name, curator_count):
+def get_games(database_name, curator_count, unfinished_games):
 
     # create our returnable and update database_name
-    fin = game_list(database_name, curator_count)
+    fin = game_list(database_name, curator_count, unfinished_games)
     # use database_name to update database_tier
     database_tier = get_by_tier(database_name)
     fin.append(database_tier)
@@ -76,7 +76,7 @@ def single_scrape(curator_count):
 
     
 
-def game_list(new_data, current_dict):
+def game_list(new_data, current_dict, unfinished_games : dict):
     # Set selenium driver and preferences
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
@@ -109,7 +109,6 @@ def game_list(new_data, current_dict):
     game_tracker = list(new_data.keys())
     game_tracker.remove('_id')
 
-
     # icons for CE emoji
     icons = {
         "Tier 0" : '<:tier0:1126268390605070426>',
@@ -129,17 +128,14 @@ def game_list(new_data, current_dict):
         "Strategy" : '<:CE_strategy:1126326195915591690>'
     }
 
-    print(game_tracker)
-    for i in range(25) : print('---')
-
     # game loop adding updated parts
     for game in json_response:
         print(game['name'])
          
 
         # check if updated since last check
-        updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
-        created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+        updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple()) - 14400.0
+        created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple()) - 14400.0
         icon = game['icon']
 
         # if game is a T0 and updated
@@ -186,9 +182,13 @@ def game_list(new_data, current_dict):
                 number += 1
             new_data[game['name']] = get_game(game)
 
+        elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None) :
+            unfinished_games['unfinished'].append(game['id'])
+
+
         # if game is new
         # elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
-        elif created_time > current_newest:
+        elif (created_time > current_newest) or (game['id'] in unfinished_games['unfinished'] and (game['tier'] != 0 and game['genre'] != None)):
             print("NEW: " + game['name'])
             ss = (get_image(number, game['id'], driver))
             ss = io.BytesIO(ss)
@@ -234,6 +234,8 @@ def game_list(new_data, current_dict):
             updated_games.append(embed)
             number += 1
 
+            if (game['id'] in unfinished_games['unfinished'] and (game['tier'] != 0 and game['genre'] != None)): unfinished_games['unfinished'].remove(game['id'])
+
             del ss
 
         # game is neither new nor updated
@@ -265,7 +267,7 @@ def game_list(new_data, current_dict):
     del driver
     del game_tracker
 
-    return [updated_games, number, new_data, current_dict]
+    return [updated_games, number, new_data, current_dict, unfinished_games]
 
 
 # updates for games

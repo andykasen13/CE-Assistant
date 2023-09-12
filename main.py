@@ -66,7 +66,8 @@ mongo_ids = {
     "tier" : ObjectId('64f8bc4d094bdbfc3f7d0050'),
     "curator" : ObjectId('64f8d63592d3fe5849c1ba35'),
     "tasks" : ObjectId('64f8d6b292d3fe5849c1ba37'),
-    "user" : ObjectId('64f8bd1b094bdbfc3f7d0051')
+    "user" : ObjectId('64f8bd1b094bdbfc3f7d0051'),
+    "unfinished" : ObjectId('650076a9e35bbc49b06c9881')
 }
 
 
@@ -74,7 +75,7 @@ mongo_ids = {
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-discord_token = localJSONData['discord_token']  
+discord_token = localJSONData['other_discord_token']  
 guild_ID = localJSONData['test_guild_ID']
 
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
@@ -98,6 +99,13 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 async def aaaaa(interaction : discord.Interaction):
     await interaction.response.defer()
 
+    json = {"unfinished" : []}
+    dump = await collection.insert_one(json)
+
+    await interaction.followup.send('silly!')
+
+    """
+    
     # Set selenium driver and preferences
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
@@ -131,6 +139,10 @@ async def aaaaa(interaction : discord.Interaction):
     del ss
     del screenshot
     del embed
+    
+    """
+
+
 
 
 
