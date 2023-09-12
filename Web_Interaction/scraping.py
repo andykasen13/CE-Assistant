@@ -129,6 +129,9 @@ def game_list(new_data, current_dict):
         "Strategy" : '<:CE_strategy:1126326195915591690>'
     }
 
+    print(game_tracker)
+    for i in range(25) : print('---')
+
     # game loop adding updated parts
     for game in json_response:
         print(game['name'])
@@ -138,8 +141,6 @@ def game_list(new_data, current_dict):
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
         created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
         icon = game['icon']
-
-        if(game['name'] == "Ghostland Yard") : created_time = current_newest + 1
 
         # if game is a T0 and updated
         if updated_time > current_newest and game['tier'] == 0 and game['name'] in list(new_data.keys()):
