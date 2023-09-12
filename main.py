@@ -19,7 +19,7 @@ import json
 
 # --------- web imports ---------
 import requests
-from Helper_Functions.Scheduler import get_tasks, startup_sched
+from Helper_Functions.Scheduler import startup_sched
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from motor.motor_asyncio import AsyncIOMotorClient
