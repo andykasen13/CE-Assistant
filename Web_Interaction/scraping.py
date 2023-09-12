@@ -151,9 +151,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 objrequpdatedtime = time.mktime(datetime.strptime(str(objrequirement['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
                 if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
 
-        updated_time -= 14000
-        created_time -= 14000
-
         print(updated_time)
         print(created_time)
 
@@ -195,7 +192,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             new_data[game['name']] = get_game(game)
         
         elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None):
-            "cry"
+            print('silly!')
             unfinished_games['unfinished'].append(game['id'])
 
         # if game is updated
@@ -213,9 +210,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 updated_games.append(update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
                 number += 1
             new_data[game['name']] = get_game(game)
-
-        elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None) :
-            unfinished_games['unfinished'].append(game['id'])
 
 
         # if game is new

@@ -8,6 +8,7 @@ import typing
 import os
 from bson import ObjectId
 import time
+import json
 
 # ----------- discord imports ---------
 import discord
@@ -75,7 +76,7 @@ mongo_ids = {
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-discord_token = localJSONData['discord_token']  
+discord_token = localJSONData['other_discord_token']  
 guild_ID = localJSONData['test_guild_ID']
 
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
@@ -99,8 +100,17 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 async def aaaaa(interaction : discord.Interaction):
     await interaction.response.defer()
 
-    json = {"unfinished" : []}
-    dump = await collection.insert_one(json)
+    #json = {"unfinished" : []}
+    #dump = await collection.insert_one(json)
+    j = requests.get('https://cedb.me/api/game/15e19c86-8a9b-409a-9f21-1da650e1b94c')
+    js = json.loads(j.text)
+
+    x = js['objectives'][0]['updatedAt']
+    x = time.mktime(datetime.datetime.strptime(str(x[:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+
+    print(js)
+
+    print(x)
 
     await interaction.followup.send('silly!')
 
