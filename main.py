@@ -19,7 +19,7 @@ import json
 
 # --------- web imports ---------
 import requests
-from Helper_Functions.Scheduler import get_tasks
+from Helper_Functions.Scheduler import get_tasks, startup_sched
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -1286,6 +1286,7 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
 @client.event
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
+    await startup_sched()
     test_log = client.get_channel(1141886539157221457)
     await test_log.send("Ready!")    #get_tasks(client)
     print(await master_loop.start(client, mongo_client))
