@@ -154,6 +154,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         updated_time -= 14000
         created_time -= 14000
 
+        print(updated_time)
+        print(created_time)
+
         del game_json
 
 
@@ -275,7 +278,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         elif game['name'] in game_tracker:
             game_tracker.remove(game['name'])
         elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
-            for other_game in json_response:
+            for other_game in new_data:
                 if game['id'] == other_game['id']:
                     game_tracker.remove(other_game['name'])
                     del(new_data[other_game['name']])
