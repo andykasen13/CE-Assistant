@@ -49,7 +49,7 @@ async def startup_sched():
                 user_info
             ]
 
-            add_task(end_time, args)
+            await add_task(end_time, args)
 
         for current_roll in user["Cooldowns"]:
             if not 'End Time' in list(current_roll):
@@ -63,7 +63,7 @@ async def startup_sched():
                 user_info
             ]
 
-            add_task(end_time, args)
+            await add_task(end_time, args)
 
     sched.start()
 
