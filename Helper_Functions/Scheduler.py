@@ -34,6 +34,7 @@ async def startup_sched():
     user_info = await collection.find_one({'_id' : mongo_ids["user"]})
 
     for user_str in user_info:
+        if user_str == '_id' : continue
         user = user_info[user_str]
         
         for current_roll in user["Current Rolls"]:
