@@ -101,6 +101,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
     # grab last updated time
     current_newest = current_dict['Updated Time']
+    c = current_newest
     current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
     
     # grab the new data and initialize trackers
@@ -131,6 +132,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     # game loop adding updated parts
     for game in json_response:
         print(game['name'])
+        current_newest = c
 
         # i am so sorry theron
         game_json = requests.get('https://cedb.me/api/game/' + game['id'])
@@ -155,6 +157,10 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         del game_json
 
         if(game['name'] in game_tracker) : current_newest = new_data[game['name']]['Last Updated']
+
+        print("updatd")
+        print(updated_time)
+        print(current_newest)
 
 
 
