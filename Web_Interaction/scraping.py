@@ -154,6 +154,8 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
         del game_json
 
+        if(game['name'] in game_tracker) : current_newest = new_data[game['name']]['Last Updated']
+
 
 
         # check if updated since last check
