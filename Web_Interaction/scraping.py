@@ -157,8 +157,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
 
         # check if updated since last check
-        updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple()) - 14400.0
-        created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple()) - 14400.0
         icon = game['icon']
 
         # if game is a T0 and updated
