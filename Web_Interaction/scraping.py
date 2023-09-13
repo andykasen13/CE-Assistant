@@ -380,7 +380,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
 
     for objective_info in objective_list:
         objective = objective_info[objective_info.find("'")+3:objective_info.rfind("'")-2:]
-        special_image(number, decimal, new_game['CE ID'], driver, objective)
+        image = special_image(number, decimal, new_game['CE ID'], driver, objective)
 
         embed = {
         'Embed' : discord.Embed(
@@ -389,7 +389,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
             timestamp=datetime.now(),
             description=objective_info.strip()
         ),
-        'Image' : discord.File("/CE-Assistant/Pictures/ss{}.png".format(str(number) + '-' + str(decimal)), filename="image.png")
+        'Image' : discord.File(image, filename="image.png")
         }
         embed['Embed'].set_image(url='attachment://image.png')
         embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
