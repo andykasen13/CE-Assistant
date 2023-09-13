@@ -102,15 +102,15 @@ async def aaaaa(interaction : discord.Interaction):
 
     #json = {"unfinished" : []}
     #dump = await collection.insert_one(json)
-    j = requests.get('https://cedb.me/api/game/15e19c86-8a9b-409a-9f21-1da650e1b94c')
-    js = json.loads(j.text)
+    #j = requests.get('https://cedb.me/api/game/15e19c86-8a9b-409a-9f21-1da650e1b94c')
+    #js = json.loads(j.text)
 
-    x = js['objectives'][0]['updatedAt']
-    x = time.mktime(datetime.datetime.strptime(str(x[:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+    #x = js['objectives'][0]['updatedAt']
+    #x = time.mktime(datetime.datetime.strptime(str(x[:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
 
-    print(js)
+    #print(js)
 
-    print(x)
+    #print(x)
 
     await interaction.followup.send('silly!')
 
