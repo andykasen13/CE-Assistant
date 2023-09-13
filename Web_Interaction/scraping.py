@@ -276,7 +276,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                     del(new_data[other_game['name']])
                     new_data[game['name']] = get_game(game)
         if game['genre'] != None:
-            new_data[game['name']]['Last Updated'] = int(updated_time)
+            new_data[game['name']]['Last Updated'] = updated_time
 
 
     # games removed
