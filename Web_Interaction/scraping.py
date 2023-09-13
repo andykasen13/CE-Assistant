@@ -151,16 +151,16 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 objrequpdatedtime = time.mktime(datetime.strptime(str(objrequirement['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
                 if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
 
-        print(updated_time)
-        print(created_time)
+        #print(updated_time)
+        #print(created_time)
 
         del game_json
 
         if(game['name'] in game_tracker) : current_newest = new_data[game['name']]['Last Updated']
 
-        print("updatd")
-        print(updated_time)
-        print(current_newest)
+       # print("updatd")
+        #print(updated_time)
+        #print(current_newest)
 
 
 
