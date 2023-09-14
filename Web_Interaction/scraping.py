@@ -522,14 +522,14 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
     elif 'Achievements' in list(new.keys()) and new['Achievements'] != old['Achievements']:
         
         # initialize new achievements and old achievement tracker
-        stand_in = "\n- Achievements "
+        stand_in = "\n  - Achievements "
         old_achievements = old['Achievements']
         to_delete = []
 
         # make sure the last achievement is new
         for achievement in new['Achievements']:
             if achievement in list(old_achievements.keys()):
-                old_achievements.pop(achievement)
+                old_achievements.remove(achievement)
                 to_delete.append(achievement)
                 
         for achievement in to_delete:
@@ -553,9 +553,11 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
                     stand_in = stand_in[:-2:] + " and '{}'".format(new['Achievements'][achievement])
                 else:
                     stand_in += "and '{}'".format(new['Achievements'][achievement])
+        
+        stand_in += " added"
 
         # add to message if pertinent
-        if len(stand_in) > 17:
+        if len(stand_in) > 23:
             update += stand_in
 
 
@@ -566,7 +568,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
             grammar_check = len(old_achievements)
 
             # initialize
-            stand_in = "\n\t- Achievements "
+            stand_in = "\n\t  - Achievements "
 
             # loop through each removed game
             for achievement in old_achievements:
