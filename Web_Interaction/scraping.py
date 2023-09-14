@@ -135,8 +135,11 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         current_newest = c
 
         # i am so sorry theron
-        game_json = requests.get('https://cedb.me/api/game/' + game['id'])
-        game_json = json.loads(game_json.text)
+        try:
+            game_json = requests.get('https://cedb.me/api/game/' + game['id'])
+            game_json = json.loads(game_json.text)
+        except:
+            continue
 
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
         created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
