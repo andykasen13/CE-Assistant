@@ -528,9 +528,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
 
         # make sure the last achievement is new
         for achievement in new['Achievements']:
-            print(achievement)
             if achievement in list(old_achievements.keys()):
-                print('silly')
                 old_achievements.pop(achievement)
                 to_delete.append(achievement)
                 
@@ -562,6 +560,8 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
         if len(stand_in) > 23:
             update += stand_in
 
+        stand_in2 = ""
+
 
         # anything left over has been removed
         if len(old_achievements) > 0:
@@ -570,29 +570,29 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
             grammar_check = len(old_achievements)
 
             # initialize
-            stand_in = "\n\t  - Achievements "
+            stand_in2 = "\n\t  - Achievements "
 
             # loop through each removed game
             for achievement in old_achievements:
 
                 # if no the last one
                 if old['Achievements'][achievement] != old_achievements[list(old_achievements.keys())[-1]]:
-                    stand_in += "'{}', ".format(old['Achievements'][achievement])
+                    stand_in2 += "'{}', ".format(old['Achievements'][achievement])
 
                 # if it is the last one
                 else:
                     if grammar_check == 1:
-                        stand_in +=  " '{}'".format(old['Achievements'][achievement])
+                        stand_in2 +=  " '{}'".format(old['Achievements'][achievement])
                     elif grammar_check == 2:
-                        stand_in = stand_in[:-1:] + "and '{}'".format(old['Achievements'][achievement])
+                        stand_in2 = stand_in[:-1:] + "and '{}'".format(old['Achievements'][achievement])
                     else:
-                        stand_in += "and '{}'".format(old['Achievements'][achievement])
+                        stand_in2 += "and '{}'".format(old['Achievements'][achievement])
         
-        stand_in += " removed"
+        stand_in2 += " removed"
 
         # add to message if pertinent
-        if len(stand_in) > 25:
-            update += stand_in
+        if len(stand_in2) > 25:
+            update += stand_in2
 
     return update
 
