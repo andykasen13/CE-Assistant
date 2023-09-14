@@ -557,7 +557,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
         stand_in += " added"
 
         # add to message if pertinent
-        if len(stand_in) > 23:
+        if len(stand_in) > 26:
             update += stand_in
 
         stand_in2 = ""
@@ -570,7 +570,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
             grammar_check = len(old_achievements)
 
             # initialize
-            stand_in2 = "\n\t  - Achievements "
+            stand_in2 = "\n  - Achievements "
 
             # loop through each removed game
             for achievement in old_achievements:
@@ -582,7 +582,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
                 # if it is the last one
                 else:
                     if grammar_check == 1:
-                        stand_in2 +=  " '{}'".format(old['Achievements'][achievement])
+                        stand_in2 +=  "'{}'".format(old['Achievements'][achievement])
                     elif grammar_check == 2:
                         stand_in2 = stand_in[:-1:] + "and '{}'".format(old['Achievements'][achievement])
                     else:
@@ -591,7 +591,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
         stand_in2 += " removed"
 
         # add to message if pertinent
-        if len(stand_in2) > 25:
+        if len(stand_in2) > 30:
             update += stand_in2
 
     return update
