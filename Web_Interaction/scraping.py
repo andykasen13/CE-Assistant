@@ -585,9 +585,11 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
                         stand_in = stand_in[:-1:] + "and '{}'".format(old['Achievements'][achievement])
                     else:
                         stand_in += "and '{}'".format(old['Achievements'][achievement])
+        
+        stand_in += " removed"
 
         # add to message if pertinent
-        if len(stand_in) > 17:
+        if len(stand_in) > 25:
             update += stand_in
 
     return update
