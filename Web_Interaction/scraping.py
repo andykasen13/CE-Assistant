@@ -529,7 +529,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
         # make sure the last achievement is new
         for achievement in new['Achievements']:
             if achievement in list(old_achievements.keys()):
-                old_achievements.remove(achievement)
+                old_achievements.pop(achievement)
                 to_delete.append(achievement)
                 
         for achievement in to_delete:
