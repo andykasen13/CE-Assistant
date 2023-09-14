@@ -329,7 +329,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
     for objective in old_game['Primary Objectives']:
         old_points += old_game['Primary Objectives'][objective]['Point Value']
 
-    if new_points != old_points and (len(old_game["Primary Objectives"]) != 1 or len(new_game["Primary Objective"]) != 1):
+    if new_points != old_points and (len(old_game["Primary Objectives"]) != 1 or len(new_game["Primary Objectives"]) != 1):
         update += "\n- {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(old_points, new_points)
 
     # ------------------- check Genre -------------------
