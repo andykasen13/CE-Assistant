@@ -381,6 +381,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
     for objective_info in objective_list:
         objective = objective_info[objective_info.find("'")+3:objective_info.rfind("'")-2:]
         image = special_image(number, decimal, new_game['CE ID'], driver, objective)
+        image = io.BytesIO(image)
 
         embed = {
         'Embed' : discord.Embed(
@@ -847,7 +848,7 @@ def special_image(number, decimal, CE_ID, driver, objective_name):
 
     
     ob = Screenshot(bottom_right_y)
-    im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(str(number) + '-' + str(decimal)), is_load_at_runtime=True, load_wait_time=3, hide_elements=header_elements)
+    im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=10, hide_elements=header_elements)
     im = io.BytesIO(im)
     im_image = Image.open(im)
     im_image = im_image.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y))
