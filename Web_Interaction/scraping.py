@@ -139,6 +139,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             game_json = requests.get('https://cedb.me/api/game/' + game['id'])
             game_json = json.loads(game_json.text)
         except:
+            game_tracker.remove(game['name'])
             continue
 
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
