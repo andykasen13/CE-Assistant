@@ -281,6 +281,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             game_tracker.remove(game['name'])
         elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
             for other_game in new_data:
+                if other_game == '_id' : continue
                 if game['id'] == new_data[other_game]['CE ID']:
                     game_tracker.remove(other_game['name'])
                     del(new_data[other_game])
