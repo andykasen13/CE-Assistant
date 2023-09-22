@@ -157,7 +157,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         #print(updated_time)
         #print(created_time)
 
-        if(game['name'] in game_tracker) : current_newest = new_data[game['name']]['Last Updated']
+        if(game['name'] in list(new_data.keys())) : current_newest = new_data[game['name']]['Last Updated']
 
        # print("updatd")
         #print(updated_time)
