@@ -220,7 +220,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         # if game is new
         # elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
 
-        # if a game was updated
+        # if a game is new
         # ORRRRR
         # the game is in unfininshed games and is ready to go 
         elif (created_time > current_newest) or (game['id'] in unfinished_games['unfinished'] and (game['tier'] != 0 and game['genre'] != None)):
