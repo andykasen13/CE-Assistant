@@ -283,7 +283,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                     game_tracker.remove(other_game['name'])
                     del(new_data[other_game])
                     new_data[game['name']] = get_game(game)
-        if game['genre'] != None:
+
+
+        if game['genre'] != None and game['name'] in list(new_data.keys()):
             new_data[game['name']]['Last Updated'] = updated_time
 
 
