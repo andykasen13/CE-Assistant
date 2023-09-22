@@ -253,7 +253,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             # make embed
             embed = {
                 'Embed' : discord.Embed(
-                    title="__" + game['name'] + "__ added to the site", 
+                    title="__" + game['name'] + "__ added to the site:", 
                     colour= 0x48b474,
                     timestamp=datetime.now(),
                     description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
@@ -479,7 +479,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
 
     # ------------------- check description -------------------
     if new['Description'] != old['Description']:
-        update += "\n\t- Description Updated"
+        update += "\n\t- Description updated"
 
 
     # ------------------- check requirements -------------------
