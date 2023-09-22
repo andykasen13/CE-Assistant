@@ -96,7 +96,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
 
     # set up API requests
-    api_response = requests.get('https://cedb.me/api/games')
+    api_response = requests.get('https://cedb.me/api/games/full')
     json_response = json.loads(api_response.text)
 
     # grab last updated time
@@ -129,23 +129,22 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         "Strategy" : '<:CE_strategy:1126326195915591690>'
     }
 
+    try:
+        print('testing...')
+        print(json_response[0]['id'])
+    except:
+        print('json failed lol')
+        return
+
     # game loop adding updated parts
     for game in json_response:
         print(game['name'])
         current_newest = c
 
-        # i am so sorry theron
-        try:
-            game_json = requests.get('https://cedb.me/api/game/' + game['id'])
-            game_json = json.loads(game_json.text)
-        except:
-            game_tracker.remove(game['name'])
-            continue
-
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
         created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
 
-        for objective in game_json['objectives'] :
+        for objective in game['objectives'] :
             # was the objective updated
             objupdatedtime = time.mktime(datetime.strptime(str(objective['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
             if updated_time < objupdatedtime : updated_time = objupdatedtime
@@ -157,8 +156,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
         #print(updated_time)
         #print(created_time)
-
-        del game_json
 
         if(game['name'] in game_tracker) : current_newest = new_data[game['name']]['Last Updated']
 
@@ -613,7 +610,8 @@ def get_game(game):
         'Full Completions' : game['completion']['completed'],
         'Total Owners' : game['completion']['total'],
         'Primary Objectives' : objectives[0],
-        'Community Objectives' : objectives[1]
+        'Community Objectives' : objectives[1],
+        'Last Updated' : objectives[2]
         }
     
     return returnable
@@ -624,7 +622,7 @@ def get_objectives(CE_ID):
     api_response = requests.get('https://cedb.me/api/game/{}'.format(CE_ID))
     json_response = json.loads(api_response.text)
 
-    objectives = [{}, {}]
+    objectives = [{}, {}, ""]
     achievements = {}
 
     for achievement in json_response['achievements']:
@@ -656,7 +654,20 @@ def get_objectives(CE_ID):
             objectives[index][objective['name']]['Achievements'] = achievement_name
         if requirements != '':
             objectives[index][objective['name']]['Requirements'] = requirements
-        
+    
+    updated_time = time.mktime(datetime.strptime(str(json_response['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+
+    for objective in json_response['objectives'] :
+        # was the objective updated
+        objupdatedtime = time.mktime(datetime.strptime(str(objective['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+        if updated_time < objupdatedtime : updated_time = objupdatedtime
+
+        # was the objective's requirement updated
+        for objrequirement in objective["objectiveRequirements"] :
+            objrequpdatedtime = time.mktime(datetime.strptime(str(objrequirement['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+            if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
+    
+    objectives[2] = updated_time
 
     return objectives
 
