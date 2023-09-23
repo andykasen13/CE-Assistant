@@ -200,6 +200,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             # update data
             new_data[game['name']] = get_game(game)
         
+        # game is new BUT! unfinished
         elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None):
             print('silly!')
             unfinished_games['unfinished'].append(game['id'])
@@ -219,7 +220,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 updated_games.append(update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
                 number += 1
             new_data[game['name']] = get_game(game)
-
 
         # if game is new
         # elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
@@ -280,15 +280,77 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         # game is neither new nor updated
         elif game['name'] in game_tracker:
             game_tracker.remove(game['name'])
+        
+        # two options: 
+        # either the games name was changed 
+        # - OR 
+        # the game is not registered in the CE Assistant database.
         elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
+            silly = False
+            
+            # check if the game's name was changed
             for other_game in new_data:
                 if other_game == '_id' : continue
                 if game['id'] == new_data[other_game]['CE ID']:
                     game_tracker.remove(other_game['name'])
                     del(new_data[other_game])
                     new_data[game['name']] = get_game(game)
+                    silly = True
+
+            # new game that wasn't caught above
+            if not silly:
+                print("NEW: " + game['name'])
+                ss = (get_image(number, game['id'], driver))
+                ss = io.BytesIO(ss)
+                new_game = get_game(game)
+                new_data[game['name']] = new_game
+
+                # grab total points
+                points = 0
+                for objective in new_game['Primary Objectives']:
+                    points += new_game['Primary Objectives'][objective]['Point Value']
+                
+                second_part = ""
+                third_part = ""
+                num_po = len(list(new_game['Primary Objectives']))
+                num_co = len(list(new_game['Community Objectives']))
+
+                # grammar police
+                if num_po > 1:
+                    second_part = 's'
+
+                if num_co > 1:
+                    third_part = "\n- {} Community Objectives".format(num_co)
+                elif num_co == 1:
+                    third_part = "\n- 1 Community Objective"
+                
+
+                # make embed
+                embed = {
+                    'Embed' : discord.Embed(
+                        title="__" + game['name'] + "__ added to the site:", 
+                        colour= 0x48b474,
+                        timestamp=datetime.now(),
+                        description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
+                    ),
+                    'Image' : discord.File(ss, filename="image.png")
+                }
+                embed['Embed'].set_image(url='attachment://image.png')
+                embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
+                embed['Embed'].set_thumbnail(url=ce_hex_icon)
+                embed['Embed'].set_footer(text="CE Assistant",
+                    icon_url=final_ce_icon)
+            
+                updated_games.append(embed)
+                number += 1
+
+                if (game['id'] in unfinished_games['unfinished'] and (game['tier'] != 0 and game['genre'] != None)): unfinished_games['unfinished'].remove(game['id'])
+
+                del ss
 
 
+
+        # if the game exists in database_name
         if game['genre'] != None and game['name'] in list(new_data.keys()):
             new_data[game['name']]['Last Updated'] = updated_time
 
