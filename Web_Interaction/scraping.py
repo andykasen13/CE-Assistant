@@ -97,7 +97,11 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
     # set up API requests
     api_response = requests.get('https://cedb.me/api/games/full')
-    json_response = json.loads(api_response.text)
+    try:
+        json_response = json.loads(api_response.text)
+    except:
+        print('json failed lol!!!')
+        return
 
     # grab last updated time
     current_newest = current_dict['Updated Time']
