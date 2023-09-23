@@ -159,6 +159,8 @@ async def scrape(channel, mongo_client):
     # thread call scraping the new data
     updates = await thread_scrape(database_name, curator_count, unfinished) #asyncio.to_thread(thread_scrape)
 
+    if updates == None : return 
+
     # dump the data back onto mongodb
     dump1 = await collection.replace_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')}, updates[2]) # name
     dump2 = await collection.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, updates[3]) # user

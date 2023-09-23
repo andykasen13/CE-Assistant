@@ -50,6 +50,7 @@ def get_games(database_name, curator_count, unfinished_games):
 
     # create our returnable and update database_name
     fin = game_list(database_name, curator_count, unfinished_games)
+    if fin == None: return None
     # use database_name to update database_tier
     database_tier = get_by_tier(database_name)
     fin.append(database_tier)
@@ -227,6 +228,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         # if a game is new
         # ORRRRR
         # the game is in unfininshed games and is ready to go 
+        #TODO: this might be redundant code but i'm not gonna find out so lol
         elif (created_time > current_newest) or (game['id'] in unfinished_games['unfinished'] and (game['tier'] != 0 and game['genre'] != None)):
             print("NEW: " + game['name'])
             ss = (get_image(number, game['id'], driver))
