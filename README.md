@@ -92,6 +92,7 @@ You will need to `pip install` the following:
 - `bs4` (html sorting)
 - `apscheduler` (scheduling roll-ends)
 - `pymongo` and `motor` (accessing databases)
+- `chromedriver_binary` (don't ask bruh i have no idea)
 
 
 # CE-Assistant
