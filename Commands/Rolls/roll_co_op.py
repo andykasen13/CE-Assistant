@@ -175,12 +175,14 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 "Partner" : target_user_data["CE ID"],
                 "Games" : [target_user_selected_game]
             })
+            #TODO: GOJO SATORU
 
             database_user[part_user_id]["Current Rolls"][t_num] = ({
                 "Event Name" : event,
                 "Partner" : interaction_user_data["CE ID"],
                 "Games" : [interaction_user_selected_game]
             })
+            #TODO: GOJO SATORU
 
             dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
 
@@ -299,12 +301,14 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         "Partner" : target_user_data["CE ID"],
                         "Games" : [game]
                     })
+                    #TODO: GOJO SATORU
 
                     database_user[part_user_id]["Current Rolls"][t_num] = ({
                         "Event Name" : event,
                         "Partner" : interaction_user_data["CE ID"],
                         "Games" : [game]
                     })
+                    #TODO: GOJO SATORU
 
                 
                 else :
@@ -315,6 +319,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         "End Time" : int(time.mktime((datetime.datetime.now()+end_db[tier_num]).timetuple())),
                         "Games" : [game]
                     })
+                    #TODO: GOJO SATORU
 
                     database_user[part_user_id]["Current Rolls"][t_num] = ({
                         "Event Name" : event,
@@ -322,6 +327,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         "End Time" : int(time.mktime((datetime.datetime.now()+end_db[tier_num]).timetuple())),
                         "Games" : [game]
                     })
+                    #TODO: GOJO SATORU
 
                 dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
 
@@ -409,7 +415,9 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 interaction_user_has_points_in_game = True
                 while (target_user_owns_game and target_user_has_points_in_game) or (interaction_user_owns_game and interaction_user_has_points_in_game) :
                     # grab a rollable game
-                    game = get_rollable_game(40, 20, "Tier 3", database_tier=database_tier, database_name=database_name)
+                    game = get_rollable_game(40, 20, "Tier 3", database_tier=database_tier, database_name=database_name, games=games)
+
+                    
                     
                     # check to see if user B owns the game and if they have points in the game
                     target_user_owns_game = list(target_user_data["Owned Games"].keys()).count(game) > 0
@@ -456,6 +464,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 "End Time" :  int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple())),
                 "Games" : games
             })
+            #TODO: GOJO SATORU
 
             database_user[part_user_id]["Current Rolls"][t_num] = ({
                 "Event Name" : event,
@@ -463,6 +472,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 "End Time" :  int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple())),
                 "Games" : games
             })
+            #TODO: GOJO SATORU
 
             dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
 
@@ -553,12 +563,12 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
                 i_num = 0
                 for roll_i in database_user[int_user_id]["Current Rolls"] :
-                    if(roll_i["Games"] == ['pending...']) : break
+                    if(roll_i["Games"] == ['pending...'] and roll_i["Event Name"] == event) : break
                     i_num += 1
                 
                 t_num = 0
                 for roll_t in database_user[part_user_id]["Current Rolls"] :
-                    if(roll_t["Games"] == ['pending...']) : break
+                    if(roll_t["Games"] == ['pending...'] and roll_t["Event Name"] == event) : break
                     t_num += 1
 
 
@@ -567,12 +577,14 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     "Partner" : target_user_data["CE ID"],
                     "Games" : [game]
                 })
+                #TODO: GOJO SATORU
 
                 database_user[part_user_id]["Current Rolls"][t_num] = ({
                     "Event Name" : event,
                     "Partner" : interaction_user_data["CE ID"],
                     "Games" : [game]
                 })
+                #TODO: GOJO SATORU
 
                 dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
 
@@ -703,12 +715,12 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
                     i_num = 0
                     for roll_i in database_user[int_user_id]["Current Rolls"] :
-                        if(roll_i["Games"] == ['pending...']) : break
+                        if(roll_i["Games"] == ['pending...'] and roll_i["Event Name"] == event) : break
                         i_num += 1
                     
                     t_num = 0
                     for roll_t in database_user[part_user_id]["Current Rolls"] :
-                        if(roll_t["Games"] == ['pending...']) : break
+                        if(roll_t["Games"] == ['pending...'] and roll_t["Event Name"] == event) : break
                         t_num += 1
 
 
@@ -717,12 +729,14 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         "End Time" :  int(time.mktime((datetime.datetime.now()+timedelta(7)).timetuple())),
                         "Games" : ["andy's cool epic fun time balloons yay"]
                     })
+                    #TODO: GOJO SATORU
 
                     database_user[part_user_id]["Current Rolls"][t_num] = ({
                         "Event Name" : event,
                         "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(7)).timetuple())),
                         "Games" : ["andy's cool epic fun time balloons yay"]
                     })
+                    #TODO: GOJO SATORU
 
                     dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
 

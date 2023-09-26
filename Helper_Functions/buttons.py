@@ -110,7 +110,9 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
             database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
                                                     "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple())),
                                                     "Games" : games})
+        # TODO: GOJO SATORU
         
+        """
         elif reroll :
             c_nums = []
             for index, c_roll in enumerate(database_user[target_user]["Current Rolls"]) :
@@ -132,6 +134,7 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
                 "End Time" : database_user[target_user]["Current Rolls"][c_num]["End Time"],
                 "Games" : games
             })
+        """
 
         # dump the info
         dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)

@@ -335,8 +335,10 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         userInfo[target_user]["Current Rolls"].append({"Event Name" : event, 
                                                     "End Time" :  int(time.mktime((datetime.datetime.now()+times[event]).timetuple())),
                                                     "Games" : games})
+        # TODO: GOJO SATORU
 
-    elif (dont_save is False) and (reroll) :
+    # this is reroll shit and rerolls dont exist anymore lol
+    """ elif (dont_save is False) and (reroll) :
         c_num = -1
         for index, c_roll in enumerate(userInfo[target_user]["Current Rolls"]) :
             if c_roll["Event Name"] == event :
@@ -350,6 +352,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             "End Time" : userInfo[target_user]["Current Rolls"][c_num]["End Time"],
             "Games" : games
         })
+    """
 
 
     # dump the info
