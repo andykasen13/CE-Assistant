@@ -626,7 +626,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
             # the last achievement
             else:
                 if grammar_check == 1:
-                    stand_in +=  " '{}'".format(new['Achievements'][achievement])
+                    stand_in +=  "'{}'".format(new['Achievements'][achievement])
                 elif grammar_check == 2:
                     stand_in = stand_in[:-2:] + " and '{}'".format(new['Achievements'][achievement])
                 else:
@@ -811,7 +811,7 @@ def get_by_tier(games):
     
     for game in games:
             if game == "_id" : continue
-            if games[game]["Tier"] == 5:
+            if games[game]["Tier"] == "Tier 5":
                 tot = 0
                 for obj in games[game]["Primary Objectives"]:
                     tot += games[game]["Primary Objectives"][obj]["Point Value"]
