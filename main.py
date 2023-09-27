@@ -76,7 +76,7 @@ mongo_ids = {
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-discord_token = localJSONData['discord_token']  
+discord_token = localJSONData['other_discord_token']  
 guild_ID = localJSONData['test_guild_ID']
 
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
@@ -90,71 +90,27 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 
 
 
+async def aaaa_auto(interaction : discord.Interaction, current:str) -> typing.List[app_commands.Choice[str]]:
+    data = []
+    database_name = await collection.find_one({'_id' : mongo_ids["tier"]})
+    print(database_name) 
 
+    for game in list(database_name.keys()):
+        data.append(app_commands.Choice(name=game,value=game))
+    print(data)
+    return data
 
 
 
 
 
 @tree.command(name="aaaaa", description="afjdals", guild=discord.Object(id=guild_ID))
-async def aaaaa(interaction : discord.Interaction):
+@app_commands.autocomplete(item=aaaa_auto)
+async def aaaaa(interaction : discord.Interaction, item : str):
     await interaction.response.defer()
 
-    #json = {"unfinished" : []}
-    #dump = await collection.insert_one(json)
-    #j = requests.get('https://cedb.me/api/game/15e19c86-8a9b-409a-9f21-1da650e1b94c')
-    #js = json.loads(j.text)
 
-    #x = js['objectives'][0]['updatedAt']
-    #x = time.mktime(datetime.datetime.strptime(str(x[:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
-
-    #print(js)
-
-    #print(x)
-
-    await interaction.followup.send('silly!')
-
-    """
-    
-    # Set selenium driver and preferences
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--disable-gpu')
-    driver = webdriver.Chrome(options=options)
-    driver.set_window_size(width=1440, height=8000)
-
-
-    # grab first game to get color on the rest of them
-    url = 'https://cedb.me/game/1e8565aa-b9f2-4b41-9578-22e4c2a5436b'
-    driver.get(url)
-    objective_lst = []
-    while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
-        objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
-        print(objective_lst)
-
-
-
-    ss = get_image(0, "1e866995-6fec-452e-81ba-1e8f8594f4ea", driver)
-
-    screenshot = io.BytesIO(ss)
-    
-    embed = discord.Embed(title="blajaj")
-
-
-
-    await interaction.followup.send(content='silly!', embed=embed, file=discord.File(screenshot, filename="ss.png"))
-
-    del ss
-    del screenshot
-    del embed
-    
-    """
-
-
-
-
+    await interaction.followup.send(item)
 
 
 

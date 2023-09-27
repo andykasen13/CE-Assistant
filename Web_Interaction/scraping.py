@@ -267,7 +267,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 'Image' : discord.File(ss, filename="image.png")
             }
             embed['Embed'].set_image(url='attachment://image.png')
-            embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
+            embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
             embed['Embed'].set_thumbnail(url=ce_hex_icon)
             embed['Embed'].set_footer(text="CE Assistant",
                 icon_url=final_ce_icon)
@@ -338,7 +338,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                     'Image' : discord.File(ss, filename="image.png")
                 }
                 embed['Embed'].set_image(url='attachment://image.png')
-                embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
+                embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
                 embed['Embed'].set_thumbnail(url=ce_hex_icon)
                 embed['Embed'].set_footer(text="CE Assistant",
                     icon_url=final_ce_icon)
@@ -424,7 +424,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
         'Image' : discord.File(ss, filename="image.png")
     }
     embed['Embed'].set_image(url='attachment://image.png')
-    embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
+    embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
     embed['Embed'].set_thumbnail(url=ce_hex_icon)
     embed['Embed'].set_footer(text="CE Assistant",
         icon_url=final_ce_icon)
@@ -465,7 +465,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
         'Image' : discord.File(image, filename="image.png")
         }
         embed['Embed'].set_image(url='attachment://image.png')
-        embed['Embed'].set_author(name="Challenge Enthusiasts", url="https://cedb.me", icon_url=icon)
+        embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
         embed['Embed'].set_thumbnail(url=ce_hex_icon)
         embed['Embed'].set_footer(text="CE Assistant",
             icon_url=final_ce_icon)
@@ -485,6 +485,8 @@ def objective_update(type, new_game, old_game):
 
     if new_game['{} Objectives'.format(type)] != old_game['{} Objectives'.format(type)]:
 
+        objective_tracker = list(old_game['{} Objectives'.format(type)].keys())
+
         # primary objective loop
         for objective in new_game['{} Objectives'.format(type)]:
 
@@ -503,9 +505,13 @@ def objective_update(type, new_game, old_game):
             elif objective in list(old_game['{} Objectives'.format(type)].keys()) and old_game['{} Objectives'.format(type)][objective] != new_game['{} Objectives'.format(type)][objective]:
                 update += "🧑‍🦲😼💀😩🥵"
                 update += update_embed(new_game, old_game, objective, type)
+            
+            # remove objective from tracker
+            if objective in objective_tracker : objective_tracker.remove(objective)
 
+        for objective in objective_tracker:
             # if objective is removed
-            elif objective in list(old_game['{} Objectives'.format(type)].keys()) and not objective in list(new_game['{} Objectives'.format(type)].keys()):
+            if objective in list(old_game['{} Objectives'.format(type)].keys()) and not objective in list(new_game['{} Objectives'.format(type)].keys()):
                 update += "🧑‍🦲😼💀😩🥵"
                 update += "'**{}**' was removed from the site".format(objective)
     
@@ -792,11 +798,27 @@ def get_by_tier(games):
             'First-Person' : [],
             'Platformer' : [],
             'Strategy' : []
+        },
+        'Tier 6' : {
+            'Action' : [],
+            'Arcade' : [],
+            'Bullet Hell' : [],
+            'First-Person' : [],
+            'Platformer' : [],
+            'Strategy' : []
         }
     }
     
     for game in games:
             if game == "_id" : continue
+            if games[game]["Tier"] == 5:
+                tot = 0
+                for obj in games[game]["Primary Objectives"]:
+                    tot += games[game]["Primary Objectives"][obj]["Point Value"]
+                if tot > 1000: continue
+                elif tot > 500 : tier_based_data["Tier 6"][games[game]["Genre"]].append(game)
+                else : tier_based_data[games[game]["Tier"]][games[game]["Genre"]].append(game)
+                continue
             tier_based_data[games[game]["Tier"]][games[game]["Genre"]].append(game)
 
     return tier_based_data
