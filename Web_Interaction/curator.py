@@ -139,7 +139,7 @@ def curatorUpdate(num: int) :
         embed.set_image(url=imageLink)
         embed.set_footer(text="CE Assistant",
             icon_url=final_ce_icon)
-        embed.set_author(name="New game added to curator!", url="https://store.steampowered.com/curator/36185934/")
+        embed.set_author(name="New game added to curator!", url="https://store.steampowered.com/curator/36185934/", icon_url="https://cdn.discordapp.com/attachments/639112509445505046/1133598420653854831/CE.png")
 
 
         embeds.append(embed)

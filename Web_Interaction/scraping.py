@@ -238,8 +238,10 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
             # grab total points
             points = 0
+            uncleareds = 0
             for objective in new_game['Primary Objectives']:
-                points += new_game['Primary Objectives'][objective]['Point Value']
+                if new_game["Primary Objectives"][objective]["Point Value"] == 1: uncleareds +=1
+                else: points += new_game['Primary Objectives'][objective]['Point Value']
             
             second_part = ""
             third_part = ""
@@ -254,6 +256,11 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 third_part = "\n- {} Community Objectives".format(num_co)
             elif num_co == 1:
                 third_part = "\n- 1 Community Objective"
+            
+            if uncleareds > 1:
+                third_part += "\n- {} Uncleared Objectives"
+            elif uncleareds == 1:
+                third_part += "\n- 1 Uncleared Objective"
             
 
             # make embed
@@ -508,12 +515,16 @@ def objective_update(type, new_game, old_game):
             
             # remove objective from tracker
             if objective in objective_tracker : objective_tracker.remove(objective)
+            try:
+                if objective[0:len(objective)-12] in objective_tracker : objective_tracker.remove(objective)
+            except:
+                print('hahahaha')
 
         for objective in objective_tracker:
             # if objective is removed
             if objective in list(old_game['{} Objectives'.format(type)].keys()) and not objective in list(new_game['{} Objectives'.format(type)].keys()):
                 update += "🧑‍🦲😼💀😩🥵"
-                update += "'**{}**' was removed from the site".format(objective)
+                update += "\n- '**{}**' was removed from the site".format(objective)
     
 
     return update
