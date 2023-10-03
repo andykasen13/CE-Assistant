@@ -44,7 +44,6 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     target_user = ""
     for current_user in userInfo :
         if current_user == '_id' : continue
-        print(current_user)
         if(userInfo[current_user]["Discord ID"] == interaction.user.id) :
             target_user = current_user
             break
@@ -238,6 +237,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # -------------------------------------------- Fourward Thinking --------------------------------------------
     elif event == "Fourward Thinking" :
         # idk
+        print('hahahaha')
         
         # See if the user has already rolled Fourward Thinking
         has_roll = False
@@ -252,7 +252,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         if(not has_roll) : 
             # Has not rolled Fourward Thinking before
             embed = discord.Embed(title=("Fourward Thinking"),
-                                  description="You are about to roll Fourward Thinking. This is the most confusing roll event, so buckle in."
+                                  description="You have rolled Fourward Thinking. This is the most confusing roll event, so buckle in."
                                   + "\nWhen you roll this event, a T1 in a genre of your choosing will be rolled for you, and you will have one week to do so."
                                   + "\nIf you manage to complete this T1 in one week, you will now choose a __different__ genre to roll a T2 - and you'll have two weeks."
                                   + "\nContinue this process through T4 - and if you complete that, you win!",
@@ -265,17 +265,36 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             embed.add_field(name="Timing",
                             value="- Your T1 will not have an average completion time on steamhunters larger than 40. This goes up to 80 for your T2, 120 for T3, and 160 for T4."
                             + " \n- Your cooldown timer is calculated as such: (num of completed games + 1) * 2 weeks. Failing your T1 nets you a two week cooldown, T4 nets you ten weeks.")
-            embed.add_field(name="Confirmation",
-                            value="Knowing all this, would you like to begin your Fourward Thinking roll?")
+            embed.add_field(name="Game",
+                            value="Your selected game is on the next page. Click to see your T1!",
+                            inline=False)
             embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
             embed.set_author(name="Challenge Enthusiasts")
 
+            game2 = get_rollable_game(40, 20, "Tier 1", database_tier=database_tier, database_name=database_name)
+            embed2 = getEmbed(game2, interaction.user.id, database_name)
+
+            embeds = [embed, embed2]
+
+            view = discord.ui.View(timeout=600)
+            await get_buttons(view, embeds)
+
+            userInfo[target_user]["Current Rolls"].append({
+                "Event Name" : event,
+                "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(days=7)).timetuple())),
+                "Games" : [game2]
+            })
+
+            dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, userInfo)
+
+            return await interaction.followup.send(embed=embed, view=view)
+            
             dont_save=True
 
 
         elif (has_roll and "End Time" in list(userInfo[target_user]["Current Rolls"][roll_num].keys())) :
             # Has rolled Fourward Thinking but isn't done with the roll yet.
-            embed = discord.Embed(title="You are currently participating in Fourward Thinking!")
+            return await interaction.followup.send("You are currently participating in Fourward Thinking!")
             dont_save = True
 
         else : 
