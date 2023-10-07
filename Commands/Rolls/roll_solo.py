@@ -325,7 +325,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             
             # get the embed for the new game
             embeds.append(getEmbed(game, interaction.user.id, database_name))
-
+        
+            view = discord.ui.View(timeout=600)
             # get buttons
             await get_buttons(view, embeds)
             embed = embeds[0]
