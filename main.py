@@ -902,6 +902,7 @@ async def update(interaction : discord.Interaction) :
     # Defer the message
     await interaction.response.defer(ephemeral=True)
 
+    database_name = await collection.find_one({'_id' : mongo_ids["name"]})
     database_user = await collection.find_one({'_id' : mongo_ids["user"]})
 
     log_channel = client.get_channel(1141886539157221457)
@@ -923,7 +924,7 @@ async def update(interaction : discord.Interaction) :
 
     # actually update the user's database 
     # and store anything we need to report
-    returns = update_p(interaction.user.id, False, database_user)
+    returns = update_p(interaction.user.id, False, database_user, database_name)
 
     if returns == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
 

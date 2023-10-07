@@ -218,8 +218,10 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             test_old['Full Completions'] = None
             test_old['Total Owners'] = None
             if test_old != test_new:
-                updated_games.append(update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
-                number += 1
+                upppp = update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name'])
+                if upppp != "hiya!":
+                    updated_games.append(upppp)
+                    number += 1
             new_data[game['name']] = get_game(game)
 
         # if game is new
@@ -419,6 +421,11 @@ def update(new_game, old_game, driver, number, icon, icons, name):
     # ------------------- check objectives -------------------
     update += objective_update('Primary', new_game, old_game).replace('🧑‍🦲😼💀😩🥵', '')
     update += objective_update('Community', new_game, old_game).replace('🧑‍🦲😼💀😩🥵', '')
+
+    fake_update = update
+    fake_update.replace('\n','')
+    fake_update.replace('\t','')
+    if fake_update == "" : return "hiya!"
 
     # ------------------- make final embed -------------------
     embed = {
