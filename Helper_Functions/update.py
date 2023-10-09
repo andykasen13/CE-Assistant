@@ -473,6 +473,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             if current_roll["Event Name"] == "Fourward Thinking" :
                 if "End Time" not in current_roll : continue
                 returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
+                remove_indexes.append(c_index)
 
             # two week t2 streak
             elif "End Time" not in current_roll and current_roll["Event Name"] == "Two Week T2 Streak":

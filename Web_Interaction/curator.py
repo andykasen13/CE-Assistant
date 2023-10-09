@@ -48,6 +48,7 @@ def getCuratorCount():
     broth = requests.get("https://store.steampowered.com/curator/36185934/", params=veggies)
     soup = BeautifulSoup(broth.text, features="html.parser")
     noodle = soup.find_all("span")
+    number = "Failed"
     for noodlet in noodle:
         try:
             if noodlet['id'] == "Recommendations_total":
@@ -59,6 +60,7 @@ def getCuratorCount():
 
 def checkCuratorCount(curator_count):
     number = getCuratorCount()
+    if number == "Failed": number = current_count
     current_count = curator_count['Curator Count']
     if number != current_count:
         embeds = curatorUpdate(int(number)-int(current_count))

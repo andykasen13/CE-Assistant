@@ -313,10 +313,12 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="check-rolls", description="Check the active rolls of anyone on the server", guild=discord.Object(id=guild_ID))
 @app_commands.describe(user="The user you'd like to check the rolls of")
-async def checkRolls(interaction, user: discord.Member=None) :
+async def checkRolls(interaction : discord.Interaction, user: discord.Member=None) :
     # defer the message
     print('balls')
     await interaction.response.defer()
+
+    return await interaction.followup.send("Feature under construction!! Coming soon.")
 
     # if no user is provided default to sender
     if user is None :
