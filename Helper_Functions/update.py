@@ -458,7 +458,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     database_name[game]["Primary Objectives"][dbN_objective] = database_name[game]["Primary Objectives"][dbN_objective]["Point Value"]
 
                 # ---------- check to see if the games are equal ----------
-                if (game not in user_dict[ce_id]["Owned Games"] or user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"]) : roll_completed = False
+                if (game not in user_dict[ce_id]["Owned Games"] or "Primary Objectives" not in user_dict[ce_id]["Owned Games"][game] or user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"]) : roll_completed = False
 
 
         # -------------------------------------------------- NO MORE CHECKING --------------------------------------------------------------
