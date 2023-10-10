@@ -246,6 +246,7 @@ events_solo = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a 
 async def roll_solo_command(interaction : discord.Interaction, event: events_solo) :   
 
     await interaction.response.defer()
+    if interaction.user.id == 359387889781571585 : return await interaction.followup.send("syrenyx you have been blocked from the bot lol")
 
     await solo_command(interaction, event, reroll = False, collection=collection)
     
