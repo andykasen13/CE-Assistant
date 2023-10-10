@@ -28,6 +28,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     # Find the users data
     user = -1
     for for_user in database_user :
+        if for_user == "_id" : continue
         if(database_user[for_user]['Discord ID'] == user_id) : 
             user = for_user
             break
