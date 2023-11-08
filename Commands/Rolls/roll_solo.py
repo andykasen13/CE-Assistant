@@ -282,7 +282,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             userInfo[target_user]["Current Rolls"].append({
                 "Event Name" : event,
                 "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(days=7)).timetuple())),
-                "Games" : [game2]
+                "Games" : [game2],
+                "Rerolls" : 0
             })
 
             dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, userInfo)
@@ -294,7 +295,15 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         elif (has_roll and "End Time" in list(userInfo[target_user]["Current Rolls"][roll_num].keys())) :
             # Has rolled Fourward Thinking but isn't done with the roll yet.
-            return await interaction.followup.send("You are currently participating in Fourward Thinking!")
+            if userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"] == 0:
+                return await interaction.followup.send("You are currently participating in Fourward Thinking!")
+            else:
+                view = discord.ui.View(timeout=600)
+                agree_button = discord.ui.Button(label="Agree", style=discord.ButtonStyle.success)
+                deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
+                view.add_item(deny_button)
+                view.add_item(agree_button)
+                return await interaction.followup.send("You have {} reroll ticket(s). Would you like to use one?", view=view)
             dont_save = True
 
         else : 
@@ -334,7 +343,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             # update users2.json
             userInfo[target_user]["Current Rolls"][roll_num]["Games"].append(game)
             userInfo[target_user]["Current Rolls"][roll_num]["End Time"] = int(time.mktime((datetime.datetime.now()+timedelta(7*(num_of_games+1))).timetuple()))
-            
+            userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"] += 1
+
             # dont add the thing to users2.json AGAIN!
             dont_save = True
 

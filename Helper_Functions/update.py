@@ -518,6 +518,9 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     returns.append("casino: " + "<@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
                     
                     # and add the cooldown
+                    if current_roll["Event Name"] == "Fourward Thinking" :
+                        cooldown_days = 0
+                        database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime((datetime.datetime.now()).timetuple()))
                     database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] =  int(time.mktime((datetime.datetime.now()+cooldowns[current_roll["Event Name"]]).timetuple()))
                 remove_indexes.append(m_index)
             

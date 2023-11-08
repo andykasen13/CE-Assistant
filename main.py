@@ -76,7 +76,7 @@ mongo_ids = {
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-discord_token = localJSONData['discord_token']  
+discord_token = localJSONData['other_discord_token']  
 guild_ID = localJSONData['test_guild_ID']
 
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
