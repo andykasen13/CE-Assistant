@@ -146,10 +146,16 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         print(game['name'])
         current_newest = c
 
+        import_objective_names = []
+        local_objective_names = []
+
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
         created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
 
         for objective in game['objectives'] :
+            # store the objective names
+            import_objective_names.append(objective['name'])
+
             # was the objective updated
             objupdatedtime = time.mktime(datetime.strptime(str(objective['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
             if updated_time < objupdatedtime : updated_time = objupdatedtime
@@ -167,7 +173,13 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         #print(created_time)
 
         if(game['name'] in list(new_data.keys())) : 
+            # if the game is locally stored, set current_newest to that updatedvalue
             current_newest = new_data[game['name']]['Last Updated']
+
+            # also grab the names of objectives
+            local_objective_names = list(new_data[game['name']]["Primary Objectives"].keys()) + list(new_data[game['name']]["Community Objectives"].keys())
+        
+        if set(import_objective_names) != set(local_objective_names): updated_time = int(time.mktime(datetime.now().timetuple()))
             
 
        # print("updatd")
