@@ -159,14 +159,21 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 objrequpdatedtime = time.mktime(datetime.strptime(str(objrequirement['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
                 if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
 
+        # don't forget to undo this if using locally
+        #updated_time -= 4*3600
+        
+
         #print(updated_time)
         #print(created_time)
 
-        if(game['name'] in list(new_data.keys())) : current_newest = new_data[game['name']]['Last Updated']
+        if(game['name'] in list(new_data.keys())) : 
+            current_newest = new_data[game['name']]['Last Updated']
+            print('found')
 
        # print("updatd")
-        #print(updated_time)
-        #print(current_newest)
+        print(updated_time)
+        print(current_newest)
+        print(updated_time > current_newest)
 
 
 
@@ -450,6 +457,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
 
 
 def special_update(new_game, old_game, driver, number, icon, icons, name):
+    removed = False
     update = ""
     decimal = 0
     embeds = []
@@ -467,17 +475,30 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
     for objective_info in objective_list:
         objective = objective_info[objective_info.find("'")+3:objective_info.rfind("'")-2:]
         image = special_image(number, decimal, new_game['CE ID'], driver, objective)
-        image = io.BytesIO(image)
+        if(image == "none") : removed = True
+        else:
+            image = io.BytesIO(image)
 
-        embed = {
-        'Embed' : discord.Embed(
-            title="__" + name + "__ updated on the site:",
-            colour= 0xefd839,
-            timestamp=datetime.now(),
-            description=objective_info.strip()
-        ),
-        'Image' : discord.File(image, filename="image.png")
-        }
+        if(not removed):
+            embed = {
+                'Embed' : discord.Embed(
+                    title="__" + name + "__ updated on the site:",
+                    colour= 0xefd839,
+                    timestamp=datetime.now(),
+                    description=objective_info.strip()
+                ),
+                'Image' : discord.File(image, filename="image.png")
+            }
+        else:
+            embed = {
+                'Embed' : discord.Embed(
+                    title="__" + name + "__ updated on the site:",
+                    colour= 0xefd839,
+                    timestamp=datetime.now(),
+                    description=objective_info.strip()
+                ),
+                'Image' : discord.File("Web_Interaction/removed.png", filename="image.png")
+            }
         embed['Embed'].set_image(url='attachment://image.png')
         embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
         embed['Embed'].set_thumbnail(url=ce_hex_icon)
@@ -941,7 +962,7 @@ def get_image(number, CE_ID, driver):
 
 
 
-def special_image(number, decimal, CE_ID, driver, objective_name):
+def special_image(number, decimal, CE_ID, driver, objective_name : str):
     try:
         url = 'https://cedb.me/game/' + CE_ID
         driver.get(url)
@@ -955,11 +976,28 @@ def special_image(number, decimal, CE_ID, driver, objective_name):
         print("I'm a doodoo head")
         special_image(number, decimal, CE_ID, driver, objective_name)
 
-
+    print('objective looking: ' + objective_name)
+    
+    objective_name = objective_name.lower()
+    objective_name = objective_name.replace(" ", '')
+    print(objective_name)
+    print('objectives in objective list')
     for objective in objective_lst:
-        if objective_name == objective.find_element(By.TAG_NAME, "h3").text:
+        check_name = str(objective.find_element(By.TAG_NAME, "h3").text)
+        check_name = check_name.lower()
+        check_name = check_name.replace(" ",'')
+        print(check_name)
+        print(check_name == objective_name)
+        if objective_name == check_name:
+            print('yeayuhhhh"')
             target_objective = objective
             break
+    
+    try:
+        target_objective
+    except NameError:
+        return "none"
+    
     
     top_left = target_objective.location
     bottom_right = target_objective.location
