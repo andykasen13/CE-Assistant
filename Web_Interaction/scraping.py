@@ -168,12 +168,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
         if(game['name'] in list(new_data.keys())) : 
             current_newest = new_data[game['name']]['Last Updated']
-            print('found')
+            
 
        # print("updatd")
-        print(updated_time)
-        print(current_newest)
-        print(updated_time > current_newest)
 
 
 
