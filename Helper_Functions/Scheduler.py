@@ -32,6 +32,7 @@ async def add_task(time, args):
 
 async def startup_sched():
     user_info = await collection.find_one({'_id' : mongo_ids["user"]})
+    database_name = await collection.find_one({'_id' : mongo_ids['name']})
 
     for user_str in user_info:
         if user_str == '_id' : continue
@@ -46,7 +47,8 @@ async def startup_sched():
             args = [
                 user['Discord ID'],
                 current_roll["Event Name"],
-                user_info
+                user_info,
+                database_name
             ]
 
             await add_task(end_time, args)
@@ -60,7 +62,8 @@ async def startup_sched():
             args = [
                 user['Discord ID'],
                 current_roll["Event Name"],
-                user_info
+                user_info,
+                database_name
             ]
 
             await add_task(end_time, args)
