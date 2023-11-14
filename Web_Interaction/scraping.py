@@ -179,7 +179,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             # also grab the names of objectives
             local_objective_names = list(new_data[game['name']]["Primary Objectives"].keys()) + list(new_data[game['name']]["Community Objectives"].keys())
         
-        if set(import_objective_names) != set(local_objective_names): updated_time = int(time.mktime(datetime.now().timetuple()))
+        if set(import_objective_names) != set(local_objective_names): updated_time = current_newest + 1
             
 
        # print("updatd")
