@@ -79,6 +79,7 @@ def single_scrape(curator_count):
 
 def game_list(new_data, current_dict, unfinished_games : dict):
     # Set selenium driver and preferences
+    hm = False
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
@@ -210,9 +211,10 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             test_old['Total Owners'] = None
 
             # compare old and new data excluding completion data
-            if test_old != test_new:
-                updated_games.extend(special_update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
-                number += 1
+            if test_old != test_new:    
+                if hm:
+                    updated_games.extend(special_update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
+                    number += 1
 
             # update data
             new_data[game['name']] = get_game(game)
@@ -234,10 +236,11 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             test_old['Full Completions'] = None
             test_old['Total Owners'] = None
             if test_old != test_new:
-                upppp = update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name'])
-                if upppp != "hiya!":
-                    updated_games.append(upppp)
-                    number += 1
+                if hm:
+                    upppp = update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name'])
+                    if upppp != "hiya!":
+                        updated_games.append(upppp)
+                        number += 1
             new_data[game['name']] = get_game(game)
 
         # if game is new
@@ -249,8 +252,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         #TODO: this might be redundant code but i'm not gonna find out so lol
         elif (created_time > current_newest) or (game['id'] in unfinished_games['unfinished'] and (game['tier'] != 0 and game['genre'] != None)):
             print("NEW: " + game['name'])
-            ss = (get_image(number, game['id'], driver))
-            ss = io.BytesIO(ss)
+            if hm:
+                ss = (get_image(number, game['id'], driver))
+                ss = io.BytesIO(ss)
             new_game = get_game(game)
             new_data[game['name']] = new_game
 
@@ -282,27 +286,27 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             
 
             # make embed
-            embed = {
-                'Embed' : discord.Embed(
-                    title="__" + game['name'] + "__ added to the site:", 
-                    colour= 0x48b474,
-                    timestamp=datetime.now(),
-                    description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
-                ),
-                'Image' : discord.File(ss, filename="image.png")
-            }
-            embed['Embed'].set_image(url='attachment://image.png')
-            embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
-            embed['Embed'].set_thumbnail(url=ce_hex_icon)
-            embed['Embed'].set_footer(text="CE Assistant",
-                icon_url=final_ce_icon)
-           
-            updated_games.append(embed)
-            number += 1
+            if hm:
+                embed = {
+                    'Embed' : discord.Embed(
+                        title="__" + game['name'] + "__ added to the site:", 
+                        colour= 0x48b474,
+                        timestamp=datetime.now(),
+                        description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
+                    ),
+                    'Image' : discord.File(ss, filename="image.png")
+                }
+                embed['Embed'].set_image(url='attachment://image.png')
+                embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
+                embed['Embed'].set_thumbnail(url=ce_hex_icon)
+                embed['Embed'].set_footer(text="CE Assistant",
+                    icon_url=final_ce_icon)
+            
+                updated_games.append(embed)
+                number += 1
 
             if (game['id'] in unfinished_games['unfinished'] and (game['tier'] != 0 and game['genre'] != None)): unfinished_games['unfinished'].remove(game['id'])
-
-            del ss
+            if hm: del ss
 
         # game is neither new nor updated
         elif game['name'] in game_tracker:
@@ -327,8 +331,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             # new game that wasn't caught above
             if not silly:
                 print("NEW: " + game['name'])
-                ss = (get_image(number, game['id'], driver))
-                ss = io.BytesIO(ss)
+                if hm:
+                    ss = (get_image(number, game['id'], driver))
+                    ss = io.BytesIO(ss)
                 new_game = get_game(game)
                 new_data[game['name']] = new_game
 
@@ -353,27 +358,28 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 
 
                 # make embed
-                embed = {
-                    'Embed' : discord.Embed(
-                        title="__" + game['name'] + "__ added to the site:", 
-                        colour= 0x48b474,
-                        timestamp=datetime.now(),
-                        description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
-                    ),
-                    'Image' : discord.File(ss, filename="image.png")
-                }
-                embed['Embed'].set_image(url='attachment://image.png')
-                embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
-                embed['Embed'].set_thumbnail(url=ce_hex_icon)
-                embed['Embed'].set_footer(text="CE Assistant",
-                    icon_url=final_ce_icon)
-            
-                updated_games.append(embed)
-                number += 1
+                if hm:
+                    embed = {
+                        'Embed' : discord.Embed(
+                            title="__" + game['name'] + "__ added to the site:", 
+                            colour= 0x48b474,
+                            timestamp=datetime.now(),
+                            description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
+                        ),
+                        'Image' : discord.File(ss, filename="image.png")
+                    }
+                    embed['Embed'].set_image(url='attachment://image.png')
+                    embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
+                    embed['Embed'].set_thumbnail(url=ce_hex_icon)
+                    embed['Embed'].set_footer(text="CE Assistant",
+                        icon_url=final_ce_icon)
+                
+                    updated_games.append(embed)
+                    number += 1
 
                 if (game['id'] in unfinished_games['unfinished'] and (game['tier'] != 0 and game['genre'] != None)): unfinished_games['unfinished'].remove(game['id'])
 
-                del ss
+                if hm: del ss
 
 
 
@@ -384,16 +390,17 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
     # games removed
     for game in game_tracker:
-        embed = {
-            'Embed' : discord.Embed(
-                title=game,
-                colour= 0xce4e2c,
-                timestamp=datetime.now()
-            ),
-            'Image' : discord.File("Web_Interaction/removed.png", filename="image.png")
-        }
-        embed['Embed'].set_image(url='attachment://image.png')
-        updated_games.append(embed)
+        if hm:
+            embed = {
+                'Embed' : discord.Embed(
+                    title=game,
+                    colour= 0xce4e2c,
+                    timestamp=datetime.now()
+                ),
+                'Image' : discord.File("Web_Interaction/removed.png", filename="image.png")
+            }
+            embed['Embed'].set_image(url='attachment://image.png')
+            updated_games.append(embed)
         del new_data[game]
 
     del json_response
