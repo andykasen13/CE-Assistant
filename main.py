@@ -1074,6 +1074,7 @@ async def startup(interaction: discord.Interaction):
     print('starting up')
     await startup_sched()
     print('started up')
+    await interaction.response.send_message('i love blob the log')
 
 
 

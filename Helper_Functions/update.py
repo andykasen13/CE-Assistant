@@ -446,7 +446,10 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             
                 # ---------- standardize the game dictionary ----------
                 # remove COs from the equation
-                del database_name[game]["Community Objectives"]
+                try:
+                    del database_name[game]["Community Objectives"]
+                except:
+                    continue
 
                 # format database_name like users2.json
                 for dbN_objective in database_name[game]["Primary Objectives"] :

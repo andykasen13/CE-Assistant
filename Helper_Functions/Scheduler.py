@@ -39,13 +39,13 @@ async def startup_sched():
         user = user_info[user_str]
         
         for current_roll in user["Current Rolls"]:
-            print(user)
+            
             if not 'End Time' in list(current_roll):
                 continue
 
             end_time = current_roll["End Time"]
             end_time = datetime.datetime.fromtimestamp(end_time)
-            print(end_time)
+            
 
             args = [
                 user['Discord ID'],
@@ -62,7 +62,7 @@ async def startup_sched():
 
             end_time = current_roll["End Time"]
             end_time = datetime.datetime.fromtimestamp(end_time)
-            print(end_time)
+            
 
             args = [
                 user['Discord ID'],
