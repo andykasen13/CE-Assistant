@@ -99,6 +99,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
     # set up API requests
     api_response = requests.get('https://cedb.me/api/games/full')
+    print('fetching /api/games/full/...')
     try:
         json_response = json.loads(api_response.text)
     except:
