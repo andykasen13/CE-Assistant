@@ -44,6 +44,8 @@ async def startup_sched():
                 continue
 
             end_time = current_roll["End Time"]
+            end_time = datetime.datetime.fromtimestamp(end_time)
+            print(end_time)
 
             args = [
                 user['Discord ID'],
@@ -59,6 +61,8 @@ async def startup_sched():
                 continue
 
             end_time = current_roll["End Time"]
+            end_time = datetime.datetime.fromtimestamp(end_time)
+            print(end_time)
 
             args = [
                 user['Discord ID'],
