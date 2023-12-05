@@ -39,6 +39,7 @@ async def startup_sched():
         user = user_info[user_str]
         
         for current_roll in user["Current Rolls"]:
+            print(user)
             if not 'End Time' in list(current_roll):
                 continue
 

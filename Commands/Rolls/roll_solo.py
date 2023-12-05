@@ -77,9 +77,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             "You have one day to complete " + embed.title + "."    
             + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(1)).timetuple())))
             + ">\nOne Hell of a Day has a two week cooldown."
-            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(14)).timetuple())))
-            + ">\n[insert link to cedb.me page]", inline=False)
-        embed.set_author(name="ONE HELL OF A DAY", url="https://example.com")
+            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(14)).timetuple()))), inline=False)
+        embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
 
     # -------------------------------------------- Two Week T2 Streak --------------------------------------------
     elif event == "Two Week T2 Streak" :
