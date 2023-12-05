@@ -1258,9 +1258,9 @@ async def on_ready():
     
     test_log = client.get_channel(1141886539157221457)
     await test_log.send("Ready!")    #get_tasks(client)
-    print(await master_loop.start(client, mongo_client))
-    print('master loop started up')
-    print(await startup_sched())
-    print('sched started up')
+    await master_loop.start(client, mongo_client)
+    await test_log.send('master loop started up')
+    await startup_sched()
+    await test_log.send('sched started up')
 
 client.run(discord_token)
