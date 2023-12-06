@@ -563,7 +563,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         remove_indexes.append(m_index)
 
     for cooldown in (user_dict[ce_id]["Cooldowns"]):
-        if user_dict[ce_id]["Cooldowns"][cooldown] > int(time.mktime((datetime.datetime.now()).timetuple())):
+        if user_dict[ce_id]["Cooldowns"][cooldown] < int(time.mktime((datetime.datetime.now()).timetuple())):
             cooldown_indexes.append(cooldown)
             returns.append("casino: <@{}>, your {} cooldown has now ended.".format(user_dict[ce_id]["Discord ID"], cooldown))
         
