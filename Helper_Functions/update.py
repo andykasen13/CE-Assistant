@@ -514,11 +514,13 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 
                 # this is a normal solo roll
                 else : 
+                    print('working')
                     # fourward thinking? again?
-                    if current_roll["Event Name"] == "Fourward Thinking" : returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
+                    if current_roll["Event Name"] == "Fourward Thinking" : 
+                        returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
                     
                     # add the message for any normal roll
-                    returns.append("casino: " + "<@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+                    returns.append("casino: <@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
                     
                     # and add the cooldown
                     if current_roll["Event Name"] == "Fourward Thinking" :
