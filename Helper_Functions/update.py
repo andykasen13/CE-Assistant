@@ -509,7 +509,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     del database_user[current_roll["Partner"]]["Current Rolls"][myindex]
                     
                     # set up cooldowns
-                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime( (datetime.datetime.now()) + (timedelta(cooldowns[current_roll["Event Name"]]) ).timetuple() ) )
+                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime( (datetime.datetime.now()) + (timedelta(cooldowns[current_roll["Event Name"]]) )).timetuple()  )
                     database_user[current_roll["Partner"]]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime( (datetime.datetime.now()) + timedelta(cooldowns[current_roll["Event Name"]]) ).timetuple())
                 
                 # this is a normal solo roll
@@ -524,7 +524,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     if current_roll["Event Name"] == "Fourward Thinking" :
                         cooldown_days = 0
                         database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime((datetime.datetime.now()).timetuple()))
-                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] =  int(time.mktime( (datetime.datetime.now()) + (timedelta(cooldowns[current_roll["Event Name"]]) ).timetuple()))
+                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] =  int(time.mktime( (datetime.datetime.now()) + (timedelta(cooldowns[current_roll["Event Name"]]) )).timetuple())
                 remove_indexes.append(m_index)
             
             continue
