@@ -7,19 +7,19 @@ from datetime import timedelta
 
 def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     cooldowns = {
-        "One Hell of a Day" : timedelta(14),
-        "One Hell of a Week" : timedelta(28),
-        "One Hell of a Month" : timedelta(28*3),
+        "One Hell of a Day" : (14),
+        "One Hell of a Week" : (28),
+        "One Hell of a Month" : (28*3),
         "Two Week T2 Streak" : 0, # multi-stage roll
-        "Two 'Two Week T2 Streak' Streak" : timedelta(7),
-        "Never Lucky" : timedelta(28),
-        "Triple Threat" : timedelta(28*3),
-        "Let Fate Decide" : timedelta(28*3),
+        "Two 'Two Week T2 Streak' Streak" : (7),
+        "Never Lucky" : (28),
+        "Triple Threat" : (28*3),
+        "Let Fate Decide" : (28*3),
         "Fourward Thinking" : 0, # multi-stage roll
-        "Russian Roulette" : timedelta(28*6),
-        "Destiny Alignment" : timedelta(28),
+        "Russian Roulette" : (28*6),
+        "Destiny Alignment" : (28),
         "Soul Mates" : 0, # this depends on which tier was chosen
-        "Teamwork Makes the Dream Work" : timedelta(28*3)
+        "Teamwork Makes the Dream Work" : 28*3
     }
 
     # Set up total-points
@@ -509,8 +509,8 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     del database_user[current_roll["Partner"]]["Current Rolls"][myindex]
                     
                     # set up cooldowns
-                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime( (datetime.datetime.now()) + (datetime.datetime.fromtimestamp( cooldowns[current_roll["Event Name"]] ) ).timetuple() ) )
-                    database_user[current_roll["Partner"]]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime( (datetime.datetime.now()) + (datetime.datetime.fromtimestamp( cooldowns[current_roll["Event Name"]] ) ).timetuple()))
+                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime( (datetime.datetime.now()) + (timedelta(cooldowns[current_roll["Event Name"]]) ).timetuple() ) )
+                    database_user[current_roll["Partner"]]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime( (datetime.datetime.now()) + timedelta(cooldowns[current_roll["Event Name"]]) ).timetuple())
                 
                 # this is a normal solo roll
                 else : 
@@ -524,7 +524,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     if current_roll["Event Name"] == "Fourward Thinking" :
                         cooldown_days = 0
                         database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime((datetime.datetime.now()).timetuple()))
-                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] =  int(time.mktime( (datetime.datetime.now()) + (datetime.datetime.fromtimestamp( cooldowns[current_roll["Event Name"]] ) ).timetuple()))
+                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] =  int(time.mktime( (datetime.datetime.now()) + (timedelta(cooldowns[current_roll["Event Name"]]) ).timetuple()))
                 remove_indexes.append(m_index)
             
             continue
