@@ -963,8 +963,8 @@ async def update(interaction : discord.Interaction) :
             if role.name == return_value[6::] : continue
             else :
                 for rankrole in rankroles :
-                    if rankrole in interaction.user.roles : interaction.user.remove_roles(roles=rankrole)
-                    if rankrole.name == return_value[6::] : interaction.user.add_roles(roles=rankrole)
+                    if rankrole in interaction.user.roles : interaction.user.remove_roles(rankrole)
+                    if rankrole.name == return_value[6::] : interaction.user.add_roles(rankrole)
         
         # log channel shit
         elif return_value[:4:] == "log:" :
