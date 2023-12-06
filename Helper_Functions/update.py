@@ -577,7 +577,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     database_user.update(user_dict)
 
     # Dump the data
-    returns.insert(database_user, 0)
+    returns.insert(0, database_user)
     
     returns.append("Updated")
 
