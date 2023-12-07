@@ -60,6 +60,7 @@ def getCuratorCount():
 
 def checkCuratorCount(curator_count):
     number = getCuratorCount()
+    print(number)
     if number == "Failed": number = current_count
     current_count = curator_count['Curator Count']
     if number != current_count:
