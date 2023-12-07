@@ -61,8 +61,9 @@ def getCuratorCount():
 def checkCuratorCount(curator_count):
     number = getCuratorCount()
     print(number)
-    if number == "Failed": number = current_count
+    if number == "Failed": current_count = number # this was originally switched but that seemed wrong so i changed it
     current_count = curator_count['Curator Count']
+    print(current_count)
     if number != current_count:
         embeds = curatorUpdate(int(number)-int(current_count))
         return [number, embeds]
