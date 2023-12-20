@@ -884,7 +884,7 @@ def get_by_tier(games):
 
 def get_completion_data(steam_id):
     response = requests.get("https://steamhunters.com/api/apps/{}/".format(steam_id))
-    json_response = json.loads(response)
+    json_response = response.json()
 
     if "medianCompletionTime" not in json_response.keys(): 
         return "none"

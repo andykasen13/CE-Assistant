@@ -477,7 +477,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             if current_roll["Event Name"] == "Fourward Thinking" :
                 if "End Time" not in current_roll : continue
                 returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
-                remove_indexes.append(c_index)
+                remove_indexes.append(m_index)
 
             # two week t2 streak
             elif "End Time" not in current_roll and current_roll["Event Name"] == "Two Week T2 Streak":
@@ -569,11 +569,13 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             cooldown_indexes.append(cooldown)
             returns.append("casino: <@{}>, your {} cooldown has now ended.".format(user_dict[ce_id]["Discord ID"], cooldown))
         
+    remove_indexes.reverse()
     for indexx in remove_indexes :
         del user_dict[ce_id]["Current Rolls"][indexx]
 
+    cooldown_indexes.reverse()
     for c_index in cooldown_indexes:
-        user_dict[ce_id]["Cooldowns"][c_index]
+        del user_dict[ce_id]["Cooldowns"][c_index]
     
     # Add the user file to the database
     database_user.update(user_dict)

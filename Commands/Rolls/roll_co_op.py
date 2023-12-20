@@ -5,6 +5,8 @@ from Helper_Functions.rollable_games import *
 from Helper_Functions.create_embed import *
 from Helper_Functions.buttons import *
 
+from Helper_Functions.Scheduler import add_task
+
 
 async def co_op_command(interaction : discord.Interaction, event, partner : discord.User, reroll : bool, collection) :
 

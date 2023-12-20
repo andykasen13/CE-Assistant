@@ -142,7 +142,6 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
             if(completion_time == "none") :
                 print(f"No completion data for {returned_game}.") 
                 continue
-            else : completion_time = int(completion_time.replace(',',''))
 
             print(f"Game price is {gamePrice}... {gamePrice < price_limit}" + f"Game completion time is {completion_time}... {completion_time < avg_completion_time_limit}")
 
