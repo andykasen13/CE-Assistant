@@ -883,6 +883,15 @@ def get_by_tier(games):
 
 
 def get_completion_data(steam_id):
+    response = requests.get("https://steamhunters.com/api/apps/{}/".format(steam_id))
+    json_response = json.loads(response)
+
+    if "medianCompletionTime" not in json_response.keys(): 
+        return "none"
+    else:
+        return int(json_response["medianCompletionTime"] / 60)
+
+
     response = requests.get("https://steamhunters.com/apps/{}/achievements".format(steam_id))
     site = BeautifulSoup(response.text, features='html.parser')
     ass = site.find_all('i')
