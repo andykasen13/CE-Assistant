@@ -232,11 +232,18 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         async def t4_callback(interaction) : return await soulmate_callback(interaction, "Tier 4")
         async def t5_callback(interaction) : return await soulmate_callback(interaction, "Tier 5")
 
-        async def soulmate_callback(interaction, tier_num) :
+        async def soulmate_callback(interaction : discord.Interaction, tier_num) :
             await interaction.response.defer()
 
+            soul_mate_hours = {
+                "Tier 1" : 15,
+                "Tier 2" : 40,
+                "Tier 3" : 80,
+                "Tier 4" : 160,
+                "Tier 5" : "nope",
+                "Tier 6" : "nope"
+            }
             
-
             if interaction.user.id != interaction_user_data['Discord ID'] : return
             view.clear_items()
 
