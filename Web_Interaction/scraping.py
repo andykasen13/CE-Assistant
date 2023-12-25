@@ -80,6 +80,7 @@ def single_scrape(curator_count):
 def game_list(new_data, current_dict, unfinished_games : dict):
     # Set selenium driver and preferences
     hm = False
+    """
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
@@ -95,7 +96,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
         objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
         print(objective_lst)
-
+    """
 
     # set up API requests
     api_response = requests.get('https://cedb.me/api/games/full')
