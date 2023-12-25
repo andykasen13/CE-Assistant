@@ -105,7 +105,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         json_response = json.loads(api_response.text)
     except:
         print('json failed lol!!!')
-        del driver
+        #del driver
         return
 
     # grab last updated time
@@ -407,7 +407,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         del new_data[game]
 
     del json_response
-    del driver
+    #del driver
     del game_tracker
 
     return [updated_games, number, new_data, current_dict, unfinished_games]
