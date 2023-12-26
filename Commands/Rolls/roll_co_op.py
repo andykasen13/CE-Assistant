@@ -481,21 +481,39 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 if(roll_t["Games"] == ['pending...']) : break
                 t_num += 1
 
+            end_time = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
+
             database_user[int_user_id]["Current Rolls"][i_num] = ({
                 "Event Name" : event,
                 "Partner" : target_user_data["CE ID"],
-                "End Time" :  int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple())),
+                "End Time" : end_time,
                 "Games" : games
             })
-            #TODO: GOJO SATORU
+
+            args = [
+                database_user[int_user_id]["Discord ID"],
+                0,
+                0,
+                0
+            ]
+            
+            await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
             database_user[part_user_id]["Current Rolls"][t_num] = ({
                 "Event Name" : event,
                 "Partner" : interaction_user_data["CE ID"],
-                "End Time" :  int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple())),
+                "End Time" : end_time,
                 "Games" : games
             })
-            #TODO: GOJO SATORU
+            
+            args = [
+                database_user[part_user_id]["Discord ID"],
+                0,
+                0,
+                0
+            ]
+            
+            await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
             dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
 
@@ -600,14 +618,14 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     "Partner" : target_user_data["CE ID"],
                     "Games" : [game]
                 })
-                #TODO: GOJO SATORU
+               
 
                 database_user[part_user_id]["Current Rolls"][t_num] = ({
                     "Event Name" : event,
                     "Partner" : interaction_user_data["CE ID"],
                     "Games" : [game]
                 })
-                #TODO: GOJO SATORU
+              
 
                 dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
 
@@ -746,23 +764,36 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         if(roll_t["Games"] == ['pending...'] and roll_t["Event Name"] == event) : break
                         t_num += 1
 
-
-                    database_user[int_user_id]["Current Rolls"][i_num] = ({
-                        "Event Name" : event,
-                        "End Time" :  int(time.mktime((datetime.datetime.now()+timedelta(7)).timetuple())),
-                        "Games" : ["andy's cool epic fun time balloons yay"]
+                    end_time = int(time.mktime((datetime.datetime.now()+timedelta(7)).timetuple()))
+                    
+                    database_user[int_user_id]["Cooldowns"].append({
+                        "Winner Takes All" : end_time
                     })
-                    #TODO: GOJO SATORU
 
-                    database_user[part_user_id]["Current Rolls"][t_num] = ({
-                        "Event Name" : event,
-                        "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(7)).timetuple())),
-                        "Games" : ["andy's cool epic fun time balloons yay"]
+                    database_user[part_user_id]["Cooldowns"].append({
+                        "Winner Takes All" : end_time
                     })
-                    #TODO: GOJO SATORU
+
+                    args = [
+                        database_user[part_user_id]["Discord ID"],
+                        0,
+                        0,
+                        0
+                    ]
+                    
+                    await add_task(datetime.datetime.fromtimestamp(end_time), args)
+
+                    args = [
+                        database_user[int_user_id]["Discord ID"],
+                        0,
+                        0,
+                        0
+                    ]
+                    
+                    await add_task(datetime.datetime.fromtimestamp(end_time), args)
+
 
                     dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
-
 
                     return
                 

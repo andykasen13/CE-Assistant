@@ -7,6 +7,8 @@ import json
 import datetime
 from datetime import timedelta
 
+from Helper_Functions.Scheduler import add_task
+
 # -------------------------------------------------------------------------------------------------- #
 # -------------------------------------------- BUTTONS --------------------------------------------- #
 # -------------------------------------------------------------------------------------------------- #
@@ -106,11 +108,20 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
             roll_num +=1
 
         # update the 
+        end_time = int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple()))
         if not reroll : 
             database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
-                                                    "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple())),
+                                                    "End Time" : end_time,
                                                     "Games" : games})
-        # TODO: GOJO SATORU
+        
+        args = [
+            database_user[target_user]["Discord ID"],
+            0,
+            0,
+            0
+        ]
+        
+        await add_task(datetime.datetime.fromtimestamp(end_time), args)
         
         """
         elif reroll :
