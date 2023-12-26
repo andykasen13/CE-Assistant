@@ -1071,10 +1071,11 @@ async def cr(interaction : discord.Interaction, ephemeral : bool) :
 
 @tree.command(name='startup_sched', description='yeah', guild=discord.Object(id=guild_ID))
 async def startup(interaction: discord.Interaction):
+    await interaction.response.defer()
     print('starting up')
     await startup_sched()
     print('started up')
-    await interaction.response.send_message('i love blob the log')
+    await interaction.followup.send('i love blob the log')
 
 
 
