@@ -11,6 +11,7 @@ from Helper_Functions.create_embed import create_multi_embed, getEmbed
 from Helper_Functions.roll_string import get_roll_string
 from Helper_Functions.buttons import get_buttons, get_genre_buttons
 from Helper_Functions.update import update_p
+from Helper_Functions.Scheduler import add_task
 
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
@@ -360,11 +361,19 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # ------------------------------------ CONTINUE ON ---------------------------------------------------
 
     if (dont_save is False) and (not reroll) :
+        end_time = int(time.mktime((datetime.datetime.now()+times[event]).timetuple()))
         # append the roll to the user's current rolls array
         userInfo[target_user]["Current Rolls"].append({"Event Name" : event, 
-                                                    "End Time" :  int(time.mktime((datetime.datetime.now()+times[event]).timetuple())),
+                                                    "End Time" : end_time,
                                                     "Games" : games})
-        # TODO: GOJO SATORU
+        args = [
+            interaction.user.id,
+            0,
+            0,
+            0
+        ]
+        
+        await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
     # this is reroll shit and rerolls dont exist anymore lol
     """ elif (dont_save is False) and (reroll) :
