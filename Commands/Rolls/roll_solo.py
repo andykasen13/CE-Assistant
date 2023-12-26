@@ -75,10 +75,10 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # Create the embed
         embed = getEmbed(games[0], interaction.user.id, database_name=database_name)
         embed.add_field(name="Roll Requirements", value = 
-            "You have one day to complete " + embed.title + "."    
+            "You have one day to complete One Hell of a Day."
             + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(1)).timetuple())))
             + ">\nOne Hell of a Day has a two week cooldown."
-            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(14)).timetuple()))), inline=False) + ">."
+            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(14)).timetuple()))) + ">.", inline=False)
         embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
 
     # -------------------------------------------- Two Week T2 Streak --------------------------------------------
