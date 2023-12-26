@@ -6,7 +6,7 @@ import datetime
 from datetime import timedelta
 from bson import ObjectId
 
-from Helper_Functions.Scheduler import add_task
+
 
 mongo_ids = {
     "name" : ObjectId('64f8d47f827cce7b4ac9d35b'),
@@ -19,6 +19,8 @@ mongo_ids = {
 
 
 async def update_p(user_id : int, roll_ended_name, database_user, database_name) :
+
+    from Helper_Functions.Scheduler import add_task
     cooldowns = {
         "One Hell of a Day" : (14),
         "One Hell of a Week" : (28),
