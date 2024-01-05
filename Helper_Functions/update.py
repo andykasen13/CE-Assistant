@@ -4,8 +4,23 @@ import requests
 import json
 import datetime
 from datetime import timedelta
+from bson import ObjectId
 
-def update_p(user_id : int, roll_ended_name, database_user, database_name) :
+
+
+mongo_ids = {
+    "name" : ObjectId('64f8d47f827cce7b4ac9d35b'),
+    "tier" : ObjectId('64f8bc4d094bdbfc3f7d0050'),
+    "curator" : ObjectId('64f8d63592d3fe5849c1ba35'),
+    "tasks" : ObjectId('64f8d6b292d3fe5849c1ba37'),
+    "user" : ObjectId('64f8bd1b094bdbfc3f7d0051'),
+    "unfinished" : ObjectId('650076a9e35bbc49b06c9881')
+}
+
+
+async def update_p(user_id : int, roll_ended_name, database_user, database_name) :
+
+    from Helper_Functions.Scheduler import add_task
     cooldowns = {
         "One Hell of a Day" : (14),
         "One Hell of a Week" : (28),
@@ -21,6 +36,11 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         "Soul Mates" : 0, # this depends on which tier was chosen
         "Teamwork Makes the Dream Work" : 28*3
     }
+
+    from main import collection
+
+    database_user = await collection.find_one({'_id' : mongo_ids["user"]})
+    database_name = await collection.find_one({'_id' : mongo_ids["name"]})
 
     # Set up total-points
     total_points = 0
@@ -278,8 +298,19 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     if other_roll["Event Name"] == "Winner Takes All" : 
                         other_location = index
                         break
-                database_user[current_roll["Partner"]]["Cooldowns"]["Winner Takes All"] = int(time.mktime((datetime.datetime.now()+timedelta(28*3)).timetuple()))
-                #TODO: GOJO SATORU (cooldown)
+                end_time = int(time.mktime((datetime.datetime.now()+timedelta(28*3)).timetuple()))
+                database_user[current_roll["Partner"]]["Cooldowns"]["Winner Takes All"] = end_time
+                
+                args = [
+                    database_user[current_roll["Partner"]]["Discord ID"],
+                    0,
+                    0,
+                    0
+                ]
+                
+                await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                
+                
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
                 returns.append("log: " + "<@{}> has beaten <@{}> in Winner Takes All.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
                 continue
@@ -296,7 +327,18 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
                 # update user 1 database
                 user_dict[ce_id]["Cooldowns"]["Winner Takes All"]  = int(time.mktime((datetime.datetime.now()+timedelta(28*3)).timetuple()))
-                #TODO: GOJO SATORU (cooldown)
+                
+                
+                args = [
+                    database_user[ce_id]["Discord ID"],
+                    0,
+                    0,
+                    0
+                ]
+                
+                await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                
+                
                 remove_indexes.append(m_index)
                 returns.append("log: " + "<@{}> has beaten <@{}> in Winner Takes All.".format(database_user[current_roll["Partner"]]["Discord ID"], user_dict[ce_id]["Discord ID"]))
                 continue
@@ -365,8 +407,21 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     if other_roll["Event Name"] == "Game Theory" : 
                         other_location = index
                         break
-                database_user[current_roll["Partner"]]["Cooldowns"]["Game Theory"] = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
-                #TODO: GOJO SATORU (cooldown)
+                end_time = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
+                database_user[current_roll["Partner"]]["Cooldowns"]["Game Theory"] = end_time
+                
+
+                
+                args = [
+                    database_user[current_roll["Partner"]]["Discord ID"],
+                    0,
+                    0,
+                    0
+                ]
+                
+                await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                
+                
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
                 returns.append("log: " + "<@{}> has beaten <@{}> in Game Theory.".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"]))
                 continue
@@ -382,8 +437,20 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 database_user[current_roll["Partner"]]["Completed Rolls"].append(database_user[current_roll["Partner"]]["Current Rolls"][other_location])
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
                 # update user 1 database
-                user_dict[ce_id]["Cooldowns"]["Game Theory"]  = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
-                #TODO: GOJO SATORU (cooldown)
+                end_time = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
+                user_dict[ce_id]["Cooldowns"]["Game Theory"]  = end_time
+                
+                
+                args = [
+                    database_user[ce_id]["Discord ID"],
+                    0,
+                    0,
+                    0
+                ]
+                
+                await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                
+                
                 remove_indexes.append(m_index)
                 returns.append("log: " + "<@{}> has beaten <@{}> in Game Theory.".format(database_user[current_roll["Partner"]]["Discord ID"], user_dict[ce_id]["Discord ID"]))
                 continue
@@ -477,7 +544,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             if current_roll["Event Name"] == "Fourward Thinking" :
                 if "End Time" not in current_roll : continue
                 returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
-                remove_indexes.append(c_index)
+                remove_indexes.append(m_index)
 
             # two week t2 streak
             elif "End Time" not in current_roll and current_roll["Event Name"] == "Two Week T2 Streak":
@@ -569,11 +636,13 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             cooldown_indexes.append(cooldown)
             returns.append("casino: <@{}>, your {} cooldown has now ended.".format(user_dict[ce_id]["Discord ID"], cooldown))
         
+    remove_indexes.reverse()
     for indexx in remove_indexes :
         del user_dict[ce_id]["Current Rolls"][indexx]
 
+    cooldown_indexes.reverse()
     for c_index in cooldown_indexes:
-        user_dict[ce_id]["Cooldowns"][c_index]
+        del user_dict[ce_id]["Cooldowns"][c_index]
     
     # Add the user file to the database
     database_user.update(user_dict)

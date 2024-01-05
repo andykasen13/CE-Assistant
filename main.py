@@ -1071,10 +1071,11 @@ async def cr(interaction : discord.Interaction, ephemeral : bool) :
 
 @tree.command(name='startup_sched', description='yeah', guild=discord.Object(id=guild_ID))
 async def startup(interaction: discord.Interaction):
+    await interaction.response.defer()
     print('starting up')
     await startup_sched()
     print('started up')
-    await interaction.response.send_message('i love blob the log')
+    await interaction.followup.send('i love blob the log')
 
 
 
@@ -1262,10 +1263,10 @@ async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
     
     test_log = client.get_channel(1141886539157221457)
-    await test_log.send("Ready!")    #get_tasks(client)
+    await test_log.send("The bot has now been restarted. Please run /start_schedule")    #get_tasks(client)
     await master_loop.start(client, mongo_client)
-    await test_log.send('master loop started up')
+
     await startup_sched()
-    await test_log.send('sched started up')
+
 
 client.run(discord_token)
