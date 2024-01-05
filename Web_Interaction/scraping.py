@@ -80,32 +80,33 @@ def single_scrape(curator_count):
 def game_list(new_data, current_dict, unfinished_games : dict):
     # Set selenium driver and preferences
     hm = False
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--disable-gpu')
-    driver = webdriver.Chrome(options=options)
-    driver.set_window_size(width=1440, height=8000)
+    if hm:
+    
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--disable-gpu')
+        driver = webdriver.Chrome(options=options)
+        driver.set_window_size(width=1440, height=8000)
 
-    # grab first game to get color on the rest of them
-    url = 'https://cedb.me/game/1e8565aa-b9f2-4b41-9578-22e4c2a5436b'
-    driver.get(url)
-    objective_lst = []
-    print('readying driver...')
-    while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
-        objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
-    print('driver ready.')
-
+        # grab first game to get color on the rest of them
+        url = 'https://cedb.me/game/1e8565aa-b9f2-4b41-9578-22e4c2a5436b'
+        driver.get(url)
+        objective_lst = []
+        while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
+            objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+            print(objective_lst)
+    
 
     # set up API requests
-    api_response = requests.get('https://cedb.me/api/games/full')
     print('fetching /api/games/full/...')
+    api_response = requests.get('https://cedb.me/api/games/full')
     try:
         json_response = json.loads(api_response.text)
     except:
         print('json failed lol!!!')
-        del driver
+        if hm: del driver
         return
 
     # grab last updated time
@@ -407,7 +408,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         del new_data[game]
 
     del json_response
-    del driver
+    if hm: del driver
     del game_tracker
 
     return [updated_games, number, new_data, current_dict, unfinished_games]
@@ -463,6 +464,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
         ),
         'Image' : discord.File(ss, filename="image.png")
     }
+
     embed['Embed'].set_image(url='attachment://image.png')
     embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
     embed['Embed'].set_thumbnail(url=ce_hex_icon)
@@ -884,6 +886,15 @@ def get_by_tier(games):
 
 
 def get_completion_data(steam_id):
+    response = requests.get("https://steamhunters.com/api/apps/{}/".format(steam_id))
+    json_response = response.json()
+
+    if "medianCompletionTime" not in json_response.keys(): 
+        return "none"
+    else:
+        return int(json_response["medianCompletionTime"] / 60)
+
+
     response = requests.get("https://steamhunters.com/apps/{}/achievements".format(steam_id))
     site = BeautifulSoup(response.text, features='html.parser')
     ass = site.find_all('i')
