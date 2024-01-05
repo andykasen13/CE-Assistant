@@ -7,6 +7,7 @@ from bson import ObjectId
 from Helper_Functions.update import update_p
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from motor.motor_asyncio import AsyncIOMotorClient
 
 
@@ -25,10 +26,15 @@ mongo_ids = {
 }
 
 
-sched = BackgroundScheduler()
+sched = AsyncIOScheduler()
 
 async def add_task(time, args):
-    sched.add_job(update_p, 'date', run_date=time, args=args)
+    if time > datetime.datetime.now():
+        sched.add_job(update_p, 'date', run_date=time, args=args)
+    else:
+        print("runtime missed. running update now for <@" + args[0] + ">")
+        await update_p(args[0], args[1], args[2], args[3])
+
 
 async def startup_sched():
     user_info = await collection.find_one({'_id' : mongo_ids["user"]})
