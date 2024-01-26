@@ -1266,7 +1266,5 @@ async def on_ready():
     await test_log.send("The bot has now been restarted. Please run /start_schedule")    #get_tasks(client)
     await master_loop.start(client, mongo_client)
 
-    await startup_sched()
-
 
 client.run(discord_token)
