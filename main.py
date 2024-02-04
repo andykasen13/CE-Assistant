@@ -419,9 +419,10 @@ async def check_roll_status():
             
             # update database_user.
             database_user = returns[0]
+            returns[0] = "NEW USER: " + str(database_user[user]["Discord ID"])
             
             # add all returned values to the array except database_user. that has been dealt with.
-            for i in range(1, len(returns)):
+            for i in range(0, len(returns)):
                 all_returns.append(returns[i])
             
             # make the returns array empty.
@@ -429,6 +430,80 @@ async def check_roll_status():
     
     # update the databases
     dump = await collection.replace_one({"_id" : mongo_ids["user"]}, database_user)
+
+
+    # initialize the variables ##################################################################################################################
+    log_channel = client.get_channel(1141886539157221457)                                                                                       #
+    casino_channel = client.get_channel(811286469251039333)                                                                                     #
+                                                                                                                                                #
+    # rank silliness                                                                                                                            #
+    ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]                                      #
+    rankroles = []                                                                                                                              #
+    ex_rank_role = discord.utils.get(correct_guild_2.roles, name = "EX Rank")                                                                 #
+    sss_rank_role = discord.utils.get(correct_guild_2.roles, name = "SSS Rank")                                                               #
+    ss_rank_role = discord.utils.get(correct_guild_2.roles, name = "SS Rank")                                                                 #
+    s_rank_role = discord.utils.get(correct_guild_2.roles, name = "S Rank")                                                                   #
+    a_rank_role = discord.utils.get(correct_guild_2.roles, name = "A Rank")                                                                   #
+    b_rank_role = discord.utils.get(correct_guild_2.roles, name = "B Rank")                                                                   #
+    c_rank_role = discord.utils.get(correct_guild_2.roles, name = "C Rank")                                                                   #
+    d_rank_role = discord.utils.get(correct_guild_2.roles, name = "D Rank")                                                                   #
+    e_rank_role = discord.utils.get(correct_guild_2.roles, name = "E Rank")                                                                   #
+    rankroles = [a_rank_role, ex_rank_role, sss_rank_role, ss_rank_role, s_rank_role, b_rank_role, c_rank_role, d_rank_role, e_rank_role]       #
+    
+    correct_guild = discord.Object(id=guild_ID)
+    correct_guild_2 = client.get_guild(id=guild_ID)
+    discord.Guild.roles
+    #############################################################################################################################################
+       
+
+    for return_value in all_returns :
+        current_user = ""
+        if return_value[:9:] == "NEW USER: ": 
+            current_user_id = int(return_value[10::])
+            current_user = correct_guild_2.get_member(current_user_id)
+
+
+        # you've reached the end
+        # if return_value == "Updated" :
+        #     # Create confirmation embed
+        #     embed = discord.Embed(
+        #         title="Updated!",
+        #         color=0x000000,
+        #         timestamp=datetime.datetime.now()
+        #     )
+        #     embed.add_field(name="Information", value=f"Your information has been updated in the CE Assistant database.")
+        #     embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
+        #     embed.set_footer(text="CE Assistant",
+        #         icon_url=final_ce_icon)
+        #     embed.set_thumbnail(url=interaction.user.avatar)
+
+
+        # change the rank
+        # TODO: maybe get folkius to give theron points to test this out? 
+        # TODO: given that i have no way of knowing if it works rn
+        elif return_value[:5:] == "rank:" :
+            for rankrole in rankroles :
+                if rankrole in current_user.roles :
+                    role = rankrole
+                    break
+            if role.name == return_value[6::] : continue
+            else :
+                for rankrole in rankroles :
+                    if rankrole in current_user.roles : await current_user.remove_roles(rankrole)
+                    if rankrole.name == return_value[6::] : await current_user.add_roles(rankrole)
+        
+        # log channel shit
+        elif return_value[:4:] == "log:" :
+            await log_channel.send(return_value[5::])
+
+        # casino channel shit
+        elif return_value[:7:] == "casino:":
+            await casino_channel.send(return_value[8::])
+
+        # else
+        else :
+            await log_channel.send("BOT ERROR: recieved unrecognized update code: \n'{}'".format(return_value))
+
 
     # delete all variables (mmmmm...... my precious ram.... mmmmmmffgggggggg......)
     del dump
@@ -965,7 +1040,7 @@ async def update(interaction : discord.Interaction) :
 
     # actually update the user's database 
     # and store anything we need to report
-    returns = await update_p(interaction.user.id, False, database_user, database_name)
+    returns = update_p(interaction.user.id, False, database_user, database_name)
 
     if returns == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
 
