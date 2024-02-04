@@ -306,7 +306,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 ]
                 
             
-                #await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                ##await add_task(datetime.datetime.fromtimestamp(end_time), args)
                 
                 
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
@@ -334,7 +334,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     0
                 ]
                 
-                #await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                ##await add_task(datetime.datetime.fromtimestamp(end_time), args)
                 
                 
                 remove_indexes.append(m_index)
@@ -417,7 +417,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     0
                 ]
                 
-                #await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                ##await add_task(datetime.datetime.fromtimestamp(end_time), args)
                 
                 
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
@@ -446,7 +446,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     0
                 ]
                 
-                #await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                ##await add_task(datetime.datetime.fromtimestamp(end_time), args)
                 
                 
                 remove_indexes.append(m_index)

@@ -121,7 +121,7 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
             0
         ]
         
-        await add_task(datetime.datetime.fromtimestamp(end_time), args)
+        #await add_task(datetime.datetime.fromtimestamp(end_time), args)
         
         """
         elif reroll :

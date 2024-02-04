@@ -333,7 +333,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         database_name
                     ]
 
-                    await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                    #await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
                     database_user[part_user_id]["Current Rolls"][t_num] = ({
                         "Event Name" : event,
@@ -349,7 +349,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         database_name
                     ]
                     
-                    await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                    #await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
 
                 dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
@@ -497,7 +497,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 0
             ]
             
-            await add_task(datetime.datetime.fromtimestamp(end_time), args)
+            #await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
             database_user[part_user_id]["Current Rolls"][t_num] = ({
                 "Event Name" : event,
@@ -513,7 +513,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 0
             ]
             
-            await add_task(datetime.datetime.fromtimestamp(end_time), args)
+            #await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
             dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
 
@@ -781,7 +781,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         0
                     ]
                     
-                    await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                    #await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
                     args = [
                         database_user[int_user_id]["Discord ID"],
@@ -790,7 +790,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         0
                     ]
                     
-                    await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                    #await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
 
                     dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
