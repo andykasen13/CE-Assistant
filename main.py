@@ -398,7 +398,44 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 
 
 
+async def check_roll_status():
+    # get databases
+    database_user = await collection.find_one({'_id' : mongo_ids["user"]})
+    database_name = await collection.find_one({"_id" : mongo_ids["name"]})
 
+    # create a variable that holds all the messages that need to be sent
+    all_returns = []
+
+    # go through each user in database user. if they have any cooldowns or current rolls.... update their profiles.
+    for user in database_user:
+
+        # if their current rolls are empty and their cooldowns are empty keep checking
+        if(database_user[user]["Current Rolls"] == [] and database_user[user]["Cooldowns"] == {}) : continue
+        else:
+            # update their profile.
+            returns = update_p(database_user[user]["Discord ID"], "", database_user, database_name)
+            
+            # update database_user.
+            database_user = returns[0]
+            
+            # add all returned values to the array except database_user. that has been dealt with.
+            for i in range(1, len(returns)):
+                all_returns.append(returns[i])
+            
+            # make the returns array empty.
+            returns = []
+    
+    # update the databases
+    dump = await collection.replace_one({"_id" : mongo_ids["user"]}, database_user)
+
+    # delete all variables (mmmmm...... my precious ram.... mmmmmmffgggggggg......)
+    del dump
+    del database_user
+    del database_name
+    del all_returns
+    del returns
+
+        
 
 
 
@@ -513,7 +550,6 @@ async def curate(interaction, num : int = 0):
         await interaction.followup.send('Those are the last {} curator reviews!'.format(num))
     else:
         await interaction.followup.send('There are no new curator reviews.')
-
 
 
 
@@ -1069,7 +1105,7 @@ async def cr(interaction : discord.Interaction, ephemeral : bool) :
 
 
 
-@tree.command(name='startup_sched', description='yeah', guild=discord.Object(id=guild_ID))
+@tree.command(name='startup_sched', description='hoping this is outdated by now!!!!', guild=discord.Object(id=guild_ID))
 async def startup(interaction: discord.Interaction):
     await interaction.response.defer()
     print('starting up')
@@ -1124,6 +1160,11 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 
     # and send a response to the original interaction
     await interaction.followup.send("worked", ephemeral=True)
+
+
+    #get mongo shit
+    def getMongoShit(option : mongo_ids.keys()):
+        return asyncio.run(collection.find_one[{'_id' : mongo_ids[option]}])
 
 """
 # ---------------------------------------------------------------------------------------------------------------------------------- #
@@ -1244,6 +1285,10 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
     #             content=f"{self.current_page}", view=self
     #         )
 """
+
+
+
+
 
 
 

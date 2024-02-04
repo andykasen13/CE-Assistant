@@ -18,9 +18,10 @@ mongo_ids = {
 }
 
 
-async def update_p(user_id : int, roll_ended_name, database_user, database_name) :
+def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
     from Helper_Functions.Scheduler import add_task
+    from main import getMongoShit
     cooldowns = {
         "One Hell of a Day" : (14),
         "One Hell of a Week" : (28),
@@ -37,10 +38,6 @@ async def update_p(user_id : int, roll_ended_name, database_user, database_name)
         "Teamwork Makes the Dream Work" : 28*3
     }
 
-    from main import collection
-
-    database_user = await collection.find_one({'_id' : mongo_ids["user"]})
-    database_name = await collection.find_one({'_id' : mongo_ids["name"]})
 
     # Set up total-points
     total_points = 0
@@ -308,7 +305,8 @@ async def update_p(user_id : int, roll_ended_name, database_user, database_name)
                     0
                 ]
                 
-                await add_task(datetime.datetime.fromtimestamp(end_time), args)
+            
+                #await add_task(datetime.datetime.fromtimestamp(end_time), args)
                 
                 
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
@@ -336,7 +334,7 @@ async def update_p(user_id : int, roll_ended_name, database_user, database_name)
                     0
                 ]
                 
-                await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                #await add_task(datetime.datetime.fromtimestamp(end_time), args)
                 
                 
                 remove_indexes.append(m_index)
@@ -419,7 +417,7 @@ async def update_p(user_id : int, roll_ended_name, database_user, database_name)
                     0
                 ]
                 
-                await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                #await add_task(datetime.datetime.fromtimestamp(end_time), args)
                 
                 
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
@@ -448,7 +446,7 @@ async def update_p(user_id : int, roll_ended_name, database_user, database_name)
                     0
                 ]
                 
-                await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                #await add_task(datetime.datetime.fromtimestamp(end_time), args)
                 
                 
                 remove_indexes.append(m_index)
