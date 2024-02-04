@@ -373,7 +373,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             0
         ]
         
-        await add_task(datetime.datetime.fromtimestamp(end_time), args)
+        #await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
     # this is reroll shit and rerolls dont exist anymore lol
     """ elif (dont_save is False) and (reroll) :
