@@ -19,9 +19,6 @@ mongo_ids = {
 
 
 def update_p(user_id : int, roll_ended_name, database_user, database_name) :
-
-    from Helper_Functions.Scheduler import add_task
-    from main import getMongoShit
     cooldowns = {
         "One Hell of a Day" : (14),
         "One Hell of a Week" : (28),
