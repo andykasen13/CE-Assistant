@@ -9,6 +9,7 @@ import os
 from bson import ObjectId
 import time
 import json
+from discord.ext import tasks
 
 # ----------- discord imports ---------
 import discord
@@ -397,8 +398,9 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 
 
 
-
+@tasks.loop(time=datetime.time(hour=0, minute=0, tzinfo=datetime.timezone.utc))
 async def check_roll_status():
+    print('it ran omg it actually ran')
     # get databases
     database_user = await collection.find_one({'_id' : mongo_ids["user"]})
     database_name = await collection.find_one({"_id" : mongo_ids["name"]})
