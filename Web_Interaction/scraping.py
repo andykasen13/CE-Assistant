@@ -82,7 +82,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     hm = False
 
     # use this if /api/games/full/ fails
-    option3 = False
+    option3 = True
 
     if hm:
     
