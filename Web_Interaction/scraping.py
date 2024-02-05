@@ -80,6 +80,10 @@ def single_scrape(curator_count):
 def game_list(new_data, current_dict, unfinished_games : dict):
     # Set selenium driver and preferences
     hm = False
+
+    # use this if /api/games/full/ fails
+    option3 = False
+
     if hm:
     
         options = webdriver.ChromeOptions()
@@ -100,14 +104,25 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     
 
     # set up API requests
-    print('fetching /api/games/full/...')
-    api_response = requests.get('https://cedb.me/api/games/full')
-    try:
-        json_response = json.loads(api_response.text)
-    except:
-        print('json failed lol!!!')
-        if hm: del driver
-        return
+    if option3 :
+        print('fetching /api/games/...')
+        api_response = requests.get('https://cedb.me/api/games')
+        try:   
+            json_response = json.loads(api_response.text)
+        except:
+            print('json failed lol!!!!!!!')
+            if hm: del driver
+            return
+        
+    else :
+        print('fetching /api/games/full/...')
+        api_response = requests.get('https://cedb.me/api/games/full')
+        try:
+            json_response = json.loads(api_response.text)
+        except:
+            print('json failed lol!!!')
+            if hm: del driver
+            return
 
     # grab last updated time
     current_newest = current_dict['Updated Time']
@@ -142,6 +157,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     try:
         print('testing...')
         print(json_response[0]['id'])
+        print('test passed.\n')
     except:
         print('json failed lol')
         return
@@ -156,6 +172,15 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
         updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
         created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+
+        if option3:
+            api_response_current = requests.get('https://cedb.me/api/game/' + game['id'])
+            try:   
+                json_response_current = json.loads(api_response_current.text)
+            except:
+                continue
+
+            game = json_response_current
 
         for objective in game['objectives'] :
             # store the objective names
