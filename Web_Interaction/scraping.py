@@ -768,8 +768,8 @@ def get_game(game):
         'Steam ID' : game['platformId'],
         'Tier' : 'Tier ' + str(game['tier']),
         'Genre' : game['genre']['name'],
-        'Full Completions' : game['completion']['completed'],
-        'Total Owners' : game['completion']['total'],
+        #'Full Completions' : game['completion']['completed'],
+        #'Total Owners' : game['completion']['total'],
         'Primary Objectives' : objectives[0],
         'Community Objectives' : objectives[1],
         'Last Updated' : objectives[2]
