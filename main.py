@@ -106,7 +106,7 @@ async def aaaa_auto(interaction : discord.Interaction, current:str) -> typing.Li
 
 
 @tree.command(name="aaaaa", description="afjdals", guild=discord.Object(id=guild_ID))
-@app_commands.autocomplete(item=aaaa_auto)
+#@app_commands.autocomplete(item=aaaa_auto)
 async def aaaaa(interaction : discord.Interaction, item : str):
     await interaction.response.defer()
 
