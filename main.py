@@ -507,6 +507,7 @@ async def check_roll_status():
         else :
             await log_channel.send("BOT ERROR: recieved unrecognized update code: \n'{}'".format(return_value))
 
+    log_channel.send("holy fucking shit the once-a-day actually ran???")
 
     # delete all variables (mmmmm...... my precious ram.... mmmmmmffgggggggg......)
     del dump
