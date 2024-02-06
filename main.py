@@ -110,7 +110,10 @@ async def aaaa_auto(interaction : discord.Interaction, current:str) -> typing.Li
 async def aaaaa(interaction : discord.Interaction, item : str):
     await interaction.response.defer()
 
-
+    data = requests.get('https://cedb.me/api/user/d7cb0869-5ed9-465c-87bf-0fb95aaebbd5/')
+    print(data.text)
+    data_json = json.loads(data.text)
+    #data_json_2 = json.load(data.text)
     await interaction.followup.send(item)
 
 
