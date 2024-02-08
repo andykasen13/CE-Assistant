@@ -126,10 +126,10 @@ async def master_loop(client, mongo_client):
     await curate(correct_channel, mongo_client)
 
     # start the scrape function
-    await scrape(correct_channel, mongo_client)
+    scrape_message = await scrape(correct_channel, mongo_client)
 
     log = client.get_channel(1141886539157221457)
-    await log.send('loop complete')
+    await log.send(scrape_message)
 
     print('done')
 
@@ -175,7 +175,7 @@ def thread_curate(curator_count):
     # call to the curator file
     return checkCuratorCount(curator_count)
 
-@timeout(600, default="Timeout!")
+@timeout(600, default="Scraping timeout!!")
 async def scrape(channel, mongo_client):
     print('scraping...')
 
@@ -209,6 +209,8 @@ async def scrape(channel, mongo_client):
     del curator_count
     del unfinished
     del collection
+
+    return "loop successful"
 
 
 @to_thread
