@@ -23,7 +23,6 @@ import shutil
 
 # thread management
 import asyncio
-from asyncio import timeout
 import typing
 from bson import ObjectId
 from discord.ext import tasks
