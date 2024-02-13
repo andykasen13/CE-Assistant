@@ -101,7 +101,7 @@ async def master_loop(client, mongo_client):
 
     # start the scrape function
     try:
-        with asyncio.timeout(600):
+        async with asyncio.timeout(600):
             scrape_message = await scrape(correct_channel, mongo_client)
     except TimeoutError:
         scrape_message = "function timed out!!!"
