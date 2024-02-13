@@ -126,7 +126,7 @@ async def master_loop(client, mongo_client):
     await curate(correct_channel, mongo_client)
 
     # start the scrape function
-    async with asyncio.timeout(10)
+    async with asyncio.timeout(10):
         scrape_message = await scrape(correct_channel, mongo_client)
 
     log = client.get_channel(1141886539157221457)
