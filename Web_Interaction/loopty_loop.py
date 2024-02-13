@@ -89,32 +89,6 @@ times = [
   datetime.time(hour=23, minute=30, tzinfo=utc),
 ]
 
-def timeout(seconds, default=None):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            def signal_handler(signum, frame):
-                raise TimeoutError("Timed out!")
-            # Set up the signal handler for timeout
-            signal.signal(signal.SIGALRM, signal_handler)
-
-            # Set the initial alarm for the integer part of seconds
-            signal.setitimer(signal.ITIMER_REAL, seconds)
-
-            
-            try:
-                result = func(*args, **kwargs)
-            except TimeoutError:
-                return default
-            finally:
-                signal.alarm(0)
-            
-            return result
-        
-        return wrapper
-    
-    return decorator
-
 
 # big daddy loop that runs every fifteen minutes
 @tasks.loop(time=times)
@@ -128,7 +102,7 @@ async def master_loop(client, mongo_client):
 
     # start the scrape function
     try:
-        async with asyncio.timeout(10):
+        with asyncio.timeout(600):
             scrape_message = await scrape(correct_channel, mongo_client)
     except TimeoutError:
         scrape_message = "function timed out!!!"
@@ -180,7 +154,6 @@ def thread_curate(curator_count):
     # call to the curator file
     return checkCuratorCount(curator_count)
 
-@timeout(600, default="Scraping timeout!!")
 async def scrape(channel, mongo_client):
     print('scraping...')
 
