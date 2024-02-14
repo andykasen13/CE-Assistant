@@ -155,7 +155,7 @@ def thread_curate(curator_count):
 
 async def scrape(channel, mongo_client):
     print('scraping...')
-
+    from main import get_mongo, dump_mongo
     database_name = await get_mongo('name')
     curator_count = await get_mongo('curator')
     unfinished = await get_mongo('unfinished')
