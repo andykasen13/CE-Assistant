@@ -30,6 +30,7 @@ from discord.ext import tasks
 # other local files
 from Web_Interaction.curator import checkCuratorCount
 from Web_Interaction.scraping import get_games
+from main import get_mongo, dump_mongo
 
 
 # dictating which channel the info will be sent to
@@ -114,7 +115,7 @@ async def master_loop(client, mongo_client):
 
 async def curate(channel, mongo_client):
     print('curating...')
-    from main import get_mongo, dump_mongo, get_unix
+    
 
     curator_count = await get_mongo('curator')
 
@@ -153,8 +154,6 @@ def thread_curate(curator_count):
 
 async def scrape(channel, mongo_client):
     print('scraping...')
-
-    from main import get_mongo, dump_mongo, get_unix
 
     database_name = await get_mongo('name')
     curator_count = await get_mongo('curator')
