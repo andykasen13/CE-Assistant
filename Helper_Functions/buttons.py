@@ -79,7 +79,7 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
         The collection to pull the MongoDB information from.
     """
     
-    from main import get_mongo, dump_mongo
+    from Helper_Functions.mongo_silly import get_mongo, dump_mongo
 
     games = []
     genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]

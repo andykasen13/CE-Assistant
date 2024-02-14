@@ -25,7 +25,7 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 
 
 async def single_run(client, requested_reviews=0, collection=""):
-    from main import get_mongo, dump_mongo, get_unix
+    from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
     if requested_reviews > 0:
         data = await get_mongo('curator')

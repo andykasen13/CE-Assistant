@@ -30,7 +30,7 @@ import chromedriver_binary  # Adds chromedriver binary to path
 # pictures
 from .Screenshot import Screenshot
 from PIL import Image
-
+from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
 # set basic icons
 ce_hex_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
