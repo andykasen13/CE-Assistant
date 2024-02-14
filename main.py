@@ -1244,8 +1244,8 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 
 
     #get mongo shit
-    def getMongoShit(option : mongo_ids.keys()):
-        return asyncio.run(collection.find_one[{'_id' : mongo_ids[option]}])
+    #def getMongoShit(option : mongo_ids.keys()):
+    #    return asyncio.run(collection.find_one[{'_id' : mongo_ids[option]}])
 
 """
 # ---------------------------------------------------------------------------------------------------------------------------------- #
