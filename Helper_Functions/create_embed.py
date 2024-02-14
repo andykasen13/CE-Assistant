@@ -140,8 +140,10 @@ def getEmbed(game_name, authorID, database_name):
         for objective in database_name[game_name]["Primary Objectives"] :
             total_points += int(database_name[game_name]["Primary Objectives"][objective]["Point Value"])
         embed.add_field(name="CE Status", value=f"{total_points} Points", inline=True)
-        embed.add_field(name="CE Owners", value= database_name[game_name]["Total Owners"], inline=True)
-        embed.add_field(name="CE Completions", value= database_name[game_name]["Full Completions"], inline=True)
+        try:
+            embed.add_field(name="CE Owners", value= database_name[game_name]["Total Owners"], inline=True)
+            embed.add_field(name="CE Completions", value= database_name[game_name]["Full Completions"], inline=True)
+        except:""
     else : embed.add_field(name="CE Status", value="Not on Challenge Enthusiasts", inline=True)
 
     return embed
