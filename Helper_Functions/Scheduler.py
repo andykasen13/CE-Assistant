@@ -10,22 +10,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from motor.motor_asyncio import AsyncIOMotorClient
 
-
-uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
-mongo_client = AsyncIOMotorClient(uri)
-
-mongo_database = mongo_client['database_name']
-collection = mongo_client['database_name']['ce-collection']
-
-mongo_ids = {
-    "name" : ObjectId('64f8d47f827cce7b4ac9d35b'),
-    "tier" : ObjectId('64f8bc4d094bdbfc3f7d0050'),
-    "curator" : ObjectId('64f8d63592d3fe5849c1ba35'),
-    "tasks" : ObjectId('64f8d6b292d3fe5849c1ba37'),
-    "user" : ObjectId('64f8bd1b094bdbfc3f7d0051')
-}
-
-
 sched = AsyncIOScheduler()
 
 async def add_task(time, args):
@@ -37,8 +21,9 @@ async def add_task(time, args):
 
 
 async def startup_sched():
-    user_info = await collection.find_one({'_id' : mongo_ids["user"]})
-    database_name = await collection.find_one({'_id' : mongo_ids['name']})
+    from main import get_mongo, dump_mongo
+    user_info = await get_mongo('user')
+    database_name = await get_mongo('name')
 
     for user_str in user_info:
         if user_str == '_id' : continue

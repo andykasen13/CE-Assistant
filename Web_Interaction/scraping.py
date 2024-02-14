@@ -155,6 +155,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         "Strategy" : '<:CE_strategy:1126326195915591690>'
     }
 
+    # make sure the json loaded in its entirety
     try:
         print('testing...')
         print(json_response[0]['id'])

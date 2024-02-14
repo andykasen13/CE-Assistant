@@ -8,17 +8,9 @@ from bson import ObjectId
 
 
 
-mongo_ids = {
-    "name" : ObjectId('64f8d47f827cce7b4ac9d35b'),
-    "tier" : ObjectId('64f8bc4d094bdbfc3f7d0050'),
-    "curator" : ObjectId('64f8d63592d3fe5849c1ba35'),
-    "tasks" : ObjectId('64f8d6b292d3fe5849c1ba37'),
-    "user" : ObjectId('64f8bd1b094bdbfc3f7d0051'),
-    "unfinished" : ObjectId('650076a9e35bbc49b06c9881')
-}
-
-
 def update_p(user_id : int, roll_ended_name, database_user, database_name) :
+    from main import get_unix
+    
     cooldowns = {
         "One Hell of a Day" : (14),
         "One Hell of a Week" : (28),
@@ -161,7 +153,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
         # ------------------------------------ pending... -------------------------------------
         if current_roll["Games"] == ['pending...']:
-            if current_roll["End Time"] > int(time.mktime((datetime.datetime.now()).timetuple())): 
+            if current_roll["End Time"] > get_unix("now"): 
                 #"delete pending..."
                 #"continue"
                 remove_indexes.append(m_index)
@@ -284,7 +276,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             if winner == 1 :
                 print('andy wins')
                 # update user 1 database
-                current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
+                current_roll["End Time"] = get_unix("now")
                 user_dict[ce_id]["Completed Rolls"].append(current_roll)
                 remove_indexes.append(m_index)
                 # update user 2 database
@@ -292,7 +284,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     if other_roll["Event Name"] == "Winner Takes All" : 
                         other_location = index
                         break
-                end_time = int(time.mktime((datetime.datetime.now()+timedelta(28*3)).timetuple()))
+                end_time = get_unix(28*3)
                 database_user[current_roll["Partner"]]["Cooldowns"]["Winner Takes All"] = end_time
                 
                 args = [
@@ -317,11 +309,11 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     if other_roll["Event Name"] == "Winner Takes All" : 
                         other_location = index
                         break
-                database_user[current_roll["Partner"]]["Current Rolls"][other_location]["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
+                database_user[current_roll["Partner"]]["Current Rolls"][other_location]["End Time"] = get_unix("now")
                 database_user[current_roll["Partner"]]["Completed Rolls"].append(database_user[current_roll["Partner"]]["Current Rolls"][other_location])
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
                 # update user 1 database
-                user_dict[ce_id]["Cooldowns"]["Winner Takes All"]  = int(time.mktime((datetime.datetime.now()+timedelta(28*3)).timetuple()))
+                user_dict[ce_id]["Cooldowns"]["Winner Takes All"]  = get_unix(28*3)
                 
                 
                 args = [
@@ -386,7 +378,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 winner = 2
             elif not bool_1 and not bool_2 :
                 print('fail')
-                if current_roll["End Time"] < int(time.mktime((datetime.datetime.now()).timetuple())) : returns.append("log: " + "<@{}> and <@{}> ")
+                if current_roll["End Time"] < get_unix("now") : returns.append("log: " + "<@{}> and <@{}> ")
                 continue
             elif bool_1 and bool_2 :
                 winner = 1
@@ -394,7 +386,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             if winner == 1 :
                 print('andy wins')
                 # update user 1 database
-                current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
+                current_roll["End Time"] = get_unix("now")
                 user_dict[ce_id]["Completed Rolls"].append(current_roll)
                 remove_indexes.append(m_index)
                 # update user 2 database
@@ -402,7 +394,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     if other_roll["Event Name"] == "Game Theory" : 
                         other_location = index
                         break
-                end_time = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
+                end_time = get_unix(28)
                 database_user[current_roll["Partner"]]["Cooldowns"]["Game Theory"] = end_time
                 
 
@@ -428,11 +420,11 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     if other_roll["Event Name"] == "Game Theory" : 
                         other_location = index
                         break
-                database_user[current_roll["Partner"]]["Current Rolls"][other_location]["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
+                database_user[current_roll["Partner"]]["Current Rolls"][other_location]["End Time"] = get_unix("now")
                 database_user[current_roll["Partner"]]["Completed Rolls"].append(database_user[current_roll["Partner"]]["Current Rolls"][other_location])
                 del database_user[current_roll["Partner"]]["Current Rolls"][other_location]
                 # update user 1 database
-                end_time = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
+                end_time = get_unix(28)
                 user_dict[ce_id]["Cooldowns"]["Game Theory"]  = end_time
                 
                 
@@ -534,7 +526,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         # we now have to determine if the roll has ended or not. 
         # it could be that this function was called because the roll has ended, 
         # or because it is just being updated.
-        if not roll_completed and int(time.mktime((datetime.datetime.now()).timetuple())) > current_roll["End Time"] : 
+        if not roll_completed and get_unix('now') > current_roll["End Time"] : 
             # fourward thinking
             if current_roll["Event Name"] == "Fourward Thinking" :
                 if "End Time" not in current_roll : continue
@@ -571,8 +563,8 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     del database_user[current_roll["Partner"]]["Current Rolls"][myindex]
                     
                     # set up cooldowns
-                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime(( (datetime.datetime.now()) + (timedelta(cooldowns[current_roll["Event Name"]]) )).timetuple()  )  )
-                    database_user[current_roll["Partner"]]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime(( (datetime.datetime.now()) + timedelta(cooldowns[current_roll["Event Name"]]) ).timetuple()))
+                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] = get_unix(cooldowns[current_roll["Event Name"]])
+                    database_user[current_roll["Partner"]]["Cooldowns"][current_roll["Event Name"]] = get_unix(cooldowns[current_roll["Event Name"]])
                 
                 # this is a normal solo roll
                 else : 
@@ -587,8 +579,8 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     # and add the cooldown
                     if current_roll["Event Name"] == "Fourward Thinking" :
                         cooldown_days = 0
-                        database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] = int(time.mktime((datetime.datetime.now()).timetuple()))
-                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] =  int(time.mktime( ((datetime.datetime.now()) + (timedelta(cooldowns[current_roll["Event Name"]]) )).timetuple()))
+                        database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] = get_unix("now")
+                    database_user[ce_id]["Cooldowns"][current_roll["Event Name"]] =  get_unix(cooldowns[current_roll["Event Name"]])
                 remove_indexes.append(m_index)
             
             continue
@@ -611,7 +603,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             returns.append("log: " + "<@{}>, you have completed {}! Congratulations!".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
         
         # edit the roll that was completed
-        current_roll["End Time"] = int(time.mktime((datetime.datetime.now()).timetuple()))
+        current_roll["End Time"] = get_unix("now")
         user_dict[ce_id]["Completed Rolls"].append(current_roll)
 
         # if it's a co-op roll, delete their instance as well
@@ -627,7 +619,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         remove_indexes.append(m_index)
 
     for cooldown in (user_dict[ce_id]["Cooldowns"]):
-        if user_dict[ce_id]["Cooldowns"][cooldown] < int(time.mktime((datetime.datetime.now()).timetuple())):
+        if user_dict[ce_id]["Cooldowns"][cooldown] < get_unix("now"):
             cooldown_indexes.append(cooldown)
             returns.append("casino: <@{}>, your {} cooldown has now ended.".format(user_dict[ce_id]["Discord ID"], cooldown))
         

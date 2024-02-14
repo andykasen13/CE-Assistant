@@ -9,11 +9,12 @@ from Helper_Functions.Scheduler import add_task
 
 
 async def co_op_command(interaction : discord.Interaction, event, partner : discord.User, reroll : bool, collection) :
+    from main import get_mongo, dump_mongo, get_unix
 
     # Open the user database
-    database_user = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
-    database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
-    database_tier = await collection.find_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')})
+    database_user = await get_mongo('user')
+    database_name = await get_mongo('name')
+    database_tier = await get_mongo("tier")
     
     # Set up variables
     interaction_user_data = ""
@@ -49,11 +50,11 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('Your partner recently tried to participate in {}. Please wait 10 minutes in between rolling for the same event!'.format(event))
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
 
-    database_user[int_user_id]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
-    database_user[part_user_id]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
+    database_user[int_user_id]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ["pending..."]})
+    database_user[part_user_id]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ["pending..."]})
 
-    dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
-    database_user = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
+    dump = await dump_mongo('user', database_user)
+    database_user = await get_mongo('user')
 
     # Make sure both users are registered in the database
     if interaction_user_data == "" : return await interaction.followup.send("You are not registered in the CE Assistant database.")
@@ -185,7 +186,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 "Games" : [interaction_user_selected_game]
             })
 
-            dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
+            dump = await dump_mongo('user', database_user)
 
             # and edit the message.
             return await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
@@ -318,7 +319,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
                 
                 else :
-                    end_time = int(time.mktime((datetime.datetime.now()+end_db[tier_num]).timetuple()))
+                    end_time = get_unix(tier_num)
                     database_user[int_user_id]["Current Rolls"][i_num] = ({
                         "Event Name" : event,
                         "Partner" : target_user_data["CE ID"],
@@ -352,7 +353,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     #await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
 
-                dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
+                dump = await dump_mongo('user', database_user)
 
                 return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
             async def deny_callback(interaction) :
@@ -481,7 +482,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 if(roll_t["Games"] == ['pending...']) : break
                 t_num += 1
 
-            end_time = int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple()))
+            end_time = get_unix(28)
 
             database_user[int_user_id]["Current Rolls"][i_num] = ({
                 "Event Name" : event,
@@ -515,7 +516,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             
             #await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
-            dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
+            dump = await dump_mongo('user', database_user)
 
             # ------ and edit the message. ------
             return await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
@@ -627,7 +628,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 })
               
 
-                dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
+                dump = await dump_mongo('user', database_user)
 
 
                 return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
@@ -764,7 +765,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         if(roll_t["Games"] == ['pending...'] and roll_t["Event Name"] == event) : break
                         t_num += 1
 
-                    end_time = int(time.mktime((datetime.datetime.now()+timedelta(7)).timetuple()))
+                    end_time = get_unix(7)
                     
                     database_user[int_user_id]["Cooldowns"].append({
                         "Winner Takes All" : end_time
@@ -793,7 +794,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     #await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
 
-                    dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
+                    dump = await dump_mongo('user', database_user)
 
                     return
                 
@@ -871,7 +872,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     "Games" : [target_user_selected_game]
                 })
 
-                dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
+                dump = await dump_mongo('user', database_user)
 
 
                 # Edit the message

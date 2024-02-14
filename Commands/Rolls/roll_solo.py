@@ -16,7 +16,7 @@ from Helper_Functions.Scheduler import add_task
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
 async def solo_command(interaction : discord.Interaction, event : str, reroll : bool, collection) :
-    
+    from main import get_mongo, dump_mongo, get_unix
 
     # Set up variables
     view = discord.ui.View(timeout=600)
@@ -76,9 +76,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         embed = getEmbed(games[0], interaction.user.id, database_name=database_name)
         embed.add_field(name="Roll Requirements", value = 
             "You have one day to complete One Hell of a Day."
-            + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(1)).timetuple())))
+            + "\nMust be completed by <t:" + str(get_unix(1))
             + ">\nOne Hell of a Day has a two week cooldown."
-            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(14)).timetuple()))) + ">.", inline=False)
+            + "\nCooldown ends on <t:" + str(get_unix(14)) + ">.", inline=False)
         embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
 
     # -------------------------------------------- Two Week T2 Streak --------------------------------------------
@@ -186,7 +186,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         embed.add_field(name="Roll Requirements", value = 
             "There is no time limit on " + embed.title + "."
             + "\nNever Lucky has a one week cooldown."
-            + "\nCooldown ends on <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(28)).timetuple())))
+            + "\nCooldown ends on <t:" + str(get_unix(28))
             + f">\nhttps://cedb.me/game/{database_name[embed.title]['CE ID']}/", inline=False)
 
     # -------------------------------------------- Triple Threat --------------------------------------------
@@ -206,7 +206,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         if not can_continue : return await interaction.followup.send("You must complete Never Lucky to roll Triple Threat!")
         
         # add the pending...
-        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
+        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ["pending..."]})
 
         # close and reopen users2.json
         dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, userInfo)
@@ -224,7 +224,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # one t4
 
         # add pending...
-        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(minutes=10)).timetuple())), "Games" : ["pending..."]})
+        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ["pending..."]})
 
         # close and reopen users2.json
         dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, userInfo)
@@ -281,7 +281,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
             userInfo[target_user]["Current Rolls"].append({
                 "Event Name" : event,
-                "End Time" : int(time.mktime((datetime.datetime.now()+timedelta(days=7)).timetuple())),
+                "End Time" : get_unix(7),
                 "Games" : [game2],
                 "Rerolls" : 0
             })
@@ -352,7 +352,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
             # update users2.json
             userInfo[target_user]["Current Rolls"][roll_num]["Games"].append(game)
-            userInfo[target_user]["Current Rolls"][roll_num]["End Time"] = int(time.mktime((datetime.datetime.now()+timedelta(7*(num_of_games+1))).timetuple()))
+            userInfo[target_user]["Current Rolls"][roll_num]["End Time"] = get_unix(7*(num_of_games+1))
             userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"] += 1
 
             # dont add the thing to users2.json AGAIN!
@@ -371,7 +371,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # ------------------------------------ CONTINUE ON ---------------------------------------------------
 
     if (dont_save is False) and (not reroll) :
-        end_time = int(time.mktime((datetime.datetime.now()+times[event]).timetuple()))
+        end_time = get_unix(times[event])
         # append the roll to the user's current rolls array
         userInfo[target_user]["Current Rolls"].append({"Event Name" : event, 
                                                     "End Time" : end_time,

@@ -165,7 +165,9 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
 # -------------------------------------------------------------------------------------------------------------------------------- #
 
 async def get_rollable_game_from_list(games, collection) :
-    database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
+    from main import get_mongo, dump_mongo, get_unix
+
+    database_name = await get_mongo('name')
     rollable = False
     while not rollable :
         random_num = random.randint(0, len(games)-1)
