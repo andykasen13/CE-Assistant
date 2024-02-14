@@ -100,7 +100,7 @@ async def master_loop(client, mongo_client):
     await curate(correct_channel, mongo_client)
 
     # start the scrape function
-    try:
+    try: # timeout the function after 10 minutes. it keeps getting stuck smh my head
         async with asyncio.timeout(600):
             scrape_message = await scrape(correct_channel, mongo_client)
     except TimeoutError:
@@ -114,27 +114,25 @@ async def master_loop(client, mongo_client):
 
 async def curate(channel, mongo_client):
     print('curating...')
+    from main import get_mongo, dump_mongo, get_unix
 
-    collection = mongo_client['database_name']['ce-collection']
-
-    curator_count = await collection.find_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')})
+    curator_count = await get_mongo('curator')
 
     # thread call getting the latest curator stuff
     curation = await thread_curate(curator_count) #await asyncio.to_thread(thread_curate) 
 
     # get the current curator page and update its curator count
-    data = await collection.find_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')})
+    data = await get_mongo('curator')
     data['Curator Count'] = curation[0]
 
     # dump new count
-    dump = await collection.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, data)
+    dump = await dump_mongo("curator", data)
 
     # if there were updates send them to the channel
     if len(curation) > 1:
         for embed in curation[1]:
             await channel.send(embed=embed)
-        
-    del collection
+
     del curator_count
     del curation
     del data
@@ -156,10 +154,11 @@ def thread_curate(curator_count):
 async def scrape(channel, mongo_client):
     print('scraping...')
 
-    collection = mongo_client['database_name']['ce-collection']
-    database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
-    curator_count = await collection.find_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')})
-    unfinished = await collection.find_one({'_id' : ObjectId('650076a9e35bbc49b06c9881')})
+    from main import get_mongo, dump_mongo, get_unix
+
+    database_name = await get_mongo('name')
+    curator_count = await get_mongo('curator')
+    unfinished = await get_mongo('unfinished')
 
     # thread call scraping the new data
     updates = await thread_scrape(database_name, curator_count, unfinished) #asyncio.to_thread(thread_scrape)
@@ -167,11 +166,11 @@ async def scrape(channel, mongo_client):
     if updates == None : return 
 
     # dump the data back onto mongodb
-    dump1 = await collection.replace_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')}, updates[2]) # name
-    dump2 = await collection.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, updates[3]) # user
-    dump2andahalf = await collection.replace_one({'_id' : ObjectId('650076a9e35bbc49b06c9881')}, updates[4])
+    dump1 = await dump_mongo("name", updates[2]) # name
+    dump2 = await dump_mongo("user", updates[3]) # user
+    dump2andahalf = await dump_mongo('unfinished', updates[4]) # unfinished
     updates[5]['_id'] = ObjectId('64f8bc4d094bdbfc3f7d0050')
-    dump3 = await collection.replace_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')}, updates[5]) # tier
+    dump3 = await dump_mongo('tier', updates[5]) # tier
 
     # send out each update
     for dict in updates[0]:
@@ -185,7 +184,6 @@ async def scrape(channel, mongo_client):
     del database_name
     del curator_count
     del unfinished
-    del collection
 
     return "loop successful"
 

@@ -40,8 +40,6 @@ async def get_buttons(view : discord.ui.View, embeds):
     buttons[0].callback = hehe
     buttons[1].callback = haha
 
-    
-
     async def disable() :
         for button in buttons :
             button.disabled = True
@@ -49,7 +47,40 @@ async def get_buttons(view : discord.ui.View, embeds):
 
     view.on_timeout = disable()
 
-async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit, tier_number, event_name, time_limit, cooldown_time, num_of_games, user_id, reroll : bool, collection) :
+async def get_genre_buttons(view : discord.ui.View, completion_time : int, price_limit : int, tier_number : str, event_name : str, 
+                            time_limit : int, cooldown_time : int, num_of_games : int, user_id : int, 
+                            collection) :
+    """
+    Overview
+    ----------
+    Gets buttons for each genre in Challenge Enthusiasts.
+
+    Parameters
+    -----------
+    view: :class:`discord.ui.View` (REQUIRED)
+        The view of the message that's been sent. This is required.
+    completion_time: :class:`int` (REQUIRED)
+        The limit on SteamHunters' average completion time for the game(s) chosen.
+    price_limit: :class:`int` (REQUIRED)
+        The limit on the base price on Steam for the game(s) chosen.
+    tier_number: :class:`str` (REQUIRED)
+        The tier of the game(s) chosen. (e.g. "Tier 1")
+    event_name: :class:`str` (REQUIRED)
+        The name of the roll event.
+    time_limit: :class:`int` (REQUIRED)
+        The amount of time (in days) for the user to complete this roll event.
+    cooldown_time: :class:`int` (REQUIRED)
+        The amount of time (in days) that the cooldown will last if the user fails the roll event.
+    num_of_games: :class:`int` (REQUIRED)
+        The number of games that need to be rolled for this event.
+    user_id: :class:`int` (REQUIRED)
+        The Discord ID for the user who rolled this event.
+    collection: :class:`MongoCollection` (REQUIRED)
+        The collection to pull the MongoDB information from.
+    """
+    
+    from main import get_mongo, dump_mongo
+
     games = []
     genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
     buttons = []
@@ -78,8 +109,8 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
         await interaction.followup.edit_message(embed=discord.Embed(title="working..."), view=view, message_id=interaction.message.id)
 
         # Open database name
-        database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
-        database_tier = await collection.find_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')})
+        database_name = await get_mongo("name")
+        database_tier = await get_mongo("tier")
 
 
         i=0
@@ -92,7 +123,7 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
         await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
 
         # Open database_user
-        database_user = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
+        database_user = await get_mongo("user")
         
         # grab the target user
         for user in database_user :
@@ -109,17 +140,16 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
 
         # update the 
         end_time = int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple()))
-        if not reroll : 
-            database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
+        database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
                                                     "End Time" : end_time,
                                                     "Games" : games})
         
-        args = [
-            database_user[target_user]["Discord ID"],
-            0,
-            0,
-            0
-        ]
+        # args = [
+        #     database_user[target_user]["Discord ID"],
+        #     0,
+        #     0,
+        #     0
+        # ]
         
         #await add_task(datetime.datetime.fromtimestamp(end_time), args)
         
@@ -148,7 +178,8 @@ async def get_genre_buttons(view : discord.ui.View, completion_time, price_limit
         """
 
         # dump the info
-        dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, database_user)
+        dump = await dump_mongo("user", database_user)
+
     buttons[0].callback = AC_callback
     buttons[1].callback = AR_callback
     buttons[2].callback = BH_callback

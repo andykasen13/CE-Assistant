@@ -15,6 +15,7 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 
 # ------------------------------------------------ CREATE MULTI EMBED ------------------------------------------------------------ #
 def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interaction, database_name) :
+    from main import get_mongo, dump_mongo, get_unix
 
     # ----- Set up initial embed -----
     embeds = []
@@ -37,7 +38,7 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
     # ----- Display Roll Requirements -----
     embeds[0].add_field(name="Roll Requirements", value =
         f"You have two weeks to complete " + embeds[0].title + "."
-        + "\nMust be completed by <t:" + str(int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple())))
+        + "\nMust be completed by <t:" + str(get_unix(time_limit))
         + f">.\n{event_name} has a cooldown time of {cooldown_time} days.", inline=False)
     embeds[0].timestamp = datetime.datetime.now()
     embeds[0].set_thumbnail(url = interaction.user.avatar)

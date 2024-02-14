@@ -25,15 +25,18 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 
 
 async def single_run(client, requested_reviews=0, collection=""):
+    from main import get_mongo, dump_mongo, get_unix
+
     if requested_reviews > 0:
-        data = await collection.find_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')})
+        data = await get_mongo('curator')
         curation = checkCuratorCount(data)
         data['Curator Count'] = curation[0]
         embeds=[]
         if len(curation) > 1:
             embeds = curation[1]
 
-        dump = await collection.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, data)
+        dump = await dump_mongo('curator', data)
+        del dump
     else:
         embeds = curatorUpdate(requested_reviews)
 

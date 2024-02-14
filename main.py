@@ -1,6 +1,6 @@
 # ---------- time imports -----------
 import asyncio
-from datetime import datetime
+from datetime import datetime, timedelta
 import datetime
 import functools
 import io
@@ -86,14 +86,33 @@ ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
 
+# get and set mongo databases
+mongo_names = Literal["name", "tier", "curator", "user", "tasks", "unfinished"]
+async def get_mongo(title : mongo_names):
+    """Returns the MongoDB associated with `title`."""
+    return await collection.find_one({'_id' : mongo_ids[title]})
+
+async def dump_mongo(title : mongo_names, data) :
+    """Dumps the MongoDB given by `title` and passed by `data`."""
+    return await collection.replace_one({'_id' : mongo_ids[title]}, data)
 
 
+# get unix timestamp for x days from now
+def get_unix(days, minutes = -1):
+    """Returns a unix timestamp for `days` days (or `minutes` minutes) from the current time."""
+    # return right now
+    if(days == "now") : return int(time.mktime((datetime.datetime.now()).timetuple()))
+    # return minutes
+    elif (minutes != -1) : return int(time.mktime((datetime.datetime.now()+timedelta(minutes=minutes)).timetuple()))
+    # return days
+    else: return int(time.mktime((datetime.datetime.now()+timedelta(days)).timetuple()))
 
 
-
+# test function that never really worked lol
+"""
 async def aaaa_auto(interaction : discord.Interaction, current:str) -> typing.List[app_commands.Choice[str]]:
     data = []
-    database_name = await collection.find_one({'_id' : mongo_ids["tier"]})
+    database_name = await get_mongo("name")
     print(database_name) 
 
     for game in list(database_name.keys()):
@@ -115,7 +134,7 @@ async def aaaaa(interaction : discord.Interaction, item : str):
     data_json = json.loads(data.text)
     #data_json_2 = json.load(data.text)
     await interaction.followup.send(item)
-
+"""
 
 
 
@@ -330,8 +349,8 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
         user = interaction.user
 
     # get mongo data
-    userInfo = await collection.find_one({'_id' : mongo_ids["user"]})
-    database_name_info = await collection.find_one({'_id' : mongo_ids["name"]})
+    userInfo = await get_mongo('user')
+    database_name_info = await get_mongo('name')
 
 
     # iterate through the json file until you find the
@@ -405,8 +424,8 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 async def check_roll_status():
     print('it ran omg it actually ran')
     # get databases
-    database_user = await collection.find_one({'_id' : mongo_ids["user"]})
-    database_name = await collection.find_one({"_id" : mongo_ids["name"]})
+    database_user = await get_mongo('user')
+    database_name = await get_mongo('name')
 
     # create a variable that holds all the messages that need to be sent
     all_returns = []
@@ -432,7 +451,7 @@ async def check_roll_status():
             returns = []
     
     # update the databases
-    dump = await collection.replace_one({"_id" : mongo_ids["user"]}, database_user)
+    dump = await dump_mongo("user", database_user)
 
 
     # initialize the variables ##################################################################################################################
@@ -662,7 +681,7 @@ async def steam_command(interaction : discord.Interaction, game_name: str):
     print("Recieved steam_game command with parameter: " + game_name + ".")
 
     # open database
-    database_name = await collection.find_one({'_id' : mongo_ids['name']})
+    database_name = await get_mongo('name')
 
     # Defer the interaction
     await interaction.response.defer(ephemeral=True)
@@ -878,7 +897,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
     
     #Open the user database
-    database_user = await collection.find_one({'_id' : (mongo_ids["user"])})
+    database_user = await get_mongo('user')
 
     # Set up total_points to calculate rank
     total_points = 0
@@ -983,7 +1002,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     database_user.update(user_dict)
 
     # Dump the data
-    dump = await collection.replace_one({'_id' : mongo_ids['user']}, database_user)
+    dump = await dump_mongo("user", database_user)
 
     # Create confirmation embed
     embed = discord.Embed(
@@ -1022,8 +1041,8 @@ async def update(interaction : discord.Interaction) :
     # Defer the message
     await interaction.response.defer(ephemeral=True)
 
-    database_name = await collection.find_one({'_id' : mongo_ids["name"]})
-    database_user = await collection.find_one({'_id' : mongo_ids["user"]})
+    database_name = await get_mongo('name')
+    database_user = await get_mongo('user')
 
     log_channel = client.get_channel(1141886539157221457)
     casino_channel = client.get_channel(811286469251039333)
@@ -1048,7 +1067,7 @@ async def update(interaction : discord.Interaction) :
 
     if returns == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
 
-    dump = await collection.replace_one({'_id' : mongo_ids['user']}, returns[0])
+    dump = await dump_mongo('user', returns[0])
     del returns[0]
 
     for return_value in returns :
@@ -1121,8 +1140,8 @@ async def update(interaction : discord.Interaction) :
 async def cr(interaction : discord.Interaction, ephemeral : bool) :
     await interaction.response.defer(ephemeral=ephemeral)
 
-    database_user = await collection.find_one({'_id' : mongo_ids["user"]})
-    database_name = await collection.find_one({'_id' : mongo_ids['name']})
+    database_user = await get_mongo('user')
+    database_name = await get_mongo('name')
     
     # find them in the users2.json
     ce_id = ""
@@ -1241,11 +1260,6 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 
     # and send a response to the original interaction
     await interaction.followup.send("worked", ephemeral=True)
-
-
-    #get mongo shit
-    #def getMongoShit(option : mongo_ids.keys()):
-    #    return asyncio.run(collection.find_one[{'_id' : mongo_ids[option]}])
 
 """
 # ---------------------------------------------------------------------------------------------------------------------------------- #
