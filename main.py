@@ -52,16 +52,42 @@ intents.reactions = True
 intents.members = True
 intents.guilds = True
 
-client = discord.Client(intents=intents)
-tree = app_commands.CommandTree(client)
-
-intents.message_content = True
-
+# ----------------------------------------------------------------------------------------------------------------------------
 uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
 mongo_client = AsyncIOMotorClient(uri)
 
 mongo_database = mongo_client['database_name']
 collection = mongo_client['database_name']['ce-collection']
+
+# get and set mongo databases
+mongo_names = Literal["name", "tier", "curator", "user", "tasks", "unfinished"]
+async def get_mongo(title : mongo_names):
+    """Returns the MongoDB associated with `title`."""
+    return await collection.find_one({'_id' : mongo_ids[title]})
+
+async def dump_mongo(title : mongo_names, data) :
+    """Dumps the MongoDB given by `title` and passed by `data`."""
+    return await collection.replace_one({'_id' : mongo_ids[title]}, data)
+
+
+# get unix timestamp for x days from now
+def get_unix(days, minutes = -1):
+    """Returns a unix timestamp for `days` days (or `minutes` minutes) from the current time."""
+    # return right now
+    if(days == "now") : return int(time.mktime((datetime.datetime.now()).timetuple()))
+    # return minutes
+    elif (minutes != -1) : return int(time.mktime((datetime.datetime.now()+timedelta(minutes=minutes)).timetuple()))
+    # return days
+    else: return int(time.mktime((datetime.datetime.now()+timedelta(days)).timetuple()))
+
+# ----------------------------------------------------------------------------------------------------------------------------
+
+client = discord.Client(intents=intents)
+tree = app_commands.CommandTree(client)
+
+intents.message_content = True
+
+
 
 mongo_ids = {
     "name" : ObjectId('64f8d47f827cce7b4ac9d35b'),
@@ -86,26 +112,7 @@ ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
 
-# get and set mongo databases
-mongo_names = Literal["name", "tier", "curator", "user", "tasks", "unfinished"]
-async def get_mongo(title : mongo_names):
-    """Returns the MongoDB associated with `title`."""
-    return await collection.find_one({'_id' : mongo_ids[title]})
 
-async def dump_mongo(title : mongo_names, data) :
-    """Dumps the MongoDB given by `title` and passed by `data`."""
-    return await collection.replace_one({'_id' : mongo_ids[title]}, data)
-
-
-# get unix timestamp for x days from now
-def get_unix(days, minutes = -1):
-    """Returns a unix timestamp for `days` days (or `minutes` minutes) from the current time."""
-    # return right now
-    if(days == "now") : return int(time.mktime((datetime.datetime.now()).timetuple()))
-    # return minutes
-    elif (minutes != -1) : return int(time.mktime((datetime.datetime.now()+timedelta(minutes=minutes)).timetuple()))
-    # return days
-    else: return int(time.mktime((datetime.datetime.now()+timedelta(days)).timetuple()))
 
 
 # test function that never really worked lol
