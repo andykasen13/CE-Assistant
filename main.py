@@ -146,6 +146,7 @@ async def aaaaa(interaction : discord.Interaction, item : str):
 
 
 
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------HELP COMMAND------------------------------------------------------------- #
@@ -420,9 +421,11 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 
 
 
-@tasks.loop(time=datetime.time(hour=0, minute=0, tzinfo=datetime.timezone.utc))
+@tasks.loop(time=datetime.time(hour=0, minute=20, tzinfo=datetime.timezone.utc))
 async def check_roll_status():
     print('it ran omg it actually ran')
+    log_channel = client.get_channel(1141886539157221457) 
+    log_channel.send("check_roll_status has begun!!")
     # get databases
     database_user = await get_mongo('user')
     database_name = await get_mongo('name')
@@ -455,7 +458,7 @@ async def check_roll_status():
 
 
     # initialize the variables ##################################################################################################################
-    log_channel = client.get_channel(1141886539157221457)                                                                                       #
+                                                                                          #
     casino_channel = client.get_channel(811286469251039333)                                                                                     #
                                                                                                                                                 #
     # rank silliness                                                                                                                            #
@@ -541,8 +544,33 @@ async def check_roll_status():
 
 
 
+@tree.command(name='purge-roll', description="Remove a roll from a specific user (in the event of catastrophe)", 
+              guild=discord.Object(id=guild_ID))
+async def purge_roll(interaction : discord.Interaction, user : discord.User, roll_event : events_solo):
+    await interaction.response.defer()
+    
+    # pull the database
+    database_user = await get_mongo('user')
+    
+    # find the user
+    ce_id = 0
+    for u in database_user:
+        if(u["Discord ID"] == user.id): ce_id = u
+    if ce_id == 0:
+        return await interaction.followup.send("<@{}> is not registered in the CE Assistant database.")
+    
+    # find the roll
+    r_index = -1
+    for i, r in enumerate(database_user[ce_id]):
+        if r["Event Name"] == roll_event : r_index = i
+    if r_index == -1:
+        return await interaction.followup.send("<@{}> does not have {} in their Current Rolls array.")
+    
+    # user does exist and has the roll in their array
+    del database_user[ce_id][r_index]
 
-
+    # dump the database
+    await dump_mongo('user', database_user)
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
@@ -556,12 +584,10 @@ def scrape_thread_call(curator_count):
 
 
 @tree.command(name="scrape", description="Force update every game without creating embeds. DO NOT RUN UNLESS NECESSARY.", guild=discord.Object(id=guild_ID))
-async def scrape(interaction):
+async def scrape(interaction : discord.Interaction):
     await interaction.response.send_message('scraping...')
 
-    namedb = mongo_client['database_name']
-    col = namedb['ce-collection']
-    curator_count = await col.find_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')})
+    curator_count = await get_mongo('curator')
 
     objects = await scrape_thread_call(curator_count)
 
@@ -570,9 +596,9 @@ async def scrape(interaction):
     objects[2]['_id'] = ObjectId('64f8bc4d094bdbfc3f7d0050')
     
     # dump the databases back onto mongoDB
-    dump1 = await col.replace_one({'_id' : ObjectId('64f8d63592d3fe5849c1ba35')}, objects[1])
-    dump2 = await col.replace_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')}, objects[0])
-    dump3 = await col.replace_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')}, objects[2])
+    dump1 = await dump_mongo('curator', objects[1]) #curator
+    dump2 = await dump_mongo('name', objects[0]) #name
+    dump3 = await dump_mongo('tier', objects[2]) #tier
 
     await interaction.channel.send('scraped')
 
@@ -642,7 +668,7 @@ async def get_times(interaction):
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="curate", description="Sends as many of the latest curator messages as requested or the latest if none specified.", guild=discord.Object(id=guild_ID))
 @app_commands.describe(num="Number of previous curator entries to pull")
-async def curate(interaction, num : int = 0):
+async def curate(interaction : discord.Interaction, num : int = 0):
     await interaction.response.defer()
     await single_run(client, num, collection)
 
@@ -856,7 +882,7 @@ async def color(interaction) :
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="initiate-loop", description="Initiate the curating and scraping loop. ONLY DO THIS IF NECESSARY.", guild=discord.Object(id=guild_ID))
-async def test(interaction : discord.Interaction) :
+async def initiate_master_loop(interaction : discord.Interaction) :
     await interaction.response.defer(ephemeral=True)
 
     await interaction.followup.send('looping....')
