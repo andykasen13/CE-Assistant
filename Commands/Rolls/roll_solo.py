@@ -39,7 +39,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     ends = True
 
     # grab user info
-    userInfo = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
+    userInfo = await get_mongo('user')
     
     i = 0
     target_user = ""
@@ -64,8 +64,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
 
     # grab both databases (tier needs to be passed to get_rollable_game())
-    database_name = await collection.find_one({'_id' : ObjectId('64f8d47f827cce7b4ac9d35b')})
-    database_tier = await collection.find_one({'_id' : ObjectId('64f8bc4d094bdbfc3f7d0050')})
+    database_name = await get_mongo('name')
+    database_tier = await get_mongo('tier')
 
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
@@ -209,8 +209,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ["pending..."]})
 
         # close and reopen users2.json
-        dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, userInfo)
-        userInfo = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
+        dump = await dump_mongo('user', userInfo)
+        userInfo = await get_mongo('user')
 
         # ----- Grab all the games -----
         embed = discord.Embed(title=("Triple Threat"), description="Please select your genre.")
@@ -227,8 +227,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ["pending..."]})
 
         # close and reopen users2.json
-        dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, userInfo)
-        userInfo = await collection.find_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')})
+        dump = await dump_mongo('user', userInfo)
+        userInfo = await get_mongo('user')
 
         embed = discord.Embed(title=("Let Fate Decide"), description="A random T4 in a genre of you choosing will be rolled. There is no time limit for Let Fate Decide. You win once you complete all Primary Objectives in your rolled game!")
         await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, 84, 1, interaction.user.id, reroll=reroll, collection=collection)
@@ -286,7 +286,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 "Rerolls" : 0
             })
 
-            dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, userInfo)
+            dump = await dump_mongo('user', userInfo)
 
             return await interaction.followup.send(embed=embed, view=view)
             
@@ -404,7 +404,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
 
     # dump the info
-    dump = await collection.replace_one({'_id' : ObjectId('64f8bd1b094bdbfc3f7d0051')}, userInfo)
+    dump = await dump_mongo('user', userInfo)
 
     # Finally, send the embed
     await interaction.followup.send(embed=embed, view=view)
