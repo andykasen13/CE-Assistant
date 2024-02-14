@@ -296,14 +296,24 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         elif (has_roll and "End Time" in list(userInfo[target_user]["Current Rolls"][roll_num].keys())) :
             # Has rolled Fourward Thinking but isn't done with the roll yet.
             if userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"] == 0:
-                return await interaction.followup.send("You are currently participating in Fourward Thinking!")
+                return await interaction.followup.send("You are currently participating in Fourward Thinking and have no reroll tickets. Beat it.")
             else:
                 view = discord.ui.View(timeout=600)
                 agree_button = discord.ui.Button(label="Agree", style=discord.ButtonStyle.success)
                 deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
                 view.add_item(deny_button)
                 view.add_item(agree_button)
-                return await interaction.followup.send("You have {} reroll ticket(s). Would you like to use one?", view=view)
+                return await interaction.followup.send(f"You have {userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"]} reroll ticket(s). Would you like to use one?", view=view)
+            
+            """
+            this is for my own brainstorm
+            if someone has used a reroll ticket, their number of games completed will NOT equal the number of tickets they have
+            for example, someone on their first game would not have used any as they wouldn't have gotten any reroll tickets yet
+            someone on their second game could either have one or zero tickets
+            so, used_tickets = (num_of_games - 1) - (num_of_tickets)
+            
+            TODO: change fourward thinking check to only check most recently added game!!!!
+            """
             dont_save = True
 
         else : 
