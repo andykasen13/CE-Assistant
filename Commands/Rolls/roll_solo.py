@@ -12,11 +12,12 @@ from Helper_Functions.roll_string import get_roll_string
 from Helper_Functions.buttons import get_buttons, get_genre_buttons
 from Helper_Functions.update import update_p
 from Helper_Functions.Scheduler import add_task
+from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
 async def solo_command(interaction : discord.Interaction, event : str, reroll : bool, collection) :
-    from main import get_mongo, dump_mongo, get_unix
+
 
     # Set up variables
     view = discord.ui.View(timeout=600)

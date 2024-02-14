@@ -9,7 +9,7 @@ from Helper_Functions.Scheduler import add_task
 
 
 async def co_op_command(interaction : discord.Interaction, event, partner : discord.User, reroll : bool, collection) :
-    from main import get_mongo, dump_mongo, get_unix
+    from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
     # Open the user database
     database_user = await get_mongo('user')
@@ -53,7 +53,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             return await interaction.followup.send(
                 'Your partner recently tried to participate in {}. '.format(event)
                 + 'Please wait 10 minutes in between rolling for the same event!')
-        if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
+        if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : 
+            return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
 
     database_user[int_user_id]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ["pending..."]})
     database_user[part_user_id]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ["pending..."]})

@@ -165,7 +165,7 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
 # -------------------------------------------------------------------------------------------------------------------------------- #
 
 async def get_rollable_game_from_list(games, collection) :
-    from main import get_mongo, dump_mongo, get_unix
+    from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
     database_name = await get_mongo('name')
     rollable = False

@@ -9,7 +9,7 @@ from bson import ObjectId
 
 
 def update_p(user_id : int, roll_ended_name, database_user, database_name) :
-    from main import get_unix
+    from Helper_Functions.mongo_silly import get_unix
     
     cooldowns = {
         "One Hell of a Day" : (14),

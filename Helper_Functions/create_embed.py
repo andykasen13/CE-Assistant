@@ -15,7 +15,7 @@ final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144
 
 # ------------------------------------------------ CREATE MULTI EMBED ------------------------------------------------------------ #
 def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interaction, database_name) :
-    from main import get_mongo, dump_mongo, get_unix
+    from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
     # ----- Set up initial embed -----
     embeds = []

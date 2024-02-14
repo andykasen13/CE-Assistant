@@ -21,7 +21,7 @@ async def add_task(time, args):
 
 
 async def startup_sched():
-    from main import get_mongo, dump_mongo
+    from Helper_Functions.mongo_silly import get_mongo, dump_mongo
     user_info = await get_mongo('user')
     database_name = await get_mongo('name')
 
