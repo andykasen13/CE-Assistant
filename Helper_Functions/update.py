@@ -169,6 +169,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             if(current_roll["End Time"] < get_unix("now")):
                 del current_roll["Games"][0]
                 del current_roll["End Time"]
+                returns.append("casino: " + f"<@{user_dict[ce_id]["Discord ID"]}>, you can now roll {current_roll["Event Name"]} again.")
             continue
 
 
