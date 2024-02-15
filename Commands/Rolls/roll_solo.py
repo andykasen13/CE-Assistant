@@ -343,40 +343,49 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             print(num_of_games)
 
             # set up the starting embed
-            embeds.append(discord.Embed(title=event, timestamp=datetime.datetime.now()))
+            embed = (discord.Embed(title=event, timestamp=datetime.datetime.now()))
             if(num_of_games == 1) :
                 # get a game
-                game = get_rollable_game(80, 20, "Tier 2", userInfo[current_user], database_name=database_name, database_tier=database_tier)
+                embed.add_field(name="Roll Status", value="You have rolled your T2. You have two weeks to complete.")
 
-                embeds[0].add_field(name="Roll Status", value="You have rolled your T2. You have two weeks to complete.")
-
-            elif(num_of_games == 2):              
+            elif(num_of_games == 2):
                 # get a game
-                game = get_rollable_game(120, 20, "Tier 3", userInfo[current_user], database_name=database_name, database_tier=database_tier)
-
-                embeds[0].add_field(name="Roll Status", value = "You have rolled your T3. You have three weeks to complete.")
+                embed.add_field(name="Roll Status", value = "You have rolled your T3. You have three weeks to complete.")
             elif(num_of_games == 3):
                 # get a game
-                game = get_rollable_game(160, 20, "Tier 4", userInfo[current_user], database_name=database_name, database_tier=database_tier)
-                
-                embeds[0].add_field(name="Roll Status", value = "You have rolled your T4. You have four weeks to complete.")
+                embed.add_field(name="Roll Status", value = "You have rolled your T4. You have four weeks to complete.")
                 #roll a t4
             
-            # get the embed for the new game
-            embeds.append(getEmbed(game, interaction.user.id, database_name))
-        
             view = discord.ui.View(timeout=600)
-            # get buttons
-            await get_buttons(view, embeds)
-            embed = embeds[0]
+
+            await get_genre_buttons(view, 40*(num_of_games+1), 20, f"Tier {(num_of_games+1)}", "Fourward Thinking",
+                                    7*(num_of_games+1), 14*(num_of_games+1), 1, interaction.user.id, collection)
+            
+            for game in (userInfo[target_user]["Current Rolls"][roll_num]["Games"]):
+                genre = database_name[game]["Genre"]
+                for i, g in enumerate(genres):
+                    if g == genre: view.children[i].disabled = True
+            
+            userInfo[target_user]["Current Rolls"][roll_num] = {
+                "Event Name" : "Fourward Thinking",
+                "End Time" : get_unix(minutes=10),
+                "Games" : ["pending..."] + userInfo[target_user]["Current Rolls"][roll_num]["Games"],
+                "Rerolls" : userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"]
+            }
+            
+            dump = await dump_mongo('user', userInfo)
+            return await interaction.followup.send(view=view, embed=embed)
+
 
             # update users2.json
+            """
             userInfo[target_user]["Current Rolls"][roll_num]["Games"].append(game)
             userInfo[target_user]["Current Rolls"][roll_num]["End Time"] = get_unix(7*(num_of_games+1))
             userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"] += 1
 
             # dont add the thing to users2.json AGAIN!
             dont_save = True
+            """
 
 
     # -------------------------------------------- Russian Roulette --------------------------------------------
