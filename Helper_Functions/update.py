@@ -569,6 +569,9 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         # or because it is just being updated.
                 
 
+
+
+        # -----------------------------  ROLL WAS FAILED -----------------------------
         if not roll_completed and ("End Time" not in current_roll or get_unix('now') > current_roll["End Time"]) : 
             # fourward thinking
             if current_roll["Event Name"] == "Fourward Thinking" :
@@ -635,40 +638,41 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             continue
         
         # ----------------------------- REGULAR ROLL WAS COMPLETED -----------------------------
-        # if its forward thinking, check the stage and run accordingly
-        if(current_roll["Event Name"] == "Fourward Thinking") :
-            if len(current_roll["Games"]) == 4 : 
-                returns.append("log: Congratulations to <@{}>! They have completed Fourward Thinking!".format(user_dict[ce_id]["Discord ID"]))
-            else: 
-                del current_roll["End Time"]
-                returns.append("casino: <@{}>, you have completed the T{} in your Fourward Thinking roll. Use `/solo-roll Fourward Thinking` to move to your next stage!".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
-                continue
-        
-        # if it's a co-op roll, send it to the log channel
-        elif(current_roll["Event Name"] in ["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work"]) :
-            returns.append("log: " + "<@{}> and <@{}> have completed {}!".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"], current_roll["Event Name"]))
-        
-        # if it's a solo roll, send it to the log channel
-        else:
-            returns.append("log: " + "<@{}>, you have completed {}! Congratulations!".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
-        
-        # edit the roll that was completed
-        current_roll["End Time"] = get_unix("now")
-        user_dict[ce_id]["Completed Rolls"].append(current_roll)
+        if roll_completed:
+            # if its forward thinking, check the stage and run accordingly
+            if(current_roll["Event Name"] == "Fourward Thinking") :
+                if len(current_roll["Games"]) == 4 : 
+                    returns.append("log: Congratulations to <@{}>! They have completed Fourward Thinking!".format(user_dict[ce_id]["Discord ID"]))
+                else: 
+                    del current_roll["End Time"]
+                    returns.append("casino: <@{}>, you have completed the T{} in your Fourward Thinking roll. Use `/solo-roll Fourward Thinking` to move to your next stage!".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
+                    continue
+            
+            # if it's a co-op roll, send it to the log channel
+            elif(current_roll["Event Name"] in ["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work"]) :
+                returns.append("log: " + "<@{}> and <@{}> have completed {}!".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"], current_roll["Event Name"]))
+            
+            # if it's a solo roll, send it to the log channel
+            else:
+                returns.append("log: " + "<@{}>, you have completed {}! Congratulations!".format(user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+            
+            # edit the roll that was completed
+            current_roll["End Time"] = get_unix("now")
+            user_dict[ce_id]["Completed Rolls"].append(current_roll)
 
-        # if it's a co-op roll, delete their instance as well
-        if "Partner" in current_roll:
-            myindex = ""
-            for index3, roll in enumerate(database_user[current_roll["Partner"]]["Current Rolls"]):
-                if roll["Event Name"] == current_roll["Event Name"] : 
-                    myindex = index3
-                    break
-            user_dict[current_roll["Partner"]]["Current Rolls"][myindex]["End Time"] = get_unix("now")
-            user_dict[current_roll["Partner"]]["Completed Rolls"].append(user_dict[current_roll["Partner"]]["Current Rolls"][myindex])
-            del database_user[current_roll["Partner"]]["Current Rolls"][myindex]
+            # if it's a co-op roll, delete their instance as well
+            if "Partner" in current_roll:
+                myindex = ""
+                for index3, roll in enumerate(database_user[current_roll["Partner"]]["Current Rolls"]):
+                    if roll["Event Name"] == current_roll["Event Name"] : 
+                        myindex = index3
+                        break
+                user_dict[current_roll["Partner"]]["Current Rolls"][myindex]["End Time"] = get_unix("now")
+                user_dict[current_roll["Partner"]]["Completed Rolls"].append(user_dict[current_roll["Partner"]]["Current Rolls"][myindex])
+                del database_user[current_roll["Partner"]]["Current Rolls"][myindex]
 
-        # add this index to the ones that need to be removed
-        remove_indexes.append(m_index) 
+            # add this index to the ones that need to be removed
+            remove_indexes.append(m_index) 
     
     # ///////////////////////////////////////////////////////////////////////////////////////////
     
