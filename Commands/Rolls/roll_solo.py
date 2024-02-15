@@ -312,7 +312,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         # Has rolled Fourward Thinking but isn't done with the roll yet.
         elif (has_roll and "End Time" in list(userInfo[target_user]["Current Rolls"][roll_num].keys())) :
-            
+            if userInfo[target_user]["Current Rolls"][roll_num]["Games"][0] == "pending...":
+                return await interaction.followup.send("Please wait 10 minutes in between requests.")
             if userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"] == 0:
                 return await interaction.followup.send("You are currently participating in Fourward Thinking and have no reroll tickets. Beat it.")
             else:
