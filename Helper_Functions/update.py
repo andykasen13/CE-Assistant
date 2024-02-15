@@ -521,7 +521,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 if("Requirements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Requirements"]
                 del database_name[game]["Primary Objectives"][dbN_objective]["Description"]
                 database_name[game]["Primary Objectives"][dbN_objective] = database_name[game]["Primary Objectives"][dbN_objective]["Point Value"]
-                if ((game not in user_dict[ce_id]["Owned Games"]) or ("Primary Objectives" not in user_dict[ce_id]["Owned Games"][game]) or (user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"])) : roll_completed = False
+            if ((game not in user_dict[ce_id]["Owned Games"]) or ("Primary Objectives" not in user_dict[ce_id]["Owned Games"][game]) or (user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"])) : roll_completed = False
             
 
 
@@ -626,14 +626,15 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         # ----------------------------- REGULAR ROLL WAS COMPLETED -----------------------------
         # if its forward thinking, check the stage and run accordingly
         if(current_roll["Event Name"] == "Fourward Thinking") :
-            if len(current_roll["Games"]) == 4 : returns.append("log: Congratulations <@{}>! You have completed Fourward Thinking!".format(user_dict[ce_id]["Discord ID"]))
+            if len(current_roll["Games"]) == 4 : 
+                returns.append("log: Congratulations to <@{}>! They have completed Fourward Thinking!".format(user_dict[ce_id]["Discord ID"]))
             else: 
                 del current_roll["End Time"]
                 returns.append("casino: <@{}>, you have completed the T{} in your Fourward Thinking roll. Use `/solo-roll Fourward Thinking` to move to your next stage!".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
                 continue
         
         # if it's a co-op roll, send it to the log channel
-        if(current_roll["Event Name"] in ["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work"]) :
+        elif(current_roll["Event Name"] in ["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work"]) :
             returns.append("log: " + "<@{}> and <@{}> have completed {}!".format(user_dict[ce_id]["Discord ID"], database_user[current_roll["Partner"]]["Discord ID"], current_roll["Event Name"]))
         
         # if it's a solo roll, send it to the log channel
