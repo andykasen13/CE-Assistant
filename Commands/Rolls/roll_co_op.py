@@ -721,7 +721,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         buttons[3].callback = fps_callback
         buttons[4].callback = platformer_callback
         buttons[5].callback = strategy_callback
-        buttons[5].disabled = target_user_data
+        buttons[5].disabled = True
 
         async def game_theory_callback_1(interaction : discord.Interaction, targets_genre) :
             await interaction.response.defer()
