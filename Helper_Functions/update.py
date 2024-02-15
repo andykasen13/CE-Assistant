@@ -559,7 +559,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         # or because it is just being updated.
                 
 
-        if not roll_completed and get_unix('now') > current_roll["End Time"] : 
+        if not roll_completed and (get_unix('now') > current_roll["End Time"] or "End Time" not in current_roll) : 
             # fourward thinking
             if current_roll["Event Name"] == "Fourward Thinking" :
                 if "End Time" not in current_roll : continue
