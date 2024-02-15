@@ -164,11 +164,11 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
                 continue
         
-        elif current_roll["Games"][0] == 'pending...' and len(current_roll["Games"]) != 1 and (
-            current_roll["End Time"] < get_unix("now")):
-
-            del current_roll["Games"][0]
-            del current_roll["End Time"]
+        elif current_roll["Games"][0] == 'pending...' and len(current_roll["Games"]) != 1:
+            
+            if(current_roll["End Time"] < get_unix("now")):
+                del current_roll["Games"][0]
+                del current_roll["End Time"]
             continue
 
 
