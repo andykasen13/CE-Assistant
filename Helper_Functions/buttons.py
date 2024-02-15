@@ -45,7 +45,7 @@ async def get_buttons(view : discord.ui.View, embeds):
             button.disabled = True
         print("disabled")
 
-    view.on_timeout = await disable()
+    #view.on_timeout = await disable()
 
 async def get_genre_buttons(view : discord.ui.View, completion_time : int, price_limit : int, tier_number : str, event_name : str, 
                             time_limit : int, cooldown_time : int, num_of_games : int, user_id : int, 
@@ -154,6 +154,18 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
 
         # update the 
         end_time = int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple()))
+
+        # of course, the king of shitters, fourward thinking
+        if (event_name == "Fourward Thinking"):
+            r = database_user[target_user]["Current Rolls"][roll_num]["Rerolls"]
+            database_user[target_user]["Current Rolls"][roll_num] = ({
+                "Event Name" : "Fourward Thinking",
+                "End Time" : end_time,
+                "Games" : games,
+                "Rerolls" : r
+            })
+
+        # all other rolls
         database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
                                                     "End Time" : end_time,
                                                     "Games" : games})

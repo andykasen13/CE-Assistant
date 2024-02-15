@@ -337,6 +337,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         # Has rolled Fourward Thinking and is ready for the next roll
         # OR OR OR is done!
+        # TODO: make the games[0] be [pending...], don't entirely override it 
         else : 
             num_of_games = len(userInfo[target_user]["Current Rolls"][roll_num]["Games"])
             print(num_of_games)
@@ -434,4 +435,4 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     del userInfo
     del embed
     del embeds
-    del dump
+    del dump#
