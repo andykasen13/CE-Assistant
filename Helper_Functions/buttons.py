@@ -167,7 +167,7 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
                 "Event Name" : "Fourward Thinking",
                 "End Time" : end_time,
                 "Games" : finished_games + games,
-                "Rerolls" : r
+                "Rerolls" : r + 1
             })
 
         # all other rolls
