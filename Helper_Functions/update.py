@@ -66,9 +66,11 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     returns = []
 
     # Grab user info from CE API
-    response = requests.get(f"https://cedb.me/api/user/{ce_id}")
-    user_ce_data = json.loads(response.text)
-
+    try:
+        response = requests.get(f"https://cedb.me/api/user/{ce_id}")
+        user_ce_data = json.loads(response.text)
+    except:
+        return "failed"
     
 
     # Go through owned games in CE JSON
