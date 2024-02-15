@@ -93,7 +93,7 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
     after the call to this function, write `buttons[i].disabled = True`.
     """
     
-    from Helper_Functions.mongo_silly import get_mongo, dump_mongo
+    from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
     games = []
     genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
@@ -153,7 +153,7 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
             roll_num +=1
 
         # update the 
-        end_time = int(time.mktime((datetime.datetime.now()+timedelta(time_limit)).timetuple()))
+        end_time = get_unix(time_limit)
 
         # of course, the king of shitters, fourward thinking
         if (event_name == "Fourward Thinking"):
@@ -166,7 +166,8 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
             })
 
         # all other rolls
-        database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
+        else:
+            database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
                                                     "End Time" : end_time,
                                                     "Games" : games})
         
