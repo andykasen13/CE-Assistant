@@ -91,7 +91,7 @@ async def aaaa_auto(interaction : discord.Interaction, current:str) -> typing.Li
         data.append(app_commands.Choice(name=game,value=game))
     print(data)
     return data
-
+"""
 
 
 
@@ -101,12 +101,32 @@ async def aaaa_auto(interaction : discord.Interaction, current:str) -> typing.Li
 async def aaaaa(interaction : discord.Interaction, item : str):
     await interaction.response.defer()
 
-    data = requests.get('https://cedb.me/api/user/d7cb0869-5ed9-465c-87bf-0fb95aaebbd5/')
-    print(data.text)
-    data_json = json.loads(data.text)
-    #data_json_2 = json.load(data.text)
-    await interaction.followup.send(item)
-"""
+    db = {
+        "_id" : ObjectId('64f8bd1b094bdbfc3f7d0051'),
+        "Template User" : {
+            "Discord ID" : 0,
+            "Rank" : "Rank E",
+            "Casino Score" : 0,
+            "Owned Games" : {
+                "Neon White" :{
+                    "Primary Objectives": {
+                        "Demon Exterminator" : 35,
+                        "Rocket League" : 10,
+                        "Heaven's Janitor" : 5
+                    },
+                    "Community Objectives" : {
+                        "My Dick and Balls" : True
+                    }
+                }
+            },
+            "Current Rolls" : [],
+            "Completed Rolls" : [],
+            "Cooldowns" : {}
+        }
+    }
+
+    dump = await dump_mongo('user', db)
+
 
 
 
