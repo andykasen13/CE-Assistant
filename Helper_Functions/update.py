@@ -579,6 +579,8 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 cooldown_days = (len(current_roll["Games"]) * 14) + (len(current_roll["Games"]) - 1) - (current_roll["Rerolls"])
                 database_user[ce_id]["Cooldowns"]["Fourward Thinking"] = get_unix(cooldown_days)
 
+                continue
+
 
             # two week t2 streak
             elif "End Time" not in current_roll and current_roll["Event Name"] == "Two Week T2 Streak":
