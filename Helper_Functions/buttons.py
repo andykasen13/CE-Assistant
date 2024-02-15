@@ -59,24 +59,38 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
     -----------
     view: :class:`discord.ui.View` (REQUIRED)
         The view of the message that's been sent. This is required.
+    
     completion_time: :class:`int` (REQUIRED)
         The limit on SteamHunters' average completion time for the game(s) chosen.
+    
     price_limit: :class:`int` (REQUIRED)
         The limit on the base price on Steam for the game(s) chosen.
+    
     tier_number: :class:`str` (REQUIRED)
         The tier of the game(s) chosen. (e.g. "Tier 1")
+    
     event_name: :class:`str` (REQUIRED)
         The name of the roll event.
+    
     time_limit: :class:`int` (REQUIRED)
         The amount of time (in days) for the user to complete this roll event.
+    
     cooldown_time: :class:`int` (REQUIRED)
         The amount of time (in days) that the cooldown will last if the user fails the roll event.
+    
     num_of_games: :class:`int` (REQUIRED)
         The number of games that need to be rolled for this event.
+    
     user_id: :class:`int` (REQUIRED)
         The Discord ID for the user who rolled this event.
+    
     collection: :class:`MongoCollection` (REQUIRED)
         The collection to pull the MongoDB information from.
+
+    Helpful Note (from andy :))
+    ----------------------------
+    To make any of these buttons disabled (like, for example, in Fourward Thinking),
+    after the call to this function, write `buttons[i].disabled = True`.
     """
     
     from Helper_Functions.mongo_silly import get_mongo, dump_mongo

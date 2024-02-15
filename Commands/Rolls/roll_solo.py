@@ -265,12 +265,28 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             embed.add_field(name="Timing",
                             value="- Your T1 will not have an average completion time on steamhunters larger than 40. This goes up to 80 for your T2, 120 for T3, and 160 for T4."
                             + " \n- Your cooldown timer is calculated as such: (num of completed games + 1) * 2 weeks. Failing your T1 nets you a two week cooldown, T4 nets you ten weeks.")
-            embed.add_field(name="Game",
-                            value="Your selected game is on the next page. Click to see your T1!",
+            embed.add_field(name="Genre",
+                            value="Choose the genre below to roll your T1. Remember: this genre cannot be picked again!!!",
                             inline=False)
             embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
             embed.set_author(name="Challenge Enthusiasts")
 
+            view = discord.ui.View(timeout=600)
+            
+            await get_genre_buttons(view, 40, 20, "Tier 1", "Fourward Thinking", 7, 14, 1, interaction.user.id, collection)
+            userInfo[target_user]["Current Rolls"].append({
+                "Event Name" : "Fourward Thinking",
+                "End Time" : get_unix(minutes=10),
+                "Games" : ["pending..."],
+                "Rerolls" : 0
+            })
+
+            dump = await dump_mongo('user', userInfo)
+            return await interaction.followup.send(embed=embed, view=view)
+
+
+            # old method
+            """
             game2 = get_rollable_game(40, 20, "Tier 1", database_tier=database_tier, database_name=database_name)
             embed2 = getEmbed(game2, interaction.user.id, database_name)
 
@@ -291,6 +307,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             return await interaction.followup.send(embed=embed, view=view)
             
             dont_save=True
+            """
 
 
         # Has rolled Fourward Thinking but isn't done with the roll yet.
