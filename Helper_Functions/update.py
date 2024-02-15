@@ -155,13 +155,18 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
         # ------------------------------------ pending... -------------------------------------
         if current_roll["Games"] == ['pending...']:
-            if current_roll["End Time"] > get_unix("now"): 
+            if current_roll["End Time"] < get_unix("now"): 
                 #"delete pending..."
                 #"continue"
                 remove_indexes.append(m_index)
+                returns.append("casino: " + "<@{}>, you can now roll {} again.".format(
+                    user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
+
                 continue
         
-        elif current_roll["Games"][0] == 'pending...' and len(current_roll["Games"] != 1):
+        elif current_roll["Games"][0] == 'pending...' and len(current_roll["Games"] != 1) and (
+            current_roll["End Time"] < get_unix("now")):
+
             del current_roll["Games"][0]
             del current_roll["End Time"]
             continue
@@ -498,6 +503,25 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
             
 
+        elif current_roll["Event Name"] == "Fourward Thinking":
+            ""
+            # pending should have been dealt with by now
+            # only check the most recently added game
+            game = current_roll["Games"][len(current_roll["Games"]) - 1]
+            try:
+                del database_name[game]["Community Objectives"]
+            except:
+                ""
+            
+            # format database_name like database_user
+            for dbN_objective in database_name[game]["Primary Objectives"]:
+                if(type(database_name[game]["Primary Objectives"][dbN_objective]) is int) : continue
+                if("Achievements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Achievements"]
+                if("Requirements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Requirements"]
+                del database_name[game]["Primary Objectives"][dbN_objective]["Description"]
+                database_name[game]["Primary Objectives"][dbN_objective] = database_name[game]["Primary Objectives"][dbN_objective]["Point Value"]
+                if ((game not in user_dict[ce_id]["Owned Games"]) or ("Primary Objectives" not in user_dict[ce_id]["Owned Games"][game]) or (user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"])) : roll_completed = False
+            
 
 
 
@@ -510,19 +534,19 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 try:
                     del database_name[game]["Community Objectives"]
                 except:
-                    continue
+                    "do nothing lol"
 
                 # format database_name like users2.json
                 for dbN_objective in database_name[game]["Primary Objectives"] :
                     if(type(database_name[game]["Primary Objectives"][dbN_objective]) is int) : continue
-                    print(dbN_objective)
+                    #print(dbN_objective)
                     if("Achievements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Achievements"]
                     if("Requirements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Requirements"]
                     del database_name[game]["Primary Objectives"][dbN_objective]["Description"]
                     database_name[game]["Primary Objectives"][dbN_objective] = database_name[game]["Primary Objectives"][dbN_objective]["Point Value"]
 
                 # ---------- check to see if the games are equal ----------
-                if (game not in user_dict[ce_id]["Owned Games"] or "Primary Objectives" not in user_dict[ce_id]["Owned Games"][game] or user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"]) : roll_completed = False
+                if ((game not in user_dict[ce_id]["Owned Games"]) or ("Primary Objectives" not in user_dict[ce_id]["Owned Games"][game]) or (user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"])) : roll_completed = False
 
 
         # -------------------------------------------------- NO MORE CHECKING --------------------------------------------------------------
@@ -533,12 +557,18 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         # we now have to determine if the roll has ended or not. 
         # it could be that this function was called because the roll has ended, 
         # or because it is just being updated.
+                
+
         if not roll_completed and get_unix('now') > current_roll["End Time"] : 
             # fourward thinking
             if current_roll["Event Name"] == "Fourward Thinking" :
                 if "End Time" not in current_roll : continue
                 returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
                 remove_indexes.append(m_index)
+
+                cooldown_days = (len(current_roll["Games"]) * 14) + (len(current_roll["Games"]) - 1) - (current_roll["Rerolls"])
+                database_user[ce_id]["Cooldowns"]["Fourward Thinking"] = get_unix(cooldown_days)
+
 
             # two week t2 streak
             elif "End Time" not in current_roll and current_roll["Event Name"] == "Two Week T2 Streak":
@@ -598,7 +628,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             if len(current_roll["Games"]) == 4 : returns.append("log: Congratulations <@{}>! You have completed Fourward Thinking!".format(user_dict[ce_id]["Discord ID"]))
             else: 
                 del current_roll["End Time"]
-                returns.append("casino: <@{}>, you have completed the T{} in your Fourward Thinking roll. Use /solo-roll Fourward Thinking to move to your next stage!".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
+                returns.append("casino: <@{}>, you have completed the T{} in your Fourward Thinking roll. Use `/solo-roll Fourward Thinking` to move to your next stage!".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
                 continue
         
         # if it's a co-op roll, send it to the log channel
@@ -616,15 +646,21 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         # if it's a co-op roll, delete their instance as well
         if "Partner" in current_roll:
             myindex = ""
-            for roll, index3 in enumerate(database_user[current_roll["Partner"]]["Current Rolls"]):
+            for index3, roll in enumerate(database_user[current_roll["Partner"]]["Current Rolls"]):
                 if roll["Event Name"] == current_roll["Event Name"] : 
                     myindex = index3
                     break
+            user_dict[current_roll["Partner"]]["Current Rolls"][myindex]["End Time"] = get_unix("now")
+            user_dict[current_roll["Partner"]]["Completed Rolls"].append(user_dict[current_roll["Partner"]]["Current Rolls"][myindex])
             del database_user[current_roll["Partner"]]["Current Rolls"][myindex]
 
         # add this index to the ones that need to be removed
-        remove_indexes.append(m_index)
-
+        remove_indexes.append(m_index) 
+    
+    # ///////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    
     for cooldown in (user_dict[ce_id]["Cooldowns"]):
         if user_dict[ce_id]["Cooldowns"][cooldown] < get_unix("now"):
             cooldown_indexes.append(cooldown)
