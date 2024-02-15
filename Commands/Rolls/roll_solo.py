@@ -25,16 +25,16 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     embeds = []
     genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
     times = {
-        "One Hell of a Day" : timedelta(1),
-        "One Hell of a Week" : timedelta(7),
-        "One Hell of a Month" : timedelta(28),
-        "Two Week T2 Streak" : timedelta(14),
-        "Two 'Two Week T2 Streak' Streak" : timedelta(28),
-        "Never Lucky" : timedelta(0),
-        "Triple Threat" : timedelta(28),
-        "Let Fate Decide" : timedelta(0),
-        "Fourward Thinking" : timedelta(0),
-        "Russian Roulette" :timedelta(0)
+        "One Hell of a Day" : (1),
+        "One Hell of a Week" : (7),
+        "One Hell of a Month" : (28),
+        "Two Week T2 Streak" : (14),
+        "Two 'Two Week T2 Streak' Streak" : (28),
+        "Never Lucky" : (0),
+        "Triple Threat" : (28),
+        "Let Fate Decide" : (0),
+        "Fourward Thinking" : (0),
+        "Russian Roulette" :(0)
     }
     dont_save = False
     ends = True
