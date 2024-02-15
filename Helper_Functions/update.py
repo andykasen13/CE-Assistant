@@ -521,6 +521,8 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 if("Requirements" in database_name[game]["Primary Objectives"][dbN_objective]) : del database_name[game]["Primary Objectives"][dbN_objective]["Requirements"]
                 del database_name[game]["Primary Objectives"][dbN_objective]["Description"]
                 database_name[game]["Primary Objectives"][dbN_objective] = database_name[game]["Primary Objectives"][dbN_objective]["Point Value"]
+            
+            print(database_name[game]["Primary Objectives"])
             if ((game not in user_dict[ce_id]["Owned Games"]) or ("Primary Objectives" not in user_dict[ce_id]["Owned Games"][game]) or (user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"])) : roll_completed = False
             
 
