@@ -105,6 +105,8 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
         view.add_item(buttons[i])
         i+=1
 
+    print(view.children)
+
     async def AC_callback(interaction) : return await callback(interaction, "Action")
     async def AR_callback(interaction) : return await callback(interaction, "Arcade")
     async def BH_callback(interaction) : return await callback(interaction, "Bullet Hell")
