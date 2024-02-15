@@ -168,6 +168,7 @@ async def scrape(channel, mongo_client):
 
     # dump the data back onto mongodb
     dump1 = await dump_mongo("name", updates[2]) # name
+    updates[3]['_id'] = ObjectId('64f8bd1b094bdbfc3f7d0051')
     dump2 = await dump_mongo("user", updates[3]) # user
     dump2andahalf = await dump_mongo('unfinished', updates[4]) # unfinished
     updates[5]['_id'] = ObjectId('64f8bc4d094bdbfc3f7d0050')

@@ -249,9 +249,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 break
             roll_num += 1
 
-
+        # Has not rolled Fourward Thinking before
         if(not has_roll) : 
-            # Has not rolled Fourward Thinking before
             embed = discord.Embed(title=("Fourward Thinking"),
                                   description="You have rolled Fourward Thinking. This is the most confusing roll event, so buckle in."
                                   + "\nWhen you roll this event, a T1 in a genre of your choosing will be rolled for you, and you will have one week to do so."
@@ -294,8 +293,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             dont_save=True
 
 
+        # Has rolled Fourward Thinking but isn't done with the roll yet.
         elif (has_roll and "End Time" in list(userInfo[target_user]["Current Rolls"][roll_num].keys())) :
-            # Has rolled Fourward Thinking but isn't done with the roll yet.
+            
             if userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"] == 0:
                 return await interaction.followup.send("You are currently participating in Fourward Thinking and have no reroll tickets. Beat it.")
             else:
@@ -304,7 +304,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
                 view.add_item(deny_button)
                 view.add_item(agree_button)
-                return await interaction.followup.send(f"You have {userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"]} reroll ticket(s). Would you like to use one?", view=view)
+                return await interaction.followup.send(f"You have {userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"]} reroll ticket(s). Would you like to use one?", 
+                                                       view=view)
             
             """
             this is for my own brainstorm
@@ -317,9 +318,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             """
             dont_save = True
 
+        # Has rolled Fourward Thinking and is ready for the next roll
+        # OR OR OR is done!
         else : 
-            # Has rolled Fourward Thinking and is ready for the next roll
-            # OR OR OR is done!
             num_of_games = len(userInfo[target_user]["Current Rolls"][roll_num]["Games"])
             print(num_of_games)
 
