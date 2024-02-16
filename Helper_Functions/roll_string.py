@@ -52,7 +52,7 @@ def get_roll_string(database_user, ce_id, database_name, target_user, roll_type)
             roll_string += "  (Partner: <@" + str(database_user[partner]["Discord ID"]) +">)\n"
 
         if(x["Event Name"] == "One Hell of a Month") :
-            roll_string += "- Just DM me <@413427677522034727> for details. This will be updated in v1.1."
+            roll_string += "\t\t- Just DM me <@413427677522034727> for details. This will be updated in v1.1."
             continue
 
         gameNum = 1
