@@ -53,6 +53,7 @@ def get_roll_string(database_user, ce_id, database_name, target_user, roll_type)
 
         if(x["Event Name"] == "One Hell of a Month") :
             roll_string += "- Just DM me <@413427677522034727> for details. This will be updated in v1.1."
+            continue
 
         gameNum = 1
 
