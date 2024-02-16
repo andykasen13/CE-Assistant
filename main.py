@@ -376,8 +376,8 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
             steam_user_name = user_name
             break
     
-    if(steam_user_name == "") : return await interaction.response.followup("This user does not exist.")
-    print(steam_user_name)
+    if(steam_user_name == "") : return await interaction.followup.send("This user is not registered in the CE Assistant database. Please make sure they use /register!")
+    print(steam_user_name) 
 
     current_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, user, 'Current Rolls')
     completed_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, user, 'Completed Rolls')

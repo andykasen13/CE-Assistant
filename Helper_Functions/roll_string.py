@@ -24,7 +24,6 @@ def get_roll_string(database_user, ce_id, database_name, target_user, roll_type)
     """
     # grab all current rolls
     for x in database_user[ce_id][roll_type] :
-        print(x.keys())
 
         # get all the values (if they exist!)
         if("End Time" in list(x.keys())) : end_time = x["End Time"]
@@ -35,8 +34,6 @@ def get_roll_string(database_user, ce_id, database_name, target_user, roll_type)
         else : partner = None
         if("Rerolls" in list(x.keys())) : rerolls = x["Rerolls"]
         else : rerolls = None
-
-        print(x)
 
 
 
@@ -72,10 +69,6 @@ def get_roll_string(database_user, ce_id, database_name, target_user, roll_type)
                 # get points
                 for objective_title in game_info["Primary Objectives"] : # Iterate through all of the games' objectives
                     total_default_points += game_info["Primary Objectives"][objective_title]["Point Value"]
-
-                    if(True
-                    and
-                    True) : print('yay')
 
                     if(game_title in list(database_user[ce_id]["Owned Games"].keys())
                     and
