@@ -4,12 +4,26 @@ import datetime
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------------------- ROLL STRING ---------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-def get_roll_string(userInfo, ce_id, database_name, target_user, roll_type) :
+def get_roll_string(database_user, ce_id, database_name, target_user, roll_type) :
     # set up this bullshit
     roll_string = ""
 
+    """
+    for obj in database_user[ce_id][roll_type]:
+        if "End Time" in obj : end_time = obj["End Time"]
+        else : end_time = None
+        if "Games" in obj : games = obj["Games"]
+        else: games = None
+        if "Partner" in obj : partner = obj["Partner"]
+        else : partner = None
+        if "Rerolls" in obj : rerolls = obj["Rerolls"]
+        else : rerolls = None
+
+
+    return
+    """
     # grab all current rolls
-    for x in userInfo[ce_id][roll_type] :
+    for x in database_user[ce_id][roll_type] :
         print(x.keys())
 
         # get all the values (if they exist!)
@@ -19,6 +33,8 @@ def get_roll_string(userInfo, ce_id, database_name, target_user, roll_type) :
         else : games = None
         if("Partner" in list(x.keys())) : partner = x["Partner"]
         else : partner = None
+        if("Rerolls" in list(x.keys())) : rerolls = x["Rerolls"]
+        else : rerolls = None
 
         print(x)
 
@@ -33,9 +49,10 @@ def get_roll_string(userInfo, ce_id, database_name, target_user, roll_type) :
         else : roll_string += "\n"
 
         if(partner != None) :
-            roll_string += "  (Partner: <@" + str(userInfo[partner]["Discord ID"]) +">)\n"
+            roll_string += "  (Partner: <@" + str(database_user[partner]["Discord ID"]) +">)\n"
 
-        
+        if(x["Event Name"] == "One Hell of a Month") :
+            roll_string += "- Just DM me <@413427677522034727> for details. This will be updated in v1.1."
 
         gameNum = 1
 
@@ -59,12 +76,12 @@ def get_roll_string(userInfo, ce_id, database_name, target_user, roll_type) :
                     and
                     True) : print('yay')
 
-                    if(game_title in list(userInfo[ce_id]["Owned Games"].keys())
+                    if(game_title in list(database_user[ce_id]["Owned Games"].keys())
                     and
-                    "Primary Objectives" in list(userInfo[ce_id]["Owned Games"][game_title].keys())
+                    "Primary Objectives" in list(database_user[ce_id]["Owned Games"][game_title].keys())
                     and
-                    objective_title in list(userInfo[ce_id]["Owned Games"][game_title]["Primary Objectives"].keys())) : 
-                            total_user_points += userInfo[ce_id]["Owned Games"][game_title]["Primary Objectives"][objective_title]
+                    objective_title in list(database_user[ce_id]["Owned Games"][game_title]["Primary Objectives"].keys())) : 
+                            total_user_points += database_user[ce_id]["Owned Games"][game_title]["Primary Objectives"][objective_title]
 
                 roll_string += " (" + str(total_user_points) + "/" + str(total_default_points) +")\n"
                 gameNum += 1 # Add to the gameNum

@@ -324,7 +324,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 view.add_item(agree_button)
                 return await interaction.followup.send(f"You have {userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"]} reroll ticket(s). Would you like to use one?", 
                                                        view=view)
-            
+            " make sure if someone else tries to click this they can't!!!!"
             """
             this is for my own brainstorm
             if someone has used a reroll ticket, their number of games completed will NOT equal the number of tickets they have

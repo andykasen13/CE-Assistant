@@ -334,8 +334,29 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
     # defer the message
     print('balls')
     await interaction.response.defer()
+    overflow = False
+
+    # this is me trying to fix it but i will deal with this later
+    """
+    if user is None : user = interaction.user
+
+    # get mongo data
+    database_user = await get_mongo('user')
+    database_name = await get_mongo('name')
+
+    ce_id = ""
+    for u in database_user:
+        if u == "_id" : continue
+        elif database_user[u]["Discord ID"] == user.id:
+            ce_id = u
+            break
+    
+    if ce_id == "" : return await interaction.followup.send("This user is not registered in the CE Assistant database. Please make sure they use /register!")
+
+
 
     return await interaction.followup.send("Feature under construction!! Coming soon.")
+    """
 
     # if no user is provided default to sender
     if user is None :
@@ -360,12 +381,21 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
 
     current_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, user, 'Current Rolls')
     completed_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, user, 'Completed Rolls')
+
+    if len(current_roll_str) > 1024 : 
+        current_roll_str = current_roll_str[:1024]
+        overflow = True
+    if len(completed_roll_str) > 1024 : 
+        completed_roll_str = completed_roll_str[:1024]
+        overflow = True
     
     # make the embed that you're going to send
     embed = discord.Embed(colour=0x000000, timestamp=datetime.datetime.now())
     embed.add_field(name="User", value = "<@" + str(user.id) + ">", inline=False)
     embed.add_field(name="Current Rolls", value=current_roll_str, inline=False)
     embed.add_field(name="Completed Rolls", value=completed_roll_str, inline=False)
+    if overflow:
+        embed.add_field(name="Overflow Error!", value="If this doesn't look right, please DM me <@413427677522034727>. This will be fixed in v1.1.", inline=False)
     embed.set_thumbnail(url=user.avatar.url)
     embed.set_footer(text="CE Assistant",
         icon_url=final_ce_icon)
