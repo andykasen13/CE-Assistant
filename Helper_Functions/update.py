@@ -579,7 +579,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
                 remove_indexes.append(m_index)
 
-                cooldown_days = (len(current_roll["Games"]) * 14) + (len(current_roll["Games"]) - 1) - (current_roll["Rerolls"])
+                cooldown_days = (len(current_roll["Games"]) * 14) + ((len(current_roll["Games"]) - 1) - (current_roll["Rerolls"]))*28
                 database_user[ce_id]["Cooldowns"]["Fourward Thinking"] = get_unix(cooldown_days)
 
                 continue
