@@ -166,7 +166,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
     # game loop adding updated parts
     for game in json_response:
-        print(game['name'])
+        #print(game['name'])
         current_newest = c
 
         import_objective_names = []
