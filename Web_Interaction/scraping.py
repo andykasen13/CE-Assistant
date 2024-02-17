@@ -105,8 +105,8 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         
         while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
             objective_lst = []
-            objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
             time.sleep(1)
+            objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
             print(objective_lst)
 
     
