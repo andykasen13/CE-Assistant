@@ -633,7 +633,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     
                     # grab and delete partner's instance as well
                     myindex = ""
-                    for roll, index3 in enumerate(database_user[current_roll["Partner"]]["Current Rolls"]):
+                    for index3, roll in enumerate(database_user[current_roll["Partner"]]["Current Rolls"]):
                         if roll["Event Name"] == current_roll["Event Name"] : 
                             myindex = index3
                             break
