@@ -132,18 +132,24 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
             view = discord.ui.View(timeout=600)
             embeds = [embed]
-            genres.remove(database_name[games[0]]["Genre"])
+            
+            # take out the genre that's been rolled already
+            existing_games = userInfo[target_user]["Current Rolls"][roll_num]["Games"]
+            genres.remove(database_name[existing_games[0]]["Genre"])
+
+            # get the game and embed
             game = get_rollable_game(40, 20, "Tier 2", userInfo[current_user]. genres, database_name=database_name, database_tier=database_tier)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
-
             await get_buttons(view, embeds)
-            existing_games = userInfo[target_user]["Current Rolls"][roll_num]["Games"]
+            
+            # update database_user
             userInfo[target_user]["Current Rolls"][roll_num] = {
                 "Event Name" : "Two Week T2 Streak",
                 "End Time" : get_unix(7),
                 "Games" : existing_games + [game]
             }
 
+            # dump and send
             await dump_mongo("user", userInfo)
             return await interaction.followup.send(embed=embeds[0], view = view)
     
