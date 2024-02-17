@@ -470,7 +470,7 @@ async def check_roll_status():
 
     # go through each user in database user. if they have any cooldowns or current rolls.... update their profiles.
     for user in database_user:
-
+        if user == "_id" : continue
         # if their current rolls are empty and their cooldowns are empty keep checking
         if(database_user[user]["Current Rolls"] == [] and database_user[user]["Cooldowns"] == {}) : continue
         else:
@@ -590,6 +590,7 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
     # find the user
     ce_id = 0
     for u in database_user:
+        if u == "_id" : continue
         if(database_user[u]["Discord ID"] == user.id): ce_id = u
     if ce_id == 0:
         return await interaction.followup.send("<@{}> is not registered in the CE Assistant database.")
