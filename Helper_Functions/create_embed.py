@@ -6,6 +6,27 @@ from datetime import timedelta
 from bs4 import BeautifulSoup
 import requests
 
+# icons for CE emoji
+icons = {
+    "Tier 0" : '<:tier0:1126268390605070426>',
+    "Tier 1" : '<:tier1:1126268393725644810>',
+    "Tier 2" : '<:tier2:1126268395483037776>',
+    "Tier 3" : '<:tier3:1126268398561677364>',
+    "Tier 4" : '<:tier4:1126268402596585524>',
+    "Tier 5" : '<:tier5:1126268404781809756>',
+    "Tier 6" : '<:tier6:1126268408116285541>',
+    "Tier 7" : '<:tier7:1126268411220074547>',
+
+    "Action" : '<:CE_action:1126326215356198942>',
+    "Arcade" : '<:CE_arcade:1126326209983291473>',
+    "Bullet Hell" : '<:CE_bullethell:1126326205642190848>',
+    "First-Person" : '<:CE_firstperson:1126326202102186034>',
+    "Platformer" : '<:CE_platformer:1126326197983383604>',
+    "Strategy" : '<:CE_strategy:1126326195915591690>',
+
+    "Points" : '<:CE_points:1128420207329816597>'
+}
+
 
 
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
@@ -140,7 +161,9 @@ def getEmbed(game_name, authorID, database_name):
     if game_name in database_name.keys() :
         for objective in database_name[game_name]["Primary Objectives"] :
             total_points += int(database_name[game_name]["Primary Objectives"][objective]["Point Value"])
-        embed.add_field(name="CE Status", value=f"{total_points} Points", inline=True)
+        embed.add_field(name="CE Status", 
+                        value=icons[database_name[game_name]["Tier"]] + icons[database_name[game_name]["Genre"]] + f" - {total_points} Points" + icons["Points"], 
+                        inline=True)
         try:
             embed.add_field(name="CE Owners", value= database_name[game_name]["Total Owners"], inline=True)
             embed.add_field(name="CE Completions", value= database_name[game_name]["Full Completions"], inline=True)
