@@ -112,7 +112,7 @@ async def master_loop(client, mongo_client):
     log = client.get_channel(1141886539157221457)
     await log.send(scrape_message)
 
-    print('done')
+    print('done\n')
 
 
 async def curate(channel, mongo_client):

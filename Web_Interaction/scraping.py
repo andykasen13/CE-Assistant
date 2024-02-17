@@ -112,6 +112,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         api_response = requests.get('https://cedb.me/api/games')
         try:   
             json_response = json.loads(api_response.text)
+            print('fetched.\n')
         except:
             print('json failed lol!!!!!!!')
             if hm: del driver
@@ -120,6 +121,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     else :
         print('fetching /api/games/full/...')
         api_response = requests.get('https://cedb.me/api/games/full')
+        print('fetched.\n')
         try:
             json_response = json.loads(api_response.text)
         except:
@@ -166,6 +168,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         print('json failed lol')
         return
 
+    print('scraping....')
     # game loop adding updated parts
     for game in json_response:
         #print(game['name'])
