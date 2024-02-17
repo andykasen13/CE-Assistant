@@ -152,7 +152,7 @@ def getEmbed(game_name, authorID, database_name):
 
     embed.add_field(name="Price", value = gamePrice, inline=True)
     
-    embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
+    embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/game/{database_name[game_name]["CE ID"]}/")
     embed.set_image(url=imageLink)
     embed.set_thumbnail(url=ce_mountain_icon)
     embed.set_footer(text="CE Assistant",
