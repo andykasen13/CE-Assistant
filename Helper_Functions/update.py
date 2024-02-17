@@ -672,7 +672,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     returns.append("log: Congratulations <@{}>! You have completed Two 'Two Week T2 Streak' Streak!".format(user_dict[ce_id]["Discord ID"]))
                 else:
                     del current_roll["End Time"]
-                    returns.append("casino: <@{}>, you have completed game {} of 4 in Two 'Two Week T2 Streak' Streak. Use `/solo_roll Two 'Two Week T2 Streak' Streak to roll your next one.".format(
+                    returns.append("casino: <@{}>, you have completed game {} of 4 in Two 'Two Week T2 Streak' Streak. Use `/solo_roll` Two 'Two Week T2 Streak' Streak to roll your next one.".format(
                         user_dict[ce_id]["Discord ID"], len(current_roll["Games"])
                     ))
                     continue
