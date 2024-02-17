@@ -383,8 +383,8 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 if("Requirements" in database_name[int_game]["Primary Objectives"][dbN_objective]) : del database_name[int_game]["Primary Objectives"][dbN_objective]["Requirements"]
                 del database_name[int_game]["Primary Objectives"][dbN_objective]["Description"]
                 database_name[int_game]["Primary Objectives"][dbN_objective] = database_name[int_game]["Primary Objectives"][dbN_objective]["Point Value"]
-            print(database_name[int_game]["Primary Objectives"])
-            print(user_dict[ce_id]["Owned Games"][int_game]["Primary Objectives"])
+            #print(database_name[int_game]["Primary Objectives"])
+            #print(user_dict[ce_id]["Owned Games"][int_game]["Primary Objectives"])
 
             # formatting part game
             for dbN_objective in database_name[other_game]["Primary Objectives"] :

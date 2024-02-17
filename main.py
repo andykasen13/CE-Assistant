@@ -320,7 +320,7 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 @tree.command(name="force-add", description="Force add a roll completion to any user.", guild=discord.Object(id=guild_ID))
 async def force_add(interaction: discord.Interaction, user: discord.Member):
     await interaction.response.defer()
-    
+
 
 
 
@@ -590,7 +590,7 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
     # find the user
     ce_id = 0
     for u in database_user:
-        if(u["Discord ID"] == user.id): ce_id = u
+        if(database_user[u]["Discord ID"] == user.id): ce_id = u
     if ce_id == 0:
         return await interaction.followup.send("<@{}> is not registered in the CE Assistant database.")
     
