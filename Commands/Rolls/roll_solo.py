@@ -378,7 +378,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # ----- Grab all the games -----
         embed = discord.Embed(title=("Triple Threat"), description="Please select your genre.")
             
-        await get_genre_buttons(view, 40, 20, "Tier 3", "Triple Threat", 28, 84, 3, interaction.user.id, reroll=reroll, collection=collection)
+        await get_genre_buttons(view, 40, 20, "Tier 3", "Triple Threat", 28, 84, 3, interaction.user.id, collection=collection)
 
         dont_save = True
          
@@ -394,7 +394,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         userInfo = await get_mongo('user')
 
         embed = discord.Embed(title=("Let Fate Decide"), description="A random T4 in a genre of you choosing will be rolled. There is no time limit for Let Fate Decide. You win once you complete all Primary Objectives in your rolled game!")
-        await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, 84, 1, interaction.user.id, reroll=reroll, collection=collection)
+        await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, 84, 1, interaction.user.id, collection=collection)
         dont_save = True
 
     # -------------------------------------------- Fourward Thinking --------------------------------------------
