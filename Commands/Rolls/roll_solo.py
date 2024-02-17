@@ -87,6 +87,73 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # two random t2s
         print("received two week t2 streak")
 
+        roll_num = -1
+        for i, roll in enumerate(userInfo[target_user]["Current Rolls"]):
+            if roll["Event Name"] == "Two Week T2 Streak" : 
+                roll_num = i
+                break
+        
+        # doesnt have roll
+        if roll_num == -1:
+            embed = discord.Embed(title = "Two Week T2 Streak",
+                                  description="A T2 will be rolled for you."
+                                  + " If you complete this T2 within a week, another T2"
+                                  + " of a different genre will be rolled for you. "
+                                  + "If you complete that T2 within a"
+                                  + " week of rolling it, you win.",
+                                  timestamp=datetime.datetime.now(),
+                                  color = 0x000000)
+            embed.add_field(name="Roll", value="Click to the next message to see your first T2!")
+
+            view = discord.ui.View(timeout=600)
+            embeds = [embed]
+            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], database_name=database_name, database_tier=database_tier)
+            embeds.append(getEmbed(game, interaction.user.id, database_name))
+
+            await get_buttons(view, embeds)
+            userInfo[target_user]["Current Rolls"].append({
+                "Event Name" : "Two Week T2 Streak",
+                "End Time" : get_unix(7),
+                "Games" : [game]
+            })
+
+            dump = await dump_mongo("user", userInfo)
+            return await interaction.followup.send(embed=embeds[0], view=view)
+        
+        # has roll and ready for second game
+        elif "End Time" not in userInfo[target_user]["Current Rolls"][roll_num]:
+            embed = discord.Embed(title = "Two Week T2 Streak",
+                                  description="You have one week to complete this T2.",
+                                  timestamp=datetime.datetime.now(),
+                                  color =0x000000)
+            embed.add_field(name="Roll", value="Click to the next message to see your second T2!")
+
+            view = discord.ui.View(timeout=600)
+            embeds = [embed]
+            genres.remove(database_name[games[0]]["Genre"])
+            game = get_rollable_game(40, 20, "Tier 2", userInfo[current_user]. genres, database_name=database_name, database_tier=database_tier)
+            embeds.append(getEmbed(game, interaction.user.id, database_name))
+
+            await get_buttons(view, embeds)
+            existing_games = userInfo[target_user]["Current Rolls"][roll_num]["Games"]
+            userInfo[target_user]["Current Rolls"][roll_num] = {
+                "Event Name" : "Two Week T2 Streak",
+                "End Time" : get_unix(7),
+                "Games" : existing_games + [game]
+            }
+
+            await dump_mongo("user", userInfo)
+            return await interaction.followup.send(embed=embeds[0], view = view)
+    
+        # has roll and is not ready
+        elif "End Time" in userInfo[target_user]["Current Rolls"][roll_num]:
+            return await interaction.followup.send("You need to finish your current T2 first before you can roll the next one!")
+        
+        #something is wrong
+        else:
+            return await interaction.followup.send("Something has gone wrong with the bot. Please ping andy for support!!")
+
+        return
         # ----- Grab two random games -----
         games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], database_name=database_name, database_tier=database_tier))
         genres.remove(database_name[games[0]]["Genre"])

@@ -944,6 +944,7 @@ async def initiate_master_loop(interaction : discord.Interaction) :
 async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
     
+    if interaction.user.id == 476213685073739798 : return await interaction.followup.send("kingconn banned lol")
     #Open the user database
     database_user = await get_mongo('user')
 
