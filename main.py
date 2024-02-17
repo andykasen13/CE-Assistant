@@ -593,14 +593,14 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
         if u == "_id" : continue
         if(database_user[u]["Discord ID"] == user.id): ce_id = u
     if ce_id == 0:
-        return await interaction.followup.send("<@{}> is not registered in the CE Assistant database.")
+        return await interaction.followup.send("<@{}> is not registered in the CE Assistant database.".format(user.id))
     
     # find the roll
     r_index = -1
     for i, r in enumerate(database_user[ce_id]):
-        if r["Event Name"] == roll_event : r_index = i
+        if database_user[ce_id][r]["Event Name"] == roll_event : r_index = i
     if r_index == -1:
-        return await interaction.followup.send("<@{}> does not have {} in their Current Rolls array.")
+        return await interaction.followup.send("<@{}> does not have {} in their Current Rolls array.".format(user.id, roll_event))
     
     # user does exist and has the roll in their array
     del database_user[ce_id][r_index]
