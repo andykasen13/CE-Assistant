@@ -90,7 +90,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         print("received two week t2 streak")
 
         roll_num = -1
-        for i, roll in enumerate(userInfo[target_user]["Completed Rolls"]):
+        for i, roll in enumerate(userInfo[target_user]["Current Rolls"]):
             if roll["Event Name"] == "Two Week T2 Streak" : 
                 roll_num = i
                 break
@@ -233,7 +233,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         # check if they've done prerequisite
         eligible = False
-        for r in userInfo[target_user]["Current Rolls"]:
+        for r in userInfo[target_user]["Completed Rolls"]:
             if r["Event Name"] == "Two Week T2 Streak" : eligible = True
         if not eligible : return await interaction.followup.send("You need to complete Two Week T2 Streak first!!!")
 
