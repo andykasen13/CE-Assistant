@@ -122,7 +122,7 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
                     continue
 
             for obj in database_name[returned_game]["Primary Objectives"]:
-                if database_name[returned_game]["Primary Objective"][obj]["Point Value"] % 5 != 0:
+                if database_name[returned_game]["Primary Objectives"][obj]["Point Value"] % 5 != 0:
                     print('uncleared game. continuing...')
                     continue
             
