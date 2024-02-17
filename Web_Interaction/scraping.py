@@ -100,6 +100,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         # grab first game to get color on the rest of them
         url = 'https://cedb.me/game/1e8565aa-b9f2-4b41-9578-22e4c2a5436b'
         driver.get(url)
+        time.sleep(5)
         objective_lst = []
         while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
             objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
