@@ -138,7 +138,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             genres.remove(database_name[existing_games[0]]["Genre"])
 
             # get the game and embed
-            game = get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier)
+            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
             await get_buttons(view, embeds)
             
@@ -161,7 +161,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         else:
             return await interaction.followup.send("Something has gone wrong with the bot. Please ping andy for support!!")
 
-        return
+        # old method
+        """
         # ----- Grab two random games -----
         games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], database_name=database_name, database_tier=database_tier))
         genres.remove(database_name[games[0]]["Genre"])
@@ -172,6 +173,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         embed = embeds[0]
 
         await get_buttons(view, embeds) # Create buttons
+        """
 
     # -------------------------------------------- One Hell of a Week --------------------------------------------
     elif event == "One Hell of a Week" : 
@@ -229,6 +231,90 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # four t2s
         print("Recieved request for Two 'Two Week T2 Streak' Streak")
 
+        # check if they've done prerequisite
+        eligible = False
+        for r in userInfo[target_user]["Current Rolls"]:
+            if r["Event Name"] == "Two Week T2 Streak" : eligible = True
+        if not eligible : return await interaction.followup.send("You need to complete Two Week T2 Streak first!!!")
+
+        roll_num = -1
+        for i, roll in enumerate(userInfo[target_user]["Current Rolls"]) :
+            if roll["Event Name"] == "Two 'Two Week T2 Streak' Streak":
+                roll_num = i
+
+        # doesnt have roll
+        if roll_num == -1:
+            embed = discord.Embed(title = "Two 'Two Week T2 Streak' Streak",
+                                  description="A T2 will be rolled for you."
+                                  + " If you complete this T2 within a week, another T2"
+                                  + " of a different genre will be rolled for you, and "
+                                  + "you will have a week to complete that. This process will "
+                                  + "repeat until you have completed four T2s.",
+                                  timestamp=datetime.datetime.now(),
+                                  color = 0x000000)
+            embed.add_field(name="Roll", value="Click to the next message to see your first T2!")
+
+            # setup view and embeds
+            view = discord.ui.View(timeout=600)
+            embeds = [embed]
+            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], database_name=database_name, database_tier=database_tier)
+            embeds.append(getEmbed(game, interaction.user.id, database_name))
+            await get_buttons(view, embeds)
+
+            # update database_user
+            userInfo[target_user]["Current Rolls"].append({
+                "Event Name" : "Two Week T2 Streak",
+                "End Time" : get_unix(7),
+                "Games" : [game]
+            })
+
+            # dump and send
+            dump = await dump_mongo("user", userInfo)
+            return await interaction.followup.send(embed=embeds[0], view=view)
+        
+        # has roll and ready for next game
+        elif "End Time" not in userInfo[target_user]["Current Rolls"][roll_num]:
+            embed = discord.Embed(title = "Two 'Two Week T2 Streak' Streak",
+                        description="You have one week to complete this T2.",
+                        timestamp=datetime.datetime.now(),
+                        color =0x000000)
+            embed.add_field(name="Roll", value="Click to the next message to see your next T2!")
+
+            # set up view and o.g. embed
+            view = discord.ui.View(timeout=600)
+            embeds = [embed]
+
+            # take out genres that have been rolled already
+            existing_games = userInfo[target_user]["Current Rolls"][roll_num]["Games"]
+            for g in existing_games:
+                genres.remove(database_name[g]["Genre"])
+            
+            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier)
+            embeds.append(getEmbed(game, interaction.user.id, database_name))
+            await get_buttons(view, embeds)
+
+            # update database user
+            userInfo[target_user]["Current Rolls"][roll_num] = {
+                "Event Name" : "Two 'Two Week T2 Streak' Streak",
+                "End Time" : get_unix(7),
+                "Games" : existing_games + [game]
+            }
+
+            # dump and send
+            await dump_mongo('user', userInfo)
+            return await interaction.followup.send(embed = embeds[0], view = view)
+            
+            # get games and embeds
+
+        elif "End Time" in userInfo[target_user]["Current Rolls"][roll_num]:
+            return await interaction.followup.send("You need to finish your current T2 before rolling the next one!")
+        
+        else:
+            return await interaction.followup.send("Something has gone wrong with the bot. Please ping andy for support!")
+
+        # old method
+        """
+        return
         eligible = False
         for roll in userInfo[target_user]["Completed Rolls"] :
             if(roll["Event Name"] == "Two Week T2 Streak") : eligible = True
@@ -247,6 +333,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         embeds = create_multi_embed("Two 'Two Week T2 Streak' Streak", 28, games, 7, interaction, database_name)
         embed = embeds[0]
         await get_buttons(view, embeds)
+        """
 
     # -------------------------------------------- Never Lucky --------------------------------------------
     elif event == "Never Lucky" :
