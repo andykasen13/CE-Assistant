@@ -1106,8 +1106,8 @@ async def register(interaction : discord.Interaction, ce_id: str) :
         icon_url=final_ce_icon)
     embed.set_thumbnail(url=interaction.user.avatar)
 
-    registered_role = discord.utils.get(interaction.guild.roles, name = "registered")
-    #await interaction.user.add_roles(registered_role)
+    registered_role = discord.utils.get(interaction.guild.roles, name = "CEA Registered")
+    await interaction.user.add_roles(registered_role)
 
     # Send a confirmation message
     await interaction.followup.send(embed=embed)
