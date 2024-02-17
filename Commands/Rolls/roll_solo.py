@@ -73,7 +73,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
         # Get one random (rollable) game in Tier 1, non-genre specific
-        games.append(get_rollable_game(10, 10, "Tier 1", userInfo[current_user], database_name=database_name, database_tier=database_tier))
+        games.append(await get_rollable_game(10, 10, "Tier 1", userInfo[current_user], database_name=database_name, database_tier=database_tier))
 
         # Create the embed
         embed = getEmbed(games[0], interaction.user.id, database_name=database_name)
@@ -109,7 +109,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
             view = discord.ui.View(timeout=600)
             embeds = [embed]
-            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], database_name=database_name, database_tier=database_tier)
+            game = await get_rollable_game(40, 20, "Tier 2", userInfo[target_user], database_name=database_name, database_tier=database_tier)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
 
             await get_buttons(view, embeds)
@@ -138,7 +138,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             genres.remove(database_name[existing_games[0]]["Genre"])
 
             # get the game and embed
-            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier)
+            game = await get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
             await get_buttons(view, embeds)
             
@@ -164,9 +164,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # old method
         """
         # ----- Grab two random games -----
-        games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], database_name=database_name, database_tier=database_tier))
+        games.append(await get_rollable_game(40, 20, "Tier 2", userInfo[current_user], database_name=database_name, database_tier=database_tier))
         genres.remove(database_name[games[0]]["Genre"])
-        games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
+        games.append(await get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
         
         # ----- Get all the embeds -----s
         embeds = create_multi_embed("Two Week T2 Streak", 14, games, 0, interaction, database_name)
@@ -191,7 +191,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         genres.remove("Strategy")
         i = 0
         while i < 5:
-            games.append(get_rollable_game(10, 10, "Tier 1", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
+            games.append(await get_rollable_game(10, 10, "Tier 1", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
             genres.remove(database_name[games[i]]["Genre"])
             i+=1
 
@@ -219,7 +219,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         for ggenre in genres :
             i=0
             while(i < 5) :
-                games.append(get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre, games=games, database_name=database_name, database_tier=database_tier))
+                games.append(await get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre, games=games, database_name=database_name, database_tier=database_tier))
                 i+=1
         embeds = create_multi_embed("One Hell of a Month", 28, games, 28*3, interaction, database_name)
         embed = embeds[0]
@@ -257,7 +257,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             # setup view and embeds
             view = discord.ui.View(timeout=600)
             embeds = [embed]
-            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], database_name=database_name, database_tier=database_tier)
+            game = await get_rollable_game(40, 20, "Tier 2", userInfo[target_user], database_name=database_name, database_tier=database_tier)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
             await get_buttons(view, embeds)
 
@@ -289,7 +289,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             for g in existing_games:
                 genres.remove(database_name[g]["Genre"])
             
-            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier)
+            game = await get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
             await get_buttons(view, embeds)
 
@@ -325,7 +325,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         genres.remove("Strategy")
         i=0
         while i < 4:
-            games.append(get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
+            games.append(await get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
             genres.remove(database_name[games[i]]["Genre"])
             i+=1
         
@@ -338,7 +338,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # -------------------------------------------- Never Lucky --------------------------------------------
     elif event == "Never Lucky" :
         # one t3
-        games.append(get_rollable_game(40, 20, "Tier 3", userInfo[current_user], database_name=database_name, database_tier=database_tier))
+        games.append(await get_rollable_game(40, 20, "Tier 3", userInfo[current_user], database_name=database_name, database_tier=database_tier))
 
         ends = False
 
@@ -457,7 +457,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
             # old method
             """
-            game2 = get_rollable_game(40, 20, "Tier 1", database_tier=database_tier, database_name=database_name)
+            game2 = await get_rollable_game(40, 20, "Tier 1", database_tier=database_tier, database_name=database_name)
             embed2 = getEmbed(game2, interaction.user.id, database_name)
 
             embeds = [embed, embed2]
