@@ -78,13 +78,14 @@ def single_scrape(curator_count):
     
 
 def game_list(new_data, current_dict, unfinished_games : dict):
-    # Set selenium driver and preferences
-    # use this if you want
-    hm = False
+    
+    # use this if you want selenium and #game-additions stuff
+    hm = True
 
     # use this if /api/games/full/ fails
     option3 = True
 
+    # Set selenium driver and preferences
     if hm:
     
         options = webdriver.ChromeOptions()
