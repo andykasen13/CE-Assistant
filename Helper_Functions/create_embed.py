@@ -121,6 +121,8 @@ def getEmbed(game_name, authorID, database_name):
         for i in range(0, len(options)):
             if game_name == options[i]:
                 correct_app_id = ass[i]['data-ds-appid']
+        
+        if correct_app_id == None : return discord.Embed(title=f"Could not find game \"{game_name}\".")
 
 # --- DOWNLOAD JSON FILE ---
 
