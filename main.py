@@ -603,7 +603,7 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
         return await interaction.followup.send("<@{}> does not have {} in their Current Rolls array.".format(user.id, roll_event))
     
     # user does exist and has the roll in their array
-    del database_user[ce_id][r_index]
+    del database_user[ce_id]["Current Rolls"][r_index]
 
     # dump the database
     await dump_mongo('user', database_user)
