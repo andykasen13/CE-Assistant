@@ -504,7 +504,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
             
 
-        elif current_roll["Event Name"] == "Fourward Thinking":
+        elif current_roll["Event Name"] == "Fourward Thinking" or current_roll["Event Name"] == "Two Week T2 Streak" or current_roll["Two 'Two Week T2 Streak' Streak"]:
             ""
             # pending should have been dealt with by now
             # only check the most recently added game
@@ -529,9 +529,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 (user_dict[ce_id]["Owned Games"][game]["Primary Objectives"] != database_name[game]["Primary Objectives"])
                 ) : 
                     roll_completed = False
-            print(game not in user_dict[ce_id]["Owned Games"])
-            print(roll_completed)
-            
+
 
 
 
@@ -586,12 +584,26 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
 
             # two week t2 streak
-            elif "End Time" not in current_roll and current_roll["Event Name"] == "Two Week T2 Streak":
+            elif current_roll["Event Name"] == "Two Week T2 Streak":
                 "do something"
+                if "End Time" not in current_roll : continue
+                returns.append("casino: <@{}>, you have failed Two Week T2 Streak. There is no cooldown.".format(user_dict[ce_id]["Discord ID"]))
+                remove_indexes.append(m_index)
+
+                continue # :)
+
+                
             
             # two "two week t2 streak" streak
-            elif "End Time" not in current_roll and current_roll["Event Name"] == "Two 'Two Week T2 Streak' Streak":
+            elif current_roll["Event Name"] == "Two 'Two Week T2 Streak' Streak":
                 "do something"
+                if "End Time" not in current_roll : continue
+                returns.append("casino: <@{}>, you have failed Two 'Two Week T2 Streak' Streak and are now on cooldown.".format(user_dict[ce_id]["Discord ID"]))
+                remove_indexes.append(m_index)
+
+                database_user[ce_id]["Cooldowns"]["Two 'Two Week T2 Streak' Streak"] = get_unix(7)
+
+                continue # :)
 
             # ----------------------- REGULAR ROLL HAS ENDED ----------------------------
             else: # if the roll was not completed AND the event name is ended_roll_name then they failed
