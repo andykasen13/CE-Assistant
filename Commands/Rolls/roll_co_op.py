@@ -272,7 +272,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             interaction_user_has_points_in_game = True
             while (target_user_owns_game and target_user_has_points_in_game) or (interaction_user_owns_game and interaction_user_has_points_in_game) :
                 # grab a rollable game
-                game = get_rollable_game(40, 20, tier_num, database_tier=database_tier, database_name=database_name)
+                game = get_rollable_game(soul_mate_hours[tier_num], 20, tier_num, database_tier=database_tier, database_name=database_name)
                 
                 # check to see if user B owns the game and if they have points in the game
                 target_user_owns_game = list(target_user_data["Owned Games"].keys()).count(game) > 0
