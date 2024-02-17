@@ -138,7 +138,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             genres.remove(database_name[existing_games[0]]["Genre"])
 
             # get the game and embed
-            game = get_rollable_game(40, 20, "Tier 2", userInfo[current_user]. genres, database_name=database_name, database_tier=database_tier)
+            game = get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
             await get_buttons(view, embeds)
             
