@@ -504,7 +504,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
             
 
-        elif current_roll["Event Name"] == "Fourward Thinking" or current_roll["Event Name"] == "Two Week T2 Streak" or current_roll["Two 'Two Week T2 Streak' Streak"]:
+        elif current_roll["Event Name"] == "Fourward Thinking" or current_roll["Event Name"] == "Two Week T2 Streak" or current_roll["Event Name"] == "Two 'Two Week T2 Streak' Streak":
             ""
             # pending should have been dealt with by now
             # only check the most recently added game
@@ -658,6 +658,24 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 else: 
                     del current_roll["End Time"]
                     returns.append("casino: <@{}>, you have completed the T{} in your Fourward Thinking roll. Use `/solo-roll Fourward Thinking` to move to your next stage!".format(user_dict[ce_id]["Discord ID"], str(len(current_roll["Games"]))))
+                    continue
+            
+            elif(current_roll["Event Name"] == "Two Week T2 Streak") :
+                if len(current_roll["Games"]) == 2:
+                    returns.append("log: Congratulations <@{}>! You have completed Two Week T2 Streak!".format(user_dict[ce_id]["Discord ID"]))
+                else:
+                    del current_roll["End Time"]
+                    returns.append("casino: <@{}>, you have completed your first T2. Use `/solo_roll Two Week T2 Streak` to roll your second one.".format(user_dict[ce_id]["Discord ID"]))
+                    continue
+            
+            elif(current_roll["Event Name"] == "Two 'Two Week T2 Streak' Streak") :
+                if len(current_roll["Games"]) == 4:
+                    returns.append("log: Congratulations <@{}>! You have completed Two 'Two Week T2 Streak' Streak!".format(user_dict[ce_id]["Discord ID"]))
+                else:
+                    del current_roll["end Time"]
+                    returns.append("casino: <@{}>, you have completed game {} of 4 in Two 'Two Week T2 Streak' Streak. Use `/solo_roll Two 'Two Week T2 Streak' Streak to roll your next one.".format(
+                        user_dict[ce_id]["Discord ID"], len(current_roll["Games"])
+                    ))
                     continue
             
             # if it's a co-op roll, send it to the log channel
