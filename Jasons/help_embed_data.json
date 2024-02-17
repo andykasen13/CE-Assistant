@@ -61,12 +61,6 @@
             "Emoji" : "\uD83E\uDD14",
             "Description" : "Learn how to add reasoning to any game change!",
             "Content" : "The /add-reason command takes in two parameters: the \"reason\" and the embed-id. This command is intended to be used for adding any specific reasoning to any game changes - ideally removals but this command will work with any kind of embed in the site-additions channel. You do have to retrieve the message-id of the embed you are trying to edit. To learn more about that, look up Discord Developer Mode."
-        },
-        "Send File" : {
-            "Name" : "Send File",
-            "Emoji" : "\uD83D\uDCCB",
-            "Description" : "Learn about grabbing CE Assistant files!",
-            "Content" : "CE Assistant keeps three local databases: name, tier, and user. The name database is where all the information about every game on CE is stored. The tier database is to help pull games for rolling purposes. And the user database stores information about all registered users. /send-file will return to you whichever file you request."
         }
     },
     "Rolls" : {
