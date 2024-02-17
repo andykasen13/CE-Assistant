@@ -328,6 +328,7 @@ async def force_add(interaction: discord.Interaction, user: discord.Member, roll
 
     ce_id = ""
     for u in database_user:
+        if u == "_id" : continue
         if database_user[u]["Discord ID"] == user.id:
             ce_id = u
 
@@ -627,7 +628,7 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
     await dump_mongo('user', database_user)
 
     # send message (dumbass!)
-    return await interaction.followup.send(f"{roll_event} was dropped from {user.id}'s Current Rolls array.")
+    return await interaction.followup.send(f"{roll_event} was dropped from <@{user.id}>'s Current Rolls array.")
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
