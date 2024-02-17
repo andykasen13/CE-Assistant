@@ -27,6 +27,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
     # Grab the information for both users
     for user in database_user :
+        if user == "_id" : continue
         if database_user[user]["Discord ID"] == interaction.user.id : 
             interaction_user_data = database_user[user]
             int_user_id = user
