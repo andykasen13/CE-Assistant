@@ -101,7 +101,7 @@ async def aaaa_auto(interaction : discord.Interaction, current:str) -> typing.Li
 
 
 
-
+"""
 @tree.command(name="aaaaa", description="afjdals", guild=discord.Object(id=guild_ID))
 #@app_commands.autocomplete(item=aaaa_auto)
 async def aaaaa(interaction : discord.Interaction, item : str):
@@ -133,7 +133,7 @@ async def aaaaa(interaction : discord.Interaction, item : str):
 
     dump = await dump_mongo('user', db)
 
-
+"""
 
 
 
@@ -312,14 +312,32 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 
 
 
-
+events_total = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+          "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
+          "Russian Roulette", "Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
+          "Winner Takes All", "Game Theory"]
 
 
 
 
 @tree.command(name="force-add", description="Force add a roll completion to any user.", guild=discord.Object(id=guild_ID))
-async def force_add(interaction: discord.Interaction, user: discord.Member):
+async def force_add(interaction: discord.Interaction, user: discord.Member, roll_event : events_total):
     await interaction.response.defer()
+
+    database_user = await get_mongo('user')
+
+    ce_id = ""
+    for u in database_user:
+        if database_user[u]["Discord ID"] == user.id:
+            ce_id = u
+
+    if ce_id == "" : return await interaction.followup.send(f"<@{user.id}> is not registered in the CE Assistant database. Please have them use /register.")
+
+    database_user[ce_id]["Completed Rolls"].append({"Event Name" : roll_event})
+
+    dump = await dump_mongo('user', database_user)
+    return await interaction.followup.send(f"{roll_event} has been added to <@{user.id}>'s Completed Rolls array.")
+    
 
 
 
@@ -664,8 +682,8 @@ async def scrape(interaction : discord.Interaction):
 
 
 
-
-
+# godspeed, get_times :pray:
+"""
 
 @tree.command(name="get_times", description="Prints out a table of times fifteen minutes apart in UTC", guild=discord.Object(id=guild_ID))
 async def get_times(interaction):
@@ -681,7 +699,7 @@ async def get_times(interaction):
 
 
 
-
+"""
 
 
 
@@ -1061,6 +1079,9 @@ async def register(interaction : discord.Interaction, ce_id: str) :
             if(list(user_dict[ce_id]["Owned Games"]["- Challenge Enthusiasts -"]["Community Objectives"].keys()).count(event_name) > 0) :
                 x=0
                 user_dict[ce_id]["Completed Rolls"].append({"Event Name" : event_name})
+            if(event_name == "Two \"Two Week T2 Streak\" Streak" 
+               and "Two \"Two Week T2 Streak\" Streak" in user_dict[ce_id]["Owned Games"]["- Challenge Enthusiasts -"]["Community Objectives"]):
+                user_dict[ce_id]["Completed Rolls"].append({"Event Name" : "Two 'Two Week T2 Streak' Streak"})
 
     # Add the user file to the database
     database_user.update(user_dict)
@@ -1266,7 +1287,7 @@ async def cr(interaction : discord.Interaction, ephemeral : bool) :
 
 
 
-
+"""
 
 
 @tree.command(name='startup_sched', description='hoping this is outdated by now!!!!', guild=discord.Object(id=guild_ID))
@@ -1277,7 +1298,7 @@ async def startup(interaction: discord.Interaction):
     print('started up')
     await interaction.followup.send('i love blob the log')
 
-
+"""
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
