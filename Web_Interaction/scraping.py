@@ -102,9 +102,13 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         driver.get(url)
         time.sleep(5)
         objective_lst = []
+        
         while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
+            objective_lst = []
             objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+            time.sleep(1)
             print(objective_lst)
+
     
 
     # set up API requests
