@@ -508,6 +508,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             ""
             # pending should have been dealt with by now
             # only check the most recently added game
+            if "End Time" not in current_roll : continue
             game = current_roll["Games"][len(current_roll["Games"]) - 1]
             try:
                 del database_name[game]["Community Objectives"]
@@ -585,7 +586,6 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
             # two week t2 streak
             elif current_roll["Event Name"] == "Two Week T2 Streak":
-                "do something"
                 if "End Time" not in current_roll : continue
                 returns.append("casino: <@{}>, you have failed Two Week T2 Streak. There is no cooldown.".format(user_dict[ce_id]["Discord ID"]))
                 remove_indexes.append(m_index)
@@ -596,7 +596,6 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             
             # two "two week t2 streak" streak
             elif current_roll["Event Name"] == "Two 'Two Week T2 Streak' Streak":
-                "do something"
                 if "End Time" not in current_roll : continue
                 returns.append("casino: <@{}>, you have failed Two 'Two Week T2 Streak' Streak and are now on cooldown.".format(user_dict[ce_id]["Discord ID"]))
                 remove_indexes.append(m_index)
