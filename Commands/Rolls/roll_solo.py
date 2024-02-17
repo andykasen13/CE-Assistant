@@ -263,7 +263,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
             # update database_user
             userInfo[target_user]["Current Rolls"].append({
-                "Event Name" : "Two Week T2 Streak",
+                "Event Name" : "Two 'Two Week T2 Streak' Streak",
                 "End Time" : get_unix(7),
                 "Games" : [game]
             })
