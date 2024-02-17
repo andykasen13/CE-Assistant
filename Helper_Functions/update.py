@@ -174,6 +174,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     user_dict[ce_id]["Discord ID"], current_roll["Event Name"]))
 
                 continue
+            continue
         
         elif current_roll["Games"][0] == 'pending...' and len(current_roll["Games"]) != 1:
             
