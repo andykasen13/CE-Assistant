@@ -79,6 +79,7 @@ def single_scrape(curator_count):
 
 def game_list(new_data, current_dict, unfinished_games : dict):
     # Set selenium driver and preferences
+    # use this if you want
     hm = False
 
     # use this if /api/games/full/ fails
