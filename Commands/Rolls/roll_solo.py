@@ -62,7 +62,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     for eventInfo in userInfo[target_user]['Current Rolls'] :
         #TODO: have different errors if someone tries to go again during pending and if someone tries to reroll while pending
         if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('Please wait 10 minutes in between rolling for the same event!')
-        if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
+        if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and event != "Two Week T2 Streak"
+           and event != "Two 'Two Week T2 Streak' Streak" and not reroll) : 
+            return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
 
     # grab both databases (tier needs to be passed to get_rollable_game())
     database_name = await get_mongo('name')
