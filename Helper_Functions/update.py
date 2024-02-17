@@ -151,6 +151,17 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     for m_index, current_roll in enumerate(user_dict[ce_id]['Current Rolls']) :
         roll_completed = True
 
+        f = False
+        for g in current_roll["Games"] :
+            if g == "pending..." : continue
+            if g not in database_name :
+                if len(current_roll["Games"]) > 1: current_roll["Games"].remove(g)
+                else : 
+                    returns.append("log: <@{}>: unfortunately, the game(s) in your roll were removed from the site. please ping andy for support and/or reroll")
+                    remove_indexes.append(m_index)
+                    f = True
+        if f : continue
+
         print("checking {}".format(current_roll["Event Name"]))
 
         # ------------------------------------ pending... -------------------------------------
@@ -172,6 +183,8 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 returns.append("casino: " + f"<@{user_dict[ce_id]["Discord ID"]}>, you can now roll {current_roll["Event Name"]} again.")
             continue
 
+        # ---------------------------- deal with deleted games -------------------------------
+        
 
         # --------------------------------- co op rolls :sob: ---------------------------------
         # destiny alignment
