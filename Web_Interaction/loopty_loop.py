@@ -35,6 +35,11 @@ from Web_Interaction.scraping import get_games
 from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
 
+ce_log_id = 1208259110638985246
+ce_casino_test_id = 1208259878381031485
+ce_casino_id = 1080137628604694629
+test_log_id = 1141886539157221457
+test_casino_id = 811286469251039333
 
 # dictating which channel the info will be sent to
 channel_number = 1128742486416834570   #1135993275162050690
@@ -97,9 +102,8 @@ times = [
 @tasks.loop(time=times)
 async def master_loop(client, mongo_client):
     print('loop engaged...')
-    
 
-    correct_channel = client.get_channel(channel_number)
+    correct_channel = client.get_channel(ce_log_id)
 
     # start the curate function
     await curate(correct_channel, mongo_client)
@@ -114,7 +118,7 @@ async def master_loop(client, mongo_client):
         scrape_message = "stale element!!! wahoo!! please ping andy even though he will cry"
         print(e)
 
-    log = client.get_channel(1141886539157221457)
+    log = client.get_channel(ce_log_id)
     await log.send(scrape_message)
 
     print('done\n')

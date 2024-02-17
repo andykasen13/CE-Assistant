@@ -69,7 +69,13 @@ with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
 discord_token = localJSONData['discord_token']  
-guild_ID = localJSONData['test_guild_ID']
+guild_ID = localJSONData['ce_guild_ID']
+
+ce_log_id = 1208259110638985246
+ce_casino_test_id = 1208259878381031485
+ce_casino_id = 1080137628604694629
+test_log_id = 1141886539157221457
+test_casino_id = 811286469251039333
 
 ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
 ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
@@ -446,7 +452,7 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 @tasks.loop(time=datetime.time(hour=0, minute=20, tzinfo=datetime.timezone.utc))
 async def check_roll_status():
     print('it ran omg it actually ran')
-    log_channel = client.get_channel(1141886539157221457) 
+    log_channel = client.get_channel(ce_log_id) 
     log_channel.send("check_roll_status has begun!!")
     # get databases
     database_user = await get_mongo('user')
@@ -481,7 +487,7 @@ async def check_roll_status():
 
     # initialize the variables ##################################################################################################################
                                                                                           #
-    casino_channel = client.get_channel(811286469251039333)                                                                                     #
+    casino_channel = client.get_channel(ce_casino_test_id)                                                                                     #
                                                                                                                                                 #
     # rank silliness                                                                                                                            #
     ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]                                      #
@@ -1093,8 +1099,8 @@ async def update(interaction : discord.Interaction) :
     database_name = await get_mongo('name')
     database_user = await get_mongo('user')
 
-    log_channel = client.get_channel(1141886539157221457)
-    casino_channel = client.get_channel(811286469251039333)
+    log_channel = client.get_channel(ce_log_id)
+    casino_channel = client.get_channel(ce_casino_test_id)
     
     # rank silliness
     ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]
@@ -1280,7 +1286,7 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 
     # grab the site additions channel
     # TODO: update this in the CE server
-    site_additions_channel = client.get_channel(1128742486416834570)
+    site_additions_channel = client.get_channel(ce_log_id)
 
     # try to get the message
     try :
@@ -1451,7 +1457,7 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
     
-    test_log = client.get_channel(1141886539157221457)
+    test_log = client.get_channel(ce_log_id)
     await test_log.send("The bot has now been restarted.")    #get_tasks(client)
     await master_loop.start(client, mongo_client)
     await check_roll_status.start()
