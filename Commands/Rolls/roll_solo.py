@@ -404,7 +404,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         # eligibility
         eligible = False
-        for r in database_name[target_user]["Completed Rolls"]:
+        for r in userInfo[target_user]["Completed Rolls"]:
             if r["Event Name"] == "Let Fate Decide":
                 eligible = True
                 break
