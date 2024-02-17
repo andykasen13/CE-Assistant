@@ -27,6 +27,8 @@ import typing
 from bson import ObjectId
 from discord.ext import tasks
 
+from selenium.common.exceptions import StaleElementReferenceException
+
 # other local files
 from Web_Interaction.curator import checkCuratorCount
 from Web_Interaction.scraping import get_games
@@ -108,6 +110,8 @@ async def master_loop(client, mongo_client):
             scrape_message = await scrape(correct_channel, mongo_client)
     except TimeoutError:
         scrape_message = "function timed out!!!"
+    except StaleElementReferenceException:
+        scrape_message = "stale element!!! wahoo!! please ping andy even though he will cry"
 
     log = client.get_channel(1141886539157221457)
     await log.send(scrape_message)
