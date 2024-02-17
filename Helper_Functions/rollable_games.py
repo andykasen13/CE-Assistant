@@ -121,6 +121,10 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
                     print("User has completed game. Moving on...\n")
                     continue
 
+            for obj in database_name[returned_game]["Primary Objectives"]:
+                if obj["Point Value"] == 1:
+                    print('uncleared game. continuing...')
+                    continue
             # ----- Grab the Game ID -----
             gameID = int(database_name[returned_game]["Steam ID"])
 
