@@ -121,10 +121,12 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
                     print("User has completed game. Moving on...\n")
                     continue
 
+            uncleared = False
             for obj in database_name[returned_game]["Primary Objectives"]:
                 if database_name[returned_game]["Primary Objectives"][obj]["Point Value"] % 5 != 0:
                     print('uncleared game. continuing...')
-                    continue
+                    uncleared = True
+            if uncleared : continue
             
             # ----- Grab the Game ID -----
             gameID = int(database_name[returned_game]["Steam ID"])
