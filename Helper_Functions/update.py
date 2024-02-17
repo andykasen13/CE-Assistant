@@ -405,7 +405,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 winner = 2
             elif not bool_1 and not bool_2 :
                 print('fail')
-                if current_roll["End Time"] < get_unix("now") : returns.append("log: " + "<@{}> and <@{}> ")
+                #if current_roll["End Time"] < get_unix("now") : returns.append("log: " + "<@{}> and <@{}> ")
                 continue
             elif bool_1 and bool_2 :
                 winner = 1
