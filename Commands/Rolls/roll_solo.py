@@ -401,6 +401,14 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     elif event == "Fourward Thinking" :
         # idk
         print('hahahaha')
+
+        # eligibility
+        eligible = False
+        for r in database_name[target_user]["Completed Rolls"]:
+            if r["Event Name"] == "Let Fate Decide":
+                eligible = True
+                break
+        if not eligible : return await interaction.followup.send("You need to complete Let Fate Decide to roll Fourward Thinking!")
         
         # See if the user has already rolled Fourward Thinking
         has_roll = False
@@ -554,7 +562,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # -------------------------------------------- Russian Roulette --------------------------------------------
     elif event == "Russian Roulette" :
         # choose six t5s and get one at random
-        embed = discord.Embed(title=("⚠️Roll still under construction!⚠️"))
+        embed = discord.Embed(title=("⚠️ Russian Roulette ⚠️"))
 
         dont_save = True
 
