@@ -110,8 +110,9 @@ async def master_loop(client, mongo_client):
             scrape_message = await scrape(correct_channel, mongo_client)
     except TimeoutError:
         scrape_message = "function timed out!!!"
-    except StaleElementReferenceException:
+    except StaleElementReferenceException as e:
         scrape_message = "stale element!!! wahoo!! please ping andy even though he will cry"
+        print(e)
 
     log = client.get_channel(1141886539157221457)
     await log.send(scrape_message)
