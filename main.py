@@ -317,7 +317,10 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 
 
 
-
+@tree.command(name="force-add", description="Force add a roll completion to any user.", guild=discord.Object(id=guild_ID))
+async def force_add(interaction: discord.Interaction, user: discord.Member):
+    await interaction.response.defer()
+    
 
 
 
@@ -365,7 +368,9 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
     """
 
     # if no user is provided default to sender
+    selfy = False
     if user is None :
+        selfy = True
         user = interaction.user
 
     # get mongo data
@@ -382,8 +387,10 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
             steam_user_name = user_name
             break
     
-    if(steam_user_name == "") : return await interaction.followup.send("This user is not registered in the CE Assistant database. Please make sure they use /register!")
-    print(steam_user_name) 
+    if(steam_user_name == "") : 
+        if selfy: return await interaction.followup.send("You are not registered in the CE Assistant database. Please use `/register`!")
+        else: return await interaction.followup.send("This user is not registered in the CE Assistant database. Please make sure they use `/register`!")
+    #print(steam_user_name) 
 
     current_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, user, 'Current Rolls')
     completed_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, user, 'Completed Rolls')
@@ -951,6 +958,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
     
     if interaction.user.id == 476213685073739798 : return await interaction.followup.send("kingconn banned lol")
+    if interaction.user.id == 73648432367013888  : return await interaction.followup.send("hey laura when you fix /api/games/full/ i'll give you access")
     #Open the user database
     database_user = await get_mongo('user')
 
