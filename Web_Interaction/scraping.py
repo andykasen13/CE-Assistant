@@ -954,6 +954,7 @@ def get_image(number, CE_ID, driver):
     try:
         url = 'https://cedb.me/game/' + CE_ID
         driver.get(url)
+        time.sleep(5)
         objective_lst = []
         while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
             print(objective_lst)
