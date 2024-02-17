@@ -154,7 +154,7 @@ async def aaaaa(interaction : discord.Interaction, item : str):
 async def help(interaction : discord.Interaction) :
     await interaction.response.defer(ephemeral=True)
 
-    page_data = json.loads(open("/CE-Assistant/Jasons/help_embed_data.json").read())
+    page_data = json.loads(open("Jasons/help_embed_data.json").read())
 
     basic_options = page_data['Options']
     selections = []
