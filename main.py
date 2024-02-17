@@ -626,6 +626,9 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
     # dump the database
     await dump_mongo('user', database_user)
 
+    # send message (dumbass!)
+    return await interaction.followup.send(f"{roll_event} was dropped from {user.id}'s Current Rolls array.")
+
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #

@@ -90,7 +90,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         print("received two week t2 streak")
 
         roll_num = -1
-        for i, roll in enumerate(userInfo[target_user]["Current Rolls"]):
+        for i, roll in enumerate(userInfo[target_user]["Completed Rolls"]):
             if roll["Event Name"] == "Two Week T2 Streak" : 
                 roll_num = i
                 break
