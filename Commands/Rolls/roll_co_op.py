@@ -301,10 +301,10 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 embed.add_field(name="Tier", value=database_name[game]["Tier"])
 
                 end_db = {
-                    "Tier 1" : timedelta(2),
-                    "Tier 2" : timedelta(10),
-                    "Tier 3" : timedelta(28),
-                    "Tier 4" : timedelta(56)
+                    "Tier 1" : (2),
+                    "Tier 2" : (10),
+                    "Tier 3" : (28),
+                    "Tier 4" : (56)
                 }
 
                 i_num = 0
@@ -333,7 +333,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
                 
                 else :
-                    end_time = get_unix(tier_num)
+                    end_time = get_unix(end_db[tier_num])
                     database_user[int_user_id]["Current Rolls"][i_num] = ({
                         "Event Name" : event,
                         "Partner" : target_user_data["CE ID"],
