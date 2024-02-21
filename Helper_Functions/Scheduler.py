@@ -29,35 +29,35 @@ async def startup_sched():
         if user_str == '_id' : continue
         user = user_info[user_str]
         
-        for current_roll in user["Current Rolls"]:
+        for current_roll in user['Current Rolls']:
             
             if not 'End Time' in list(current_roll):
                 continue
 
-            end_time = current_roll["End Time"]
+            end_time = current_roll['End Time']
             end_time = datetime.datetime.fromtimestamp(end_time)
             
 
             args = [
                 user['Discord ID'],
-                current_roll["Event Name"],
+                current_roll['Event Name'],
                 user_info,
                 database_name
             ]
 
             #await add_task(end_time, args)
 
-        for current_roll in user["Cooldowns"]:
+        for current_roll in user['Cooldowns']:
             if not 'End Time' in list(current_roll):
                 continue
 
-            end_time = current_roll["End Time"]
+            end_time = current_roll['End Time']
             end_time = datetime.datetime.fromtimestamp(end_time)
             
 
             args = [
                 user['Discord ID'],
-                current_roll["Event Name"],
+                current_roll['Event Name'],
                 user_info,
                 database_name
             ]
@@ -86,14 +86,14 @@ async def startup_sched():
 #     for user_str in users:
 #         user = users[user_str]
         
-#         for current_roll in user["Current Rolls"]:
+#         for current_roll in user['Current Rolls']:
 #             if not 'End Time' in list(current_roll):
 #                 continue
 
 #             fin.append({
-#                 "End Time" : current_roll["End Time"],
-#                 "Event Name" : current_roll["Event Name"],
-#                 "CE ID": user["CE ID"]
+#                 "End Time" : current_roll['End Time'],
+#                 "Event Name" : current_roll['Event Name'],
+#                 "CE ID": user['CE ID']
 #             })
 
     
@@ -112,15 +112,15 @@ async def startup_sched():
 
 #     #read roles from other thing then do shit with those
 #     for index, task in enumerate(tasks):
-#         event_name = task["Event Name"]
-#         user_id = task["CE ID"]
+#         event_name = task['Event Name']
+#         user_id = task['CE ID']
         
 #         if task['End Time'] <= int(time.mktime((datetime.datetime.now()).timetuple())):
 #             test(user_id, event_name, -1)
 #             indices.insert(0, index)
 #             continue
 
-#         date_time = datetime.datetime.utcfromtimestamp(int(task["End Time"]-14400))
+#         date_time = datetime.datetime.utcfromtimestamp(int(task['End Time']-14400))
         
 #         sched.add_job(test, 'date', run_date = date_time, args = [user_id, event_name])
 

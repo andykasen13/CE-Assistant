@@ -27,7 +27,7 @@ mongo_database = mongo_client['database_name']
 collection = mongo_client['database_name']['ce-collection']
 
 # get and set mongo databases
-mongo_names = Literal["name", "tier", "curator", "user", "tasks", "unfinished"]
+mongo_names = Literal['name", "tier", "curator", "user", "tasks", "unfinished']
 async def get_mongo(title : mongo_names):
     """Returns the MongoDB associated with `title`."""
     return await collection.find_one({'_id' : mongo_ids[title]})

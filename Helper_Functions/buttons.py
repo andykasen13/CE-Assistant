@@ -96,7 +96,7 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
     from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
     games = []
-    genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
+    genres = ['Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy']
     buttons = []
     i=0
     for genre in genres :
@@ -150,8 +150,8 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
         
         # find the roll to replace (from pending...)
         roll_num = 0
-        for current_roll in database_user[target_user]["Current Rolls"] :
-            if current_roll["Event Name"] == event_name : break
+        for current_roll in database_user[target_user]['Current Rolls'] :
+            if current_roll['Event Name'] == event_name : break
             roll_num +=1
 
         # update the 
@@ -159,13 +159,13 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
 
         # of course, the king of shitters, fourward thinking
         if (event_name == "Fourward Thinking"):
-            r = database_user[target_user]["Current Rolls"][roll_num]["Rerolls"]
+            r = database_user[target_user]['Current Rolls'][roll_num]['Rerolls']
             
             finished_games = []
-            if(len(database_user[target_user]["Current Rolls"][roll_num]["Games"]) > 1):
-                finished_games = database_user[target_user]["Current Rolls"][roll_num]["Games"][1::]
+            if(len(database_user[target_user]['Current Rolls'][roll_num]['Games']) > 1):
+                finished_games = database_user[target_user]['Current Rolls'][roll_num]['Games'][1::]
                 r+=1
-            database_user[target_user]["Current Rolls"][roll_num] = ({
+            database_user[target_user]['Current Rolls'][roll_num] = ({
                 "Event Name" : "Fourward Thinking",
                 "End Time" : end_time,
                 "Games" : finished_games + games,
@@ -174,12 +174,12 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
 
         # all other rolls
         else:
-            database_user[target_user]["Current Rolls"][roll_num] = ({"Event Name" : event_name, 
+            database_user[target_user]['Current Rolls'][roll_num] = ({"Event Name" : event_name, 
                                                     "End Time" : end_time,
                                                     "Games" : games})
         
         # args = [
-        #     database_user[target_user]["Discord ID"],
+        #     database_user[target_user]['Discord ID'],
         #     0,
         #     0,
         #     0
@@ -190,8 +190,8 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
         """
         elif reroll :
             c_nums = []
-            for index, c_roll in enumerate(database_user[target_user]["Current Rolls"]) :
-                if c_roll["Event Name"] == event_name :
+            for index, c_roll in enumerate(database_user[target_user]['Current Rolls']) :
+                if c_roll['Event Name'] == event_name :
                     c_nums.append(index)
                     
 
@@ -200,13 +200,13 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
             if c_nums == [] : return await interaction.followup.send('you havent rolled this game. except i should have cleared that already. something is wrong')
 
             if len(c_nums) > 1 : 
-                del database_user[target_user]["Current Rolls"][c_nums[1]]
+                del database_user[target_user]['Current Rolls'][c_nums[1]]
 
             c_num = c_nums[0]
 
             database_user[target_user]['Current Rolls'][c_num] = ({
                 "Event Name" : event_name,
-                "End Time" : database_user[target_user]["Current Rolls"][c_num]["End Time"],
+                "End Time" : database_user[target_user]['Current Rolls'][c_num]['End Time'],
                 "Games" : games
             })
         """

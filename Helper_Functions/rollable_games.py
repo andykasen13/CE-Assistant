@@ -39,7 +39,6 @@ banned_games = ["Serious Sam HD: The Second Encounter",
                         "Elasto Mania Remastered"]
 
 
-
 # -------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------------------------------------------------------------------------------- #
@@ -53,7 +52,7 @@ banned_games = ["Serious Sam HD: The Second Encounter",
 async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_info = -1, specific_genre = "any", games : list = [], database_tier = "", database_name = "") :
         returned_game = ""
         rollable = False
-        genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"] 
+        genres = ['Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy'] 
 
         if avg_completion_time_limit == "nope" : avg_completion_time_limit = 9999999
         
@@ -115,21 +114,21 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
 
             # ---- Check to see if the user has already completed the game -----
             if(user_info != -1) :
-                if((returned_game in user_info["Owned Games"].keys()) 
-                and "Primary Objectives" in user_info["Owned Games"][returned_game]
-                and user_info["Owned Games"][returned_game]["Primary Objectives"].keys() == database_name[returned_game]["Primary Objectives"].keys()) :
+                if((returned_game in user_info['Owned Games'].keys()) 
+                and "Primary Objectives" in user_info['Owned Games'][returned_game]
+                and user_info['Owned Games'][returned_game]['Primary Objectives'].keys() == database_name[returned_game]['Primary Objectives'].keys()) :
                     print("User has completed game. Moving on...\n")
                     continue
 
             uncleared = False
-            for obj in database_name[returned_game]["Primary Objectives"]:
-                if database_name[returned_game]["Primary Objectives"][obj]["Point Value"] % 5 != 0:
+            for obj in database_name[returned_game]['Primary Objectives']:
+                if database_name[returned_game]['Primary Objectives'][obj]['Point Value'] % 5 != 0:
                     print('uncleared game. continuing...')
                     uncleared = True
             if uncleared : continue
             
             # ----- Grab the Game ID -----
-            gameID = int(database_name[returned_game]["Steam ID"])
+            gameID = int(database_name[returned_game]['Steam ID'])
 
             # ----- Grab Steam JSON file -----
             payload = {'appids': gameID, 'cc' : 'US'}
@@ -183,7 +182,7 @@ async def get_rollable_game_from_list(games, collection) :
         print(f"Seeing if {random_game} is rollable...")
 
         # check for price and avg completion time
-        game_id = database_name[random_game]["Steam ID"]
+        game_id = database_name[random_game]['Steam ID']
         # ----- Grab Steam JSON file -----
         payload = {'appids': game_id, 'cc' : 'US'}
         response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload)
