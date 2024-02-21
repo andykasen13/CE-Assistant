@@ -209,7 +209,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             if updated_time < objupdatedtime : updated_time = objupdatedtime
 
             # was the objective's requirement updated
-            for objrequirement in objective["objectiveRequirements"] :
+            for objrequirement in objective['objectiveRequirements'] :
                 objrequpdatedtime = time.mktime(datetime.strptime(str(objrequirement['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
                 if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
 
@@ -225,7 +225,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             current_newest = new_data[game['name']]['Last Updated']
 
             # also grab the names of objectives
-            local_objective_names = list(new_data[game['name']]["Primary Objectives"].keys()) + list(new_data[game['name']]["Community Objectives"].keys())
+            local_objective_names = list(new_data[game['name']]['Primary Objectives'].keys()) + list(new_data[game['name']]['Community Objectives'].keys())
         
         if set(import_objective_names) != set(local_objective_names): updated_time = current_newest + 1
             
@@ -273,7 +273,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
         # if game is updated
         elif updated_time > current_newest and game['name'] in list(new_data.keys()):
-            print("UPDATED: " + game["name"])
+            print("UPDATED: " + game['name'])
             game_tracker.remove(game['name'])
             test_old = new_data[game['name']]
             to_keep = get_game(game)
@@ -309,7 +309,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             points = 0
             uncleareds = 0
             for objective in new_game['Primary Objectives']:
-                if new_game["Primary Objectives"][objective]["Point Value"] == 1: uncleareds +=1
+                if new_game['Primary Objectives'][objective]['Point Value'] == 1: uncleareds +=1
                 else: points += new_game['Primary Objectives'][objective]['Point Value']
             
             second_part = ""
@@ -480,7 +480,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
     for objective in old_game['Primary Objectives']:
         old_points += old_game['Primary Objectives'][objective]['Point Value']
 
-    if new_points != old_points and (len(old_game["Primary Objectives"]) != 1 or len(new_game["Primary Objectives"]) != 1):
+    if new_points != old_points and (len(old_game['Primary Objectives']) != 1 or len(new_game['Primary Objectives']) != 1):
         update += "\n- {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(old_points, new_points)
 
     # ------------------- check Genre -------------------
@@ -842,7 +842,7 @@ def get_objectives(CE_ID):
         if updated_time < objupdatedtime : updated_time = objupdatedtime
 
         # was the objective's requirement updated
-        for objrequirement in objective["objectiveRequirements"] :
+        for objrequirement in objective['objectiveRequirements'] :
             objrequpdatedtime = time.mktime(datetime.strptime(str(objrequirement['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
             if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
     
@@ -914,15 +914,15 @@ def get_by_tier(games):
     
     for game in games:
             if game == "_id" : continue
-            if games[game]["Tier"] == "Tier 5":
+            if games[game]['Tier'] == "Tier 5":
                 tot = 0
-                for obj in games[game]["Primary Objectives"]:
-                    tot += games[game]["Primary Objectives"][obj]["Point Value"]
+                for obj in games[game]['Primary Objectives']:
+                    tot += games[game]['Primary Objectives'][obj]['Point Value']
                 if tot > 1000: continue
-                elif tot > 500 : tier_based_data["Tier 6"][games[game]["Genre"]].append(game)
-                else : tier_based_data[games[game]["Tier"]][games[game]["Genre"]].append(game)
+                elif tot > 500 : tier_based_data['Tier 6'][games[game]['Genre']].append(game)
+                else : tier_based_data[games[game]['Tier']][games[game]['Genre']].append(game)
                 continue
-            tier_based_data[games[game]["Tier"]][games[game]["Genre"]].append(game)
+            tier_based_data[games[game]['Tier']][games[game]['Genre']].append(game)
 
     return tier_based_data
 
@@ -935,7 +935,7 @@ def get_completion_data(steam_id):
     if "medianCompletionTime" not in json_response.keys(): 
         return "none"
     else:
-        return int(json_response["medianCompletionTime"] / 60)
+        return int(json_response['medianCompletionTime'] / 60)
 
 
     response = requests.get("https://steamhunters.com/apps/{}/achievements".format(steam_id))

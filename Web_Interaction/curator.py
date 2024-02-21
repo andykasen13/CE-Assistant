@@ -95,10 +95,10 @@ def curatorUpdate(num: int) :
     divs = html.find_all('div')
     for div in divs:
         try:
-            if div["class"][0] == "recommendation_desc":
+            if div['class'][0] == "recommendation_desc":
                 descriptions.append(div.string.replace('\t', '').replace('\r', '').replace('\n', ''))
-            if div["class"][0] == "recommendation_readmore":
-                links.append(div.contents[0]["href"][43:])
+            if div['class'][0] == "recommendation_readmore":
+                links.append(div.contents[0]['href'][43:])
         except:
             continue
     del descriptions[num:]
@@ -106,7 +106,7 @@ def curatorUpdate(num: int) :
     onlyAs = html.find_all('a')
     for a in onlyAs:
         try:
-            app_ids.append(a["data-ds-appid"])
+            app_ids.append(a['data-ds-appid'])
         except:
             continue
     del app_ids[num:]

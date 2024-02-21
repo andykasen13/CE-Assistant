@@ -23,7 +23,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     view = discord.ui.View(timeout=600)
     games = []
     embeds = []
-    genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
+    genres = ['Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy']
     times = {
         "One Hell of a Day" : (1),
         "One Hell of a Week" : (7),
@@ -46,7 +46,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     target_user = ""
     for current_user in userInfo :
         if current_user == '_id' : continue
-        if(userInfo[current_user]["Discord ID"] == interaction.user.id) :
+        if(userInfo[current_user]['Discord ID'] == interaction.user.id) :
             target_user = current_user
             break
     
@@ -90,8 +90,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         print("received two week t2 streak")
 
         roll_num = -1
-        for i, roll in enumerate(userInfo[target_user]["Current Rolls"]):
-            if roll["Event Name"] == "Two Week T2 Streak" : 
+        for i, roll in enumerate(userInfo[target_user]['Current Rolls']):
+            if roll['Event Name'] == "Two Week T2 Streak" : 
                 roll_num = i
                 break
         
@@ -113,7 +113,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             embeds.append(getEmbed(game, interaction.user.id, database_name))
 
             await get_buttons(view, embeds)
-            userInfo[target_user]["Current Rolls"].append({
+            userInfo[target_user]['Current Rolls'].append({
                 "Event Name" : "Two Week T2 Streak",
                 "End Time" : get_unix(7),
                 "Games" : [game]
@@ -123,7 +123,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             return await interaction.followup.send(embed=embeds[0], view=view)
         
         # has roll and ready for second game
-        elif "End Time" not in userInfo[target_user]["Current Rolls"][roll_num]:
+        elif "End Time" not in userInfo[target_user]['Current Rolls'][roll_num]:
             embed = discord.Embed(title = "Two Week T2 Streak",
                                   description="You have one week to complete this T2.",
                                   timestamp=datetime.datetime.now(),
@@ -134,8 +134,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             embeds = [embed]
             
             # take out the genre that's been rolled already
-            existing_games = userInfo[target_user]["Current Rolls"][roll_num]["Games"]
-            genres.remove(database_name[existing_games[0]]["Genre"])
+            existing_games = userInfo[target_user]['Current Rolls'][roll_num]['Games']
+            genres.remove(database_name[existing_games[0]]['Genre'])
 
             # get the game and embed
             game = await get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier)
@@ -143,7 +143,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             await get_buttons(view, embeds)
             
             # update database_user
-            userInfo[target_user]["Current Rolls"][roll_num] = {
+            userInfo[target_user]['Current Rolls'][roll_num] = {
                 "Event Name" : "Two Week T2 Streak",
                 "End Time" : get_unix(7),
                 "Games" : existing_games + [game]
@@ -154,7 +154,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             return await interaction.followup.send(embed=embeds[0], view = view)
     
         # has roll and is not ready
-        elif "End Time" in userInfo[target_user]["Current Rolls"][roll_num]:
+        elif "End Time" in userInfo[target_user]['Current Rolls'][roll_num]:
             return await interaction.followup.send("You need to finish your current T2 first before you can roll the next one!")
         
         #something is wrong
@@ -165,7 +165,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         """
         # ----- Grab two random games -----
         games.append(await get_rollable_game(40, 20, "Tier 2", userInfo[current_user], database_name=database_name, database_tier=database_tier))
-        genres.remove(database_name[games[0]]["Genre"])
+        genres.remove(database_name[games[0]]['Genre'])
         games.append(await get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
         
         # ----- Get all the embeds -----s
@@ -181,8 +181,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         print("Recieved request for One Hell of a Week")
 
         can_continue = False
-        for completed_roll in userInfo[target_user]["Completed Rolls"] :
-            if completed_roll["Event Name"] == "One Hell of a Day": can_continue = True
+        for completed_roll in userInfo[target_user]['Completed Rolls'] :
+            if completed_roll['Event Name'] == "One Hell of a Day": can_continue = True
         
         if not can_continue : return await interaction.followup.send("You must complete One Hell of a Day in order to roll One Hell of a Week!")
                 
@@ -192,7 +192,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         i = 0
         while i < 5:
             games.append(await get_rollable_game(10, 10, "Tier 1", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
-            genres.remove(database_name[games[i]]["Genre"])
+            genres.remove(database_name[games[i]]['Genre'])
             i+=1
 
         # ----- Get all the embeds -----
@@ -206,8 +206,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         print("One Hell of a Month")
 
         can_continue = False
-        for completed_roll in userInfo[target_user]["Completed Rolls"] :
-            if completed_roll["Event Name"] == "One Hell of a Week": can_continue = True
+        for completed_roll in userInfo[target_user]['Completed Rolls'] :
+            if completed_roll['Event Name'] == "One Hell of a Week": can_continue = True
         
         if not can_continue : return await interaction.followup.send("You must complete One Hell of a Week in order to roll One Hell of a Month!")
              
@@ -233,13 +233,13 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         # check if they've done prerequisite
         eligible = False
-        for r in userInfo[target_user]["Completed Rolls"]:
-            if r["Event Name"] == "Two Week T2 Streak" : eligible = True
+        for r in userInfo[target_user]['Completed Rolls']:
+            if r['Event Name'] == "Two Week T2 Streak" : eligible = True
         if not eligible : return await interaction.followup.send("You need to complete Two Week T2 Streak first!!!")
 
         roll_num = -1
-        for i, roll in enumerate(userInfo[target_user]["Current Rolls"]) :
-            if roll["Event Name"] == "Two 'Two Week T2 Streak' Streak":
+        for i, roll in enumerate(userInfo[target_user]['Current Rolls']) :
+            if roll['Event Name'] == "Two 'Two Week T2 Streak' Streak":
                 roll_num = i
 
         # doesnt have roll
@@ -262,7 +262,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             await get_buttons(view, embeds)
 
             # update database_user
-            userInfo[target_user]["Current Rolls"].append({
+            userInfo[target_user]['Current Rolls'].append({
                 "Event Name" : "Two 'Two Week T2 Streak' Streak",
                 "End Time" : get_unix(7),
                 "Games" : [game]
@@ -273,7 +273,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             return await interaction.followup.send(embed=embeds[0], view=view)
         
         # has roll and ready for next game
-        elif "End Time" not in userInfo[target_user]["Current Rolls"][roll_num]:
+        elif "End Time" not in userInfo[target_user]['Current Rolls'][roll_num]:
             embed = discord.Embed(title = "Two 'Two Week T2 Streak' Streak",
                         description="You have one week to complete this T2.",
                         timestamp=datetime.datetime.now(),
@@ -285,16 +285,16 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             embeds = [embed]
 
             # take out genres that have been rolled already
-            existing_games = userInfo[target_user]["Current Rolls"][roll_num]["Games"]
+            existing_games = userInfo[target_user]['Current Rolls'][roll_num]['Games']
             for g in existing_games:
-                genres.remove(database_name[g]["Genre"])
+                genres.remove(database_name[g]['Genre'])
             
             game = await get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
             await get_buttons(view, embeds)
 
             # update database user
-            userInfo[target_user]["Current Rolls"][roll_num] = {
+            userInfo[target_user]['Current Rolls'][roll_num] = {
                 "Event Name" : "Two 'Two Week T2 Streak' Streak",
                 "End Time" : get_unix(7),
                 "Games" : existing_games + [game]
@@ -306,7 +306,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             
             # get games and embeds
 
-        elif "End Time" in userInfo[target_user]["Current Rolls"][roll_num]:
+        elif "End Time" in userInfo[target_user]['Current Rolls'][roll_num]:
             return await interaction.followup.send("You need to finish your current T2 before rolling the next one!")
         
         else:
@@ -316,8 +316,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         """
         return
         eligible = False
-        for roll in userInfo[target_user]["Completed Rolls"] :
-            if(roll["Event Name"] == "Two Week T2 Streak") : eligible = True
+        for roll in userInfo[target_user]['Completed Rolls'] :
+            if(roll['Event Name'] == "Two Week T2 Streak") : eligible = True
 
         if not eligible : return await interaction.followup.send(f"You must complete 'Two Week T2 Streak' to be eligible for {event}.")
 
@@ -326,7 +326,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         i=0
         while i < 4:
             games.append(await get_rollable_game(40, 20, "Tier 2", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
-            genres.remove(database_name[games[i]]["Genre"])
+            genres.remove(database_name[games[i]]['Genre'])
             i+=1
         
         # ----- Get all the embeds -----
@@ -363,13 +363,13 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 return await interaction.followup.send('hang on their buster')
         
         for roll in userInfo[target_user]['Completed Rolls'] :
-            if(roll["Event Name"] == "Never Lucky") : can_continue = True
+            if(roll['Event Name'] == "Never Lucky") : can_continue = True
         
         # Never lucky hasn't been completed
         if not can_continue : return await interaction.followup.send("You must complete Never Lucky to roll Triple Threat!")
         
         # add the pending...
-        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ["pending..."]})
+        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ['pending...']})
 
         # close and reopen users2.json
         dump = await dump_mongo('user', userInfo)
@@ -387,7 +387,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # one t4
 
         # add pending...
-        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ["pending..."]})
+        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ['pending...']})
 
         # close and reopen users2.json
         dump = await dump_mongo('user', userInfo)
@@ -404,8 +404,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         # eligibility
         eligible = False
-        for r in userInfo[target_user]["Completed Rolls"]:
-            if r["Event Name"] == "Let Fate Decide":
+        for r in userInfo[target_user]['Completed Rolls']:
+            if r['Event Name'] == "Let Fate Decide":
                 eligible = True
                 break
         if not eligible : return await interaction.followup.send("You need to complete Let Fate Decide to roll Fourward Thinking!")
@@ -413,8 +413,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # See if the user has already rolled Fourward Thinking
         has_roll = False
         roll_num = 0
-        for roll in userInfo[target_user]["Current Rolls"] :
-            if roll["Event Name"] == "Fourward Thinking" : 
+        for roll in userInfo[target_user]['Current Rolls'] :
+            if roll['Event Name'] == "Fourward Thinking" : 
                 has_roll = True
                 break
             roll_num += 1
@@ -444,10 +444,10 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             view = discord.ui.View(timeout=600)
             
             await get_genre_buttons(view, 40, 20, "Tier 1", "Fourward Thinking", 7, 14, 1, interaction.user.id, collection)
-            userInfo[target_user]["Current Rolls"].append({
+            userInfo[target_user]['Current Rolls'].append({
                 "Event Name" : "Fourward Thinking",
                 "End Time" : get_unix(minutes=10),
-                "Games" : ["pending..."],
+                "Games" : ['pending...'],
                 "Rerolls" : 0
             })
 
@@ -465,7 +465,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             view = discord.ui.View(timeout=600)
             await get_buttons(view, embeds)
 
-            userInfo[target_user]["Current Rolls"].append({
+            userInfo[target_user]['Current Rolls'].append({
                 "Event Name" : event,
                 "End Time" : get_unix(7),
                 "Games" : [game2],
@@ -481,10 +481,10 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
 
         # Has rolled Fourward Thinking but isn't done with the roll yet.
-        elif (has_roll and "End Time" in list(userInfo[target_user]["Current Rolls"][roll_num].keys())) :
-            if userInfo[target_user]["Current Rolls"][roll_num]["Games"][0] == "pending...":
+        elif (has_roll and "End Time" in list(userInfo[target_user]['Current Rolls'][roll_num].keys())) :
+            if userInfo[target_user]['Current Rolls'][roll_num]['Games'][0] == "pending...":
                 return await interaction.followup.send("Please wait 10 minutes in between requests.")
-            if userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"] == 0:
+            if userInfo[target_user]['Current Rolls'][roll_num]['Rerolls'] == 0:
                 return await interaction.followup.send("You are currently participating in Fourward Thinking and have no reroll tickets. Beat it.")
             else:
                 view = discord.ui.View(timeout=600)
@@ -510,7 +510,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # OR OR OR is done!
         # TODO: make the games[0] be [pending...], don't entirely override it 
         else : 
-            num_of_games = len(userInfo[target_user]["Current Rolls"][roll_num]["Games"])
+            num_of_games = len(userInfo[target_user]['Current Rolls'][roll_num]['Games'])
             print(num_of_games)
 
             # set up the starting embed
@@ -532,16 +532,16 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             await get_genre_buttons(view, 40*(num_of_games+1), 20, f"Tier {(num_of_games+1)}", "Fourward Thinking",
                                     7*(num_of_games+1), 14*(num_of_games+1), 1, interaction.user.id, collection)
             
-            for game in (userInfo[target_user]["Current Rolls"][roll_num]["Games"]):
-                genre = database_name[game]["Genre"]
+            for game in (userInfo[target_user]['Current Rolls'][roll_num]['Games']):
+                genre = database_name[game]['Genre']
                 for i, g in enumerate(genres):
                     if g == genre: view.children[i].disabled = True
             
-            userInfo[target_user]["Current Rolls"][roll_num] = {
+            userInfo[target_user]['Current Rolls'][roll_num] = {
                 "Event Name" : "Fourward Thinking",
                 "End Time" : get_unix(minutes=10),
-                "Games" : ["pending..."] + userInfo[target_user]["Current Rolls"][roll_num]["Games"],
-                "Rerolls" : userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"]
+                "Games" : ['pending...'] + userInfo[target_user]['Current Rolls'][roll_num]['Games'],
+                "Rerolls" : userInfo[target_user]['Current Rolls'][roll_num]['Rerolls']
             }
             
             dump = await dump_mongo('user', userInfo)
@@ -550,9 +550,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
             # update users2.json
             """
-            userInfo[target_user]["Current Rolls"][roll_num]["Games"].append(game)
-            userInfo[target_user]["Current Rolls"][roll_num]["End Time"] = get_unix(7*(num_of_games+1))
-            userInfo[target_user]["Current Rolls"][roll_num]["Rerolls"] += 1
+            userInfo[target_user]['Current Rolls'][roll_num]['Games'].append(game)
+            userInfo[target_user]['Current Rolls'][roll_num]['End Time'] = get_unix(7*(num_of_games+1))
+            userInfo[target_user]['Current Rolls'][roll_num]['Rerolls'] += 1
 
             # dont add the thing to users2.json AGAIN!
             dont_save = True
@@ -573,7 +573,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     if (dont_save is False) and (not reroll) :
         end_time = get_unix(times[event])
         # append the roll to the user's current rolls array
-        userInfo[target_user]["Current Rolls"].append({"Event Name" : event, 
+        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, 
                                                     "End Time" : end_time,
                                                     "Games" : games})
         args = [
@@ -588,8 +588,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # this is reroll shit and rerolls dont exist anymore lol
     """ elif (dont_save is False) and (reroll) :
         c_num = -1
-        for index, c_roll in enumerate(userInfo[target_user]["Current Rolls"]) :
-            if c_roll["Event Name"] == event :
+        for index, c_roll in enumerate(userInfo[target_user]['Current Rolls']) :
+            if c_roll['Event Name'] == event :
                 c_num = index
                 break
         
@@ -597,7 +597,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         userInfo[target_user]['Current Rolls'][c_num] = ({
             "Event Name" : event,
-            "End Time" : userInfo[target_user]["Current Rolls"][c_num]["End Time"],
+            "End Time" : userInfo[target_user]['Current Rolls'][c_num]['End Time'],
             "Games" : games
         })
     """

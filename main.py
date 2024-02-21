@@ -181,13 +181,13 @@ async def help(interaction : discord.Interaction) :
     for option in basic_options:
         if option == 'Admin Options' and (not mod_role in interaction.user.roles and not admin_role in interaction.user.roles):
             continue
-        selections.append(discord.SelectOption(label=basic_options[option]["Name"],emoji=basic_options[option]['Emoji'],description=basic_options[option]["Description"]))
+        selections.append(discord.SelectOption(label=basic_options[option]['Name'],emoji=basic_options[option]['Emoji'],description=basic_options[option]['Description']))
 
     for option in roll_options:
-        rolls.append(discord.SelectOption(label=roll_options[option]["Name"],emoji=roll_options[option]['Emoji'],description=roll_options[option]["Description"]))
+        rolls.append(discord.SelectOption(label=roll_options[option]['Name'],emoji=roll_options[option]['Emoji'],description=roll_options[option]['Description']))
 
     for option in admin_options:
-        admin.append(discord.SelectOption(label=admin_options[option]["Name"],emoji=admin_options[option]['Emoji'],description=admin_options[option]["Description"]))
+        admin.append(discord.SelectOption(label=admin_options[option]['Name'],emoji=admin_options[option]['Emoji'],description=admin_options[option]['Description']))
   
 
     
@@ -260,9 +260,9 @@ async def help(interaction : discord.Interaction) :
 # --------------------------------------------------- SOLO ROLL COMMAND ------------------------------------------------------------ # 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-events_solo = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+events_solo = Literal['One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
-          "Russian Roulette"]
+          "Russian Roulette']
 @tree.command(name="solo-roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guild_ID))
 @app_commands.describe(event="The event you'd like to participate in")
 async def roll_solo_command(interaction : discord.Interaction, event: events_solo) :   
@@ -297,8 +297,8 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
 # -------------------------------------------------- CO-OP ROLL COMMAND ------------------------------------------------------------ # 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-events_co_op = Literal["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
-                       "Winner Takes All", "Game Theory"]
+events_co_op = Literal['Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
+                       "Winner Takes All", "Game Theory']
 
 @tree.command(name="co-op-roll", description="Participate in Challenge Enthusiast Co-Op or PvP roll events!", guild=discord.Object(id=guild_ID))
 @app_commands.describe(event="The event you'd like to participate in")
@@ -312,10 +312,10 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 
 
 
-events_total = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+events_total = Literal['One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
           "Russian Roulette", "Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
-          "Winner Takes All", "Game Theory"]
+          "Winner Takes All", "Game Theory']
 
 
 
@@ -329,12 +329,12 @@ async def force_add(interaction: discord.Interaction, user: discord.Member, roll
     ce_id = ""
     for u in database_user:
         if u == "_id" : continue
-        if database_user[u]["Discord ID"] == user.id:
+        if database_user[u]['Discord ID'] == user.id:
             ce_id = u
 
     if ce_id == "" : return await interaction.followup.send(f"<@{user.id}> is not registered in the CE Assistant database. Please have them use /register.")
 
-    database_user[ce_id]["Completed Rolls"].append({"Event Name" : roll_event})
+    database_user[ce_id]['Completed Rolls'].append({"Event Name" : roll_event})
 
     dump = await dump_mongo('user', database_user)
     return await interaction.followup.send(f"{roll_event} has been added to <@{user.id}>'s Completed Rolls array.")
@@ -375,7 +375,7 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
     ce_id = ""
     for u in database_user:
         if u == "_id" : continue
-        elif database_user[u]["Discord ID"] == user.id:
+        elif database_user[u]['Discord ID'] == user.id:
             ce_id = u
             break
     
@@ -402,7 +402,7 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
     steam_user_name = ""
     for user_name in list(userInfo) :
         if user_name == "_id" : continue
-        if(userInfo[user_name]["Discord ID"] == user.id) :
+        if(userInfo[user_name]['Discord ID'] == user.id) :
             steam_user_name = user_name
             break
     
@@ -491,14 +491,14 @@ async def check_roll_status():
     for user in database_user:
         if user == "_id" : continue
         # if their current rolls are empty and their cooldowns are empty keep checking
-        if(database_user[user]["Current Rolls"] == [] and database_user[user]["Cooldowns"] == {}) : continue
+        if(database_user[user]['Current Rolls'] == [] and database_user[user]['Cooldowns'] == {}) : continue
         else:
             # update their profile.
-            returns = update_p(database_user[user]["Discord ID"], "", database_user, database_name)
+            returns = update_p(database_user[user]['Discord ID'], "", database_user, database_name)
             
             # update database_user.
             database_user = returns[0]
-            returns[0] = "NEW USER: " + str(database_user[user]["Discord ID"])
+            returns[0] = "NEW USER: " + str(database_user[user]['Discord ID'])
             
             # add all returned values to the array except database_user. that has been dealt with.
             for i in range(0, len(returns)):
@@ -516,7 +516,7 @@ async def check_roll_status():
     casino_channel = client.get_channel(ce_casino_test_id)                                                                                     #
                                                                                                                                                 #
     # rank silliness                                                                                                                            #
-    ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]                                      #
+    ranks = ['E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank']                                      #
     rankroles = []                                                                                                                              #
     ex_rank_role = discord.utils.get(correct_guild_2.roles, name = "EX Rank")                                                                 #
     sss_rank_role = discord.utils.get(correct_guild_2.roles, name = "SSS Rank")                                                               #
@@ -610,19 +610,19 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
     ce_id = 0
     for u in database_user:
         if u == "_id" : continue
-        if(database_user[u]["Discord ID"] == user.id): ce_id = u
+        if(database_user[u]['Discord ID'] == user.id): ce_id = u
     if ce_id == 0:
         return await interaction.followup.send("<@{}> is not registered in the CE Assistant database.".format(user.id))
     
     # find the roll
     r_index = -1
-    for i, r in enumerate(database_user[ce_id]["Current Rolls"]):
-        if r["Event Name"] == roll_event : r_index = i
+    for i, r in enumerate(database_user[ce_id]['Current Rolls']):
+        if r['Event Name'] == roll_event : r_index = i
     if r_index == -1:
         return await interaction.followup.send("<@{}> does not have {} in their Current Rolls array.".format(user.id, roll_event))
     
     # user does exist and has the roll in their array
-    del database_user[ce_id]["Current Rolls"][r_index]
+    del database_user[ce_id]['Current Rolls'][r_index]
 
     # dump the database
     await dump_mongo('user', database_user)
@@ -692,7 +692,7 @@ async def scrape(interaction : discord.Interaction):
 @tree.command(name="get_times", description="Prints out a table of times fifteen minutes apart in UTC", guild=discord.Object(id=guild_ID))
 async def get_times(interaction):
     await interaction.response.send_message('times...')
-    fin = "times = ["
+    fin = "times = ['
     for i in range(0, 24):
         for j in range(0, 4):
             fin += "\n  datetime.time(hour={}, minute={}, tzinfo=utc),".format(i,j*15)
@@ -999,8 +999,8 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     # Make sure user isn't already registered
     for user in database_user :
         if user == '_id' : continue
-        if(database_user[user]["Discord ID"] == interaction.user.id) : return await interaction.followup.send("You are already registered in the database!")
-        elif(database_user[user]["CE ID"] == ce_id) : return await interaction.followup.send(f"This CE-ID is already registered to <@{database_user[user]['Discord ID']}>, silly!")
+        if(database_user[user]['Discord ID'] == interaction.user.id) : return await interaction.followup.send("You are already registered in the database!")
+        elif(database_user[user]['CE ID'] == ce_id) : return await interaction.followup.send(f"This CE-ID is already registered to <@{database_user[user]['Discord ID']}>, silly!")
     
     # Grab user info from CE API
     response = requests.get(f"https://cedb.me/api/user/{ce_id}")
@@ -1022,39 +1022,39 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     }
 
     # Go through owned games in CE JSON
-    for game in user_ce_data["userGames"] :
-        game_name = game["game"]["name"]
+    for game in user_ce_data['userGames'] :
+        game_name = game['game']['name']
         
         # Add the games to the local JSON
-        user_dict[ce_id]["Owned Games"][game_name] = {}
+        user_dict[ce_id]['Owned Games'][game_name] = {}
 
     # Go through all objectives 
-    for objective in user_ce_data["userObjectives"] :
-        game_name = objective["objective"]["game"]["name"]
-        obj_name = objective["objective"]["name"]
+    for objective in user_ce_data['userObjectives'] :
+        game_name = objective['objective']['game']['name']
+        obj_name = objective['objective']['name']
         
         # If the objective is community, set the value to true
-        if objective["objective"]["community"] : 
-            if(list(user_dict[ce_id]["Owned Games"][game_name].keys()).count("Community Objectives") == 0) :
-                user_dict[ce_id]["Owned Games"][game_name]["Community Objectives"] = {}
-            user_dict[ce_id]["Owned Games"][game_name]["Community Objectives"][obj_name] = True
+        if objective['objective']['community'] : 
+            if(list(user_dict[ce_id]['Owned Games'][game_name].keys()).count("Community Objectives") == 0) :
+                user_dict[ce_id]['Owned Games'][game_name]['Community Objectives'] = {}
+            user_dict[ce_id]['Owned Games'][game_name]['Community Objectives'][obj_name] = True
 
         # If the objective is primary...
         else : 
             # ... and there are partial points AND no one has assigned requirements...
-            if(objective["objective"]["pointsPartial"] != 0 and objective["assignerId"] == None) :
+            if(objective['objective']['pointsPartial'] != 0 and objective['assignerId'] == None) :
                 # ... set the points earned to the partial points value.
-                points = objective["objective"]["pointsPartial"]
+                points = objective['objective']['pointsPartial']
             # ... and there are no partial points, set the points earned to the total points value.
-            else : points = objective["objective"]["points"]
+            else : points = objective['objective']['points']
 
             # Add the points to user's total points
             total_points += points
 
             # Now actually update the value in the user's dictionary.
-            if(list(user_dict[ce_id]["Owned Games"][game_name].keys()).count("Primary Objectives") == 0) :
-                user_dict[ce_id]["Owned Games"][game_name]["Primary Objectives"] = {}
-            user_dict[ce_id]["Owned Games"][game_name]["Primary Objectives"][obj_name] = points
+            if(list(user_dict[ce_id]['Owned Games'][game_name].keys()).count("Primary Objectives") == 0) :
+                user_dict[ce_id]['Owned Games'][game_name]['Primary Objectives'] = {}
+            user_dict[ce_id]['Owned Games'][game_name]['Primary Objectives'][obj_name] = points
 
 
     # Get the user's rank
@@ -1069,23 +1069,23 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     elif total_points < 10000 : rank = "Rank SSS"
     else : rank = "Rank EX"
 
-    user_dict[ce_id]["Rank"] = rank
+    user_dict[ce_id]['Rank'] = rank
 
-    all_events = ["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", "Two 'Two Week T2 Streak' Streak",
+    all_events = ['One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", "Two 'Two Week T2 Streak' Streak",
                   "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking", "Russian Roulette", "Destiny Alignment",
-                  "Soul Mates", "Teamwork Makes the Dream Work", "Winner Takes All", "Game Theory"]
+                  "Soul Mates", "Teamwork Makes the Dream Work", "Winner Takes All", "Game Theory']
 
     # Check and see if the user has any completed rolls
-    if(list(user_dict[ce_id]["Owned Games"].keys()).count("- Challenge Enthusiasts -") > 0) :
+    if(list(user_dict[ce_id]['Owned Games'].keys()).count("- Challenge Enthusiasts -") > 0) :
         x=0
         
         for event_name in all_events :
-            if(list(user_dict[ce_id]["Owned Games"]["- Challenge Enthusiasts -"]["Community Objectives"].keys()).count(event_name) > 0) :
+            if(list(user_dict[ce_id]['Owned Games']['- Challenge Enthusiasts -']['Community Objectives'].keys()).count(event_name) > 0) :
                 x=0
-                user_dict[ce_id]["Completed Rolls"].append({"Event Name" : event_name})
+                user_dict[ce_id]['Completed Rolls'].append({"Event Name" : event_name})
             if(event_name == "Two \"Two Week T2 Streak\" Streak" 
-               and "Two \"Two Week T2 Streak\" Streak" in user_dict[ce_id]["Owned Games"]["- Challenge Enthusiasts -"]["Community Objectives"]):
-                user_dict[ce_id]["Completed Rolls"].append({"Event Name" : "Two 'Two Week T2 Streak' Streak"})
+               and "Two \"Two Week T2 Streak\" Streak" in user_dict[ce_id]['Owned Games']['- Challenge Enthusiasts -']['Community Objectives']):
+                user_dict[ce_id]['Completed Rolls'].append({"Event Name" : "Two 'Two Week T2 Streak' Streak"})
 
     # Add the user file to the database
     database_user.update(user_dict)
@@ -1137,7 +1137,7 @@ async def update(interaction : discord.Interaction) :
     casino_channel = client.get_channel(ce_casino_test_id)
     
     # rank silliness
-    ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]
+    ranks = ['E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank']
     rankroles = []
     ex_rank_role = discord.utils.get(interaction.guild.roles, name = "EX Rank")
     sss_rank_role = discord.utils.get(interaction.guild.roles, name = "SSS Rank")
@@ -1236,7 +1236,7 @@ async def cr(interaction : discord.Interaction, ephemeral : bool) :
     ce_id = ""
     for user in database_user :
         if user == '_id' : continue
-        if database_user[user]["Discord ID"] == interaction.user.id :
+        if database_user[user]['Discord ID'] == interaction.user.id :
             ce_id = user
             break
     
@@ -1247,21 +1247,21 @@ async def cr(interaction : discord.Interaction, ephemeral : bool) :
     groups = {"Action" : [], "Arcade" : [], "Bullet Hell" : [], "First-Person" : [], "Platformer" : [], "Strategy" : []}
 
     # go through all of their games
-    for game in database_user[ce_id]["Owned Games"] :
+    for game in database_user[ce_id]['Owned Games'] :
 
         points_in_game = 0
 
         # does the user have any points in the game?
-        if "Primary Objectives" in database_user[ce_id]["Owned Games"][game] :
+        if "Primary Objectives" in database_user[ce_id]['Owned Games'][game] :
 
             # go through all of their objectives
-            for obj in database_user[ce_id]["Owned Games"][game]["Primary Objectives"] :
+            for obj in database_user[ce_id]['Owned Games'][game]['Primary Objectives'] :
 
                 # add up all of their points
-                points_in_game += database_user[ce_id]["Owned Games"][game]["Primary Objectives"][obj]
+                points_in_game += database_user[ce_id]['Owned Games'][game]['Primary Objectives'][obj]
         
         if points_in_game != 0 :
-            groups[database_name[game]["Genre"]].append(points_in_game)
+            groups[database_name[game]['Genre']].append(points_in_game)
         else : continue
 
 
@@ -1356,10 +1356,10 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 # -------------------------------------------------------- REROLL COMMAND----------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-events_total = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+events_total = Literal['One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
           "Russian Roulette", "Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
-          "Winner Takes All", "Game Theory"]
+          "Winner Takes All", "Game Theory']
 
 @tree.command(name='reroll', description='Reroll any of your current rolls', guild=discord.Object(id=guild_ID))
 @app_commands.describe(event="The event you'd like to re-roll")
@@ -1369,12 +1369,12 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
     # defer the message
     await interaction.response.defer()
 
-    local_events_solo = ["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+    local_events_solo = ['One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
-          "Russian Roulette"]
+          "Russian Roulette']
     
-    local_events_co_op = ["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
-                       "Winner Takes All", "Game Theory"]
+    local_events_co_op = ['Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
+                       "Winner Takes All", "Game Theory']
 
     print(event)
 
@@ -1392,12 +1392,12 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
 
     # Check if the user is participating in the event
     roll_num = -1
-    for index, c_roll in enumerate(database_user[user_name]["Current Rolls"]) :
+    for index, c_roll in enumerate(database_user[user_name]['Current Rolls']) :
 
-        if(c_roll["Games"] == ['pending...']) : return await interaction.followup.send('You have recently tried to roll or reroll this event. Please wait 10 minutes to try again.')
+        if(c_roll['Games'] == ['pending...']) : return await interaction.followup.send('You have recently tried to roll or reroll this event. Please wait 10 minutes to try again.')
 
 
-        if(c_roll["Event Name"] == event) : 
+        if(c_roll['Event Name'] == event) : 
             roll_num = index
         
     # if the user isn't participating in the event
@@ -1409,8 +1409,8 @@ async def reroll(interaction : discord.Interaction, event : events_total) :
     confirm_embed = discord.Embed(
         title="Are you sure?",
         timestamp=datetime.datetime.now(),
-        description="You are asking to reroll {}. Your game(s) will switch from {} to other game(s).".format(event, database_user[user_name]["Current Rolls"][roll_num]["Games"])
-        + " You will not recieve any additional time to complete this roll - and your deadline is still <t:{}>.".format(database_user[user_name]["Current Rolls"][roll_num]["End Time"])
+        description="You are asking to reroll {}. Your game(s) will switch from {} to other game(s).".format(event, database_user[user_name]['Current Rolls'][roll_num]['Games'])
+        + " You will not recieve any additional time to complete this roll - and your deadline is still <t:{}>.".format(database_user[user_name]['Current Rolls'][roll_num]['End Time'])
     )
 
     # add buttons

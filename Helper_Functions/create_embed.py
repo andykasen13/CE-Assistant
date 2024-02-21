@@ -74,8 +74,8 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
                                 icon_url=final_ce_icon)
         embeds[i+1].set_author(name="Challenge Enthusiasts")
         embeds[i+1].set_thumbnail(url=interaction.user.avatar)
-        for objective in database_name[selected_game]["Primary Objectives"] :
-            total_points += int(database_name[selected_game]["Primary Objectives"][objective]["Point Value"])
+        for objective in database_name[selected_game]['Primary Objectives'] :
+            total_points += int(database_name[selected_game]['Primary Objectives'][objective]['Point Value'])
         i+=1
     
     return embeds # Set the embed to send as the first one
@@ -92,7 +92,7 @@ def getEmbed(game_name, authorID, database_name):
     #TODO turn this into a class with getters and setters for wider versatility
     
     if(game_name in list(database_name)) : 
-        correct_app_id = database_name[game_name]["Steam ID"]
+        correct_app_id = database_name[game_name]['Steam ID']
         print(f"found {game_name} with app id {correct_app_id} in local json file :)")
     else :
         print(f"couldn't find {game_name} in local json file, searching steam :(")
@@ -111,7 +111,7 @@ def getEmbed(game_name, authorID, database_name):
         options = []
         for div in divs:
             try:
-                if div["class"][0] == "match_name":
+                if div['class'][0] == "match_name":
                     options.append(div.text)
             except:
                 continue
@@ -154,7 +154,7 @@ def getEmbed(game_name, authorID, database_name):
 
     embed.add_field(name="Price", value = gamePrice, inline=True)
     if game_name in database_name :
-        embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/game/{database_name[game_name]["CE ID"]}/")
+        embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/game/{database_name[game_name]['CE ID']}/")
     else:
         embed.set_author(name="Challenge Enthusiasts")
     embed.set_image(url=imageLink)
@@ -163,14 +163,14 @@ def getEmbed(game_name, authorID, database_name):
         icon_url=final_ce_icon)
     embed.add_field(name="Rolled by", value = "<@" + str(authorID) + ">", inline=True)
     if game_name in database_name.keys() :
-        for objective in database_name[game_name]["Primary Objectives"] :
-            total_points += int(database_name[game_name]["Primary Objectives"][objective]["Point Value"])
+        for objective in database_name[game_name]['Primary Objectives'] :
+            total_points += int(database_name[game_name]['Primary Objectives'][objective]['Point Value'])
         embed.add_field(name="CE Status", 
-                        value=icons[database_name[game_name]["Tier"]] + icons[database_name[game_name]["Genre"]] + f" - {total_points} Points" + icons["Points"], 
+                        value=icons[database_name[game_name]['Tier']] + icons[database_name[game_name]['Genre']] + f" - {total_points} Points" + icons['Points'], 
                         inline=True)
         try:
-            embed.add_field(name="CE Owners", value= database_name[game_name]["Total Owners"], inline=True)
-            embed.add_field(name="CE Completions", value= database_name[game_name]["Full Completions"], inline=True)
+            embed.add_field(name="CE Owners", value= database_name[game_name]['Total Owners'], inline=True)
+            embed.add_field(name="CE Completions", value= database_name[game_name]['Full Completions'], inline=True)
         except:""
     else : embed.add_field(name="CE Status", value="Not on Challenge Enthusiasts", inline=True)
 
