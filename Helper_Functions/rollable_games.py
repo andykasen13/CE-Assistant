@@ -52,7 +52,7 @@ banned_games = ["Serious Sam HD: The Second Encounter",
 async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_info = -1, specific_genre = "any", games : list = [], database_tier = "", database_name = "") :
         returned_game = ""
         rollable = False
-        genres = ['Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy'] 
+        genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"] 
 
         if avg_completion_time_limit == "nope" : avg_completion_time_limit = 9999999
         
