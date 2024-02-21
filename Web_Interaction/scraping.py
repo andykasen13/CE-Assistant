@@ -85,6 +85,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     # use this if /api/games/full/ fails
     option3 = True
 
+    # use this if on the pi
+    pi = False
+
     # Set selenium driver and preferences
     if hm:
     
@@ -93,8 +96,11 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument('--disable-gpu')
-        service = Service('/usr/lib/chromium-browser/chromedriver')
-        driver = webdriver.Chrome(service=service, options=options)
+        if pi:
+            service = Service('/usr/lib/chromium-browser/chromedriver')
+            driver = webdriver.Chrome(service=service, options=options)
+        else:
+            driver = webdriver.Chrome(options=options)
         driver.set_window_size(width=1440, height=8000)
 
         # grab first game to get color on the rest of them
