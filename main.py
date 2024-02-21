@@ -516,7 +516,7 @@ async def check_roll_status():
     casino_channel = client.get_channel(ce_casino_test_id)                                                                                     #
                                                                                                                                                 #
     # rank silliness                                                                                                                            #
-    ranks = ['E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank']                                      #
+    ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]                                      #
     rankroles = []                                                                                                                              #
     ex_rank_role = discord.utils.get(correct_guild_2.roles, name = "EX Rank")                                                                 #
     sss_rank_role = discord.utils.get(correct_guild_2.roles, name = "SSS Rank")                                                               #
@@ -1137,7 +1137,7 @@ async def update(interaction : discord.Interaction) :
     casino_channel = client.get_channel(ce_casino_test_id)
     
     # rank silliness
-    ranks = ['E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank']
+    ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]
     rankroles = []
     ex_rank_role = discord.utils.get(interaction.guild.roles, name = "EX Rank")
     sss_rank_role = discord.utils.get(interaction.guild.roles, name = "SSS Rank")
