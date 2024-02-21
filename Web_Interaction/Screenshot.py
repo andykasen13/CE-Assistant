@@ -137,6 +137,7 @@ class Screenshot:
                 print(str(path))
 
                 ss = driver.get_screenshot_as_png()
+                print('gotcha >:)')
                 return ss
                 print("ss")
                 path.parent.mkdir(parents=True, exist_ok=True)
