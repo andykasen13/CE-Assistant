@@ -260,9 +260,9 @@ async def help(interaction : discord.Interaction) :
 # --------------------------------------------------- SOLO ROLL COMMAND ------------------------------------------------------------ # 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-events_solo = Literal['One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+events_solo = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
-          "Russian Roulette']
+          "Russian Roulette"]
 @tree.command(name="solo-roll", description="Participate in Challenge Enthusiast roll events!", guild=discord.Object(id=guild_ID))
 @app_commands.describe(event="The event you'd like to participate in")
 async def roll_solo_command(interaction : discord.Interaction, event: events_solo) :   
@@ -297,8 +297,8 @@ async def roll_solo_command(interaction : discord.Interaction, event: events_sol
 # -------------------------------------------------- CO-OP ROLL COMMAND ------------------------------------------------------------ # 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-events_co_op = Literal['Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
-                       "Winner Takes All", "Game Theory']
+events_co_op = Literal["Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
+                       "Winner Takes All", "Game Theory"]
 
 @tree.command(name="co-op-roll", description="Participate in Challenge Enthusiast Co-Op or PvP roll events!", guild=discord.Object(id=guild_ID))
 @app_commands.describe(event="The event you'd like to participate in")
@@ -312,10 +312,10 @@ async def roll_co_op_command(interaction : discord.Interaction, event : events_c
 
 
 
-events_total = Literal['One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+events_total = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
           "Russian Roulette", "Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
-          "Winner Takes All", "Game Theory']
+          "Winner Takes All", "Game Theory"]
 
 
 
@@ -1071,9 +1071,9 @@ async def register(interaction : discord.Interaction, ce_id: str) :
 
     user_dict[ce_id]['Rank'] = rank
 
-    all_events = ['One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", "Two 'Two Week T2 Streak' Streak",
+    all_events = ["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", "Two 'Two Week T2 Streak' Streak",
                   "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking", "Russian Roulette", "Destiny Alignment",
-                  "Soul Mates", "Teamwork Makes the Dream Work", "Winner Takes All", "Game Theory']
+                  "Soul Mates", "Teamwork Makes the Dream Work", "Winner Takes All", "Game Theory"]
 
     # Check and see if the user has any completed rolls
     if(list(user_dict[ce_id]['Owned Games'].keys()).count("- Challenge Enthusiasts -") > 0) :
