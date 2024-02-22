@@ -3,6 +3,7 @@ from bson import ObjectId
 import discord
 import datetime
 from datetime import timedelta
+import calendar
 import json
 import time
 # --------- other file imports ---------
@@ -216,13 +217,26 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         random_num = random.randint(0, 5)
         genres.remove(genres[random_num])
 
+        # determine roll duration and cooldown, noting 1 month (duration) and 3 months (cooldown) will be different to a 28 day period depending on point in the year
+        now = datetime.datetime.now()
+        hm_time = calendar.monthrange(now.year, now.month)[1]
+
+        hell_month_cd = 3 #num months
+        hm_cd_endyear = now.year + (now.month + hell_month_cd - 1) // 12
+        hm_cd_endmonth = (now.month + hell_month_cd - 1) % 12 + 1
+        hm_cd_end = datetime.date(hm_cd_endyear, hm_cd_endmonth, min(calendar.monthrange(hm_cd_endyear, hm_cd_endmonth)[1], now.day))
+        hm_cd_delta = hm_cd_end - datetime.date(now.year, now.month, now.day)
+
+        del now, hell_month_cd, hm_cd_endyear, hm_cd_endmonth, hm_cd_end
+
         for ggenre in genres :
             i=0
             while(i < 5) :
                 games.append(await get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre, games=games, database_name=database_name, database_tier=database_tier))
                 i+=1
-        embeds = create_multi_embed("One Hell of a Month", 28, games, 28*3, interaction, database_name)
+        embeds = create_multi_embed("One Hell of a Month", hm_time, games, hm_cd_delta.days, interaction, database_name)
         embed = embeds[0]
+        del hm_time, hm_cd_delta
         await get_buttons(view, embeds)
 
 
