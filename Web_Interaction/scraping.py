@@ -1042,6 +1042,7 @@ def special_image(number, decimal, CE_ID, driver, objective_name : str):
     try:
         url = 'https://cedb.me/game/' + CE_ID
         driver.get(url)
+        time.sleep(5)
         objective_lst = []
         while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
             objective_lst = []
