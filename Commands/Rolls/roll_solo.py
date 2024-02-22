@@ -517,6 +517,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                     most_recent_game = userInfo[target_user]['Current Rolls'][roll_num]['Games'][num_of_games - 1]
                     genre = database_name[most_recent_game]['Genre']
 
+                    new_game = await get_rollable_game(40*num_of_games, 20, "Tier " + str(num_of_games), userInfo, genre, database_tier=database_tier, database_name=database_name)
+                    
+
                     return
 
                 return await interaction.followup.send(f"You have {userInfo[target_user]['Current Rolls'][roll_num]['Rerolls']} reroll ticket(s). Would you like to use one?", 
