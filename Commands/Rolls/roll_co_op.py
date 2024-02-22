@@ -701,7 +701,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         buttons = []
         i = 0
 
-        genres = ['Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy']
+        genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
 
         async def action_callback(interaction) : return await game_theory_callback_1(interaction, "Action")        
         async def arcade_callback(interaction) : return await game_theory_callback_1(interaction, "Arcade")

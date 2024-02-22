@@ -414,11 +414,11 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
     current_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, user, 'Current Rolls')
     completed_roll_str = get_roll_string(userInfo, steam_user_name, database_name_info, user, 'Completed Rolls')
 
-    if len(current_roll_str) > 1024 : 
-        current_roll_str = current_roll_str[:1024]
+    if len(current_roll_str) > 1020 : 
+        current_roll_str = current_roll_str[:1020]
         overflow = True
-    if len(completed_roll_str) > 1024 : 
-        completed_roll_str = completed_roll_str[:1024]
+    if len(completed_roll_str) > 1020 : 
+        completed_roll_str = completed_roll_str[:1020]
         overflow = True
     
     # make the embed that you're going to send
