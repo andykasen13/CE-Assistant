@@ -7,6 +7,8 @@ from Helper_Functions.buttons import *
 
 from Helper_Functions.Scheduler import add_task
 
+from Helper_Functions.end_time import months_to_days
+
 
 async def co_op_command(interaction : discord.Interaction, event, partner : discord.User, reroll : bool, collection) :
     from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
@@ -161,7 +163,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             view.clear_items()
 
             # Grab the embeds you'll need
-            embeds = create_multi_embed("Destiny Alignment", 0, games, 28, interaction, database_name)
+            embeds = create_multi_embed("Destiny Alignment", 0, games, months_to_days(1), interaction, database_name)
 
             # Make adjustments to embeds
             embeds[0].set_field_at(index=0, name="Rolled Games",
@@ -303,8 +305,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 end_db = {
                     "Tier 1" : (2),
                     "Tier 2" : (10),
-                    "Tier 3" : (28),
-                    "Tier 4" : (56)
+                    "Tier 3" : (months_to_days(1)),
+                    "Tier 4" : (months_to_days(2))
                 }
 
                 i_num = 0
@@ -381,8 +383,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             shmilly = {
                 "Tier 1" : "two days",
                 "Tier 2" : "ten days",
-                "Tier 3" : "one month (28 days)",
-                "Tier 4" : "two months (56 days)"
+                "Tier 3" : "one month",
+                "Tier 4" : "two months"
             }
 
 
@@ -420,7 +422,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         # Send confirmation embed
         embed = discord.Embed(title = "Teamwork Makes the Dream Work", timestamp = datetime.datetime.now())
         embed.add_field(name = "Roll Information", value = "Four Tier 3 games will be rolled. Between the two of you,"
-                        + " you must complete all four games. This roll has no time limit, and the cooldown is three months.")
+                        + " you must complete all four games within one month. The cooldown is three months.")
         embed.add_field(name = "Confirmation", value = f"<@{partner.id}>, do you agree to participate with <@{interaction.user.id}>?")
 
         # ----- Set up buttons -----
@@ -480,7 +482,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
 
             # ----------- Get embeds ---------------------
-            embeds = create_multi_embed("Teamwork Makes the Dream Work", 28, games, (28*3), interaction, database_name)
+            embeds = create_multi_embed("Teamwork Makes the Dream Work", months_to_days(1), games, months_to_days(3), interaction, database_name)
 
             embeds[0].set_thumbnail(url = ce_mountain_icon)
 
@@ -497,7 +499,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 if(roll_t['Games'] == ['pending...']) : break
                 t_num += 1
 
-            end_time = get_unix(28)
+            end_time = get_unix(months_to_days(1))
 
             database_user[int_user_id]['Current Rolls'][i_num] = ({
                 "Event Name" : event,
@@ -850,7 +852,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 games = [interaction_user_selected_game, target_user_selected_game]
 
                 # Get the embeds
-                embeds = create_multi_embed("Game Theory", 0, games, 28, interaction, database_name)
+                embeds = create_multi_embed("Game Theory", 0, games, months_to_days(1), interaction, database_name)
 
                 # Edit the embeds to Game Theory's specific needs
                 embeds[0].set_field_at(index=0, name="Rolled Games",
@@ -858,7 +860,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                                       + f"\n<@{target_user_data['Discord ID']}>: {target_user_selected_game} ({targets_genre})", inline=False)
                 embeds[0].set_field_at(index=1, name="Roll Requirements",
                                        value="Whoever completes their roll first will win Game Theory."
-                                       + "\nGame Theory has a cooldown of one month.")
+                                       + "\nGame Theory has a cooldown of one month (for the loser).")
                 embeds[0].set_thumbnail(url=ce_mountain_icon)
                 embeds[1].set_thumbnail(url=int_avatar)
                 embeds[1].set_field_at(index=1, name="Rolled by", value="<@{}>".format(interaction_user_data['Discord ID']))
