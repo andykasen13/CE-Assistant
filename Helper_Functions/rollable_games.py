@@ -77,11 +77,13 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
                         break
                     # ----- Move to the next genre -----
                     else : random_num -= len(database_tier[tier_number][genre])
+
             # (Genre given)
             elif type(specific_genre) == str:
                 print(f"Specified genre: {specific_genre}.")
                 random_num = random.randint(0,len(database_tier[tier_number][specific_genre])-1)
                 returned_game = database_tier[tier_number][specific_genre][random_num]
+
             # (Genres given)
             elif type(specific_genre) == list :
                 print(f"Genres specified: {str(specific_genre)}")
@@ -116,7 +118,8 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
             if(user_info != -1) :
                 if((returned_game in user_info['Owned Games'].keys()) 
                 and "Primary Objectives" in user_info['Owned Games'][returned_game]
-                and user_info['Owned Games'][returned_game]['Primary Objectives'].keys() == database_name[returned_game]['Primary Objectives'].keys()) :
+                # TODO: this is so so cheating because if someone has partial points in some and finished all others this says theyre done. lets fix that
+                and set(user_info['Owned Games'][returned_game]['Primary Objectives'].keys()) == set(database_name[returned_game]['Primary Objectives'].keys())) :
                     print("User has completed game. Moving on...\n")
                     continue
 

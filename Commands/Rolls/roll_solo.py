@@ -23,7 +23,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     view = discord.ui.View(timeout=600)
     games = []
     embeds = []
-    genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
+    genres = ['Action', 'Arcade', 'Bullet Hell', 'First-Person', 'Platformer', 'Strategy']
     times = {
         "One Hell of a Day" : (1),
         "One Hell of a Week" : (7),
@@ -492,6 +492,33 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
                 view.add_item(deny_button)
                 view.add_item(agree_button)
+                
+                async def deny_callback(interaction : discord.Interaction) :
+                    await interaction.response.defer()
+                    if interaction.user.id != userInfo[target_user]['Discord ID'] : return
+
+                    # Set up denial embed
+                    embed = discord.Embed(
+                        title="Roll Denied",
+                        description=f"<@{interaction.user.id}> has denied the roll.",
+                        timestamp=datetime.datetime.now()
+                    )
+
+                    view.clear_items()
+                    return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
+            
+                async def agree_callback(interaction : discord.Interaction) :
+                    await interaction.response.defer()
+                    if interaction.user.id != userInfo[target_user]['Discord ID'] : return
+
+                    num_of_games = len(userInfo[target_user]['Current Rolls'][roll_num]['Games'])
+
+
+                    most_recent_game = userInfo[target_user]['Current Rolls'][roll_num]['Games'][num_of_games - 1]
+                    genre = database_name[most_recent_game]['Genre']
+
+                    return
+
                 return await interaction.followup.send(f"You have {userInfo[target_user]['Current Rolls'][roll_num]['Rerolls']} reroll ticket(s). Would you like to use one?", 
                                                        view=view)
             " make sure if someone else tries to click this they can't!!!!"
