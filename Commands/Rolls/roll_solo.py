@@ -14,6 +14,7 @@ from Helper_Functions.buttons import get_buttons, get_genre_buttons
 from Helper_Functions.update import update_p
 from Helper_Functions.Scheduler import add_task
 from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
+from Helper_Functions.end_time import months_to_days
 
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
@@ -28,11 +29,11 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     times = {
         "One Hell of a Day" : (1),
         "One Hell of a Week" : (7),
-        "One Hell of a Month" : (28),
+        "One Hell of a Month" : (months_to_days(1)),
         "Two Week T2 Streak" : (14),
-        "Two 'Two Week T2 Streak' Streak" : (28),
+        "Two 'Two Week T2 Streak' Streak" : (months_to_days(1)),
         "Never Lucky" : (0),
-        "Triple Threat" : (28),
+        "Triple Threat" : (months_to_days(1)),
         "Let Fate Decide" : (0),
         "Fourward Thinking" : (0),
         "Russian Roulette" :(0)
@@ -197,7 +198,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             i+=1
 
         # ----- Get all the embeds -----
-        embeds = create_multi_embed("One Hell of a Week", 7, games, 28, interaction, database_name)       
+        embeds = create_multi_embed("One Hell of a Week", 7, games, months_to_days(1), interaction, database_name)       
         embed = embeds[0] # Set the embed to send as the first one
         await get_buttons(view, embeds) # Create buttons
 
@@ -217,26 +218,13 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         random_num = random.randint(0, 5)
         genres.remove(genres[random_num])
 
-        # determine roll duration and cooldown, noting 1 month (duration) and 3 months (cooldown) will be different to a 28 day period depending on point in the year
-        now = datetime.datetime.now()
-        hm_time = calendar.monthrange(now.year, now.month)[1]
-
-        hell_month_cd = 3 #num months
-        hm_cd_endyear = now.year + (now.month + hell_month_cd - 1) // 12
-        hm_cd_endmonth = (now.month + hell_month_cd - 1) % 12 + 1
-        hm_cd_end = datetime.date(hm_cd_endyear, hm_cd_endmonth, min(calendar.monthrange(hm_cd_endyear, hm_cd_endmonth)[1], now.day))
-        hm_cd_delta = hm_cd_end - datetime.date(now.year, now.month, now.day)
-
-        del now, hell_month_cd, hm_cd_endyear, hm_cd_endmonth, hm_cd_end
-
         for ggenre in genres :
             i=0
             while(i < 5) :
                 games.append(await get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre, games=games, database_name=database_name, database_tier=database_tier))
                 i+=1
-        embeds = create_multi_embed("One Hell of a Month", hm_time, games, hm_cd_delta.days, interaction, database_name)
+        embeds = create_multi_embed("One Hell of a Month", months_to_days(1), games, months_to_days(3), interaction, database_name)
         embed = embeds[0]
-        del hm_time, hm_cd_delta
         await get_buttons(view, embeds)
 
 
@@ -344,7 +332,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             i+=1
         
         # ----- Get all the embeds -----
-        embeds = create_multi_embed("Two 'Two Week T2 Streak' Streak", 28, games, 7, interaction, database_name)
+        embeds = create_multi_embed("Two 'Two Week T2 Streak' Streak", months_to_days(1), games, 7, interaction, database_name)
         embed = embeds[0]
         await get_buttons(view, embeds)
         """
@@ -362,8 +350,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         embed.set_author(name="Never Lucky", url="https://example.com")
         embed.add_field(name="Roll Requirements", value = 
             "There is no time limit on " + embed.title + "."
-            + "\nNever Lucky has a one week cooldown."
-            + "\nCooldown ends on <t:" + str(get_unix(28))
+            + "\nNever Lucky has a one month cooldown."
+            + "\nCooldown ends on <t:" + str(get_unix(months_to_days(1)))
             + f">\nhttps://cedb.me/game/{database_name[embed.title]['CE ID']}/", inline=False)
 
     # -------------------------------------------- Triple Threat --------------------------------------------
@@ -392,7 +380,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # ----- Grab all the games -----
         embed = discord.Embed(title=("Triple Threat"), description="Please select your genre.")
             
-        await get_genre_buttons(view, 40, 20, "Tier 3", "Triple Threat", 28, 84, 3, interaction.user.id, collection=collection)
+        await get_genre_buttons(view, 40, 20, "Tier 3", "Triple Threat", months_to_days(1), months_to_days(3), 3, interaction.user.id, collection=collection)
 
         dont_save = True
          
@@ -408,7 +396,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         userInfo = await get_mongo('user')
 
         embed = discord.Embed(title=("Let Fate Decide"), description="A random T4 in a genre of you choosing will be rolled. There is no time limit for Let Fate Decide. You win once you complete all Primary Objectives in your rolled game!")
-        await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, 84, 1, interaction.user.id, collection=collection)
+        await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, months_to_days(3), 1, interaction.user.id, collection=collection)
         dont_save = True
 
     # -------------------------------------------- Fourward Thinking --------------------------------------------
