@@ -96,6 +96,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument('--disable-gpu')
+        options.add_argument('log-level=3')
         if pi:
             service = Service('/usr/lib/chromium-browser/chromedriver')
             driver = webdriver.Chrome(service=service, options=options)
@@ -437,6 +438,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
     # games removed
     for game in game_tracker:
+        print("REMOVED: " + game)
         if hm:
             embed = {
                 'Embed' : discord.Embed(
