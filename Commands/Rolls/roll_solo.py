@@ -23,7 +23,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     view = discord.ui.View(timeout=600)
     games = []
     embeds = []
-    genres = ['Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy']
+    genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
     times = {
         "One Hell of a Day" : (1),
         "One Hell of a Week" : (7),
