@@ -1,8 +1,9 @@
 # import discord
 # import json
 # from Helper_Functions.rollable_games import *
-# import datetime
+import datetime
 # from datetime import timedelta
+import calendar
 # import time
 
 # from Helper_Functions.update import update_p
@@ -132,3 +133,16 @@
 #     for cu_roll in database_user[user_name]['Current Rolls'] :
 #         if("End Time" not in cu_roll) : print('end ime not in roll')
 #         elif(cu_roll['End Time'] > int(time.mktime((datetime.datetime.now()).timetuple()))) : print("{} is joever".format(cu_roll['Event Name']))
+
+def months_to_days(num_months):
+    # purpose -- determine number of days to 'x' months away. Required as duration will be different depending on point in the year, and get_rollable_game requires day inputs
+    # function input = number of months
+    # function output = number of days between now and input months away 
+    now = datetime.datetime.now()
+    end_year = now.year + (now.month + num_months - 1) // 12
+    end_month = (now.month + num_months - 1) % 12 + 1
+    end_date = datetime.date(end_year, end_month, min(calendar.monthrange(end_year, end_month)[1], now.day))
+    date_delta = end_date - datetime.date(now.year, now.month, now.day)
+
+    return date_delta.days
+    
