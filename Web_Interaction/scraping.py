@@ -240,6 +240,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
         # if game is a T0 and updated
         if updated_time > current_newest and game['tier'] == 0 and game['name'] in list(new_data.keys()):
+            print("T0 UPDATED: " + game['name'])
             # update game tracker
             game_tracker.remove(game['name'])
 
@@ -1063,6 +1064,8 @@ def special_image(number, decimal, CE_ID, driver, objective_name : str):
         check_name = str(objective.find_element(By.TAG_NAME, "h3").text)
         check_name = check_name.lower()
         check_name = check_name.replace(" ",'')
+        check_name = check_name.replace("\n", '')
+        check_name = check_name.replace("0", '')
         print(check_name)
         print(check_name == objective_name)
         if objective_name == check_name:
@@ -1073,6 +1076,7 @@ def special_image(number, decimal, CE_ID, driver, objective_name : str):
     try:
         target_objective
     except NameError:
+        print('not found!!')
         return "none"
     
     
