@@ -524,6 +524,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
                     return
 
+                userInfo[target_user]['Pending Rolls'][event] = get_unix(minutes=10)
+                dump = await dump_mongo("user", userInfo)
+
                 return await interaction.followup.send(f"You have {userInfo[target_user]['Current Rolls'][roll_num]['Rerolls']} reroll ticket(s). Would you like to use one?", 
                                                        view=view)
             " make sure if someone else tries to click this they can't!!!!"
