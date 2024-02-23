@@ -41,6 +41,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     dont_save = False
     ends = True
 
+    # games that have more than one stage or are rerollable
+    special_rolls = ["Two Week T2 Streak", "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Let Fate Decide", "Fourward Thinking"]
+
     # grab user info
     userInfo = await get_mongo('user')
     
@@ -60,15 +63,14 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     if(event in list(userInfo[target_user]['Cooldowns'])) :
         return await interaction.followup.send(embed=discord.Embed(title="Cooldown", description=f"You are currently on cooldown for {event}."))
 
-    # ... or if the user is on pending..
+    # ... or if the user is on pending...
     if (event in userInfo[target_user]['Pending Rolls']) :
         return await interaction.followup.send('Please wait 10 minutes in between rolling for the same event!')
 
     # ... or if the event is currently active.
     for eventInfo in userInfo[target_user]['Current Rolls'] :
         #TODO: have different errors if someone tries to go again during pending and if someone tries to reroll while pending
-        if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and event != "Two Week T2 Streak"
-           and event != "Two 'Two Week T2 Streak' Streak" and not reroll) : 
+        if((eventInfo['Event Name'] == event) and event not in special_rolls) : 
             return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
 
     # grab both databases (tier needs to be passed to get_rollable_game())
@@ -342,20 +344,92 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
     # -------------------------------------------- Never Lucky --------------------------------------------
     elif event == "Never Lucky" :
-        # one t3
-        games.append(await get_rollable_game(40, 20, "Tier 3", userInfo[current_user], database_name=database_name, database_tier=database_tier))
+        roll_num = -1
+        for i, r in enumerate(userInfo[target_user]['Current Rolls']):
+            if r['Event Name'] == 'Never Lucky' :
+                roll_num = i
+                break
+        
+        if(roll_num == -1) :
+            # one t3
+            games.append(await get_rollable_game(40, 20, "Tier 3", userInfo[current_user], database_name=database_name, database_tier=database_tier))
 
-        ends = False
+            ends = False
 
-        # Create the embed
-        total_points = 0
-        embed = getEmbed(games[0], interaction.user.id, database_name)
-        embed.set_author(name="Never Lucky", url="https://example.com")
-        embed.add_field(name="Roll Requirements", value = 
-            "There is no time limit on " + embed.title + "."
-            + "\nNever Lucky has a one month cooldown."
-            + "\nCooldown ends on <t:" + str(get_unix(months=1))
-            + f">\nhttps://cedb.me/game/{database_name[embed.title]['CE ID']}/", inline=False)
+            # Create the embed
+            total_points = 0
+            embed = getEmbed(games[0], interaction.user.id, database_name)
+            embed.set_author(name="Never Lucky", url="https://example.com")
+            embed.add_field(name="Roll Requirements", value = 
+                "There is no time limit on " + embed.title + "."
+                + "\nNever Lucky has a one month cooldown."
+                + "\nCooldown ends on <t:" + str(get_unix(months=1))
+                + f">\nhttps://cedb.me/game/{database_name[embed.title]['CE ID']}/", inline=False)
+        
+        # roll is currently... rolled...
+        else :
+            # set up view and buttons
+            view = discord.ui.View(timeout=600)
+            agree_button = discord.ui.Button(label="Agree", style=discord.ButtonStyle.success)
+            deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
+            view.add_item(deny_button)
+            view.add_item(agree_button)
+
+            #TODO: make sure the previous game doesn't get rerolled
+            async def agree_callback(interaction : discord.Interaction) :
+                # pull mongo databases
+                database_name = await get_mongo('name')
+                userInfo = await get_mongo('user')
+
+                # make sure only the o.g. guy can push buttons
+                if interaction.user.id != userInfo[target_user]['Discord ID'] : return
+
+                # get a new t3
+                new_game = await get_rollable_game(40, 20, "Tier 3", userInfo[target_user], database_name=database_name, database_tier=database_tier)
+
+                # make the embed
+                embed = getEmbed(new_game, interaction.user.id, database_name)
+                embed.set_author(name="Never Lucky", url="https://cedb.me/game/" + database_name[new_game]['CE ID'])
+                embed.add_field(name="Roll Requirements", value =
+                                f"There is no time limit on {event}."
+                                + f"\nNever lucky has a one month cooldown."
+                                + f"\nCooldown ends on <t:{str(get_unix(months=1))}>.", inline=False)
+                
+                # update database_user
+                userInfo[target_user]['Current Rolls'][roll_num]['Games'] = [new_game]
+                del userInfo[target_user]['Pending Rolls']['Never Lucky']
+                d = await dump_mongo('user', userInfo)
+
+                # update the view and edit the message
+                view.clear_items()
+                return await interaction.followup.edit_message(content="", embed=embed, view=view, message_id=interaction.message.id)
+            
+            async def deny_callback(interaction : discord.Interaction) :
+                database_name = await get_mongo('name')
+                userInfo = await get_mongo('user')
+
+                # make sure only o.g. user can push button
+                if interaction.user.id != userInfo[target_user]['Discord ID'] : return
+
+                # remove the pending
+                del userInfo[target_user]['Pending Rolls']['Never Lucky']
+
+                # update the view and edit the message
+                view.clear_items()
+                return await interaction.followup.edit_message(content="", embed=discord.Embed(title="Denied!"), view=view, message_id=interaction.message.id)
+            
+            agree_button.callback = agree_callback
+            deny_button.callback = deny_callback
+
+            # update Pending Rolls and dump
+            userInfo[target_user]['Pending Rolls']['Never Lucky'] = get_unix(minutes=10)
+            d = dump_mongo('user', userInfo)
+            del d
+            
+            return await interaction.followup.send('Would you like to reroll your Never Lucky roll? You will lose your current game.', view=view)
+
+
+
 
     # -------------------------------------------- Triple Threat --------------------------------------------
     elif event == "Triple Threat" :
@@ -493,9 +567,6 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 view.add_item(deny_button)
                 view.add_item(agree_button)
 
-
-
-                
                 async def deny_callback(interaction : discord.Interaction) :
                     await interaction.response.defer()
                     if interaction.user.id != userInfo[target_user]['Discord ID'] : return
@@ -667,4 +738,4 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     del userInfo
     del embed
     del embeds
-    del dump#
+    del dump

@@ -182,7 +182,7 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
                     'Games' : games,
                     'Rerolls' : 0
                 })
-                del database_user[target_user]['Pending Rolls']['Fourward Thinking']
+            del database_user[target_user]['Pending Rolls']['Fourward Thinking']
 
         # all other rolls
         else:
