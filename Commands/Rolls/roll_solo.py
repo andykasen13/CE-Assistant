@@ -481,6 +481,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 roll_num = i
                 break
 
+        # User has not rolled before
         if roll_num == -1:
             # add pending...
             userInfo[target_user]['Pending Rolls'][event] = get_unix(minutes=10)
@@ -489,10 +490,13 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             dump = await dump_mongo('user', userInfo)
             userInfo = await get_mongo('user')
 
+            # set up the embeds and buttons
             embed = discord.Embed(title=("Let Fate Decide"), description="A random T4 in a genre of you choosing will be rolled." +
                                 " There is no time limit for Let Fate Decide. You win once you complete all Primary Objectives in your rolled game!")
             await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, months_to_days(3), 1, interaction.user.id, collection=collection)
             dont_save = True
+        
+        # User has rolled before and is ready to reroll...
         else :
             userInfo[target_user]['Pending Rolls'][event] = get_unix(minutes=10)
 
@@ -541,6 +545,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 
                 # update database_user
                 userInfo[target_user]['Current Rolls'][roll_num]['Games'] = [new_game]
+                userInfo[target_user]['Cooldowns']['Let Fate Decide'] = get_unix(months=3)
                 del userInfo[target_user]['Pending Rolls']['Let Fate Decide']
                 d = await dump_mongo('user', userInfo)
 
