@@ -492,8 +492,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
                 view.add_item(deny_button)
                 view.add_item(agree_button)
-                agree_button.callback = agree_callback
-                deny_button.callback = deny_callback
+
 
 
                 
@@ -544,6 +543,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                     view.clear_items()
                     return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
 
+                agree_button.callback = agree_callback
+                deny_button.callback = deny_callback
 
                 userInfo[target_user]['Pending Rolls'][event] = get_unix(minutes=10)
                 dump = await dump_mongo("user", userInfo)
