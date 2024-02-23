@@ -459,7 +459,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             # ------ Get page buttons -------
             await get_buttons(view, embeds)
 
-            end_time = get_unix(months_to_days(1))
+            end_time = get_unix(months=1)
 
             database_user[int_user_id]['Current Rolls'].append({
                 "Event Name" : event,
