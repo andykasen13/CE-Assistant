@@ -9,6 +9,7 @@ from bson import ObjectId
 import time
 import datetime
 from datetime import timedelta
+from Helper_Functions.end_time import months_to_days
 
 
 mongo_ids = {
@@ -38,12 +39,18 @@ async def dump_mongo(title : mongo_names, data) :
 
 
 # get unix timestamp for x days from now
-def get_unix(days = 0, minutes = -1):
+def get_unix(days = 0, minutes = -1, months = -1):
     """Returns a unix timestamp for `days` days (or `minutes` minutes) from the current time."""
     # return right now
     if(days == "now") : return int(time.mktime((datetime.datetime.now()).timetuple()))
     # return minutes
     elif (minutes != -1) : return int(time.mktime((datetime.datetime.now()+timedelta(minutes=minutes)).timetuple()))
+
+    # return months
+    elif (months != -1) : 
+        days = months_to_days(months)
+        return get_unix(days)
+
     # return days
     else: return int(time.mktime((datetime.datetime.now()+timedelta(days)).timetuple()))
 
