@@ -1053,7 +1053,7 @@ def special_image(number, decimal, CE_ID, driver, objective_name : str):
         print("I'm a doodoo head")
         special_image(number, decimal, CE_ID, driver, objective_name)
 
-    print('objective looking: ' + objective_name)
+    print('\nobjective looking: ' + objective_name)
     
     objective_name = objective_name.lower()
     objective_name = objective_name.replace(" ", '')
