@@ -156,7 +156,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     
     # removed done pendings
     for event in pendings_to_remove:
-        returns.append(f'casino: <@{database_user[ce_id]['Discord ID']}>, you can now request {event} again.')
+        returns.append(f"casino: <@{database_user[ce_id]['Discord ID']}>, you can now request {event} again.")
         del database_user[ce_id]['Pending Rolls'][event]
 
 
@@ -614,7 +614,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 
                 # if the game was pending... make a separate message
                 if current_roll['Games'][0] == "pending..." : 
-                    returns.append("casino: " + f'someone ping andy something went wrong with `pending...`')
+                    returns.append("casino: " + f"someone ping andy something went wrong with `pending...`")
                 
                 # if this was a co-op roll
                 elif "Partner" in current_roll : 

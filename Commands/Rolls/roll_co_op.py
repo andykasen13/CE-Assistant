@@ -45,11 +45,11 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     # check to see if either are pending or if either are currently participating...
     if (event in database_user[int_user_id]['Pending Rolls']) :
         return await interaction.followup.send(
-            f'You recently tried to participate in {event}. Please wait 10 minutes in between requesting the same event!'
+            f"You recently tried to participate in {event}. Please wait 10 minutes in between requesting the same event!"
         )
     if (event in database_user[part_user_id]['Pending Rolls']) :
         return await interaction.followup.send(
-            f'Your partner recently tried to participate in {event}. Please wait 10 minutes in between requesting the same event!'
+            f"Your partner recently tried to participate in {event}. Please wait 10 minutes in between requesting the same event!"
         )
     
     for eventInfo in database_user[int_user_id]['Current Rolls'] :
