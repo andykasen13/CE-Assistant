@@ -186,6 +186,10 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
 
         elif (event_name == "Let Fate Decide"):
             database_user[target_user]['Cooldowns']['Let Fate Decide'] = get_unix(months=3)
+            database_user[target_user]['Current Rolls'].append({
+                'Event Name' : 'Let Fate Decide',
+                'Games' : games
+            })
         # all other rolls
         else:
             if (roll_num != -1) :
