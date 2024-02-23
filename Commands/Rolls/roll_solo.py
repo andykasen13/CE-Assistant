@@ -492,6 +492,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
                 view.add_item(deny_button)
                 view.add_item(agree_button)
+                agree_button.callback = agree_callback
+                deny_button.callback = deny_callback
 
 
                 
