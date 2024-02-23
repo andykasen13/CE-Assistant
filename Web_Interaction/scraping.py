@@ -95,6 +95,16 @@ def single_scrape_v2(curator_count) :
     
 
 def game_list(new_data, current_dict, unfinished_games : dict):
+    """
+    Parameters
+    -----------
+    new_data: :class:`dict`
+        database_name
+    current_dict: :class:`dict`
+        curator_count
+    unfinished_games: :class`dict`
+        unfinished_games
+    """
     
     # use this if you want selenium and #game-additions stuff
     hm = True
@@ -169,6 +179,24 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     game_tracker = list(new_data.keys())
     game_tracker.remove('_id')
 
+    """
+    theron i love you but you did a shit ass job naming these variables so here's what they all mean
+    game_tracker: 
+        a list of every game's name stored in database_name BEFORE scraping.
+        games that are leftover in game_tracker after scraping is done have been removed.
+    current_newest:
+        the most recent time BEFORE scraping that scraping took place.
+        stored as an int unix-timestamp.
+    current_dict:
+        this is curator_count.json
+    c:
+        truly theron what the fuck was the point of this?
+        i actually have no clue what this variable is for
+    new_data:
+        database_name.json from BEFORE scraping.
+        this is updated throughout scraping and is eventually returned to be dumped.
+    """
+
     # icons for CE emoji
     icons = {
         "Tier 0" : '<:tier0:1126268390605070426>',
@@ -206,17 +234,22 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         import_objective_names = []
         local_objective_names = []
 
-        updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
-        created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
-
         if option3:
             api_response_current = requests.get('https://cedb.me/api/game/' + game['id'])
             try:   
                 json_response_current = json.loads(api_response_current.text)
             except:
+                game_tracker.remove(game['name'])
                 continue
 
             game = json_response_current
+
+
+
+
+        # determine the correct updated_at time
+        updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+        created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
 
         for objective in game['objectives'] :
             # store the objective names
@@ -230,13 +263,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             for objrequirement in objective['objectiveRequirements'] :
                 objrequpdatedtime = time.mktime(datetime.strptime(str(objrequirement['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
                 if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
-
-        # don't forget to undo this if using locally
-        #updated_time -= 4*3600
-        
-
-        #print(updated_time)
-        #print(created_time)
 
         if(game['name'] in list(new_data.keys())) : 
             # if the game is locally stored, set current_newest to that updatedvalue
