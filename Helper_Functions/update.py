@@ -157,6 +157,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     # removed done pendings
     for event in pendings_to_remove:
         returns.append(f"casino: <@{database_user[ce_id]['Discord ID']}>, you can now request {event} again.")
+        print('removed pending')
         del database_user[ce_id]['Pending Rolls'][event]
 
 
