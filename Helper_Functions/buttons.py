@@ -165,10 +165,8 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
             if (roll_num != -1) :
                 r = database_user[target_user]['Current Rolls'][roll_num]['Rerolls']
                 
-                finished_games = []
-                if(len(database_user[target_user]['Current Rolls'][roll_num]['Games']) > 1):
-                    finished_games = database_user[target_user]['Current Rolls'][roll_num]['Games']
-                    r+=1
+                finished_games = database_user[target_user]['Current Rolls'][roll_num]['Games']
+                r+=1
                 database_user[target_user]['Current Rolls'][roll_num] = ({
                     "Event Name" : "Fourward Thinking",
                     "End Time" : end_time,
