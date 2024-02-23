@@ -514,11 +514,11 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                     # defer the message
                     await interaction.response.defer()
 
-                    # don't let anyone else use the button!
-                    if interaction.user.id != userInfo[target_user]['Discord ID'] : return
-
                     # pull database_user
                     userInfo = await get_mongo('user')
+
+                    # don't let anyone else use the button!
+                    if interaction.user.id != userInfo[target_user]['Discord ID'] : return
 
                     # get the current number of games
                     num_of_games = len(userInfo[target_user]['Current Rolls'][roll_num]['Games'])
