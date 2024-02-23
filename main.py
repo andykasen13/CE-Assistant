@@ -1017,7 +1017,8 @@ async def register(interaction : discord.Interaction, ce_id: str) :
             "Owned Games" : {},
             "Cooldowns" : {},
             "Current Rolls" : [],
-            "Completed Rolls" : []
+            "Completed Rolls" : [],
+            "Pending Rolls" : {}
         }
     }
 

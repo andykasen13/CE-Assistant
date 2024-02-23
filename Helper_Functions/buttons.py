@@ -148,35 +148,55 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
                 target_user = user
                 break
         
-        # find the roll to replace (from pending...)
-        roll_num = 0
-        for current_roll in database_user[target_user]['Current Rolls'] :
-            if current_roll['Event Name'] == event_name : break
-            roll_num +=1
+        # find the roll to replace (if it exists)
+        roll_num = -1
+        for i, current_roll in enumerate(database_user[target_user]['Current Rolls']) :
+            if current_roll['Event Name'] == event_name : 
+                roll_num = i
+                break
 
         # update the 
         end_time = get_unix(time_limit)
 
         # of course, the king of shitters, fourward thinking
         if (event_name == "Fourward Thinking"):
-            r = database_user[target_user]['Current Rolls'][roll_num]['Rerolls']
+
+            # this isn't their first roll
+            if (roll_num != -1) :
+                r = database_user[target_user]['Current Rolls'][roll_num]['Rerolls']
+                
+                finished_games = []
+                if(len(database_user[target_user]['Current Rolls'][roll_num]['Games']) > 1):
+                    finished_games = database_user[target_user]['Current Rolls'][roll_num]['Games'][1::]
+                    r+=1
+                database_user[target_user]['Current Rolls'][roll_num] = ({
+                    "Event Name" : "Fourward Thinking",
+                    "End Time" : end_time,
+                    "Games" : finished_games + games,
+                    "Rerolls" : r
+                })
             
-            finished_games = []
-            if(len(database_user[target_user]['Current Rolls'][roll_num]['Games']) > 1):
-                finished_games = database_user[target_user]['Current Rolls'][roll_num]['Games'][1::]
-                r+=1
-            database_user[target_user]['Current Rolls'][roll_num] = ({
-                "Event Name" : "Fourward Thinking",
-                "End Time" : end_time,
-                "Games" : finished_games + games,
-                "Rerolls" : r
-            })
+            # this is their first roll
+            else :
+                database_user[target_user]['Current Rolls'].append({
+                    'Event Name' : 'Fourward Thinking',
+                    'End Time' : end_time,
+                    'Games' : games,
+                    'Rerolls' : 0
+                })
 
         # all other rolls
         else:
-            database_user[target_user]['Current Rolls'][roll_num] = ({"Event Name" : event_name, 
-                                                    "End Time" : end_time,
-                                                    "Games" : games})
+            if (roll_num != -1) :
+                database_user[target_user]['Current Rolls'][roll_num] = ({"Event Name" : event_name, 
+                                                        "End Time" : end_time,
+                                                        "Games" : games})
+            else :
+                database_user[target_user]['Current Rolls'].append({
+                    'Event Name' : event_name,
+                    'End Time' : end_time,
+                    'Games' : games
+                })
         
         # args = [
         #     database_user[target_user]['Discord ID'],
@@ -213,6 +233,8 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
 
         # dump the info
         dump = await dump_mongo("user", database_user)
+        del dump
+        return
 
     buttons[0].callback = AC_callback
     buttons[1].callback = AR_callback

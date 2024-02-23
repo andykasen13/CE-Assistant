@@ -43,24 +43,25 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     if target_user_data == "" : return await interaction.followup.send(f"<@{partner.id}> is not registered in the CE Assistant database.")
     
     # check to see if either are pending or if either are currently participating...
+    if (event in database_user[int_user_id]['Pending Rolls']) :
+        return await interaction.followup.send(
+            f'You recently tried to participate in {event}. Please wait 10 minutes in between requesting the same event!'
+        )
+    if (event in database_user[part_user_id]['Pending Rolls']) :
+        return await interaction.followup.send(
+            f'Your partner recently tried to participate in {event}. Please wait 10 minutes in between requesting the same event!'
+        )
+    
     for eventInfo in database_user[int_user_id]['Current Rolls'] :
-        if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : 
-            return await interaction.followup.send(
-                'You recently tried to participate in {}. Please wait 10 minutes in between rolling for the same event!'.format(event))
-        
-        if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : 
+        if((eventInfo['Event Name'] == event)) : 
             return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
     
     for eventInfo in database_user[part_user_id]['Current Rolls'] :
-        if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : 
-            return await interaction.followup.send(
-                'Your partner recently tried to participate in {}. '.format(event)
-                + 'Please wait 10 minutes in between rolling for the same event!')
-        if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and not reroll) : 
+        if((eventInfo['Event Name'] == event)) : 
             return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
 
-    database_user[int_user_id]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ['pending...']})
-    database_user[part_user_id]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ['pending...']})
+    database_user[int_user_id]['Pending Rolls'][event] = get_unix(minutes=10)
+    database_user[part_user_id]['Pending Rolls'][event] = get_unix(minutes=10)
 
     dump = await dump_mongo('user', database_user)
     database_user = await get_mongo('user')
@@ -175,29 +176,22 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             # Get page buttons
             await get_buttons(view, embeds)
-
-            i_num = 0
-            for roll_i in database_user[int_user_id]['Current Rolls'] :
-                if(roll_i['Games'] == ['pending...']) : break
-                i_num += 1
             
-            t_num = 0
-            for roll_t in database_user[int_user_id]['Current Rolls'] :
-                if(roll_t['Games'] == ['pending...']) : break
-                t_num += 1
-            
-            database_user[int_user_id]['Current Rolls'][i_num] = ({
+            database_user[int_user_id]['Current Rolls'].append({
                 "Event Name" : event,
                 "Partner" : target_user_data['CE ID'],
                 "Games" : [target_user_selected_game]
             })
 
 
-            database_user[part_user_id]['Current Rolls'][t_num] = ({
+            database_user[part_user_id]['Current Rolls'].append({
                 "Event Name" : event,
                 "Partner" : interaction_user_data['CE ID'],
                 "Games" : [interaction_user_selected_game]
             })
+
+            del database_user[int_user_id]['Pending Rolls'][event]
+            del database_user[part_user_id]['Pending Rolls'][event]
 
             dump = await dump_mongo('user', database_user)
 
@@ -305,29 +299,19 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 end_db = {
                     "Tier 1" : (2),
                     "Tier 2" : (10),
-                    "Tier 3" : (months_to_days(1)),
-                    "Tier 4" : (months_to_days(2))
+                    "Tier 3" : (28),
+                    "Tier 4" : (56)
                 }
-
-                i_num = 0
-                for roll_i in database_user[int_user_id]['Current Rolls'] :
-                    if(roll_i['Games'] == ['pending...']) : break
-                    i_num += 1
-                
-                t_num = 0
-                for roll_t in database_user[int_user_id]['Current Rolls'] :
-                    if(roll_t['Games'] == ['pending...']) : break
-                    t_num += 1
 
                 if(tier_num == "Tier 5") : 
 
-                    database_user[int_user_id]['Current Rolls'][i_num] = ({
+                    database_user[int_user_id]['Current Rolls'].append({
                         "Event Name" : event,
                         "Partner" : target_user_data['CE ID'],
                         "Games" : [game]
                     })
 
-                    database_user[part_user_id]['Current Rolls'][t_num] = ({
+                    database_user[part_user_id]['Current Rolls'].append({
                         "Event Name" : event,
                         "Partner" : interaction_user_data['CE ID'],
                         "Games" : [game]
@@ -336,40 +320,26 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 
                 else :
                     end_time = get_unix(end_db[tier_num])
-                    database_user[int_user_id]['Current Rolls'][i_num] = ({
+                    database_user[int_user_id]['Current Rolls'].append({
                         "Event Name" : event,
                         "Partner" : target_user_data['CE ID'],
                         "End Time" : end_time,
                         "Games" : [game]
                     })
 
-                    args = [
-                        database_user[int_user_id]['Discord ID'],
-                        event,
-                        database_user,
-                        database_name
-                    ]
-
-                    #await add_task(datetime.datetime.fromtimestamp(end_time), args)
-
-                    database_user[part_user_id]['Current Rolls'][t_num] = ({
+                    database_user[part_user_id]['Current Rolls'].append({
                         "Event Name" : event,
                         "Partner" : interaction_user_data['CE ID'],
                         "End Time" : end_time,
                         "Games" : [game]
                     })
                     
-                    args = [
-                        database_user[part_user_id]['Discord ID'],
-                        event,
-                        database_user,
-                        database_name
-                    ]
-                    
-                    #await add_task(datetime.datetime.fromtimestamp(end_time), args)
 
+                del database_user[int_user_id]['Pending Rolls'][event]
+                del database_user[part_user_id]['Pending Rolls'][event]
 
                 dump = await dump_mongo('user', database_user)
+                del dump
 
                 return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
             async def deny_callback(interaction) :
@@ -489,6 +459,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             # ------ Get page buttons -------
             await get_buttons(view, embeds)
 
+            end_time = get_unix(28)
             i_num = 0
             for roll_i in database_user[int_user_id]['Current Rolls'] :
                 if(roll_i['Games'] == ['pending...']) : break
@@ -501,37 +472,22 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             end_time = get_unix(months_to_days(1))
 
-            database_user[int_user_id]['Current Rolls'][i_num] = ({
+            database_user[int_user_id]['Current Rolls'].append({
                 "Event Name" : event,
                 "Partner" : target_user_data['CE ID'],
                 "End Time" : end_time,
                 "Games" : games
             })
 
-            args = [
-                database_user[int_user_id]['Discord ID'],
-                0,
-                0,
-                0
-            ]
-            
-            #await add_task(datetime.datetime.fromtimestamp(end_time), args)
-
-            database_user[part_user_id]['Current Rolls'][t_num] = ({
+            database_user[part_user_id]['Current Rolls'].append({
                 "Event Name" : event,
                 "Partner" : interaction_user_data['CE ID'],
                 "End Time" : end_time,
                 "Games" : games
             })
-            
-            args = [
-                database_user[part_user_id]['Discord ID'],
-                0,
-                0,
-                0
-            ]
-            
-            #await add_task(datetime.datetime.fromtimestamp(end_time), args)
+
+            del database_user[int_user_id]['Pending Rolls'][event]
+            del database_user[part_user_id]['Pending Rolls'][event]
 
             dump = await dump_mongo('user', database_user)
 
@@ -621,32 +577,25 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 embed.add_field(name="Tier", value=database_name[game]['Tier'])
                 embed.add_field(name="Completion", value="When you have completed, submit your proof to <#747384873320448082>. The first to do so wins.")
 
-                i_num = 0
-                for roll_i in database_user[int_user_id]['Current Rolls'] :
-                    if(roll_i['Games'] == ['pending...'] and roll_i['Event Name'] == event) : break
-                    i_num += 1
-                
-                t_num = 0
-                for roll_t in database_user[part_user_id]['Current Rolls'] :
-                    if(roll_t['Games'] == ['pending...'] and roll_t['Event Name'] == event) : break
-                    t_num += 1
 
-
-                database_user[int_user_id]['Current Rolls'][i_num] = ({
+                database_user[int_user_id]['Current Rolls'].append({
                     "Event Name" : event,
                     "Partner" : target_user_data['CE ID'],
                     "Games" : [game]
                 })
                
 
-                database_user[part_user_id]['Current Rolls'][t_num] = ({
+                database_user[part_user_id]['Current Rolls'].append({
                     "Event Name" : event,
                     "Partner" : interaction_user_data['CE ID'],
                     "Games" : [game]
                 })
               
+                del database_user[int_user_id]['Pending Rolls'][event]
+                del database_user[part_user_id]['Pending Rolls'][event]
 
                 dump = await dump_mongo('user', database_user)
+                del dump
 
 
                 return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
@@ -774,19 +723,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         description="You both chose {}. You are now both on cooldown for a week :)".format(targets_genre)
                     )
                     embed.set_footer(text="hahahahahahaha")
-                    await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=view)
-                     
-
-                    i_num = 0
-                    for roll_i in database_user[int_user_id]['Current Rolls'] :
-                        if(roll_i['Games'] == ['pending...'] and roll_i['Event Name'] == event) : break
-                        i_num += 1
                     
-                    t_num = 0
-                    for roll_t in database_user[part_user_id]['Current Rolls'] :
-                        if(roll_t['Games'] == ['pending...'] and roll_t['Event Name'] == event) : break
-                        t_num += 1
-
                     end_time = get_unix(7)
                     
                     database_user[int_user_id]['Cooldowns'].append({
@@ -797,28 +734,11 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         "Winner Takes All" : end_time
                     })
 
-                    args = [
-                        database_user[part_user_id]['Discord ID'],
-                        0,
-                        0,
-                        0
-                    ]
-                    
-                    #await add_task(datetime.datetime.fromtimestamp(end_time), args)
-
-                    args = [
-                        database_user[int_user_id]['Discord ID'],
-                        0,
-                        0,
-                        0
-                    ]
-                    
-                    #await add_task(datetime.datetime.fromtimestamp(end_time), args)
-
 
                     dump = await dump_mongo('user', database_user)
+                    del dump
 
-                    return
+                    return await interaction.followup.edit_message(message_id=interaction.message.id, embed=embed, view=view)
                 
                 # Remove the items
                 await interaction.followup.edit_message(message_id=interaction.message.id, embed=discord.Embed(title="Working..."), view=view)
@@ -871,24 +791,14 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 # Get the buttons
                 await get_buttons(view, embeds)
 
-                i_num = 0
-                for roll_i in database_user[int_user_id]['Current Rolls'] :
-                    if(roll_i['Games'] == ['pending...']) : break
-                    i_num += 1
-                
-                t_num = 0
-                for roll_t in database_user[part_user_id]['Current Rolls'] :
-                    if(roll_t['Games'] == ['pending...']) : break
-                    t_num += 1
 
-
-                database_user[int_user_id]['Current Rolls'][i_num] = ({
+                database_user[int_user_id]['Current Rolls'].append({
                     "Event Name" : event,
                     "Partner" : target_user_data['CE ID'],
                     "Games" : [interaction_user_selected_game]
                 })
 
-                database_user[part_user_id]['Current Rolls'][t_num] = ({
+                database_user[part_user_id]['Current Rolls'].append({
                     "Event Name" : event,
                     "Partner" : interaction_user_data['CE ID'],
                     "Games" : [target_user_selected_game]

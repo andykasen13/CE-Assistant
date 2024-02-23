@@ -35,10 +35,6 @@ def get_roll_string(database_user, ce_id, database_name, target_user, roll_type)
         if("Rerolls" in list(x.keys())) : rerolls = x['Rerolls']
         else : rerolls = None
 
-        if(games != None and games[0] == "pending...") : continue
-
-
-
         roll_string = roll_string + "- __" + x['Event Name'] + "__"
 
         if(end_time != None) : 

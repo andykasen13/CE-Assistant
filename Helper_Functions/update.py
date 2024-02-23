@@ -58,7 +58,8 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             "Owned Games" : {},
             "Cooldowns" : {},
             "Current Rolls" : [],
-            "Completed Rolls" : []
+            "Completed Rolls" : [],
+            "Pending Rolls" : {}
         }
     }
 
@@ -153,7 +154,6 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
         f = False
         for g in current_roll['Games'] :
-            if g == "pending..." : continue
             if g not in database_name :
                 if len(current_roll['Games']) > 1: current_roll['Games'].remove(g)
                 else : 
