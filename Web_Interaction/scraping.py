@@ -1059,6 +1059,8 @@ def special_image(number, decimal, CE_ID, driver, objective_name : str):
     
     objective_name = objective_name.lower()
     objective_name = objective_name.replace(" ", '')
+    objective_name = objective_name.replace("\n", '')
+    objective_name = objective_name.replace("0", '')
     print(objective_name)
     print('objectives in objective list')
     for objective in objective_lst:
