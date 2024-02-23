@@ -459,17 +459,6 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             # ------ Get page buttons -------
             await get_buttons(view, embeds)
 
-            end_time = get_unix(28)
-            i_num = 0
-            for roll_i in database_user[int_user_id]['Current Rolls'] :
-                if(roll_i['Games'] == ['pending...']) : break
-                i_num += 1
-            
-            t_num = 0
-            for roll_t in database_user[int_user_id]['Current Rolls'] :
-                if(roll_t['Games'] == ['pending...']) : break
-                t_num += 1
-
             end_time = get_unix(months_to_days(1))
 
             database_user[int_user_id]['Current Rolls'].append({

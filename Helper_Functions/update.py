@@ -148,10 +148,23 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     remove_indexes = []
     cooldown_indexes = []
 
+    # check pending rolls
+    pendings_to_remove = []
+    for event in database_user[ce_id]['Pending Rolls'] :
+        if database_user[ce_id]['Pending Rolls'][event] < get_unix("now") :
+            pendings_to_remove.append(event)
+    
+    # removed done pendings
+    for event in pendings_to_remove:
+        returns.append(f'casino: <@{database_user[ce_id]['Discord ID']}>, you can now request {event} again.')
+        del database_user[ce_id]['Pending Rolls'][event]
+
+
     # Check if any rolls have been completed
     for m_index, current_roll in enumerate(user_dict[ce_id]['Current Rolls']) :
         roll_completed = True
 
+        # ---------------------------- deal with deleted games -------------------------------
         f = False
         for g in current_roll['Games'] :
             if g not in database_name :
@@ -164,32 +177,10 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
         print("checking {}".format(current_roll['Event Name']))
 
-        # ------------------------------------ pending... -------------------------------------
-        if current_roll['Games'] == ['pending...']:
-            if current_roll['End Time'] < get_unix("now"): 
-                #"delete pending..."
-                #"continue"
-                remove_indexes.append(m_index)
-                returns.append("casino: " + "<@{}>, you can now roll {} again.".format(
-                    user_dict[ce_id]['Discord ID'], current_roll['Event Name']))
-
-                continue
-            continue
-        
-        elif current_roll['Games'][0] == 'pending...' and len(current_roll['Games']) != 1:
-            
-            if(current_roll['End Time'] < get_unix("now")):
-                del current_roll['Games'][0]
-                del current_roll['End Time']
-                returns.append("casino: " + f"<@{user_dict[ce_id]['Discord ID']}>, you can now roll {current_roll['Event Name']} again.")
-            continue
-
-        # ---------------------------- deal with deleted games -------------------------------
-        
 
         # --------------------------------- co op rolls :sob: ---------------------------------
         # destiny alignment
-        elif current_roll['Event Name'] == "Destiny Alignment" : 
+        if current_roll['Event Name'] == "Destiny Alignment" : 
 
             for other_roll in database_user[current_roll['Partner']]['Current Rolls'] :
                 if other_roll['Event Name'] == "Destiny Alignment" : 
@@ -623,7 +614,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 
                 # if the game was pending... make a separate message
                 if current_roll['Games'][0] == "pending..." : 
-                    returns.append("casino: " + "<@{}>, you can now roll {} again.".format(user_dict[ce_id]['Discord ID'], current_roll['Event Name']))
+                    returns.append("casino: " + f'someone ping andy something went wrong with `pending...`')
                 
                 # if this was a co-op roll
                 elif "Partner" in current_roll : 
