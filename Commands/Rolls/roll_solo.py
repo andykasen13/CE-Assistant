@@ -407,7 +407,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 
                 # update database_user
                 userInfo[target_user]['Current Rolls'][roll_num]['Games'] = [new_game]
-                del userInfo[target_user]['Pending Rolls']['Never Lucky']
+                try:
+                    del userInfo[target_user]['Pending Rolls']['Never Lucky']
+                except: ""
                 d = await dump_mongo('user', userInfo)
 
                 # update the view and edit the message
