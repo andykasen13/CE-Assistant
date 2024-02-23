@@ -61,49 +61,46 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
             # ----- Grab random game -----
             # (Genre not given)
             if(specific_genre == "any") :
-                print("No genre specified.")
-                # ----- Pick a random number -----
+                # Pick a random number
                 random_num = -1
                 for genre in genres :
                     random_num += len(database_tier[tier_number][genre]) 
                 random_num = random.randint(0, random_num)
 
-                # ----- Determine genre based on number -----
+                # Determine genre
                 for genre in genres :
                     if(random_num < len(database_tier[tier_number][genre])) :
-                        # ----- Pick the game -----
+                        # Correct genre, pick game
                         returned_game = database_tier[tier_number][genre][random_num]
                         print("Chosen genre: " + genre)
                         break
-                    # ----- Move to the next genre -----
+                    # Next genre
                     else : random_num -= len(database_tier[tier_number][genre])
 
             # (Genre given)
             elif type(specific_genre) == str:
-                print(f"Specified genre: {specific_genre}.")
                 random_num = random.randint(0,len(database_tier[tier_number][specific_genre])-1)
                 returned_game = database_tier[tier_number][specific_genre][random_num]
 
             # (Genres given)
             elif type(specific_genre) == list :
-                print(f"Genres specified: {str(specific_genre)}")
-                # ----- Pick a random number -----
+                # Pick a random number
                 random_num = -1
                 for genre in specific_genre :
                     random_num += len(database_tier[tier_number][genre])
                 random_num = random.randint(0, random_num)
 
-                # ----- Determine genre based on number -----
+                # Determine genre
                 for genre in specific_genre :
                     if(random_num < len(database_tier[tier_number][genre])) :
-                        # ----- Pick the game -----
+                        # Correct genre, pick game
                         returned_game = database_tier[tier_number][genre][random_num]
                         print("Chosen genre: " + genre)
                         break
-                    # ----- Move to the next genre -----
+                    # Next genre
                     else : random_num -= len(database_tier[tier_number][genre])
 
-            # ----- Log it in the console -----
+            # ----- Check to see if it's banned -----
             print(f"Seeing if {returned_game} is rollable...")
             if returned_game in banned_games :
                 print(f"{returned_game} is banned.\n")
@@ -123,6 +120,7 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
                     print("User has completed game. Moving on...\n")
                     continue
 
+            # ---- Check to see if it's uncleared ----
             uncleared = False
             for obj in database_name[returned_game]['Primary Objectives']:
                 if database_name[returned_game]['Primary Objectives'][obj]['Point Value'] % 5 != 0:
@@ -152,7 +150,15 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
                 print(f"No completion data for {returned_game}.") 
                 continue
 
-            print(f"Game price is {gamePrice}... {gamePrice < price_limit}" + f"Game completion time is {completion_time}... {completion_time < avg_completion_time_limit}")
+            # ---- Check price ----
+            if (gamePrice > price_limit) :
+                print("Too pricey.")
+                continue
+            
+            # ----- Check SteamHunters completion time ----
+            if completion_time > avg_completion_time_limit :
+                print("Completion time too high.")
+                continue
 
             # ----- Check to see if rollable -----
             if(gamePrice < price_limit and completion_time < avg_completion_time_limit) :
