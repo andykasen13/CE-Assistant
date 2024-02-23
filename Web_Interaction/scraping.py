@@ -239,6 +239,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             try:   
                 json_response_current = json.loads(api_response_current.text)
             except:
+                print(f"{game['name']} not pulled correctly...")
                 game_tracker.remove(game['name'])
                 continue
 
