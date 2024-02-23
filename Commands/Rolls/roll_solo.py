@@ -554,11 +554,10 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
                 # update the view and edit the message
                 view.clear_items()
-                return await interaction.edit_original_response(embed=embed, view=view)
+                return await interaction.followup.edit_message(content="", embed=embed, view=view, message_id=interaction.message.id)
             
             async def deny_callback(interaction : discord.Interaction) :
                 await interaction.response.defer()
-                database_name = await get_mongo('name')
                 userInfo = await get_mongo('user')
 
                 # make sure only o.g. user can push button
@@ -569,7 +568,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
                 # update the view and edit the message
                 view.clear_items()
-                return await interaction.edit_original_response(embed=discord.Embed(title="Denied!"), view=view)
+                return await interaction.followup.edit_message(content="",embed=discord.Embed(title="Denied!"), view=view,
+                                                               message_id=interaction.message.id)
             
             agree_button.callback = agree_callback
             deny_button.callback = deny_callback
