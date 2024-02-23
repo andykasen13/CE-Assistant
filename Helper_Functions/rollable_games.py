@@ -79,8 +79,14 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
 
             # (Genre given)
             elif type(specific_genre) == str:
+                if (len(database_tier[tier_number][specific_genre]) - 1 == 0) :
+                    print(tier_number)
+                    print(specific_genre)
+                    print('you are fucked buddy')
+                    return "NO ROLLABLE GAMES IN CATEGORY"
                 random_num = random.randint(0,len(database_tier[tier_number][specific_genre])-1)
                 returned_game = database_tier[tier_number][specific_genre][random_num]
+                genre = specific_genre
 
             # (Genres given)
             elif type(specific_genre) == list :
@@ -103,11 +109,13 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
             # ----- Check to see if it's banned -----
             print(f"Seeing if {returned_game} is rollable...")
             if returned_game in banned_games :
+                del database_tier[tier_number][genre][random_num]
                 print(f"{returned_game} is banned.\n")
                 continue
                 
             # ----- Check if the game has already been rolled -----
             if returned_game in games :
+                del database_tier[tier_number][genre][random_num]
                 print("{} already rolled! Continuing...".format(returned_game))
                 continue
 
@@ -117,6 +125,7 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
                 and "Primary Objectives" in user_info['Owned Games'][returned_game]
                 # TODO: this is so so cheating because if someone has partial points in some and finished all others this says theyre done. lets fix that
                 and set(user_info['Owned Games'][returned_game]['Primary Objectives'].keys()) == set(database_name[returned_game]['Primary Objectives'].keys())) :
+                    del database_tier[tier_number][genre][random_num]
                     print("User has completed game. Moving on...\n")
                     continue
 
@@ -124,6 +133,7 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
             uncleared = False
             for obj in database_name[returned_game]['Primary Objectives']:
                 if database_name[returned_game]['Primary Objectives'][obj]['Point Value'] % 5 != 0:
+                    del database_tier[tier_number][genre][random_num]
                     print('uncleared game. continuing...')
                     uncleared = True
             if uncleared : continue
@@ -152,16 +162,18 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
 
             # ---- Check price ----
             if (gamePrice > price_limit) :
+                del database_tier[tier_number][genre][random_num]
                 print("Too pricey.")
                 continue
             
             # ----- Check SteamHunters completion time ----
             if completion_time > avg_completion_time_limit :
+                del database_tier[tier_number][genre][random_num]
                 print("Completion time too high.")
                 continue
 
             # ----- Check to see if rollable -----
-            if(gamePrice < price_limit and completion_time < avg_completion_time_limit) :
+            if(gamePrice <= price_limit and completion_time <= avg_completion_time_limit) :
                 rollable = True
             print("\n")
 

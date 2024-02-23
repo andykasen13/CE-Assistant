@@ -75,6 +75,23 @@ def single_scrape(curator_count):
 
     return [database_name, curator_count, database_tier]
 
+def single_scrape_v2(curator_count) :
+    api_response = requests.get('https://cedb.me/api/games/')
+    json_response = json.loads(api_response.text)
+
+    curator_count['Updated Time'] = get_unix('now')
+
+    database_name_v2 = {}
+
+    for game in json_response:
+        if(game['genre'] == None or game['genre']['name'] == None) : continue
+        print(game['name'])
+        database_name_v2[game['id']] = get_game(game)
+    
+    database_tier = get_by_tier(database_name_v2)
+
+    return [database_name_v2, curator_count, database_tier]
+
     
 
 def game_list(new_data, current_dict, unfinished_games : dict):
@@ -786,6 +803,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
 def get_game(game):
     objectives = get_objectives(game['id'])
     returnable = {
+        'Name' : game['name'],
         "CE ID" : game['id'],
         'Steam ID' : game['platformId'],
         'Tier' : 'Tier ' + str(game['tier']),
