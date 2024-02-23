@@ -370,9 +370,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 'Event Name' : 'Never Lucky',
                 'Games' : games
             })
-            userInfo[target_user]['Cooldowns'].append({
-                'Never Lucky' : get_unix(months=1)
-            })
+            userInfo[target_user]['Cooldowns']['Never Lucky'] = get_unix(months=1)
             d = await dump_mongo('user', userInfo)
             del d
             return await interaction.followup.send(embed=embed, view=view)
