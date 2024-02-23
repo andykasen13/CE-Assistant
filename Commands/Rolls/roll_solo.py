@@ -365,6 +365,17 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 + "\nNever Lucky has a one month cooldown."
                 + "\nCooldown ends on <t:" + str(get_unix(months=1))
                 + f">\nhttps://cedb.me/game/{database_name[embed.title]['CE ID']}/", inline=False)
+            
+            userInfo[target_user]['Current Rolls'].append({
+                'Event Name' : 'Never Lucky',
+                'Games' : games
+            })
+            userInfo[target_user]['Cooldowns'].append({
+                'Never Lucky' : get_unix(months=1)
+            })
+            d = await dump_mongo('user', userInfo)
+            del d
+            return await interaction.followup.send(embed=embed, view=view)
         
         # roll is currently... rolled...
         else :
@@ -464,17 +475,99 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # -------------------------------------------- Let Fate Decide --------------------------------------------
     elif event == "Let Fate Decide" :
         # one t4
+        roll_num = -1
+        for i, r in enumerate(userInfo[target_user]['Current Rolls']):
+            if r['Event Name'] == 'Let Fate Decide' :
+                roll_num = i
+                break
 
-        # add pending...
-        userInfo[target_user]['Pending Rolls'][event] = get_unix(minutes=10)
+        if roll_num == -1:
+            # add pending...
+            userInfo[target_user]['Pending Rolls'][event] = get_unix(minutes=10)
 
-        # close and reopen users2.json
-        dump = await dump_mongo('user', userInfo)
-        userInfo = await get_mongo('user')
+            # close and reopen users2.json
+            dump = await dump_mongo('user', userInfo)
+            userInfo = await get_mongo('user')
 
-        embed = discord.Embed(title=("Let Fate Decide"), description="A random T4 in a genre of you choosing will be rolled. There is no time limit for Let Fate Decide. You win once you complete all Primary Objectives in your rolled game!")
-        await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, months_to_days(3), 1, interaction.user.id, collection=collection)
-        dont_save = True
+            embed = discord.Embed(title=("Let Fate Decide"), description="A random T4 in a genre of you choosing will be rolled." +
+                                " There is no time limit for Let Fate Decide. You win once you complete all Primary Objectives in your rolled game!")
+            await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, months_to_days(3), 1, interaction.user.id, collection=collection)
+            dont_save = True
+        else :
+            userInfo[target_user]['Pending Rolls'][event] = get_unix(minutes=10)
+
+            # close and reopen userInfo
+            d = await dump_mongo('user', userInfo)
+            del d
+            userInfo = await get_mongo('user')
+
+            # set up the embed
+            embed = discord.Embed(
+                title = 'Let Fate Decide',
+                description= 'You are requesting to reroll your Let Fate Decide roll. Your game will be overwritten by a new game of the same genre. Are you okay with this?'
+            )
+            embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
+
+            # set up view and buttons
+            view = discord.ui.View(timeout=600)
+            agree_button = discord.ui.Button(label="Agree", style=discord.ButtonStyle.success)
+            deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
+            view.add_item(deny_button)
+            view.add_item(agree_button)
+
+            #TODO: make sure the previous game doesn't get rerolled
+            async def agree_callback(interaction : discord.Interaction) :
+                # pull mongo databases
+                database_name = await get_mongo('name')
+                userInfo = await get_mongo('user')
+
+                # make sure only the o.g. guy can push buttons
+                if interaction.user.id != userInfo[target_user]['Discord ID'] : return
+
+                # o.g. game
+                original_game = userInfo[target_user]['Current Rolls'][roll_num]['Games'][0]
+
+                # get a new t4
+                new_game = await get_rollable_game(1000, 20, "Tier 4", userInfo[target_user], database_name=database_name, database_tier=database_tier,
+                                                   genres=[database_name[original_game]['Genre']])
+
+                # make the embed
+                embed = getEmbed(new_game, interaction.user.id, database_name)
+                embed.set_author(name="Let Fate Decide", url="https://cedb.me/game/" + database_name[new_game]['CE ID'])
+                embed.add_field(name="Roll Requirements", value =
+                                f"There is no time limit on {event}."
+                                + f"\nLet Fate Decide has a three month cooldown."
+                                + f"\nCooldown ends on <t:{str(get_unix(months=3))}>.", inline=False)
+                
+                # update database_user
+                userInfo[target_user]['Current Rolls'][roll_num]['Games'] = [new_game]
+                del userInfo[target_user]['Pending Rolls']['Let Fate Decide']
+                d = await dump_mongo('user', userInfo)
+
+                # update the view and edit the message
+                view.clear_items()
+                return await interaction.followup.edit_message(content="", embed=embed, view=view, message_id=interaction.message.id)
+            
+            async def deny_callback(interaction : discord.Interaction) :
+                database_name = await get_mongo('name')
+                userInfo = await get_mongo('user')
+
+                # make sure only o.g. user can push button
+                if interaction.user.id != userInfo[target_user]['Discord ID'] : return
+
+                # remove the pending
+                del userInfo[target_user]['Pending Rolls']['Let Fate Decide']
+
+                # update the view and edit the message
+                view.clear_items()
+                return await interaction.followup.edit_message(content="", embed=discord.Embed(title="Denied!"), view=view, message_id=interaction.message.id)
+            
+            agree_button.callback = agree_callback
+            deny_button.callback = deny_callback
+
+            return await interaction.followup.send(embed=embed, view=view)
+
+
 
     # -------------------------------------------- Fourward Thinking --------------------------------------------
     elif event == "Fourward Thinking" :
