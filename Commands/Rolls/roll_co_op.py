@@ -793,6 +793,9 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     "Games" : [target_user_selected_game]
                 })
 
+                del database_user[int_user_id]['Pending Rolls'][event]
+                del database_user[part_user_id]['Pending Rolls'][event]
+
                 dump = await dump_mongo('user', database_user)
 
 
