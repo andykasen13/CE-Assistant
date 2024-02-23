@@ -510,19 +510,36 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                     return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
             
                 async def agree_callback(interaction : discord.Interaction) :
+                    # defer the message
                     await interaction.response.defer()
+
+                    # don't let anyone else use the button!
                     if interaction.user.id != userInfo[target_user]['Discord ID'] : return
 
+                    # pull database_user
+                    userInfo = await get_mongo('user')
+
+                    # get the current number of games
                     num_of_games = len(userInfo[target_user]['Current Rolls'][roll_num]['Games'])
 
-
+                    # grab the most recently played game and its genre
                     most_recent_game = userInfo[target_user]['Current Rolls'][roll_num]['Games'][num_of_games - 1]
                     genre = database_name[most_recent_game]['Genre']
 
-                    new_game = await get_rollable_game(40*num_of_games, 20, "Tier " + str(num_of_games), userInfo, genre, database_tier=database_tier, database_name=database_name)
+                    # get a new game of the same tier and genre
+                    new_game = await get_rollable_game(40*num_of_games, 20, "Tier " + str(num_of_games), userInfo, genre, database_tier=database_tier, database_name=database_name, games=[most_recent_game])
                     
+                    # create the embed for it
+                    embed = getEmbed(new_game, interaction.user.id, database_name)
 
-                    return
+                    # dump the database
+                    d = await dump_mongo('user', userInfo)
+                    del d
+
+                    # clear the view and edit the message
+                    view.clear_items()
+                    return await interaction.followup.edit_message(embed=embed, view=view)
+
 
                 userInfo[target_user]['Pending Rolls'][event] = get_unix(minutes=10)
                 dump = await dump_mongo("user", userInfo)
