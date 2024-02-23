@@ -58,7 +58,7 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
 
     # ----- Display Roll Requirements -----
     embeds[0].add_field(name="Roll Requirements", value =
-        + "\nYou must complete " + event_name + " by <t:" + str(get_unix(time_limit))
+        "\nYou must complete " + str(event_name) + " by <t:" + str(get_unix(time_limit))
         + f">.\n{event_name} has a cooldown time of {cooldown_time} days.", inline=False)
     embeds[0].timestamp = datetime.datetime.now()
     embeds[0].set_thumbnail(url = interaction.user.avatar)
