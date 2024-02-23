@@ -533,7 +533,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
                 # get a new t4
                 new_game = await get_rollable_game(1000, 20, "Tier 4", userInfo[target_user], database_name=database_name, database_tier=database_tier,
-                                                   genres=[database_name[original_game]['Genre']])
+                                                   specific_genre=[database_name[original_game]['Genre']])
 
                 # make the embed
                 embed = getEmbed(new_game, interaction.user.id, database_name)
