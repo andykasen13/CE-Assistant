@@ -532,13 +532,15 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                     # create the embed for it
                     embed = getEmbed(new_game, interaction.user.id, database_name)
 
-                    # dump the database
+                    # update and dump the database
+                    userInfo[target_user]['Current Rolls'][roll_num]['Games'][num_of_games - 1] = new_game
+                    userInfo[target_user]['Current Rolls'][roll_num]['Rerolls'] = userInfo[target_user]['Current Rolls'][roll_num]['Rerolls'] - 1
                     d = await dump_mongo('user', userInfo)
                     del d
 
                     # clear the view and edit the message
                     view.clear_items()
-                    return await interaction.followup.edit_message(embed=embed, view=view)
+                    return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
 
 
                 userInfo[target_user]['Pending Rolls'][event] = get_unix(minutes=10)
