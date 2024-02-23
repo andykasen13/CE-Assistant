@@ -354,7 +354,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         embed.add_field(name="Roll Requirements", value = 
             "There is no time limit on " + embed.title + "."
             + "\nNever Lucky has a one month cooldown."
-            + "\nCooldown ends on <t:" + str(get_unix(months_to_days(1)))
+            + "\nCooldown ends on <t:" + str(get_unix(months=1))
             + f">\nhttps://cedb.me/game/{database_name[embed.title]['CE ID']}/", inline=False)
 
     # -------------------------------------------- Triple Threat --------------------------------------------
