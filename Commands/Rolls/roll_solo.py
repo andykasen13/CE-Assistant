@@ -528,7 +528,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                     genre = database_name[most_recent_game]['Genre']
 
                     # get a new game of the same tier and genre
-                    new_game = await get_rollable_game(40*num_of_games, 20, "Tier " + str(num_of_games), userInfo, genre, database_tier=database_tier, database_name=database_name, games=[most_recent_game])
+                    new_game = await get_rollable_game(40*num_of_games, 20, "Tier " + str(num_of_games), userInfo[target_user], genre, database_tier=database_tier, database_name=database_name, games=[most_recent_game])
                     
                     # create the embed for it
                     embed = getEmbed(new_game, interaction.user.id, database_name)
