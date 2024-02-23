@@ -590,6 +590,8 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
                 continue
 
+            # let fate decide and never lucky can never fail!
+            if current_roll['Event Name'] == 'Let Fate Decide' or current_roll['Event Name'] == 'Never Lucky' : continue
 
             # two week t2 streak
             elif current_roll['Event Name'] == "Two Week T2 Streak":
@@ -643,6 +645,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     if current_roll['Event Name'] == "Fourward Thinking" : 
                         returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]['Discord ID'], str(len(current_roll['Games']))))
                     
+
                     # add the message for any normal roll
                     returns.append("casino: <@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]['Discord ID'], current_roll['Event Name']))
                     
