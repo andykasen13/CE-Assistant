@@ -551,7 +551,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
                 # update the view and edit the message
                 view.clear_items()
-                return await interaction.followup.edit_message(content="", embed=embed, view=view, message_id=interaction.message.id)
+                return await interaction.edit_original_response(embed=embed, view=view)
             
             async def deny_callback(interaction : discord.Interaction) :
                 database_name = await get_mongo('name')
@@ -565,7 +565,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
                 # update the view and edit the message
                 view.clear_items()
-                return await interaction.followup.edit_message(embed=discord.Embed(title="Denied!"), view=view, message_id=interaction.message.id)
+                return await interaction.edit_original_response(embed=discord.Embed(title="Denied!"), view=view)
             
             agree_button.callback = agree_callback
             deny_button.callback = deny_callback
