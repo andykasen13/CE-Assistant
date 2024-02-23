@@ -363,7 +363,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         # check if pending.. and also make sure Never Lucky has been completed
         if event in userInfo[target_user]['Pending Rolls'] : return await interaction.followup.send(
-            f'You just tried to roll {event}. Please wait 10 minutes in between requesting the same event!'
+            f"You just tried to roll {event}. Please wait 10 minutes in between requesting the same event!"
         )
         can_continue = False
         
