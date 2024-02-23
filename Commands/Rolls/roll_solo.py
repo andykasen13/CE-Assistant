@@ -565,7 +565,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
                 # update the view and edit the message
                 view.clear_items()
-                return await interaction.followup.edit_message(content="", embed=discord.Embed(title="Denied!"), view=view, message_id=interaction.message.id)
+                return await interaction.followup.edit_message(embed=discord.Embed(title="Denied!"), view=view, message_id=interaction.message.id)
             
             agree_button.callback = agree_callback
             deny_button.callback = deny_callback
