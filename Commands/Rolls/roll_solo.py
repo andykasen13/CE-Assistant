@@ -388,6 +388,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
             #TODO: make sure the previous game doesn't get rerolled
             async def agree_callback(interaction : discord.Interaction) :
+                await interaction.response.defer()
                 # pull mongo databases
                 database_name = await get_mongo('name')
                 userInfo = await get_mongo('user')
@@ -416,6 +417,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 return await interaction.followup.edit_message(content="", embed=embed, view=view, message_id=interaction.message.id)
             
             async def deny_callback(interaction : discord.Interaction) :
+                await interaction.response.defer()
                 database_name = await get_mongo('name')
                 userInfo = await get_mongo('user')
 
@@ -521,6 +523,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
             #TODO: make sure the previous game doesn't get rerolled
             async def agree_callback(interaction : discord.Interaction) :
+                await interaction.response.defer()
                 # pull mongo databases
                 database_name = await get_mongo('name')
                 userInfo = await get_mongo('user')
@@ -554,6 +557,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 return await interaction.edit_original_response(embed=embed, view=view)
             
             async def deny_callback(interaction : discord.Interaction) :
+                await interaction.response.defer()
                 database_name = await get_mongo('name')
                 userInfo = await get_mongo('user')
 
