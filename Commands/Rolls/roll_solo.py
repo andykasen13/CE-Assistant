@@ -60,10 +60,13 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     if(event in list(userInfo[target_user]['Cooldowns'])) :
         return await interaction.followup.send(embed=discord.Embed(title="Cooldown", description=f"You are currently on cooldown for {event}."))
 
-    # ...or if the event is currently active.
+    # ... or if the user is on pending..
+    if (event in userInfo[target_user]['Pending Rolls']) :
+        return await interaction.followup.send('Please wait 10 minutes in between rolling for the same event!')
+
+    # ... or if the event is currently active.
     for eventInfo in userInfo[target_user]['Current Rolls'] :
         #TODO: have different errors if someone tries to go again during pending and if someone tries to reroll while pending
-        if(eventInfo['Event Name'] == event and eventInfo['Games'] == ['pending...']) : return await interaction.followup.send('Please wait 10 minutes in between rolling for the same event!')
         if((eventInfo['Event Name'] == event) and event != "Fourward Thinking" and event != "Two Week T2 Streak"
            and event != "Two 'Two Week T2 Streak' Streak" and not reroll) : 
             return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
@@ -358,11 +361,11 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     elif event == "Triple Threat" :
         # three t3s
 
-        # check if pending... and also make sure Never Lucky has been completed
+        # check if pending.. and also make sure Never Lucky has been completed
+        if event in userInfo[target_user]['Pending Rolls'] : return await interaction.followup.send(
+            f'You just tried to roll {event}. Please wait 10 minutes in between requesting the same event!'
+        )
         can_continue = False
-        for x_roll in userInfo[target_user]['Current Rolls'] :
-            if(x_roll['Event Name'] == event and x_roll['Games'] == ['pending...']) :
-                return await interaction.followup.send('hang on their buster')
         
         for roll in userInfo[target_user]['Completed Rolls'] :
             if(roll['Event Name'] == "Never Lucky") : can_continue = True
@@ -371,7 +374,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         if not can_continue : return await interaction.followup.send("You must complete Never Lucky to roll Triple Threat!")
         
         # add the pending...
-        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ['pending...']})
+        userInfo[target_user]['Pending Rolls'][event] = get_unix(minutes=10)
 
         # close and reopen users2.json
         dump = await dump_mongo('user', userInfo)
@@ -389,7 +392,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         # one t4
 
         # add pending...
-        userInfo[target_user]['Current Rolls'].append({"Event Name" : event, "End Time" : get_unix(minutes=10), "Games" : ['pending...']})
+        userInfo[target_user]['Pending Rolls'][event] = get_unix(minutes=10)
 
         # close and reopen users2.json
         dump = await dump_mongo('user', userInfo)
@@ -446,12 +449,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             view = discord.ui.View(timeout=600)
             
             await get_genre_buttons(view, 40, 20, "Tier 1", "Fourward Thinking", 7, 14, 1, interaction.user.id, collection)
-            userInfo[target_user]['Current Rolls'].append({
-                "Event Name" : "Fourward Thinking",
-                "End Time" : get_unix(minutes=10),
-                "Games" : ['pending...'],
-                "Rerolls" : 0
-            })
+            userInfo[target_user]['Pending Rolls']['Fourward Thinking'] = get_unix(minutes=10)
 
             dump = await dump_mongo('user', userInfo)
             return await interaction.followup.send(embed=embed, view=view)
@@ -484,7 +482,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
         # Has rolled Fourward Thinking but isn't done with the roll yet.
         elif (has_roll and "End Time" in list(userInfo[target_user]['Current Rolls'][roll_num].keys())) :
-            if userInfo[target_user]['Current Rolls'][roll_num]['Games'][0] == "pending...":
+            if event in userInfo[target_user]['Pending Rolls'] :
                 return await interaction.followup.send("Please wait 10 minutes in between requests.")
             if userInfo[target_user]['Current Rolls'][roll_num]['Rerolls'] == 0:
                 return await interaction.followup.send("You are currently participating in Fourward Thinking and have no reroll tickets. Beat it.")
@@ -494,6 +492,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 deny_button = discord.ui.Button(label ="Deny", style=discord.ButtonStyle.danger)
                 view.add_item(deny_button)
                 view.add_item(agree_button)
+
+
                 
                 async def deny_callback(interaction : discord.Interaction) :
                     await interaction.response.defer()
@@ -569,12 +569,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 for i, g in enumerate(genres):
                     if g == genre: view.children[i].disabled = True
             
-            userInfo[target_user]['Current Rolls'][roll_num] = {
-                "Event Name" : "Fourward Thinking",
-                "End Time" : get_unix(minutes=10),
-                "Games" : ['pending...'] + userInfo[target_user]['Current Rolls'][roll_num]['Games'],
-                "Rerolls" : userInfo[target_user]['Current Rolls'][roll_num]['Rerolls']
-            }
+            userInfo[target_user]['Pending Rolls']['Fourward Thinking'] = get_unix(minutes=10)
             
             dump = await dump_mongo('user', userInfo)
             return await interaction.followup.send(view=view, embed=embed)
