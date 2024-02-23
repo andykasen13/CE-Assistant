@@ -131,6 +131,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     user_dict[ce_id]['Completed Rolls'] = database_user[user]['Completed Rolls']
     user_dict[ce_id]['Cooldowns'] = database_user[user]['Cooldowns']
     user_dict[ce_id]['Casino Score'] = database_user[user]['Casino Score']
+    user_dict[ce_id]['Pending Rolls'] = database_user[user]['Pending Rolls']
 
     
 
