@@ -1,4 +1,8 @@
+import asyncio
+import functools
+from functools import wraps
 import random
+import typing
 from bson import ObjectId
 import discord
 import datetime
@@ -16,11 +20,17 @@ from Helper_Functions.Scheduler import add_task
 from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 from Helper_Functions.end_time import months_to_days
 
+
+def to_thread(func: typing.Callable) -> typing.Coroutine:
+    @functools.wraps(func)
+    async def wrapper(*args, **kwargs):
+        return await asyncio.to_thread(func, *args, **kwargs)
+    return wrapper
+
 final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
+@to_thread
 async def solo_command(interaction : discord.Interaction, event : str, reroll : bool, collection) :
-
-
     # Set up variables
     view = discord.ui.View(timeout=600)
     games = []
