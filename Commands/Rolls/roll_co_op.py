@@ -211,6 +211,9 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             await interaction.response.defer()
             if interaction.user.id != target_user_data['Discord ID'] : return
 
+            if event in database_user[int_user_id]['Pending Rolls'] : del database_user[int_user_id]['Pending Rolls'][event]
+            if event in database_user[part_user_id]['Pending Rolls'] : del database_user[part_user_id]['Pending Rolls'][event]
+            
             # Set up denial embed
             embed = discord.Embed(
                 title="Roll Denied",
@@ -377,6 +380,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             async def deny_callback(interaction) :
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data['Discord ID'] : return
+                if event in database_user[int_user_id]['Pending Rolls'] : del database_user[int_user_id]['Pending Rolls'][event]
+                if event in database_user[part_user_id]['Pending Rolls'] : del database_user[part_user_id]['Pending Rolls'][event]
                 view.clear_items()
                 return await interaction.followup.edit_message(message_id=interaction.message.id, embed=discord.Embed(title="Roll denied."), view=view)
             agree_button.callback = agree_callback
@@ -674,8 +679,12 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data['Discord ID'] : return
                 view.clear_items()
+                if event in database_user[int_user_id]['Pending Rolls'] : del database_user[int_user_id]['Pending Rolls'][event]
+                if event in database_user[part_user_id]['Pending Rolls'] : del database_user[part_user_id]['Pending Rolls'][event]
                 return await interaction.followup.edit_message(
                     message_id=interaction.message.id, embed=discord.Embed(title="Roll denied."), view=view)
+            
+
             agree_button.callback = agree_callback
             deny_button.callback = deny_callback
 
