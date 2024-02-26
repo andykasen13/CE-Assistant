@@ -58,7 +58,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     
     for eventInfo in database_user[part_user_id]['Current Rolls'] :
         if((eventInfo['Event Name'] == event)) : 
-            return await interaction.followup.send(embed=discord.Embed(title=f"You are already participating in {event}!"))
+            return await interaction.followup.send(embed=discord.Embed(title=f"Your partner is already participating in {event}!"))
 
     database_user[int_user_id]['Pending Rolls'][event] = get_unix(minutes=10)
     database_user[part_user_id]['Pending Rolls'][event] = get_unix(minutes=10)
@@ -70,6 +70,24 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     if interaction_user_data == "" : return await interaction.followup.send("You are not registered in the CE Assistant database.")
     if target_user_data == "" : return await interaction.followup.send(f"<@{partner.id}> is not registered in the CE Assistant database.")
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------- Destiny Alignment ---------------------------------------------------------------- #
@@ -77,8 +95,10 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 
     if(event == "Destiny Alignment") :
-        """Player A will roll a game that Player B has completed, and Player B will roll a game that Player A has completed.
-        Once both of them have completed their rolled games, they both win."""
+        """Player A will roll a game that Player B has completed, 
+        and Player B will roll a game that Player A has completed.
+        Once both of them have completed their rolled games, they both win.
+        This has no time limit."""
 
         # Make sure both users are the same rank
         if(interaction_user_data['Rank'] != target_user_data['Rank']) : return await interaction.followup.send("You are not the same rank!")
@@ -95,7 +115,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         deny_button = discord.ui.Button(label="Deny", style=discord.ButtonStyle.danger)
         view.add_item(deny_button)
         view.add_item(agree_button)
-        async def agree_callback(interaction) :
+        async def agree_callback(interaction : discord.Interaction) :
             await interaction.response.defer()
             if interaction.user.id != target_user_data['Discord ID'] : return
             
@@ -106,7 +126,6 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             # Grab all completed games from interaction user 
             for interaction_user_game in interaction_user_data['Owned Games'] :
-                print(interaction_user_game)
                 # Grab all objectives completed by User A
                 try : interaction_user_obj_list = list(
                     interaction_user_data['Owned Games'][interaction_user_game]['Primary Objectives'])
@@ -116,7 +135,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 database_obj_list = list(database_name[interaction_user_game]['Primary Objectives'])
 
                 # If they're the same, add the game to the list of possibilities.
-                if interaction_user_obj_list == database_obj_list : interaction_user_completed_games.append(interaction_user_game)
+                if set(interaction_user_obj_list) == set(database_obj_list) : interaction_user_completed_games.append(interaction_user_game)
 
             #  Grab all completed games from target user 
             for target_user_game in target_user_data['Owned Games'] :
@@ -131,30 +150,21 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 if target_user_obj_list == database_obj_list : target_user_completed_games.append(target_user_game)
 
             # ----- Make sure the other user doesn't have any points in the game they rolled -----
-            target_user_owns_game = True
-            target_user_has_points_in_game = True
+            user_b_pts = True
 
-            while target_user_owns_game and target_user_has_points_in_game :
+            while user_b_pts :
                 # grab a rollable game
                 interaction_user_selected_game = await get_rollable_game_from_list(interaction_user_completed_games, collection)
                 # check to see if they own the game and if they have points in the game
-                target_user_owns_game = list(target_user_data['Owned Games'].keys()).count(interaction_user_selected_game) > 0
-                if(target_user_owns_game) : 
-                    target_user_has_points_in_game = list(
-                        target_user_data['Owned Games'][interaction_user_selected_game].keys()).count("Primary Objectives") > 0
-                else : target_user_has_points_in_game = False
+                user_b_pts = has_points(target_user_data, interaction_user_selected_game)
 
-            interaction_user_owns_game = True
-            interaction_user_has_points_in_game = True
+            user_a_pts = True
 
-            while interaction_user_owns_game and interaction_user_has_points_in_game :
+            while user_a_pts:
                 # grab a rollable game
                 target_user_selected_game = await get_rollable_game_from_list(target_user_completed_games, collection)
                 # check to see if they own the game and if they have points in the game
-                interaction_user_owns_game = list(interaction_user_data['Owned Games'].keys()).count(target_user_selected_game) > 0
-                if(interaction_user_owns_game) :
-                    interaction_user_has_points_in_game = list(interaction_user_data['Owned Games'][target_user_selected_game].keys()).count("Primary Objectives") > 0
-                else : interaction_user_has_points_in_game = False
+                user_a_pts = has_points(interaction_user_data, target_user_selected_game)
 
             games = [interaction_user_selected_game, target_user_selected_game]
 
@@ -197,7 +207,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             # and edit the message.
             return await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
-        async def deny_callback(interaction) :
+        async def deny_callback(interaction : discord.Interaction) :
             await interaction.response.defer()
             if interaction.user.id != target_user_data['Discord ID'] : return
 
@@ -212,6 +222,27 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
         agree_button.callback = agree_callback
         deny_button.callback = deny_callback
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------- Soul Mates ------------------------------------------------------------ #
@@ -219,12 +250,13 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 
     elif(event == "Soul Mates") :
-        """Player A and Player B agree on a tier. A game in that tier is rolled for both of them.
+        """Player A and Player B agree on a tier. 
+        A game in that tier is rolled for both of them.
         They must both complete it in their time frame."""
 
         embed = discord.Embed(title="Soul Mates", timestamp=datetime.datetime.now())
         embed.add_field(name="Roll Requirements", value="You and your partner must agree on a tier. A game will be rolled for both of you," 
-                                                        + "and you must **both** complete it in the time constraint listed below.")
+                                                        + " and you must **both** complete it in the time constraint listed below.")
         embed.add_field(name="Tier Choices",
                         value=":one: : 48 Hours\n:two: : 10 Days\n:three: : One Month\n:four: : Two Months\n:five: : Forever")
         embed.set_thumbnail(url = ce_mountain_icon)
@@ -360,7 +392,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             # Set up embed for user B
             embed = discord.Embed(title="Do you accept?", timestamp=datetime.datetime.now())
-            embed.add_field(name="Tier", value="<@{}> has chosen {}. Do you, <@{}> agree to participate in Soul Mates with them?".format(interaction_user_data['Discord ID'], tier_num, target_user_data['Discord ID']))
+            embed.add_field(name="Tier", value="<@{}> has chosen {}. Do you, <@{}>, agree to participate in Soul Mates with them?".format(interaction_user_data['Discord ID'], tier_num, target_user_data['Discord ID']))
             if tier_num != "Tier 5" : embed.add_field(name="Time Limit", value="You will have a time limit of {}.".format(shmilly[tier_num]))
             embed.set_thumbnail(url=ce_mountain_icon)
             embed.set_footer(text="CE Assistant",icon_url=final_ce_icon)
@@ -382,13 +414,40 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             - game must be rerolled if either user has any points in the game
 
         """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ------------------------------------------------- Teamwork Makes the Dream Work -------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
     elif(event == "Teamwork Makes the Dream Work") :
-        """Four T3s are rolled. When all games have completed between Player A and Player B, they both win."""
+        """Four T3s are rolled. 
+        When all games have completed between Player A and Player B, 
+        they both win -- with a time limit of one month."""
         # Send confirmation embed
         embed = discord.Embed(title = "Teamwork Makes the Dream Work", timestamp = datetime.datetime.now())
         embed.add_field(name = "Roll Information", value = "Four Tier 3 games will be rolled. Between the two of you,"
@@ -424,7 +483,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 target_user_has_points_in_game = True
                 interaction_user_owns_game = True
                 interaction_user_has_points_in_game = True
-                while (target_user_owns_game and target_user_has_points_in_game) or (interaction_user_owns_game and interaction_user_has_points_in_game) :
+                while (target_user_has_points_in_game) or (interaction_user_has_points_in_game) :
                     # grab a rollable game
                     game = await get_rollable_game(40, 20, "Tier 3", database_tier=database_tier, database_name=database_name, games=games)
 
@@ -442,7 +501,6 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                         interaction_user_has_points_in_game = list(interaction_user_data['Owned Games'][game].keys()).count("Primary Objectives") > 0
                     else : interaction_user_has_points_in_game = False
 
-
                 # ----- Append the game -----
                 games.append(game)
                 
@@ -453,10 +511,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             # ----------- Get embeds ---------------------
             embeds = create_multi_embed("Teamwork Makes the Dream Work", months_to_days(1), games, months_to_days(3), interaction, database_name)
-
             embeds[0].set_thumbnail(url = ce_mountain_icon)
-
-            # ------ Get page buttons -------
             await get_buttons(view, embeds)
 
             end_time = get_unix(months=1)
@@ -496,13 +551,44 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         
         
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ------------------------------------------------------ Winner Takes All ------------------------------------------------------------ #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
     elif(event == "Winner Takes All") :
-        """Player A and Player B agree on a tier. One game is rolled. The first to complete the game wins."""
+        """Player A and Player B agree on a tier. 
+        One game is rolled.
+        The first to complete the game wins."""
+
         embed = discord.Embed(title="Winner Takes All", timestamp=datetime.datetime.now())
         embed.add_field(name="Roll Requirements", value="You and your partner must agree on a tier. A game will be rolled for both of you." 
                                                         + " The first to complete all Primary Objectives will win.")
@@ -539,17 +625,9 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 # grab a rollable game
                 game = await get_rollable_game(40, 20, tier_num, database_name=database_name, database_tier=database_tier)
                 
-                # check to see if user B owns the game and if they have points in the game
-                target_user_owns_game = list(target_user_data['Owned Games'].keys()).count(game) > 0
-                if(target_user_owns_game) : 
-                    target_user_has_points_in_game = list(target_user_data['Owned Games'][game].keys()).count("Primary Objectives") > 0
-                else : target_user_has_points_in_game = False
-
-                # check to see if user A owns the game and if they have points in the game
-                interaction_user_owns_game = list(interaction_user_data['Owned Games'].keys()).count(game) > 0
-                if(interaction_user_owns_game) :
-                    interaction_user_has_points_in_game = list(interaction_user_data['Owned Games'][game].keys()).count("Primary Objectives") > 0
-                else : interaction_user_has_points_in_game = False
+                # check to see if users have points in the game
+                target_user_has_points_in_game = has_points(target_user_data, game)
+                interaction_user_has_points_in_game = has_points(interaction_user_data, game)
 
             # ----- Set up agreement buttons for User B -----
             agree_button = discord.ui.Button(label="Agree", style=discord.ButtonStyle.success)
@@ -557,6 +635,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             view.add_item(deny_button)
             view.add_item(agree_button)
             
+            # agreed
             async def agree_callback(interaction : discord.Interaction) :
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data['Discord ID'] : return
@@ -566,13 +645,12 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 embed.add_field(name="Tier", value=database_name[game]['Tier'])
                 embed.add_field(name="Completion", value="When you have completed, submit your proof to <#747384873320448082>. The first to do so wins.")
 
-
+                # update database_user
                 database_user[int_user_id]['Current Rolls'].append({
                     "Event Name" : event,
                     "Partner" : target_user_data['CE ID'],
                     "Games" : [game]
                 })
-               
 
                 database_user[part_user_id]['Current Rolls'].append({
                     "Event Name" : event,
@@ -588,12 +666,14 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
 
                 return await interaction.followup.edit_message(embed=embed, view=view, message_id=interaction.message.id)
+            
+            # denied
             async def deny_callback(interaction : discord.Interaction) :
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data['Discord ID'] : return
                 view.clear_items()
                 return await interaction.followup.edit_message(
-                    message_id=interaction.message.id, embed=discord.Embed(title="Roll denied."))
+                    message_id=interaction.message.id, embed=discord.Embed(title="Roll denied."), view=view)
             agree_button.callback = agree_callback
             deny_button.callback = deny_callback
 
@@ -623,39 +703,72 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             - neither user can have completed any objectives in the game
         """
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- Game Theory ------------------------------------------------------------ #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
     elif(event == "Game Theory") :
+
+        # set up embed
         embed = discord.Embed(title="Game Theory", timestamp=datetime.datetime.now())
         embed.add_field(name="Roll Requirements", value="You and your partner will secretly select a genre for the other person. " 
                                                         + "A T3 in your selected genre will be rolled for your partner. The first to complete theirs wins!")
         embed.add_field(name="Genre Choices",
-                        value=f"<@{interaction.user.id}>, please select the genre for the other user.")
+                        value=f"<@{interaction.user.id}>, please select the genre for the other user. Remember, if you choose the same genre for each other,"
+                        + " you both will both be put on cooldown for one week.")
         embed.set_thumbnail(url = ce_mountain_icon)
         embed.set_author(name="Challenge Enthusiasts")
         embed.set_footer(text="CE Assistant", icon_url=ce_mountain_icon)
 
+        # set up buttons
         buttons = []
         i = 0
-
         genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
-
         async def action_callback(interaction) : return await game_theory_callback_1(interaction, "Action")        
         async def arcade_callback(interaction) : return await game_theory_callback_1(interaction, "Arcade")
         async def bullet_hell_callback(interaction) : return await game_theory_callback_1(interaction, "Bullet Hell")
         async def fps_callback(interaction) : return await game_theory_callback_1(interaction, "First-Person")
         async def platformer_callback(interaction) : return await game_theory_callback_1(interaction, "Platformer")
         async def strategy_callback(interaction) : return await game_theory_callback_1(interaction, "Strategy")
-
-
         while i < 6 :
             buttons.append(discord.ui.Button(label=genres[i]))
             view.add_item(buttons[i])
             i+=1
-        
         buttons[0].callback = action_callback
         buttons[1].callback = arcade_callback
         buttons[2].callback = bullet_hell_callback
@@ -664,6 +777,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         buttons[5].callback = strategy_callback
         buttons[5].disabled = True
 
+        # set up the first callback
         async def game_theory_callback_1(interaction : discord.Interaction, targets_genre) :
             await interaction.response.defer()
             if(interaction.user.id != interaction_user_data['Discord ID']) : return
@@ -716,11 +830,11 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     end_time = get_unix(7)
                     
                     database_user[int_user_id]['Cooldowns'].append({
-                        "Winner Takes All" : end_time
+                        "Game Theory" : end_time
                     })
 
                     database_user[part_user_id]['Cooldowns'].append({
-                        "Winner Takes All" : end_time
+                        "Game Theory" : end_time
                     })
 
 
@@ -733,37 +847,21 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 await interaction.followup.edit_message(message_id=interaction.message.id, embed=discord.Embed(title="Working..."), view=view)
 
                 # ----- Make sure the target user doesn't have any points in the game they rolled -----
-                target_user_owns_game = True
                 target_user_has_points_in_game = True
-
-                while target_user_owns_game and target_user_has_points_in_game :
-                    # grab a rollable game
+                while target_user_has_points_in_game :
                     target_user_selected_game = await get_rollable_game(40, 20, "Tier 3", specific_genre=targets_genre, database_tier=database_tier, database_name=database_name)
-
-                    # check to see if they own the game and if they have points in the game
-                    target_user_owns_game = list(target_user_data['Owned Games'].keys()).count(target_user_selected_game) > 0
-                    if(target_user_owns_game) : target_user_has_points_in_game = list(target_user_data['Owned Games'][target_user_selected_game].keys()).count("Primary Objectives") > 0
-                    else : target_user_has_points_in_game = False
+                    target_user_has_points_in_game = has_points(target_user_data, target_user_selected_game)
 
                 # ----- Make sure the interaction user doesn't have any points in the game they rolled -----
-                interaction_user_owns_game = True
                 interaction_user_has_points_in_game = True
-
-                while interaction_user_owns_game and interaction_user_has_points_in_game :
-                    # grab a rollable game
+                while interaction_user_has_points_in_game :
                     interaction_user_selected_game = await get_rollable_game(40, 20, "Tier 3", specific_genre=interactions_genre, database_name=database_name, database_tier=database_tier)
-                    # check to see if they own the game and if they have points in the game
-                    interaction_user_owns_game = list(interaction_user_data['Owned Games'].keys()).count(interaction_user_selected_game) > 0
-                    if(interaction_user_owns_game) :
-                        interaction_user_has_points_in_game = list(interaction_user_data['Owned Games'][interaction_user_selected_game].keys()).count("Primary Objectives") > 0
-                    else : interaction_user_has_points_in_game = False
+                    interaction_user_has_points_in_game = has_points(interaction_user_data, interaction_user_selected_game)
                 
                 games = [interaction_user_selected_game, target_user_selected_game]
 
-                # Get the embeds
+                # Get the embeds and buttons
                 embeds = create_multi_embed("Game Theory", 0, games, months_to_days(1), interaction, database_name)
-
-                # Edit the embeds to Game Theory's specific needs
                 embeds[0].set_field_at(index=0, name="Rolled Games",
                                       value=f"<@{interaction_user_data['Discord ID']}>: {interaction_user_selected_game} ({interactions_genre})"
                                       + f"\n<@{target_user_data['Discord ID']}>: {target_user_selected_game} ({targets_genre})", inline=False)
@@ -775,12 +873,10 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 embeds[1].set_field_at(index=1, name="Rolled by", value="<@{}>".format(interaction_user_data['Discord ID']))
                 embeds[2].set_field_at(index=1, name="Rolled by", value=f"<@{target_user_data['Discord ID']}>")
                 embeds[2].set_thumbnail(url=partner.display_avatar)
-
                 embed = embeds[0]
-                # Get the buttons
                 await get_buttons(view, embeds)
 
-
+                # update database_user
                 database_user[int_user_id]['Current Rolls'].append({
                     "Event Name" : event,
                     "Partner" : target_user_data['CE ID'],
@@ -798,13 +894,17 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
                 dump = await dump_mongo('user', database_user)
 
-
-                # Edit the message
+                # Edit the message and send!
                 await interaction.followup.edit_message(message_id=interaction.message.id, view=view, embed=embed)
             
-            # Edit the message
+            # Edit the message and send!
             await interaction.followup.edit_message(message_id=interaction.message.id, view=view, embed=embed)
-                
-
 
     return await interaction.followup.send(view=view, embed=embed)
+
+
+def has_points(user_data : dict, game : str) -> bool :
+    "Returns true if the user owns the game and has points in the game"
+    owns_game = game in (user_data["Owned Games"])
+    if not owns_game : return False
+    return "Primary Objectives" in user_data['Owned Games'][game]

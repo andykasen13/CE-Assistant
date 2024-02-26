@@ -67,26 +67,26 @@
         "One Hell of a Day" : {
             "Name" : "One Hell of a Day",
             "Emoji" : "\u0030\uFE0F\u20E3",
-            "Description" : "",
-            "Content" : ""
+            "Description" : "Learn about One Hell of a Day!",
+            "Content" : "One <:tier1:1126268393725644810> game will be rolled for you in a random category. It will be less than $10 and have less than 10 hours on SteamHunter's Median Completion Time. You must complete this game within 24 hours. The cooldown is one week."
         },
         "One Hell of a Week" : {
             "Name" : "One Hell of a Week",
             "Emoji" : "\u0031\u20E3",
-            "Description" : "",
-            "Content" : ""
+            "Description" : "Learn about One Hell of a Week!",
+            "Content" : "Five <:tier1:1126268393725644810>s will be rolled for you (all in different genres). They will all be less than $10 and have less than 10 hours on SteamHunter's Median Completion Time. You must complete all five of these games within one week. The cooldown is one month."
         },
         "One Hell of a Month" : {
             "Name" : "One Hell of a Month",
             "Emoji" : "\u0032\u20E3",
-            "Description" : "",
-            "Content" : ""
+            "Description" : "Learn about One Hell of a Month!",
+            "Content" : "Five genres will be chosen at random. In each of those genres, five <:tier1:1126268393725644810>s will be rolled for you. They will all be less than $10 and have less than 10 hours on SteamHunter's Median Completion Time. You must complete three of the five in each genre. The cooldown is three months."
         },
         "Two Week T2 Streak" : {
             "Name" : "Two Week T2 Streak",
             "Emoji" : "\u25B6\uFE0F",
-            "Description" : "",
-            "Content" : ""
+            "Description" : "Learn about Two Week T2 Streak!",
+            "Content" : "A random <:tier2:1126268395483037776> will be rolled for you. It will be less than $20 and have less than 40 hours on SteamHunter's Median Completion Time. You must complete this game within one week. Then, another <:tier2:1126268395483037776> will be rolled for you, and you must complete that within a week. There is no cooldown."
         },
         "Two 'Two Week T2 Streak' Streak" : {
             "Name" : "Two 'Two Week T2 Streak' Streak",
@@ -121,8 +121,8 @@
         "Russian Roulette" : {
             "Name" : "Russian Roulette",
             "Emoji" : "\uD83D\uDCA5",
-            "Description" : "",
-            "Content" : ""
+            "Description" : "Learn about Russian Roulette!",
+            "Content" : "Russian Roulette is not handled by CE Assistant. Please ping Folkius for assistance."
         }
     }
 }
