@@ -181,13 +181,22 @@ async def help(interaction : discord.Interaction) :
     for option in basic_options:
         if option == 'Admin Options' and (not mod_role in interaction.user.roles and not admin_role in interaction.user.roles):
             continue
-        selections.append(discord.SelectOption(label=basic_options[option]['Name'],emoji=basic_options[option]['Emoji'],description=basic_options[option]['Description']))
+        selections.append(discord.SelectOption(
+            label=basic_options[option]['Name'],
+            emoji=basic_options[option]['Emoji'],
+            description=basic_options[option]['Description']))
 
     for option in roll_options:
-        rolls.append(discord.SelectOption(label=roll_options[option]['Name'],emoji=roll_options[option]['Emoji'],description=roll_options[option]['Description']))
+        rolls.append(discord.SelectOption(
+            label=roll_options[option]['Name'],
+            emoji=roll_options[option]['Emoji'],
+            description=roll_options[option]['Description']))
 
     for option in admin_options:
-        admin.append(discord.SelectOption(label=admin_options[option]['Name'],emoji=admin_options[option]['Emoji'],description=admin_options[option]['Description']))
+        admin.append(discord.SelectOption(
+            label=admin_options[option]['Name'],
+            emoji=admin_options[option]['Emoji'],
+            description=admin_options[option]['Description']))
   
 
     
@@ -202,9 +211,17 @@ async def help(interaction : discord.Interaction) :
             await interaction.response.defer()
             embed = self.get_embed()
             if self.values[0] == 'Rolls' or self.values[0] in list(roll_options.keys()):
-                await interaction.followup.edit_message(embed = embed, view=HelpSelectView(menu=rolls, message="Rolls", message_2=self.values[0]), message_id = interaction.message.id)
+                await interaction.followup.edit_message(embed = embed, view=HelpSelectView(
+                    menu=rolls, 
+                    message="Rolls", 
+                    message_2=self.values[0]), 
+                    message_id = interaction.message.id)
             if self.values[0] == 'Admin Options' or self.values[0] in list(admin_options.keys()):
-                await interaction.followup.edit_message(embed = embed, view=HelpSelectView(menu=admin, message="Admin Options", message_2=self.values[0]), message_id = interaction.message.id)
+                await interaction.followup.edit_message(embed = embed, view=HelpSelectView(
+                    menu=admin, 
+                    message="Admin Options", 
+                    message_2=self.values[0]), 
+                    message_id = interaction.message.id)
             else:
                 await interaction.followup.edit_message(embed=embed, view=HelpSelectView(message=self.values[0]), message_id = interaction.message.id)
 
