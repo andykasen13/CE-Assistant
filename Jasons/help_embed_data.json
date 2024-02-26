@@ -12,12 +12,6 @@
             "Description": "Learn how to roll and about different rolls!",
             "Content": "Rolling is a fun way to try new games! Click below to find out more about all of the solo and co-op roll events!"
         },
-        "Rerolls": {
-            "Name": "Rerolls",
-            "Emoji": "\u267b\ufe0f",
-            "Description": "Learn how to reroll and about reroll tokens!",
-            "Content": "With each roll event you complete, you'll earn a certain amount of reroll tokens. These one-time use tokens allow you to reroll any roll event you're currently participating in - but be sure that's what you want, because some events come with additional cool-down times should you fail a rerolled event!"
-        },
         "Update": {
             "Name": "Update",
             "Emoji": "\ud83d\udcc8",

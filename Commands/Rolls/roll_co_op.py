@@ -65,10 +65,6 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
     dump = await dump_mongo('user', database_user)
     database_user = await get_mongo('user')
-
-    # Make sure both users are registered in the database
-    if interaction_user_data == "" : return await interaction.followup.send("You are not registered in the CE Assistant database.")
-    if target_user_data == "" : return await interaction.followup.send(f"<@{partner.id}> is not registered in the CE Assistant database.")
     
 
 
@@ -213,7 +209,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             if event in database_user[int_user_id]['Pending Rolls'] : del database_user[int_user_id]['Pending Rolls'][event]
             if event in database_user[part_user_id]['Pending Rolls'] : del database_user[part_user_id]['Pending Rolls'][event]
-            
+
             # Set up denial embed
             embed = discord.Embed(
                 title="Roll Denied",
