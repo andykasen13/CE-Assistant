@@ -39,8 +39,8 @@ async def dump_mongo(title : mongo_names, data) :
 
 
 # get unix timestamp for x days from now
-def get_unix(days = 0, minutes = -1, months = -1):
-    """Returns a unix timestamp for `days` days (or `minutes` minutes) from the current time."""
+def get_unix(days = 0, minutes = -1, months = -1) -> int:
+    """Returns a unix timestamp for `days` days (or `minutes` minutes, or `months` months) from the current time."""
     # return right now
     if(days == "now") : return int(time.mktime((datetime.datetime.now()).timetuple()))
     
@@ -54,5 +54,10 @@ def get_unix(days = 0, minutes = -1, months = -1):
 
     # return days
     else: return int(time.mktime((datetime.datetime.now()+timedelta(days)).timetuple()))
+
+def timestamp_to_unix(timestamp : str) -> int :
+    """Takes in the CE timestamp (`"2024-02-25T07:04:38.000Z"`) and converts it to unix timestamp (`1708862678`)"""
+    return int(time.mktime(datetime.datetime.strptime(str(timestamp[:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple()))
+    return 0
 
 # ----------------------------------------------------------------------------------------------------------------------------
