@@ -134,7 +134,8 @@ import calendar
 #         if("End Time" not in cu_roll) : print('end ime not in roll')
 #         elif(cu_roll['End Time'] > int(time.mktime((datetime.datetime.now()).timetuple()))) : print("{} is joever".format(cu_roll['Event Name']))
 
-def months_to_days(num_months):
+def months_to_days(num_months : int):
+    "Takes in a number of months `num_months` and returns the number of days between today and `num_months` months away."
     # purpose -- determine number of days to 'x' months away. Required as duration will be different depending on point in the year, and get_rollable_game requires day inputs
     # function input = number of months
     # function output = number of days between now and input months away 

@@ -30,7 +30,7 @@ import chromedriver_binary  # Adds chromedriver binary to path
 # pictures
 from .Screenshot import Screenshot
 from PIL import Image
-from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
+from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix, timestamp_to_unix
 
 # set basic icons
 ce_hex_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
@@ -227,7 +227,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
     print('scraping....')
     # game loop adding updated parts
-    for game in json_response:
+    for i, game in enumerate(json_response):
         #print(game['name'])
         current_newest = c
 
@@ -249,20 +249,20 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
 
         # determine the correct updated_at time
-        updated_time = time.mktime(datetime.strptime(str(game['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
-        created_time = time.mktime(datetime.strptime(str(game['createdAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+        updated_time = timestamp_to_unix(game['updatedAt'])
+        created_time = timestamp_to_unix(game['createdAt'])
 
         for objective in game['objectives'] :
             # store the objective names
             import_objective_names.append(objective['name'])
 
             # was the objective updated
-            objupdatedtime = time.mktime(datetime.strptime(str(objective['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+            objupdatedtime = timestamp_to_unix(objective['updatedAt'])
             if updated_time < objupdatedtime : updated_time = objupdatedtime
 
             # was the objective's requirement updated
             for objrequirement in objective['objectiveRequirements'] :
-                objrequpdatedtime = time.mktime(datetime.strptime(str(objrequirement['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+                objrequpdatedtime = timestamp_to_unix(objrequirement['updatedAt'])
                 if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
 
         if(game['name'] in list(new_data.keys())) : 
@@ -292,7 +292,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             test_old = new_data[game['name']]
 
             # get new data that wont be mutated
-            to_keep = get_game(game)
+            to_keep = get_game(game, json_response[i])
 
             # create maluable data
             test_new = to_keep
@@ -310,19 +310,20 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                     number += 1
 
             # update data
-            new_data[game['name']] = get_game(game)
+            new_data[game['name']] = get_game(game, json_response[i])
         
         # game is new BUT! unfinished
         elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None):
             print('silly!')
-            unfinished_games['unfinished'].append(game['id'])
+            if game['id'] in unfinished_games['unfinished'] : continue
+            else: unfinished_games['unfinished'].append(game['id'])
 
         # if game is updated
         elif updated_time > current_newest and game['name'] in list(new_data.keys()):
             print("UPDATED: " + game['name'])
             game_tracker.remove(game['name'])
             test_old = new_data[game['name']]
-            to_keep = get_game(game)
+            to_keep = get_game(game, json_response[i])
             test_new = to_keep
             test_new['Full Completions'] = None
             test_new['Total Owners'] = None
@@ -334,7 +335,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                     if upppp != "hiya!":
                         updated_games.append(upppp)
                         number += 1
-            new_data[game['name']] = get_game(game)
+            new_data[game['name']] = get_game(game, json_response[i])
 
         # if game is new
         # elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
@@ -348,7 +349,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             if hm:
                 ss = (get_image(number, game['id'], driver))
                 ss = io.BytesIO(ss)
-            new_game = get_game(game)
+            new_game = get_game(game, json_response[i])
             new_data[game['name']] = new_game
 
             # grab total points
@@ -418,7 +419,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 if game['id'] == new_data[other_game]['CE ID']:
                     game_tracker.remove(other_game['name'])
                     del(new_data[other_game])
-                    new_data[game['name']] = get_game(game)
+                    new_data[game['name']] = get_game(game, json_response[i])
                     silly = True
 
             # new game that wasn't caught above
@@ -427,7 +428,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 if hm:
                     ss = (get_image(number, game['id'], driver))
                     ss = io.BytesIO(ss)
-                new_game = get_game(game)
+                new_game = get_game(game, json_response[i])
                 new_data[game['name']] = new_game
 
                 # grab total points
@@ -827,7 +828,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
 
 
 # get the game info
-def get_game(game):
+def get_game(game, big_game = ""):
     objectives = get_objectives(game['id'])
     returnable = {
         'Name' : game['name'],
@@ -841,6 +842,9 @@ def get_game(game):
         'Community Objectives' : objectives[1],
         'Last Updated' : objectives[2]
         }
+    if big_game != "":
+        returnable['Full Completions'] = big_game['completion']['completed']
+        returnable['Total Owners'] = big_game['completion']['total']
     
     return returnable
 
@@ -883,16 +887,16 @@ def get_objectives(CE_ID):
         if requirements != '':
             objectives[index][objective['name']]['Requirements'] = requirements
     
-    updated_time = time.mktime(datetime.strptime(str(json_response['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+    updated_time = timestamp_to_unix(json_response['updatedAt'])
 
     for objective in json_response['objectives'] :
         # was the objective updated
-        objupdatedtime = time.mktime(datetime.strptime(str(objective['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+        objupdatedtime = timestamp_to_unix(objective['updatedAt'])
         if updated_time < objupdatedtime : updated_time = objupdatedtime
 
         # was the objective's requirement updated
         for objrequirement in objective['objectiveRequirements'] :
-            objrequpdatedtime = time.mktime(datetime.strptime(str(objrequirement['updatedAt'][:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple())
+            objrequpdatedtime = timestamp_to_unix(objrequirement['updatedAt'])
             if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
     
     objectives[2] = updated_time
