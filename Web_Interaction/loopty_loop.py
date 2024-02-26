@@ -23,6 +23,7 @@ import shutil
 
 # thread management
 import asyncio
+from asyncio import timeout
 import typing
 from bson import ObjectId
 from discord.ext import tasks
@@ -102,6 +103,7 @@ times = [
 @tasks.loop(time=times)
 async def master_loop(client, mongo_client):
     print('loop engaged...')
+    print('time = ' + str(datetime.datetime.now().strftime("%H:%M:%S")))
 
     correct_channel = client.get_channel(ce_log_id)
 
@@ -117,9 +119,12 @@ async def master_loop(client, mongo_client):
     except StaleElementReferenceException as e:
         scrape_message = "stale element!!! wahoo!! please ping andy even though he will cry"
         print(e)
+    except Exception as e:
+        scrape_message = "something else went wrong. someone ping andy pls\n\n" + str(e)
 
-    log = client.get_channel(ce_log_id)
-    await log.send(scrape_message)
+    if scrape_message != "loop successful" : 
+        log = client.get_channel(ce_log_id)
+        await log.send(scrape_message)
 
     print('done\n')
 
