@@ -542,6 +542,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         async def deny_callback(interaction) :
             await interaction.response.defer()
             if interaction.user.id != target_user_data['Discord ID'] : return
+            if event in database_user[int_user_id]['Pending Rolls'] : del database_user[int_user_id]['Pending Rolls'][event]
+            if event in database_user[part_user_id]['Pending Rolls'] : del database_user[part_user_id]['Pending Rolls'][event]
             view.clear_items()
             return await interaction.followup.edit_message(message_id=interaction.message.id, embed=discord.Embed(title="Roll denied."))
         
@@ -683,7 +685,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             embed.add_field(name="Winner Takes All", 
                             value="<@{}>, you have been challenged to Winner Takes All by <@{}>.".format(target_user_data['Discord ID'], 
                                                                               interaction_user_data['Discord ID'])
-                            + "Do you agree to participate with them?")
+                            + " Do you agree to participate with them?")
             embed.add_field(name="Tier", value="<@{}> has chosen {}.".format(interaction_user_data['Discord ID'], tier_num))
             embed.set_thumbnail(url=ce_mountain_icon)
             embed.set_footer(text="CE Assistant",icon_url=final_ce_icon)
