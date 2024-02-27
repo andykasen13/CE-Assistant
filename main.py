@@ -485,7 +485,7 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 @tasks.loop(time=datetime.time(hour=0, minute=20, tzinfo=datetime.timezone.utc))
 async def check_roll_status():
     print('it ran omg it actually ran')
-    log_channel = client.get_channel(ce_log_id) 
+    log_channel = client.get_channel(log_id) 
     log_channel.send("check_roll_status has begun!!")
     # get databases
     database_user = await get_mongo('user')
@@ -520,7 +520,7 @@ async def check_roll_status():
 
     # initialize the variables ##################################################################################################################
                                                                                           #
-    casino_channel = client.get_channel(ce_casino_test_id)                                                                                     #
+    casino_channel = client.get_channel(casino_id)                                                                                     #
                                                                                                                                                 #
     # rank silliness                                                                                                                            #
     ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]                                      #
@@ -1151,8 +1151,8 @@ async def update(interaction : discord.Interaction) :
     database_name = await get_mongo('name')
     database_user = await get_mongo('user')
 
-    log_channel = client.get_channel(ce_log_id)
-    casino_channel = client.get_channel(ce_casino_test_id)
+    log_channel = client.get_channel(log_id)
+    casino_channel = client.get_channel(casino_id)
     
     # rank silliness
     ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]
@@ -1342,7 +1342,7 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 
     # grab the site additions channel
     # TODO: update this in the CE server
-    site_additions_channel = client.get_channel(ce_log_id)
+    site_additions_channel = client.get_channel(game_additions_id)
 
     # try to get the message
     try :
@@ -1392,7 +1392,7 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
     
-    test_log = client.get_channel(ce_log_id)
+    test_log = client.get_channel(log_id)
     await test_log.send("The bot has now been restarted.")    #get_tasks(client)
     await master_loop.start(client, mongo_client)
     await check_roll_status.start()

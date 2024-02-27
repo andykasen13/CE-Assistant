@@ -22,7 +22,6 @@ from Helper_Functions.mongo_silly import *
 
 
 async def single_run(client, requested_reviews=0, collection=""):
-    from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
     if requested_reviews > 0:
         data = await get_mongo('curator')
@@ -38,7 +37,7 @@ async def single_run(client, requested_reviews=0, collection=""):
         embeds = curatorUpdate(requested_reviews)
 
     for embed in embeds:
-        correctChannel = client.get_channel(ce_log_id)
+        correctChannel = client.get_channel(log_id)
         await correctChannel.send(embed=embed)
 
 

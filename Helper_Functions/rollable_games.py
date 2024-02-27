@@ -193,8 +193,6 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
 # -------------------------------------------------------------------------------------------------------------------------------- #
 
 async def get_rollable_game_from_list(games, collection) :
-    
-
     database_name = await get_mongo('name')
     rollable = False
     while not rollable :

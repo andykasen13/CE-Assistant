@@ -41,18 +41,18 @@ ce_james_icon = "https://i.imgur.com/fcdHTvx.png"
 final_ce_icon = "https://i.imgur.com/O9J7fg2.png"
 
 # ------------- discord channel numbers -------------
-# ce
+# ce ids
 ce_log_id = 1208259110638985246             # log
 ce_casino_test_id = 1208259878381031485     # fake casino
 ce_casino_id = 1080137628604694629          # real casino
-ce_game_additions = 949482536726298666      # game additions
-# bot test
+ce_game_additions_id = 949482536726298666   # game additions
+# bot test ids
 test_log_id = 1141886539157221457
 test_casino_id = 811286469251039333
 # go-to channels
-game_additions = ce_log_id
-casino = ce_casino_test_id
-log = ce_log_id
+game_additions_id = ce_log_id
+casino_id = ce_casino_test_id
+log_id = ce_log_id
 
 # ------------- emoji icons -------------
 icons = {
