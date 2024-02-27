@@ -1,5 +1,8 @@
+import asyncio
+import functools
 import json
 import random
+import typing
 from bson import ObjectId
 import requests
 
@@ -49,8 +52,14 @@ banned_games = ["Serious Sam HD: The Second Encounter",
 # -------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------------------------------------------------------------------------------- #
+def to_thread(func: typing.Callable) -> typing.Coroutine:
+    @functools.wraps(func)
+    async def wrapper(*args, **kwargs):
+        return await asyncio.to_thread(func, *args, **kwargs)
+    return wrapper
 
-async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_info = -1, specific_genre = "any", games : list = [], database_tier = "", database_name = "") :
+@to_thread
+def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_info = -1, specific_genre = "any", games : list = [], database_tier = "", database_name = "") :
         returned_game = ""
         rollable = False
         genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"] 

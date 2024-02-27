@@ -150,7 +150,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             while user_b_pts :
                 # grab a rollable game
-                interaction_user_selected_game = await get_rollable_game_from_list(interaction_user_completed_games, collection)
+                interaction_user_selected_game = get_rollable_game_from_list(interaction_user_completed_games, collection)
                 # check to see if they own the game and if they have points in the game
                 user_b_pts = has_points(target_user_data, interaction_user_selected_game)
 
@@ -158,7 +158,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             while user_a_pts:
                 # grab a rollable game
-                target_user_selected_game = await get_rollable_game_from_list(target_user_completed_games, collection)
+                target_user_selected_game = get_rollable_game_from_list(target_user_completed_games, collection)
                 # check to see if they own the game and if they have points in the game
                 user_a_pts = has_points(interaction_user_data, target_user_selected_game)
 
@@ -299,7 +299,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             interaction_user_has_points_in_game = True
             while (target_user_owns_game and target_user_has_points_in_game) or (interaction_user_owns_game and interaction_user_has_points_in_game) :
                 # grab a rollable game
-                game = await get_rollable_game(soul_mate_hours[tier_num], 20, tier_num, database_tier=database_tier, database_name=database_name)
+                game = get_rollable_game(soul_mate_hours[tier_num], 20, tier_num, database_tier=database_tier, database_name=database_name)
                 
                 # check to see if user B owns the game and if they have points in the game
                 target_user_owns_game = list(target_user_data['Owned Games'].keys()).count(game) > 0
@@ -486,7 +486,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 interaction_user_has_points_in_game = True
                 while (target_user_has_points_in_game) or (interaction_user_has_points_in_game) :
                     # grab a rollable game
-                    game = await get_rollable_game(40, 20, "Tier 3", database_tier=database_tier, database_name=database_name, games=games)
+                    game = get_rollable_game(40, 20, "Tier 3", database_tier=database_tier, database_name=database_name, games=games)
 
                     
                     
@@ -626,7 +626,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             interaction_user_has_points_in_game = True
             while (target_user_owns_game and target_user_has_points_in_game) or (interaction_user_owns_game and interaction_user_has_points_in_game) :
                 # grab a rollable game
-                game = await get_rollable_game(40, 20, tier_num, database_name=database_name, database_tier=database_tier)
+                game = get_rollable_game(40, 20, tier_num, database_name=database_name, database_tier=database_tier)
                 
                 # check to see if users have points in the game
                 target_user_has_points_in_game = has_points(target_user_data, game)
@@ -856,13 +856,13 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 # ----- Make sure the target user doesn't have any points in the game they rolled -----
                 target_user_has_points_in_game = True
                 while target_user_has_points_in_game :
-                    target_user_selected_game = await get_rollable_game(40, 20, "Tier 3", specific_genre=targets_genre, database_tier=database_tier, database_name=database_name)
+                    target_user_selected_game = get_rollable_game(40, 20, "Tier 3", specific_genre=targets_genre, database_tier=database_tier, database_name=database_name)
                     target_user_has_points_in_game = has_points(target_user_data, target_user_selected_game)
 
                 # ----- Make sure the interaction user doesn't have any points in the game they rolled -----
                 interaction_user_has_points_in_game = True
                 while interaction_user_has_points_in_game :
-                    interaction_user_selected_game = await get_rollable_game(40, 20, "Tier 3", specific_genre=interactions_genre, database_name=database_name, database_tier=database_tier)
+                    interaction_user_selected_game = get_rollable_game(40, 20, "Tier 3", specific_genre=interactions_genre, database_name=database_name, database_tier=database_tier)
                     interaction_user_has_points_in_game = has_points(interaction_user_data, interaction_user_selected_game)
                 
                 games = [interaction_user_selected_game, target_user_selected_game]
