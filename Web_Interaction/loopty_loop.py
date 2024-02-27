@@ -92,19 +92,19 @@ times = [
 
 # big daddy loop that runs every fifteen minutes
 @tasks.loop(time=times)
-async def master_loop(client, mongo_client):
+async def master_loop(client):
     print('loop engaged...')
     print('time = ' + str(datetime.datetime.now().strftime("%H:%M:%S")))
 
     correct_channel = client.get_channel(game_additions_id)
 
     # start the curate function
-    await curate(correct_channel, mongo_client)
+    await curate(correct_channel)
 
     # start the scrape function
     try: # timeout the function after 10 minutes. it keeps getting stuck smh my head
         async with asyncio.timeout(600):
-            scrape_message = await scrape(correct_channel, mongo_client)
+            scrape_message = await scrape(correct_channel)
     except TimeoutError:
         scrape_message = "function timed out!!!"
     except StaleElementReferenceException as e:
@@ -120,7 +120,7 @@ async def master_loop(client, mongo_client):
     print('done\n')
 
 
-async def curate(channel, mongo_client):
+async def curate(channel):
     print('curating...')
     from Helper_Functions.mongo_silly import get_mongo, dump_mongo
 
@@ -159,7 +159,7 @@ def thread_curate(curator_count):
     # call to the curator file
     return checkCuratorCount(curator_count)
 
-async def scrape(channel, mongo_client):
+async def scrape(channel):
     print('scraping...')
     from Helper_Functions.mongo_silly import get_mongo, dump_mongo
     database_name = await get_mongo('name')

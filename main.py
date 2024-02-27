@@ -40,7 +40,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from PIL import Image
-from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix, collection, mongo_client
+from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix, collection
 from Helper_Functions.mongo_silly import *
 
 
@@ -952,7 +952,7 @@ async def initiate_master_loop(interaction : discord.Interaction) :
 
     await interaction.followup.send('looping....')
 
-    await master_loop(client, mongo_client)
+    await master_loop(client)
 
     
 
@@ -1394,7 +1394,7 @@ async def on_ready():
     
     test_log = client.get_channel(log_id)
     await test_log.send("The bot has now been restarted.")    #get_tasks(client)
-    await master_loop.start(client, mongo_client)
+    await master_loop.start(client)
     await check_roll_status.start()
 
 
