@@ -32,7 +32,7 @@ _mongo_ids = {
 _uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
 _mongo_client = AsyncIOMotorClient(_uri)
 _mongo_database = _mongo_client['database_name']
-_collection = _mongo_client['database_name']['ce-collection']
+collection = _mongo_client['database_name']['ce-collection']
 
 # ------------- image icons -------------
 ce_mountain_icon = "https://i.imgur.com/zJ0NjYY.jpg"
@@ -83,11 +83,11 @@ icons = {
 _mongo_names = Literal["name", "tier", "curator", "user", "tasks", "unfinished"]
 async def get_mongo(title : _mongo_names):
     """Returns the MongoDB associated with `title`."""
-    return await _collection.find_one({'_id' : _mongo_ids[title]})
+    return await collection.find_one({'_id' : _mongo_ids[title]})
 
 async def dump_mongo(title : _mongo_names, data) :
     """Dumps the MongoDB given by `title` and passed by `data`."""
-    return await _collection.replace_one({'_id' : _mongo_ids[title]}, data)
+    return await collection.replace_one({'_id' : _mongo_ids[title]}, data)
 
 
 # ----- get unix timestamp for x days from now -----
