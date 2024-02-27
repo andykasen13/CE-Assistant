@@ -41,6 +41,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from PIL import Image
 from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix, collection, mongo_client
+from Helper_Functions.mongo_silly import *
 
 
 # ---------- command imports --------------
@@ -71,16 +72,6 @@ with open('Jasons/secret_info.json') as f :
 discord_token = localJSONData['discord_token']  
 guild_ID = localJSONData['ce_guild_ID']
 
-ce_log_id = 1208259110638985246
-ce_casino_test_id = 1208259878381031485
-ce_casino_id = 1080137628604694629
-test_log_id = 1141886539157221457
-test_casino_id = 811286469251039333
-
-ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
-ce_hex_icon = "https://media.discordapp.net/attachments/643158133673295898/1133596132551966730/image.png?width=778&height=778"
-ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
-final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
 
 
@@ -285,7 +276,6 @@ events_solo = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a 
 async def roll_solo_command(interaction : discord.Interaction, event: events_solo) :   
 
     await interaction.response.defer()
-    if interaction.user.id == 359387889781571585 : return await interaction.followup.send("syrenyx you have been blocked from the bot lol")
 
     await solo_command(interaction, event, reroll = False, collection=collection)
     
@@ -976,7 +966,10 @@ async def initiate_master_loop(interaction : discord.Interaction) :
     #return await interaction.followup.send(embed=discord.Embed(title="this is the test command"))
     #print(role.id)
     
-    # embed = discord.Embed(title="__Celeste__ has been updadted on the site", description="' ∀MAZING' increased from 120 :CE_points: ➡ 125 :CE_points: points: Achievements '∀NOTHER ONE', and '∀DVENTED' removed New Primary Objective '∀WOKEN' added: 30 points :CE_points: Clear the Pandemonic Nightmare stage, and clear Hymeno Striker on AKASCHIC+RM difficulty.")
+    # embed = discord.Embed(title="__Celeste__ has been updadted on the site", 
+    #description="' ∀MAZING' increased from 120 :CE_points: ➡ 125 :CE_points: points: 
+    #   Achievements '∀NOTHER ONE', and '∀DVENTED' removed New Primary Objective '∀WOKEN' added: 30 points :CE_points:
+    #    Clear the Pandemonic Nightmare stage, and clear Hymeno Striker on AKASCHIC+RM difficulty.")
     # embed.set_thumbnail(url=ce_hex_icon)
     # embed.set_image(url="https://media.discordapp.net/attachments/1128742486416834570/1133903990090895440/image.png?width=1083&height=542")
     # embed.set_author(name="Challenge Enthusiasts", icon_url="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/504230/04cb7aa0b497a3962e6b1655b7fd81a2cc95d18b.jpg")
@@ -998,7 +991,8 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
     
     if interaction.user.id == 476213685073739798 : return await interaction.followup.send("kingconn banned lol")
-    if interaction.user.id == 73648432367013888  : return await interaction.followup.send("hey laura when you fix /api/games/full/ i'll give you access")
+    if interaction.user.id == 73648432367013888  : return await interaction.followup.send(
+        "hey laura when you fix /api/games/full/ i'll give you access")
     #Open the user database
     database_user = await get_mongo('user')
 
@@ -1010,14 +1004,17 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     if(ce_id[:20:] == "https://cedb.me/user" and len(ce_id) >= 29 and (ce_id[29] == '-')) :
         if(ce_id[(len(ce_id)-5)::] == "games") : ce_id = ce_id[21:(len(ce_id)-6):]
         else : ce_id = ce_id[21::]
-    else: return await interaction.followup.send(f"'{ce_id}' is not a valid user link. Please try again or contact <@413427677522034727> for assistance.")
+    else: return await interaction.followup.send(
+        f"'{ce_id}' is not a valid user link. Please try again or contact <@413427677522034727> for assistance.")
     print(f"Working ID = {ce_id}")
 
     # Make sure user isn't already registered
     for user in database_user :
         if user == '_id' : continue
-        if(database_user[user]['Discord ID'] == interaction.user.id) : return await interaction.followup.send("You are already registered in the database!")
-        elif(database_user[user]['CE ID'] == ce_id) : return await interaction.followup.send(f"This CE-ID is already registered to <@{database_user[user]['Discord ID']}>, silly!")
+        if(database_user[user]['Discord ID'] == interaction.user.id) : return await interaction.followup.send(
+            "You are already registered in the database!")
+        elif(database_user[user]['CE ID'] == ce_id) : return await interaction.followup.send(
+            f"This CE-ID is already registered to <@{database_user[user]['Discord ID']}>, silly!")
     
     # Grab user info from CE API
     response = requests.get(f"https://cedb.me/api/user/{ce_id}")
@@ -1089,8 +1086,9 @@ async def register(interaction : discord.Interaction, ce_id: str) :
 
     user_dict[ce_id]['Rank'] = rank
 
-    all_events = ["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", "Two 'Two Week T2 Streak' Streak",
-                  "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking", "Russian Roulette", "Destiny Alignment",
+    all_events = ["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+                  "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", 
+                  "Fourward Thinking", "Russian Roulette", "Destiny Alignment",
                   "Soul Mates", "Teamwork Makes the Dream Work", "Winner Takes All", "Game Theory"]
 
     # Check and see if the user has any completed rolls
@@ -1102,14 +1100,16 @@ async def register(interaction : discord.Interaction, ce_id: str) :
                 x=0
                 user_dict[ce_id]['Completed Rolls'].append({"Event Name" : event_name})
             if(event_name == "Two \"Two Week T2 Streak\" Streak" 
-               and "Two \"Two Week T2 Streak\" Streak" in user_dict[ce_id]['Owned Games']['- Challenge Enthusiasts -']['Community Objectives']):
-                user_dict[ce_id]['Completed Rolls'].append({"Event Name" : "Two 'Two Week T2 Streak' Streak"})
+               and "Two \"Two Week T2 Streak\" Streak" in 
+               user_dict[ce_id]['Owned Games']['- Challenge Enthusiasts -']['Community Objectives']):
+                    user_dict[ce_id]['Completed Rolls'].append({"Event Name" : "Two 'Two Week T2 Streak' Streak"})
 
     # Add the user file to the database
     database_user.update(user_dict)
 
     # Dump the data
     dump = await dump_mongo("user", database_user)
+    del dump
 
     # Create confirmation embed
     embed = discord.Embed(
@@ -1350,7 +1350,7 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 
     # if it errors, message is not in the site-additions channel
     except :
-        return await interaction.followup.send("This message is not in the <#1128742486416834570> channel.")
+        return await interaction.followup.send("This message is not in the <#949482536726298666> channel.")
     
     if message.author.id != 1108618891040657438 : return await interaction.followup.send("This message was not sent by the bot!")
 
@@ -1371,127 +1371,6 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 
     # and send a response to the original interaction
     await interaction.followup.send("worked", ephemeral=True)
-
-"""
-# ---------------------------------------------------------------------------------------------------------------------------------- #
-# ---------------------------------------------------------------------------------------------------------------------------------- #
-# -------------------------------------------------------- REROLL COMMAND----------------------------------------------------------- #
-# ---------------------------------------------------------------------------------------------------------------------------------- #
-# ---------------------------------------------------------------------------------------------------------------------------------- #
-events_total = Literal['One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
-          "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
-          "Russian Roulette", "Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
-          "Winner Takes All", "Game Theory']
-
-@tree.command(name='reroll', description='Reroll any of your current rolls', guild=discord.Object(id=guild_ID))
-@app_commands.describe(event="The event you'd like to re-roll")
-async def reroll(interaction : discord.Interaction, event : events_total) :
-
-
-    # defer the message
-    await interaction.response.defer()
-
-    local_events_solo = ['One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
-          "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
-          "Russian Roulette']
-    
-    local_events_co_op = ['Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
-                       "Winner Takes All", "Game Theory']
-
-    print(event)
-
-    # Open the database
-    with open('/CE-Assistant/Jasons/users2.json', 'r') as f:
-        database_user = json.load(f)
-
-    # Check if user is in the database
-    user_name = -1
-    for c_user in database_user :
-        if(database_user[c_user]['Discord ID'] == interaction.user.id) :
-            user_name = c_user
-            break
-    if user_name == -1 : return await interaction.followup.send('You are not currently in the user database! Please use /register.')
-
-    # Check if the user is participating in the event
-    roll_num = -1
-    for index, c_roll in enumerate(database_user[user_name]['Current Rolls']) :
-
-        if(c_roll['Games'] == ['pending...']) : return await interaction.followup.send('You have recently tried to roll or reroll this event. Please wait 10 minutes to try again.')
-
-
-        if(c_roll['Event Name'] == event) : 
-            roll_num = index
-        
-    # if the user isn't participating in the event
-    if roll_num == -1 : return await interaction.followup.send('You are not currently participating in {}!'.format(event))
-
-    # the user is ready to participate in the event
-
-    # set up confirmation embed
-    confirm_embed = discord.Embed(
-        title="Are you sure?",
-        timestamp=datetime.datetime.now(),
-        description="You are asking to reroll {}. Your game(s) will switch from {} to other game(s).".format(event, database_user[user_name]['Current Rolls'][roll_num]['Games'])
-        + " You will not recieve any additional time to complete this roll - and your deadline is still <t:{}>.".format(database_user[user_name]['Current Rolls'][roll_num]['End Time'])
-    )
-
-    # add buttons
-    view = discord.ui.View(timeout=600)
-    yes_button = discord.ui.Button(label="Yes", style=discord.ButtonStyle.green)
-    no_button = discord.ui.Button(label="No", style=discord.ButtonStyle.danger)
-
-
-    # send confirmation button  
-    await interaction.followup.send(embed=confirm_embed)
-
-    # run solo command if solo event
-    if event in local_events_solo :
-        await solo_command(interaction, event, reroll = True)
-
-    # run co op command if co op event
-    elif event in local_events_co_op :
-        return await interaction.followup.send('Co-op and PvP rerolls coming soon!')
-        await roll_co_op_command(interaction, event)
-    
-    # what happened here
-    else : await interaction.followup.send('something has gone horribly horribly wrong. please let andy know')
-    
-
-    
-    # class RerollView(discord.ui.View):
-    #     def __init__(self):
-    #         super().__init__(timeout=3)
-    #         self.value = None
-    #         self.current_page = 0
-    #         self.pages = 10
-
-    #     async def on_timeout(self):
-    #         print("test")
-    #         self.clear_items()
-
-    #     @discord.ui.button(label="Previous", style=discord.ButtonStyle.grey, disabled=True)
-    #     async def menu1(self, interaction: discord.Interaction, button: discord.ui.Button):
-    #         self.current_page -= 1
-    #         if self.current_page == 0:
-    #             button.disabled = True
-    #             print("previous should be disabled")
-    #         self.children[-1].disabled = False
-
-    #         await interaction.response.edit_message(
-    #             content=f"{self.current_page}", view=self
-    #         )
-
-    #     @discord.ui.button(label="Next", style=discord.ButtonStyle.green)
-    #     async def menu2(self, interaction: discord.Interaction, button: discord.ui.Button):
-    #         self.current_page += 1
-    #         if self.current_page == self.pages - 1:
-    #             button.disabled = True
-    #         self.children[0].disabled = False
-    #         await interaction.response.edit_message(
-    #             content=f"{self.current_page}", view=self
-    #         )
-"""
-
 
 
 

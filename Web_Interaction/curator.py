@@ -18,15 +18,7 @@ import requests
 
 # web interaction
 from bs4 import BeautifulSoup
-
-ce_log_id = 1208259110638985246
-ce_casino_test_id = 1208259878381031485
-ce_casino_id = 1080137628604694629
-test_log_id = 1141886539157221457
-test_casino_id = 811286469251039333
-
-ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
-final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
+from Helper_Functions.mongo_silly import *
 
 
 async def single_run(client, requested_reviews=0, collection=""):

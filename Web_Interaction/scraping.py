@@ -33,9 +33,9 @@ from PIL import Image
 from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix, timestamp_to_unix
 
 # set basic icons
-ce_hex_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
-ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
-final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
+ce_hex_icon = "https://imgur.com/a/HiQfqi5"
+ce_james_icon = "https://imgur.com/a/yJ5jc51"
+final_ce_icon = "https://imgur.com/a/p47JeLn"
 
 
 
