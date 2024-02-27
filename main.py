@@ -1170,7 +1170,11 @@ async def update(interaction : discord.Interaction) :
 
     # actually update the user's database 
     # and store anything we need to report
-    returns = update_p(interaction.user.id, False, database_user, database_name)
+    try:
+        returns = update_p(interaction.user.id, False, database_user, database_name)
+    except Exception as e:
+        print(e)
+        return await interaction.followup.send("something went wrong. please ping andy!!\n" + str(e))
     if returns == "failed" : return await interaction.followup.send("Something went wrong with the API. Please try again in five minutes.")
     if returns == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
 
