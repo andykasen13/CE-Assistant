@@ -28,7 +28,7 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
     return wrapper
 
 
-@to_thread
+#@to_thread
 async def solo_command(interaction : discord.Interaction, event : str, reroll : bool, collection) :
     # Set up variables
     view = discord.ui.View(timeout=600)
