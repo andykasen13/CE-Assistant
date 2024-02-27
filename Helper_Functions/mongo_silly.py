@@ -49,7 +49,7 @@ ce_game_additions_id = 949482536726298666   # game additions
 # bot test ids
 test_log_id = 1141886539157221457
 test_casino_id = 811286469251039333
-# go-to channels
+# go-to channels (NOTE: replace these with the ids as needed)
 game_additions_id = ce_log_id
 casino_id = ce_casino_test_id
 log_id = ce_log_id
