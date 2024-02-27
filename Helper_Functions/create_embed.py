@@ -44,7 +44,6 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
         embeds.append(getEmbed(selected_game, interaction.user.id, database_name))
         embeds[i+1].set_footer(text=(f"Page {i+2} of {page_limit}"),
                                 icon_url=final_ce_icon)
-        embeds[i+1].set_author(name="Challenge Enthusiasts")
         embeds[i+1].set_thumbnail(url=interaction.user.avatar)
         for objective in database_name[selected_game]['Primary Objectives'] :
             total_points += int(database_name[selected_game]['Primary Objectives'][objective]['Point Value'])
