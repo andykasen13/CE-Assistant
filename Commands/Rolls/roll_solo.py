@@ -56,6 +56,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # grab user info
     userInfo = await get_mongo('user')
     
+    # grab the user
     i = 0
     target_user = ""
     for current_user in userInfo :
