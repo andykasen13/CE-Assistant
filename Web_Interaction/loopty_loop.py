@@ -35,8 +35,6 @@ from Web_Interaction.curator import checkCuratorCount
 from Web_Interaction.scraping import get_games
 from Helper_Functions.mongo_silly import *
 
-# dictating which channel the info will be sent to
-channel_number = 1128742486416834570   #1135993275162050690
 
 # dedicate times every --fifteen-- thirty minutes
 utc = datetime.timezone.utc
@@ -98,7 +96,7 @@ async def master_loop(client, mongo_client):
     print('loop engaged...')
     print('time = ' + str(datetime.datetime.now().strftime("%H:%M:%S")))
 
-    correct_channel = client.get_channel(ce_log_id)
+    correct_channel = client.get_channel(game_additions_id)
 
     # start the curate function
     await curate(correct_channel, mongo_client)
@@ -116,7 +114,7 @@ async def master_loop(client, mongo_client):
         scrape_message = "something else went wrong. someone ping andy pls\n\n" + str(e)
 
     if scrape_message != "loop successful" : 
-        log = client.get_channel(ce_log_id)
+        log = client.get_channel(log_id)
         await log.send(scrape_message)
 
     print('done\n')

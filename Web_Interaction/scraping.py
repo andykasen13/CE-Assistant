@@ -30,12 +30,8 @@ import chromedriver_binary  # Adds chromedriver binary to path
 # pictures
 from .Screenshot import Screenshot
 from PIL import Image
-from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix, timestamp_to_unix
+from Helper_Functions.mongo_silly import *
 
-# set basic icons
-ce_hex_icon = "https://imgur.com/a/HiQfqi5"
-ce_james_icon = "https://imgur.com/a/yJ5jc51"
-final_ce_icon = "https://imgur.com/a/p47JeLn"
 
 
 
@@ -106,15 +102,12 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         unfinished_games
     """
     
-    # use this if you want selenium and #game-additions stuff
-    hm = True
+    # -------------- variables ------------
+    hm = True # use this if you want selenium and #game-additions stuff
+    option3 = True # use this if /api/games/full/ fails
+    pi = False # use this if on the pi
 
-    # use this if /api/games/full/ fails
-    option3 = True
-
-    # use this if on the pi
-    pi = False
-
+    # ------------- actual stuff ----------
     # Set selenium driver and preferences
     if hm:
     
@@ -197,24 +190,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         this is updated throughout scraping and is eventually returned to be dumped.
     """
 
-    # icons for CE emoji
-    icons = {
-        "Tier 0" : '<:tier0:1126268390605070426>',
-        "Tier 1" : '<:tier1:1126268393725644810>',
-        "Tier 2" : '<:tier2:1126268395483037776>',
-        "Tier 3" : '<:tier3:1126268398561677364>',
-        "Tier 4" : '<:tier4:1126268402596585524>',
-        "Tier 5" : '<:tier5:1126268404781809756>',
-        "Tier 6" : '<:tier6:1126268408116285541>',
-        "Tier 7" : '<:tier7:1126268411220074547>',
-
-        "Action" : '<:CE_action:1126326215356198942>',
-        "Arcade" : '<:CE_arcade:1126326209983291473>',
-        "Bullet Hell" : '<:CE_bullethell:1126326205642190848>',
-        "First-Person" : '<:CE_firstperson:1126326202102186034>',
-        "Platformer" : '<:CE_platformer:1126326197983383604>',
-        "Strategy" : '<:CE_strategy:1126326195915591690>'
-    }
 
     # make sure the json loaded in its entirety
     try:

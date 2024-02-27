@@ -21,7 +21,7 @@ from Helper_Functions.end_time import months_to_days
 # ---------------------------------------------variables-----------------------------------------------------------------
 
 # ------------- mongo variables -------------
-mongo_ids = {
+_mongo_ids = {
     "name" : ObjectId('64f8d47f827cce7b4ac9d35b'),
     "tier" : ObjectId('64f8bc4d094bdbfc3f7d0050'),
     "curator" : ObjectId('64f8d63592d3fe5849c1ba35'),
@@ -29,10 +29,10 @@ mongo_ids = {
     "user" : ObjectId('64f8bd1b094bdbfc3f7d0051'),
     "unfinished" : ObjectId('650076a9e35bbc49b06c9881')
 }
-uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
-mongo_client = AsyncIOMotorClient(uri)
-mongo_database = mongo_client['database_name']
-collection = mongo_client['database_name']['ce-collection']
+_uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
+_mongo_client = AsyncIOMotorClient(_uri)
+_mongo_database = _mongo_client['database_name']
+_collection = _mongo_client['database_name']['ce-collection']
 
 # ------------- image icons -------------
 ce_mountain_icon = "https://i.imgur.com/zJ0NjYY.jpg"
@@ -42,17 +42,17 @@ final_ce_icon = "https://i.imgur.com/O9J7fg2.png"
 
 # ------------- discord channel numbers -------------
 # ce ids
-ce_log_id = 1208259110638985246             # log
-ce_casino_test_id = 1208259878381031485     # fake casino
-ce_casino_id = 1080137628604694629          # real casino
-ce_game_additions_id = 949482536726298666   # game additions
+_ce_log_id = 1208259110638985246             # log
+_ce_casino_test_id = 1208259878381031485     # fake casino
+_ce_casino_id = 1080137628604694629          # real casino
+_ce_game_additions_id = 949482536726298666   # game additions
 # bot test ids
-test_log_id = 1141886539157221457
-test_casino_id = 811286469251039333
+_test_log_id = 1141886539157221457
+_test_casino_id = 811286469251039333
 # go-to channels (NOTE: replace these with the ids as needed)
-game_additions_id = ce_log_id
-casino_id = ce_casino_test_id
-log_id = ce_log_id
+game_additions_id = _ce_log_id
+casino_id = _ce_casino_test_id
+log_id = _ce_log_id
 
 # ------------- emoji icons -------------
 icons = {
@@ -78,18 +78,16 @@ icons = {
 
 # ---------------------------------------------functions-----------------------------------------------------------------
 
-# 
-
 
 # -------- get and set mongo databases --------
-mongo_names = Literal["name", "tier", "curator", "user", "tasks", "unfinished"]
-async def get_mongo(title : mongo_names):
+_mongo_names = Literal["name", "tier", "curator", "user", "tasks", "unfinished"]
+async def get_mongo(title : _mongo_names):
     """Returns the MongoDB associated with `title`."""
-    return await collection.find_one({'_id' : mongo_ids[title]})
+    return await _collection.find_one({'_id' : _mongo_ids[title]})
 
-async def dump_mongo(title : mongo_names, data) :
+async def dump_mongo(title : _mongo_names, data) :
     """Dumps the MongoDB given by `title` and passed by `data`."""
-    return await collection.replace_one({'_id' : mongo_ids[title]}, data)
+    return await _collection.replace_one({'_id' : _mongo_ids[title]}, data)
 
 
 # ----- get unix timestamp for x days from now -----
@@ -103,8 +101,7 @@ def get_unix(days = 0, minutes = -1, months = -1) -> int:
 
     # return months
     elif (months != -1) : 
-        days = months_to_days(months)
-        return get_unix(days)
+        return get_unix(months_to_days(months))
 
     # return days
     else: return int(time.mktime((datetime.datetime.now()+timedelta(days)).timetuple()))
