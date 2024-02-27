@@ -5,26 +5,27 @@ import json
 import datetime
 from datetime import timedelta
 from bson import ObjectId
-
+from Helper_Functions.mongo_silly import *
+from Helper_Functions.end_time import months_to_days
 
 
 def update_p(user_id : int, roll_ended_name, database_user, database_name) :
-    from Helper_Functions.mongo_silly import get_unix
+    
     
     cooldowns = {
         "One Hell of a Day" : (14),
-        "One Hell of a Week" : (28),
-        "One Hell of a Month" : (28*3),
+        "One Hell of a Week" : (months_to_days(1)),
+        "One Hell of a Month" : (months_to_days(3)),
         "Two Week T2 Streak" : 0, # multi-stage roll
         "Two 'Two Week T2 Streak' Streak" : (7),
         "Never Lucky" : (28),
-        "Triple Threat" : (28*3),
-        "Let Fate Decide" : (28*3),
+        "Triple Threat" : (months_to_days(3)),
+        "Let Fate Decide" : (months_to_days(3)),
         "Fourward Thinking" : 0, # multi-stage roll
-        "Russian Roulette" : (28*6),
-        "Destiny Alignment" : (28),
+        "Russian Roulette" : (months_to_days(6)),
+        "Destiny Alignment" : (months_to_days(1)),
         "Soul Mates" : 0, # this depends on which tier was chosen
-        "Teamwork Makes the Dream Work" : 28*3
+        "Teamwork Makes the Dream Work" : months_to_days(3)
     }
 
 

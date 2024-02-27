@@ -5,38 +5,11 @@ import datetime
 from datetime import timedelta
 from bs4 import BeautifulSoup
 import requests
-
-# icons for CE emoji
-icons = {
-    "Tier 0" : '<:tier0:1126268390605070426>',
-    "Tier 1" : '<:tier1:1126268393725644810>',
-    "Tier 2" : '<:tier2:1126268395483037776>',
-    "Tier 3" : '<:tier3:1126268398561677364>',
-    "Tier 4" : '<:tier4:1126268402596585524>',
-    "Tier 5" : '<:tier5:1126268404781809756>',
-    "Tier 6" : '<:tier6:1126268408116285541>',
-    "Tier 7" : '<:tier7:1126268411220074547>',
-
-    "Action" : '<:CE_action:1126326215356198942>',
-    "Arcade" : '<:CE_arcade:1126326209983291473>',
-    "Bullet Hell" : '<:CE_bullethell:1126326205642190848>',
-    "First-Person" : '<:CE_firstperson:1126326202102186034>',
-    "Platformer" : '<:CE_platformer:1126326197983383604>',
-    "Strategy" : '<:CE_strategy:1126326195915591690>',
-
-    "Points" : '<:CE_points:1128420207329816597>'
-}
-
-
-
-ce_mountain_icon = "https://cdn.discordapp.com/attachments/639112509445505046/891449764787408966/challent.jpg"
-ce_james_icon = "https://cdn.discordapp.com/attachments/1028404246279888937/1136056766514339910/CE_Logo_M3.png"
-final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
+from Helper_Functions.mongo_silly import *
 
 
 # ------------------------------------------------ CREATE MULTI EMBED ------------------------------------------------------------ #
 def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interaction, database_name) :
-    from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
     # ----- Set up initial embed -----
     embeds = []

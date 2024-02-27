@@ -8,10 +8,10 @@ from Helper_Functions.buttons import *
 from Helper_Functions.Scheduler import add_task
 
 from Helper_Functions.end_time import months_to_days
+from Helper_Functions.mongo_silly import *
 
 
 async def co_op_command(interaction : discord.Interaction, event, partner : discord.User, reroll : bool, collection) :
-    from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
     # Open the user database
     database_user = await get_mongo('user')

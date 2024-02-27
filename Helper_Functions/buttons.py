@@ -8,6 +8,7 @@ import datetime
 from datetime import timedelta
 
 from Helper_Functions.Scheduler import add_task
+from Helper_Functions.mongo_silly import *
 
 # -------------------------------------------------------------------------------------------------- #
 # -------------------------------------------- BUTTONS --------------------------------------------- #
@@ -93,7 +94,6 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
     after the call to this function, write `buttons[i].disabled = True`.
     """
     
-    from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
 
     games = []
     genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]

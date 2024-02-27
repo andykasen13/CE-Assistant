@@ -17,7 +17,7 @@ from Helper_Functions.roll_string import get_roll_string
 from Helper_Functions.buttons import get_buttons, get_genre_buttons
 from Helper_Functions.update import update_p
 from Helper_Functions.Scheduler import add_task
-from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
+from Helper_Functions.mongo_silly import *
 from Helper_Functions.end_time import months_to_days
 
 
@@ -27,7 +27,6 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
         return await asyncio.to_thread(func, *args, **kwargs)
     return wrapper
 
-final_ce_icon = "https://cdn.discordapp.com/attachments/1135993275162050690/1144289627612655796/image.png"
 
 @to_thread
 async def solo_command(interaction : discord.Interaction, event : str, reroll : bool, collection) :

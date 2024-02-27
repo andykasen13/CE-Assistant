@@ -4,6 +4,7 @@ from bson import ObjectId
 import requests
 
 from Web_Interaction.scraping import get_completion_data
+from Helper_Functions.mongo_silly import *
 
 # --------------------------------------------------------- banned games -------------------------------------------------------- #
 banned_games = ["Serious Sam HD: The Second Encounter", 
@@ -192,7 +193,7 @@ async def get_rollable_game(avg_completion_time_limit, price_limit, tier_number,
 # -------------------------------------------------------------------------------------------------------------------------------- #
 
 async def get_rollable_game_from_list(games, collection) :
-    from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
+    
 
     database_name = await get_mongo('name')
     rollable = False
