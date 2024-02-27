@@ -33,14 +33,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 # other local files
 from Web_Interaction.curator import checkCuratorCount
 from Web_Interaction.scraping import get_games
-from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix
-
-
-ce_log_id = 1208259110638985246
-ce_casino_test_id = 1208259878381031485
-ce_casino_id = 1080137628604694629
-test_log_id = 1141886539157221457
-test_casino_id = 811286469251039333
+from Helper_Functions.mongo_silly import *
 
 # dictating which channel the info will be sent to
 channel_number = 1128742486416834570   #1135993275162050690
