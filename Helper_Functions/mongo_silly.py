@@ -20,14 +20,15 @@ mongo_ids = {
     "user" : ObjectId('64f8bd1b094bdbfc3f7d0051'),
     "unfinished" : ObjectId('650076a9e35bbc49b06c9881')
 }
-# ----------------------------------------------------------------------------------------------------------------------------
 uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
 mongo_client = AsyncIOMotorClient(uri)
 
 mongo_database = mongo_client['database_name']
 collection = mongo_client['database_name']['ce-collection']
 
-# get and set mongo databases
+# ----------------------------------------------------------------------------------------------------------------------------
+
+# -------- get and set mongo databases --------
 mongo_names = Literal["name", "tier", "curator", "user", "tasks", "unfinished"]
 async def get_mongo(title : mongo_names):
     """Returns the MongoDB associated with `title`."""
@@ -38,7 +39,7 @@ async def dump_mongo(title : mongo_names, data) :
     return await collection.replace_one({'_id' : mongo_ids[title]}, data)
 
 
-# get unix timestamp for x days from now
+# ----- get unix timestamp for x days from now -----
 def get_unix(days = 0, minutes = -1, months = -1) -> int:
     """Returns a unix timestamp for `days` days (or `minutes` minutes, or `months` months) from the current time."""
     # return right now
@@ -55,9 +56,9 @@ def get_unix(days = 0, minutes = -1, months = -1) -> int:
     # return days
     else: return int(time.mktime((datetime.datetime.now()+timedelta(days)).timetuple()))
 
+# ----- convert ce timestamp to unix timestamp -----
 def timestamp_to_unix(timestamp : str) -> int :
     """Takes in the CE timestamp (`"2024-02-25T07:04:38.000Z"`) and converts it to unix timestamp (`1708862678`)"""
     return int(time.mktime(datetime.datetime.strptime(str(timestamp[:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple()))
-    return 0
 
 # ----------------------------------------------------------------------------------------------------------------------------
