@@ -499,7 +499,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         del new_data[game]
 
     del json_response
-    if hm: del driver
+    if hm: 
+        driver.close()
+        del driver
     del game_tracker
 
     return [updated_games, number, new_data, current_dict, unfinished_games]
