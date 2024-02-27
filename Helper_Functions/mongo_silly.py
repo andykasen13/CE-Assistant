@@ -35,10 +35,10 @@ mongo_database = mongo_client['database_name']
 collection = mongo_client['database_name']['ce-collection']
 
 # ------------- image icons -------------
-ce_mountain_icon = "https://imgur.com/zJ0NjYY"
-ce_hex_icon = "https://imgur.com/FLq0rFQ"
-ce_james_icon = "https://imgur.com/fcdHTvx"
-final_ce_icon = "https://imgur.com/O9J7fg2"
+ce_mountain_icon = "https://i.imgur.com/zJ0NjYY.jpg"
+ce_hex_icon = "https://i.imgur.com/FLq0rFQ.png"
+ce_james_icon = "https://i.imgur.com/fcdHTvx.png"
+final_ce_icon = "https://i.imgur.com/O9J7fg2.png"
 
 # ------------- discord channel numbers -------------
 # ce
