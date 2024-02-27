@@ -141,30 +141,30 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             objective_lst = []
             time.sleep(1)
             objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
-            print(objective_lst)
+            #print(objective_lst)
 
     
 
     # set up API requests
     if option3 :
-        print('fetching /api/games/...')
+        #print('fetching /api/games/...')
         api_response = requests.get('https://cedb.me/api/games')
         try:   
             json_response = json.loads(api_response.text)
-            print('fetched.\n')
+            #print('fetched.\n')
         except:
-            print('json failed lol!!!!!!!')
+            print('fetching failed lol!!!!!!! (api/games)')
             if hm: del driver
             return
         
     else :
-        print('fetching /api/games/full/...')
+        #print('fetching /api/games/full/...')
         api_response = requests.get('https://cedb.me/api/games/full')
-        print('fetched.\n')
+        #print('fetched.\n')
         try:
             json_response = json.loads(api_response.text)
         except:
-            print('json failed lol!!!')
+            print('fetching failed lolW (api/games/full)!!!')
             if hm: del driver
             return
 
@@ -218,14 +218,14 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
     # make sure the json loaded in its entirety
     try:
-        print('testing...')
-        print(json_response[0]['id'])
-        print('test passed.\n')
+        #print('testing...')
+        a = (json_response[0]['id'])
+        #print('test passed.\n')
     except:
         print('json failed lol')
         return
 
-    print('scraping....')
+    #print('scraping....')
     # game loop adding updated parts
     for i, game in enumerate(json_response):
         #print(game['name'])
@@ -314,7 +314,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         
         # game is new BUT! unfinished
         elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None):
-            print('silly!')
+            print('unfinished game: ' + game['name'])
             if game['id'] in unfinished_games['unfinished'] : continue
             else: unfinished_games['unfinished'].append(game['id'])
 
