@@ -35,7 +35,7 @@ _mongo_database = _mongo_client['database_name']
 collection = _mongo_client['database_name']['ce-collection']
 
 # ------------- image icons -------------
-ce_mountain_icon = "https://i.imgur.com/zJ0NjYY.jpg"
+ce_mountain_icon = "https://i.imgur.com/4PPsX4o.jpg"
 ce_hex_icon = "https://i.imgur.com/FLq0rFQ.png"
 ce_james_icon = "https://i.imgur.com/fcdHTvx.png"
 final_ce_icon = "https://i.imgur.com/O9J7fg2.png"

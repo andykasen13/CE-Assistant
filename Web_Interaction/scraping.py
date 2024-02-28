@@ -562,7 +562,6 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
 
 
     for objective_info in objective_list:
-        print(objective_info)
         objective = objective_info[objective_info.find("'")+3:objective_info.rfind("'")-2:]
         image = special_image(number, decimal, new_game['CE ID'], driver, objective)
         if(image == "none") : removed = True
