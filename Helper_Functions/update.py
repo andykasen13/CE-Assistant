@@ -28,6 +28,14 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         "Teamwork Makes the Dream Work" : months_to_days(3)
     }
 
+    soul_mates_cooldowns = {
+        'Tier 1' : 10*7,
+        'Tier 2' : 8*7,
+        'Tier 3' : 6*7,
+        'Tier 4' : 4*7,
+        'Tier 5' : 2*7
+    }
+
 
     # Set up total-points
     total_points = 0
@@ -576,10 +584,20 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         # or because it is just being updated.
                 
 
+#############################################################################################################################################################
+
+
+
+
+
+
+
+
 
 
         # -----------------------------  ROLL WAS FAILED -----------------------------
         if not roll_completed and ("End Time" not in current_roll or get_unix('now') > current_roll['End Time']) : 
+            
             # fourward thinking
             if current_roll['Event Name'] == "Fourward Thinking" :
                 if "End Time" not in current_roll : continue
@@ -602,8 +620,6 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
                 continue # :)
 
-                
-            
             # two "two week t2 streak" streak
             elif current_roll['Event Name'] == "Two 'Two Week T2 Streak' Streak":
                 if "End Time" not in current_roll : continue
@@ -634,10 +650,16 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                             myindex = index3
                             break
                     del database_user[current_roll['Partner']]['Current Rolls'][myindex]
+
+                    # get the number of days for the cooldown
+                    cooldown_time = get_unix(cooldowns[current_roll['Event Name']])
+                    if(roll['Event Name'] == 'Soul Mates') :
+                        t = database_name[current_roll['Games'][0]]['Tier']
+                        cooldown_time = get_unix(soul_mates_cooldowns[t])
                     
                     # set up cooldowns
-                    database_user[ce_id]['Cooldowns'][current_roll['Event Name']] = get_unix(cooldowns[current_roll['Event Name']])
-                    database_user[current_roll['Partner']]['Cooldowns'][current_roll['Event Name']] = get_unix(cooldowns[current_roll['Event Name']])
+                    database_user[ce_id]['Cooldowns'][current_roll['Event Name']] = cooldown_time
+                    database_user[current_roll['Partner']]['Cooldowns'][current_roll['Event Name']] = cooldown_time
                 
                 # this is a normal solo roll
                 else : 
@@ -646,7 +668,6 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     if current_roll['Event Name'] == "Fourward Thinking" : 
                         returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]['Discord ID'], str(len(current_roll['Games']))))
                     
-
                     # add the message for any normal roll
                     returns.append("casino: <@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]['Discord ID'], current_roll['Event Name']))
                     
