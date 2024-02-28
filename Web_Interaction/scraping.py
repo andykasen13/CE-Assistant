@@ -58,7 +58,7 @@ def single_scrape(curator_count):
     api_response = requests.get('https://cedb.me/api/games')
     json_response = json.loads(api_response.text)
 
-    curator_count['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
+    curator_count['Updated Time'] = int(time.mktime(datetime.datetime.now().timetuple()))
 
     database_name = {}
 
@@ -164,7 +164,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     # grab last updated time
     current_newest = current_dict['Updated Time']
     c = current_newest
-    current_dict['Updated Time'] = int(time.mktime(datetime.now().timetuple()))
+    current_dict['Updated Time'] = int(time.mktime(datetime.datetime.now().timetuple()))
     
     # grab the new data and initialize trackers
     number = 0
@@ -360,7 +360,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                     'Embed' : discord.Embed(
                         title="__" + game['name'] + "__ added to the site:", 
                         colour= 0x48b474,
-                        timestamp=datetime.now(),
+                        timestamp=datetime.datetime.now(),
                         description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
                     ),
                     'Image' : discord.File(ss, filename="image.png")
@@ -432,7 +432,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                         'Embed' : discord.Embed(
                             title="__" + game['name'] + "__ added to the site:", 
                             colour= 0x48b474,
-                            timestamp=datetime.now(),
+                            timestamp=datetime.datetime.now(),
                             description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
                         ),
                         'Image' : discord.File(ss, filename="image.png")
@@ -465,7 +465,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 'Embed' : discord.Embed(
                     title=game,
                     colour= 0xce4e2c,
-                    timestamp=datetime.now()
+                    timestamp=datetime.datetime.now()
                 ),
                 'Image' : discord.File("Web_Interaction/removed.png", filename="image.png")
             }
@@ -527,7 +527,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
         'Embed' : discord.Embed(
             title="__" + name + "__ updated on the site:",
             colour= 0xefd839,
-            timestamp=datetime.now(),
+            timestamp=datetime.datetime.now(),
             description=update.strip()
         ),
         'Image' : discord.File(ss, filename="image.png")
@@ -574,7 +574,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
                 'Embed' : discord.Embed(
                     title="__" + name + "__ updated on the site:",
                     colour= 0xefd839,
-                    timestamp=datetime.now(),
+                    timestamp=datetime.datetime.now(),
                     description=objective_info.strip()
                 ),
                 'Image' : discord.File(image, filename="image.png")
@@ -584,7 +584,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
                 'Embed' : discord.Embed(
                     title="__" + name + "__ updated on the site:",
                     colour= 0xefd839,
-                    timestamp=datetime.now(),
+                    timestamp=datetime.datetime.now(),
                     description=objective_info.strip()
                 ),
                 'Image' : discord.File("Web_Interaction/removed.png", filename="image.png")
