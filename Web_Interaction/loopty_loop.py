@@ -16,6 +16,7 @@ import functools
 import json
 import signal
 from functools import wraps
+import discord
 
 # file management
 import os
@@ -23,7 +24,7 @@ import shutil
 
 # thread management
 import asyncio
-from asyncio import timeout
+from asyncio import timeout, CancelledError
 import typing
 from bson import ObjectId
 from discord.ext import tasks
@@ -92,7 +93,7 @@ times = [
 
 # big daddy loop that runs every fifteen minutes
 @tasks.loop(time=times)
-async def master_loop(client):
+async def master_loop(client : discord.Client):
     print('loop engaged...')
     print('time = ' + str(datetime.datetime.now().strftime("%H:%M:%S")))
 
@@ -107,6 +108,8 @@ async def master_loop(client):
             scrape_message = await scrape(correct_channel)
     except TimeoutError:
         scrape_message = "function timed out!!!"
+    except CancelledError:
+        scrape_message = "function timed out!!!!"
     except StaleElementReferenceException as e:
         scrape_message = "stale element!!! wahoo!! please ping andy even though he will cry"
         print(e)
