@@ -17,6 +17,7 @@ import json
 import signal
 from functools import wraps
 import discord
+import traceback
 
 # file management
 import os
@@ -115,6 +116,10 @@ async def master_loop(client : discord.Client):
         print(e)
     except Exception as e:
         scrape_message = "something else went wrong. someone ping andy pls\n\n" + str(e)
+        try: 
+            traceback.print_exception(e)
+        except:
+            print('printing traceback failed lol')
 
     if scrape_message != "loop successful" : 
         log = client.get_channel(log_id)
