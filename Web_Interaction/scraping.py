@@ -121,7 +121,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             service = Service('/usr/lib/chromium-browser/chromedriver')
             driver = webdriver.Chrome(service=service, options=options)
         else:
-            service = Service("C:\Program Files\Google\Chrome Dev\Application\chrome.exe")
+            service = Service("C:/Program Files/Google/Chrome Dev/Application/chrome.exe")
             driver = webdriver.Chrome(options=options)
         driver.set_window_size(width=1440, height=8000)
 
