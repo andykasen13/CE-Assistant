@@ -160,15 +160,15 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
     # check pending rolls
     pendings_to_remove = []
-    for event in database_user[ce_id]['Pending Rolls'] :
-        if database_user[ce_id]['Pending Rolls'][event] < get_unix("now") :
+    for event in user_dict[ce_id]['Pending Rolls'] :
+        if user_dict[ce_id]['Pending Rolls'][event] < get_unix("now") :
             pendings_to_remove.append(event)
     
     # removed done pendings
     for event in pendings_to_remove:
         returns.append(f"casino: <@{database_user[ce_id]['Discord ID']}>, you can now request {event} again.")
         print('removed pending')
-        del database_user[ce_id]['Pending Rolls'][event]
+        del user_dict[ce_id]['Pending Rolls'][event]
 
 
     # Check if any rolls have been completed
@@ -291,7 +291,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             # figure out who completed what game
             winner = ""
             bool_1 = game in user_dict[ce_id]['Owned Games'] and "Primary Objectives" in user_dict[ce_id]['Owned Games'][game] and user_dict[ce_id]['Owned Games'][game]['Primary Objectives'] == database_name[game]['Primary Objectives']
-            bool_2 = game in database_user[ce_id]['Owned Games'] and "Primary Objectives" in database_user[current_roll['Partner']]['Owned Games'][game] and database_user[current_roll['Partner']]['Owned Games'][game]['Primary Objectives'] == database_name[game]['Primary Objectives']
+            bool_2 = game in database_user[current_roll['Partner']]['Owned Games'] and "Primary Objectives" in database_user[current_roll['Partner']]['Owned Games'][game] and database_user[current_roll['Partner']]['Owned Games'][game]['Primary Objectives'] == database_name[game]['Primary Objectives']
             if bool_1 and not bool_2 :
                 winner = 1
             elif not bool_1 and bool_2 :
@@ -308,6 +308,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 current_roll['End Time'] = get_unix("now")
                 user_dict[ce_id]['Completed Rolls'].append(current_roll)
                 remove_indexes.append(m_index)
+
                 # update user 2 database
                 for index, other_roll in enumerate(database_user[current_roll['Partner']]['Current Rolls']) :
                     if other_roll['Event Name'] == "Winner Takes All" : 
@@ -315,17 +316,10 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                         break
                 end_time = get_unix(28*3)
                 database_user[current_roll['Partner']]['Cooldowns']['Winner Takes All'] = end_time
-                
-                args = [
-                    database_user[current_roll['Partner']]['Discord ID'],
-                    0,
-                    0,
-                    0
-                ]
-                
-            
-                ##await add_task(datetime.datetime.fromtimestamp(end_time), args)
-                
+
+                # update both user's casino scores
+                user_dict = update_casino_score(ce_id, 'Winner Takes All', True, user_dict)
+                database_user = update_casino_score(current_roll['Partner'], 'Winner Takes All', False, database_user)
                 
                 del database_user[current_roll['Partner']]['Current Rolls'][other_location]
                 returns.append("log: " + "<@{}> has beaten <@{}> in Winner Takes All.".format(user_dict[ce_id]['Discord ID'], database_user[current_roll['Partner']]['Discord ID']))
@@ -344,16 +338,9 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 # update user 1 database
                 user_dict[ce_id]['Cooldowns']['Winner Takes All']  = get_unix(28*3)
                 
-                
-                args = [
-                    database_user[ce_id]['Discord ID'],
-                    0,
-                    0,
-                    0
-                ]
-                
-                ##await add_task(datetime.datetime.fromtimestamp(end_time), args)
-                
+                # update both user's casino scores
+                user_dict = update_casino_score(ce_id, 'Winner Takes All', False, user_dict)
+                database_user = update_casino_score(current_roll['Partner'], 'Winner Takes All', True, database_user)
                 
                 remove_indexes.append(m_index)
                 returns.append("log: " + "<@{}> has beaten <@{}> in Winner Takes All.".format(database_user[current_roll['Partner']]['Discord ID'], user_dict[ce_id]['Discord ID']))
@@ -425,17 +412,10 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                         break
                 end_time = get_unix(28)
                 database_user[current_roll['Partner']]['Cooldowns']['Game Theory'] = end_time
-                
 
-                
-                args = [
-                    database_user[current_roll['Partner']]['Discord ID'],
-                    0,
-                    0,
-                    0
-                ]
-                
-                ##await add_task(datetime.datetime.fromtimestamp(end_time), args)
+                # update both people's casino scores
+                user_dict = update_casino_score(ce_id, 'Game Theory', True, user_dict)
+                database_user = update_casino_score(current_roll['Partner'], 'Game Theory', False, database_user)
                 
                 
                 del database_user[current_roll['Partner']]['Current Rolls'][other_location]
@@ -455,17 +435,10 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 # update user 1 database
                 end_time = get_unix(28)
                 user_dict[ce_id]['Cooldowns']['Game Theory']  = end_time
-                
-                
-                args = [
-                    database_user[ce_id]['Discord ID'],
-                    0,
-                    0,
-                    0
-                ]
-                
-                ##await add_task(datetime.datetime.fromtimestamp(end_time), args)
-                
+
+                # update both people's casino score
+                user_dict = update_casino_score(ce_id, 'Game Theory', False, user_dict)
+                database_user = update_casino_score(current_roll['Partner'], 'Game Theory', True, database_user)
                 
                 remove_indexes.append(m_index)
                 returns.append("log: " + "<@{}> has beaten <@{}> in Game Theory.".format(database_user[current_roll['Partner']]['Discord ID'], user_dict[ce_id]['Discord ID']))
@@ -527,9 +500,9 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             if "End Time" not in current_roll : continue
             game = current_roll['Games'][len(current_roll['Games']) - 1]
             try:
-                del database_name[game]['Community Objectives']
+                if 'Community Objectives' in database_name[game] : del database_name[game]['Community Objectives']
             except:
-                ""
+                print('cock and balls: commnity objectives failed')
             
             # format database_name like database_user
             for dbN_objective in database_name[game]['Primary Objectives']:
@@ -571,7 +544,10 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     database_name[game]['Primary Objectives'][dbN_objective] = database_name[game]['Primary Objectives'][dbN_objective]['Point Value']
 
                 # ---------- check to see if the games are equal ----------
-                if ((game not in user_dict[ce_id]['Owned Games']) or ("Primary Objectives" not in user_dict[ce_id]['Owned Games'][game]) or (user_dict[ce_id]['Owned Games'][game]['Primary Objectives'] != database_name[game]['Primary Objectives'])) : roll_completed = False
+                if ((game not in user_dict[ce_id]['Owned Games'])
+                     or ("Primary Objectives" not in user_dict[ce_id]['Owned Games'][game])
+                     or (user_dict[ce_id]['Owned Games'][game]['Primary Objectives'] != database_name[game]['Primary Objectives'])) : 
+                            roll_completed = False
 
 
         # -------------------------------------------------- NO MORE CHECKING --------------------------------------------------------------
@@ -598,46 +574,51 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         # -----------------------------  ROLL WAS FAILED -----------------------------
         if not roll_completed and ("End Time" not in current_roll or get_unix('now') > current_roll['End Time']) : 
             
-            # fourward thinking
+            # fourward thinking has failed
             if current_roll['Event Name'] == "Fourward Thinking" :
                 if "End Time" not in current_roll : continue
                 returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]['Discord ID'], str(len(current_roll['Games']))))
                 remove_indexes.append(m_index)
 
                 cooldown_days = (len(current_roll['Games']) * 14) + ((len(current_roll['Games']) - 1) - (current_roll['Rerolls']))*28
-                database_user[ce_id]['Cooldowns']['Fourward Thinking'] = get_unix(cooldown_days)
+                user_dict[ce_id]['Cooldowns']['Fourward Thinking'] = get_unix(cooldown_days)
+                user_dict = update_casino_score(ce_id, 'Fourward Thinking', False, user_dict)
 
                 continue
 
             # let fate decide and never lucky can never fail!
             if current_roll['Event Name'] == 'Let Fate Decide' or current_roll['Event Name'] == 'Never Lucky' : continue
 
-            # two week t2 streak
+            # two week t2 streak has failed
             elif current_roll['Event Name'] == "Two Week T2 Streak":
                 if "End Time" not in current_roll : continue
                 returns.append("casino: <@{}>, you have failed Two Week T2 Streak. There is no cooldown.".format(user_dict[ce_id]['Discord ID']))
                 remove_indexes.append(m_index)
+                user_dict = update_casino_score(ce_id, "Two Week T2 Streak", False, user_dict)
 
                 continue # :)
 
-            # two "two week t2 streak" streak
+            # two "two week t2 streak" streak has failed
             elif current_roll['Event Name'] == "Two 'Two Week T2 Streak' Streak":
                 if "End Time" not in current_roll : continue
                 returns.append("casino: <@{}>, you have failed Two 'Two Week T2 Streak' Streak and are now on cooldown.".format(user_dict[ce_id]['Discord ID']))
                 remove_indexes.append(m_index)
 
-                database_user[ce_id]['Cooldowns']['Two \'Two Week T2 Streak\' Streak'] = get_unix(7)
+                user_dict[ce_id]['Cooldowns']['Two \'Two Week T2 Streak\' Streak'] = get_unix(7)
+                user_dict = update_casino_score(ce_id, "Two 'Two Week T2 Streak' Streak", False, user_dict)
 
                 continue # :)
 
-            # ----------------------- REGULAR ROLL HAS ENDED ----------------------------
-            else: # if the roll was not completed AND the event name is ended_roll_name then they failed
+            # all the other rolls have failed
+            else:
                 
                 # if the game was pending... make a separate message
                 if current_roll['Games'][0] == "pending..." : 
+                    print(current_roll)
+                    print(ce_id)
                     returns.append("casino: " + f"someone ping andy something went wrong with `pending...`")
                 
-                # if this was a co-op roll
+                # co-op roll was failed
                 elif "Partner" in current_roll : 
                     
                     # add the message
@@ -658,24 +639,21 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                         cooldown_time = get_unix(soul_mates_cooldowns[t])
                     
                     # set up cooldowns
-                    database_user[ce_id]['Cooldowns'][current_roll['Event Name']] = cooldown_time
+                    user_dict[ce_id]['Cooldowns'][current_roll['Event Name']] = cooldown_time
                     database_user[current_roll['Partner']]['Cooldowns'][current_roll['Event Name']] = cooldown_time
+                    user_dict = update_casino_score(ce_id, current_roll['Event Name'], False, user_dict)
+                    database_user = update_casino_score(current_roll['Partner'], current_roll['Event'], False, database_user)
                 
-                # this is a normal solo roll
+                # regular roll has failed
                 else : 
-                    print('working')
                     # fourward thinking? again?
                     if current_roll['Event Name'] == "Fourward Thinking" : 
                         returns.append("casino: <@{}>, you have failed your T{} in Fourward Thinking. You are now on cooldown.".format(user_dict[ce_id]['Discord ID'], str(len(current_roll['Games']))))
                     
                     # add the message for any normal roll
                     returns.append("casino: <@{}>, you have failed your {} roll and are now on cooldown.".format(user_dict[ce_id]['Discord ID'], current_roll['Event Name']))
-                    
-                    # and add the cooldown
-                    if current_roll['Event Name'] == "Fourward Thinking" :
-                        cooldown_days = 0
-                        database_user[ce_id]['Cooldowns'][current_roll['Event Name']] = get_unix("now")
-                    database_user[ce_id]['Cooldowns'][current_roll['Event Name']] =  get_unix(cooldowns[current_roll['Event Name']])
+                    user_dict[ce_id]['Cooldowns'][current_roll['Event Name']] =  get_unix(cooldowns[current_roll['Event Name']])
+                    user_dict = update_casino_score(ce_id, current_roll['Event Name'], False, user_dict)
                 remove_indexes.append(m_index)
             
             continue
@@ -721,6 +699,8 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             current_roll['End Time'] = get_unix("now")
             user_dict[ce_id]['Completed Rolls'].append(current_roll)
 
+            user_dict = update_casino_score(ce_id, current_roll['Event Name'], True, user_dict)
+
             # if it's a co-op roll, delete their instance as well
             if "Partner" in current_roll:
                 myindex = ""
@@ -728,9 +708,11 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                     if roll['Event Name'] == current_roll['Event Name'] : 
                         myindex = index3
                         break
-                user_dict[current_roll['Partner']]['Current Rolls'][myindex]['End Time'] = get_unix("now")
-                user_dict[current_roll['Partner']]['Completed Rolls'].append(user_dict[current_roll['Partner']]['Current Rolls'][myindex])
+                database_user[current_roll['Partner']]['Current Rolls'][myindex]['End Time'] = get_unix("now")
+                database_user[current_roll['Partner']]['Completed Rolls'].append(user_dict[current_roll['Partner']]['Current Rolls'][myindex])
                 del database_user[current_roll['Partner']]['Current Rolls'][myindex]
+                database_user = update_casino_score(current_roll['Partner'], current_roll['Event Name'], True, database_user)
+                
 
             # add this index to the ones that need to be removed
             remove_indexes.append(m_index) 
@@ -762,3 +744,53 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
     return returns
 
+def update_casino_score(ce_id : str, event : str, win : bool, user_dict : dict, tier : str = "") :
+    ""
+    if tier == "": tier = "Tier 0"
+    relatives = {
+        "Tier 0" : 0,
+        "Tier 1" : 1,
+        "Tier 2" : 2,
+        "Tier 3" : 4,
+        "Tier 4" : 8,
+        "Tier 5" : 20
+    }
+    scores_win = {
+        'One Hell of a Day' : 1,
+        'One Hell of a Week' : 7,
+        'One Hell of a Month' : 18,
+        'Two Week T2 Streak' : 4,
+        "Two 'Two Week T2 Streak' Streak" : 12,
+        "Never Lucky" : 4,
+        "Triple Threat" : 15,
+        "Let Fate Decide" : 8,
+        "Fourward Thinking" : 18,
+        "Destiny Alignment" : relatives[tier],
+        "Soul Mates" : relatives[tier],
+        "Teamwork Makes the Dream Work" : 10,
+        "Winner Takes All" : relatives[tier],
+        "Game Theory" : 4
+    }
+    scores_loss = {
+        'One Hell of a Day' : 0,
+        'One Hell of a Week' : -2,
+        'One Hell of a Month' : -5,
+        'Two Week T2 Streak' : -1,
+        "Two 'Two Week T2 Streak' Streak" : -2,
+        "Never Lucky" : -1,
+        "Triple Threat" : -3,
+        "Let Fate Decide" : -2,
+        "Fourward Thinking" : -6,
+        "Destiny Alignment" : -int(relatives[tier]/3),
+        "Soul Mates" : -int(relatives[tier]/2),
+        "Teamwork Makes the Dream Work" : -2,
+        "Winner Takes All" : -int(relatives[tier]),
+        "Game Theory" : -4
+    }
+
+    if win : user_dict[ce_id]['Casino Score'] += scores_win[event]
+    else   : user_dict[ce_id]['Casino Score'] += scores_loss[event]
+    del scores_loss
+    del scores_win
+    del relatives
+    return user_dict

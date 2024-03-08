@@ -288,7 +288,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             new_data[game['name']] = get_game(game, json_response[i])
         
         # game is new BUT! unfinished
-        elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None):
+        elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None or game['information'] == "WIP"):
             print('unfinished game: ' + game['name'])
             if game['id'] in unfinished_games['unfinished'] : continue
             else: unfinished_games['unfinished'].append(game['id'])
@@ -374,7 +374,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 updated_games.append(embed)
                 number += 1
 
-            if (game['id'] in unfinished_games['unfinished'] and (game['tier'] != 0 and game['genre'] != None)): unfinished_games['unfinished'].remove(game['id'])
+            if (game['id'] in unfinished_games['unfinished']): unfinished_games['unfinished'].remove(game['id'])
             if hm: del ss
 
         # game is neither new nor updated
@@ -535,7 +535,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
 
     embed['Embed'].set_image(url='attachment://image.png')
     embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
-    embed['Embed'].set_thumbnail(url=ce_hex_icon)
+    embed['Embed'].set_thumbnail(url=ce_mountain_icon)
     embed['Embed'].set_footer(text="CE Assistant",
         icon_url=final_ce_icon)
 
