@@ -22,6 +22,7 @@ import requests
 # web shit (like spiderman!)
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -121,7 +122,8 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             service = Service('/usr/lib/chromium-browser/chromedriver')
             driver = webdriver.Chrome(service=service, options=options)
         else:
-            driver = webdriver.Chrome(options=options)
+            service = Service(ChromeDriverManager().install())
+            driver = webdriver.Chrome(service=service, options=options)
         driver.set_window_size(width=1440, height=8000)
 
         # grab first game to get color on the rest of them
