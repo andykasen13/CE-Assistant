@@ -1332,9 +1332,9 @@ async def startup(interaction: discord.Interaction):
 # -------------------------------------------------------- REASON COMMAND----------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-@tree.command(name="add-reason", description="Add reason to embed", guild=discord.Object(id=guild_ID))
-@app_commands.describe(reason="The string you'd like to add under the 'Reason' banner on a site-addition embed")
-@app_commands.describe(embed_id="The message ID of the embed you'd like to change the reason of")
+@tree.command(name="add-notes", description="Add note to game-additions embed", guild=discord.Object(id=guild_ID))
+@app_commands.describe(reason="The string you'd like to add under the 'Notes' banner on a site-addition embed")
+@app_commands.describe(embed_id="The message ID of the embed you'd like to change the note of")
 async def reason(interaction : discord.Interaction, reason : str, embed_id : str) :
 
     # defer and make ephemeral
@@ -1359,12 +1359,12 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 
     # try and see if the embed already has a reason field
     try :
-        if(embed.fields[len(embed.fields)-1].name == "Reason") :
-            embed.set_field_at(index=len(embed.fields)-1, name="Reason", value=reason)
+        if(embed.fields[len(embed.fields)-1].name == "Note") :
+            embed.set_field_at(index=len(embed.fields)-1, name="Note", value=reason)
     
     # if it errors, then just add a reason field
     except :
-        embed.add_field(name="Reason", value=reason, inline=False)
+        embed.add_field(name="Note", value=reason, inline=False)
 
     # edit the message
     await message.edit(embed=embed, attachments="")

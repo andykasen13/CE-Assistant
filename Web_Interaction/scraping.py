@@ -65,6 +65,7 @@ def single_scrape(curator_count):
 
     for game in json_response:
         if(game['genre'] == None or game['genre']['name'] == None) : continue
+        # if not game['finished'] : continue #
         print(game['name'])
         database_name[game['name']] = get_game(game)
 
@@ -182,6 +183,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     current_newest:
         the most recent time BEFORE scraping that scraping took place.
         stored as an int unix-timestamp.
+        if the game is in database_name.json, it will use its 'Last Updated' item.
     current_dict:
         this is curator_count.json
     c:
@@ -241,9 +243,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             for objrequirement in objective['objectiveRequirements'] :
                 objrequpdatedtime = timestamp_to_unix(objrequirement['updatedAt'])
                 if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
-
+        
+        # if the game is locally stored, set current_newest to that updatedvalue
         if(game['name'] in list(new_data.keys())) : 
-            # if the game is locally stored, set current_newest to that updatedvalue
             current_newest = new_data[game['name']]['Last Updated']
 
             # also grab the names of objectives
@@ -252,12 +254,15 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         if set(import_objective_names) != set(local_objective_names): updated_time = current_newest + 1
             
 
-       # print("updatd")
-
-
-
-        # check if updated since last check
+        # grab the game's icon
         icon = game['icon']
+
+
+
+
+
+
+
 
         # if game is a T0 and updated
         if updated_time > current_newest and game['tier'] == 0 and game['name'] in list(new_data.keys()):
@@ -334,11 +339,12 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             uncleareds = 0
             for objective in new_game['Primary Objectives']:
                 if new_game['Primary Objectives'][objective]['Point Value'] == 1: uncleareds +=1
-                else: points += new_game['Primary Objectives'][objective]['Point Value']
+                else: 
+                    points += new_game['Primary Objectives'][objective]['Point Value']
+                    num_po += 1
             
             second_part = ""
             third_part = ""
-            num_po = len(list(new_game['Primary Objectives']))
             num_co = len(list(new_game['Community Objectives']))
 
             # grammar police
@@ -351,7 +357,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 third_part = "\n- 1 Community Objective"
             
             if uncleareds > 1:
-                third_part += "\n- {} Uncleared Objectives"
+                third_part += "\n- {} Uncleared Objectives".format(uncleareds)
             elif uncleareds == 1:
                 third_part += "\n- 1 Uncleared Objective"
             
@@ -401,7 +407,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
             # new game that wasn't caught above
             if not silly:
-                print("NEW: " + game['name'])
+                print("NEW (oops): " + game['name'])
                 if hm:
                     ss = (get_image(number, game['id'], driver))
                     ss = io.BytesIO(ss)

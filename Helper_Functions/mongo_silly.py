@@ -56,6 +56,7 @@ log_id = _ce_log_id
 
 # ------------- emoji icons -------------
 icons = {
+    # tiers
     "Tier 0" : '<:tier0:1126268390605070426>',
     "Tier 1" : '<:tier1:1126268393725644810>',
     "Tier 2" : '<:tier2:1126268395483037776>',
@@ -65,6 +66,7 @@ icons = {
     "Tier 6" : '<:tier6:1126268408116285541>',
     "Tier 7" : '<:tier7:1126268411220074547>',
 
+    # genres
     "Action" : '<:CE_action:1126326215356198942>',
     "Arcade" : '<:CE_arcade:1126326209983291473>',
     "Bullet Hell" : '<:CE_bullethell:1126326205642190848>',
@@ -72,7 +74,33 @@ icons = {
     "Platformer" : '<:CE_platformer:1126326197983383604>',
     "Strategy" : '<:CE_strategy:1126326195915591690>',
 
-    "Points" : '<:CE_points:1128420207329816597>'
+    # others
+    "Points" : '<:CE_points:1128420207329816597>',
+    'Arrow' : '<:CE_arrow:1126293045315375257>',
+
+    # ranks
+    "Rank A" : '<:rank_a:1126268299504795658>',
+    "Rank B" : '<:rank_b:1126268303480979517>',
+    "Rank C" : '<:rank_c:1126268305083215913>',
+    "Rank D" : '<:rank_d:1126268307813715999>',
+    "Rank E" : '<:rank_e:1126268309730512947>',
+    "Rank S" : '<:rank_s:1126268319855562853>',
+    "Rank SS" : '<:rank_ss:1126268323089367200>',
+    "Rank SSS" : '<:rank_sss:1126268324804833280>',
+    "Rank EX" : '<:rank_ex:1126268312842666075>',
+    "Rank P" : '<:rank_p:1126268315279564800>',
+    "Rank Q" : '<:rank_q:1126268318081364128>',
+
+    # miscellaneous
+    "Casino" : '<:CE_casino:1128844342732263464>',
+    "Diamond" : '<:CE_diamond:1126286987524051064>',
+    "All" : '<:CE_all:1126326219332399134>',
+    "Rank Omega" : '<:rank_omega:1126293063455756318>',
+    "Hexagon" : '<:CE_hexagon:1126289532497694730>',
+
+    # reactions
+    "Shake" : '<:shake:894912425869074462>',
+    "Safety" : '<:safety:802615322858487838>'
 }
 
 
