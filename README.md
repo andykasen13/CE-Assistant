@@ -93,6 +93,7 @@ You will need to `pip install` the following:
 - `apscheduler` (scheduling roll-ends)
 - `pymongo` and `motor` (accessing databases)
 - `chromedriver_binary` (don't ask bruh i have no idea)
+- `webdriver_manager` (sets correct webdriver for selenium)
 
 
 # CE-Assistant
