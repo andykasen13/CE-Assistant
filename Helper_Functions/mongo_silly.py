@@ -49,7 +49,8 @@ _ce_game_additions_id = 949482536726298666   # game additions
 # bot test ids
 _test_log_id = 1141886539157221457
 _test_casino_id = 811286469251039333
-# go-to channels (NOTE: replace these with the ids as needed)
+# go-to channels 
+# NOTE: replace these with the ids as needed
 game_additions_id = _ce_log_id
 casino_id = _ce_casino_test_id
 log_id = _ce_log_id
@@ -97,6 +98,7 @@ icons = {
     "All" : '<:CE_all:1126326219332399134>',
     "Rank Omega" : '<:rank_omega:1126293063455756318>',
     "Hexagon" : '<:CE_hexagon:1126289532497694730>',
+    "Site Dev" : '<:SiteDev:963835646538027018>',
 
     # reactions
     "Shake" : '<:shake:894912425869074462>',
