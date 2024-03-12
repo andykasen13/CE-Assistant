@@ -336,6 +336,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             # grab total points
             points = 0
             uncleareds = 0
+            num_po = 0
             for objective in new_game['Primary Objectives']:
                 if new_game['Primary Objectives'][objective]['Point Value'] == 1: uncleareds +=1
                 else: 
@@ -368,7 +369,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                         title="__" + game['name'] + "__ added to the site:", 
                         colour= 0x48b474,
                         timestamp=datetime.datetime.now(),
-                        description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], len(list(new_game['Primary Objectives'])), second_part, points, third_part)
+                        description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], num_po, second_part, points, third_part)
                     ),
                     'Image' : discord.File(ss, filename="image.png")
                 }
