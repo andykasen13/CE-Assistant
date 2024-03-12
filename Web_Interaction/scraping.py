@@ -850,29 +850,37 @@ def get_objectives(CE_ID):
         achievement_name = {}
         requirements = ''
 
+        # separate COs and POs
         if objective['community']:
             index = 1
 
+        # separate achievements and requirements
         for requirement in objective['objectiveRequirements']:
             if requirement['type'] == 'achievement':
                 achievement_name[requirement['data']] = achievements[requirement['data']]
             elif requirement['type'] == 'custom':
                 requirements = requirement['data']
 
+        # grab the objective's description
         objectives[index][objective['name']] = {
             'Description' : objective['description'],
         }
 
+        # if PO, grab the point value
         if not objective['community']:
             objectives[index][objective['name']]['Point Value'] = objective['points']
 
+        # put in the achievements and requirements
         if achievement_name != {}:
             objectives[index][objective['name']]['Achievements'] = achievement_name
         if requirements != '':
             objectives[index][objective['name']]['Requirements'] = requirements
-    
-    updated_time = timestamp_to_unix(json_response['updatedAt'])
 
+        # add in the objective's CE ID
+        objectives[index][objective['name']]['CE ID'] = objective['id']
+    
+    # grab the most recent updated time
+    updated_time = timestamp_to_unix(json_response['updatedAt'])
     for objective in json_response['objectives'] :
         # was the objective updated
         objupdatedtime = timestamp_to_unix(objective['updatedAt'])
