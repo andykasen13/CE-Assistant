@@ -494,8 +494,10 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 def update(new_game, old_game, driver, number, icon, icons, name):
     # get game info and image
     #new_game = get_game(game)
-    ss = get_image(number, new_game['CE ID'], driver)
-    ss = io.BytesIO(ss)
+    try:
+        ss = get_image(number, new_game['CE ID'], driver)
+    except :
+        ss = "Web_Interaction/image_failed.png"
 
     # initialize the embed description
     update = ""
@@ -1003,59 +1005,70 @@ def get_image(number, CE_ID, driver):
         driver.get(url)
         time.sleep(5)
         objective_lst = []
-        while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
-            print(objective_lst)
+        timeout = False
+        start = time.time()
+        while(len(objective_lst) < 1 or not objective_lst[0].is_displayed() or timeout):
             objective_lst = []
             objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+            timeout = time.time() - start > 5
 
-        
-    except :
-        print("I'm a doodoo head")
-        get_image(number, CE_ID, driver)
+        # if it takes more than 5 seconds to get the image
+        if timeout : return "Web_Interaction/image_failed.png"
 
-    primary_table = driver.find_element(By.CLASS_NAME, "css-c4zdq5")
-    print('test 1')
-    objective_lst = primary_table.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
-    title = driver.find_element(By.TAG_NAME, "h1")
-    top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
-    title_size = title.size['width']
-    title_location = title.location['x']
+        primary_table = driver.find_element(By.CLASS_NAME, "css-c4zdq5")
+        #print('test 1')
+        objective_lst = primary_table.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
+        title = driver.find_element(By.TAG_NAME, "h1")
+        top_left = driver.find_element(By.CLASS_NAME, "GamePage-Header-Image").location
+        title_size = title.size['width']
+        title_location = title.location['x']
 
-    print('test 2')
+        #print('test 2')
 
-    bottom_right = objective_lst[len(objective_lst)-2].location
-    size = objective_lst[len(objective_lst)-2].size
+        bottom_right = objective_lst[len(objective_lst)-2].location
+        size = objective_lst[len(objective_lst)-2].size
 
-    header_elements = [
-        'bp4-navbar',
-        'tr-fadein',
-        'css-1ugviwv'
-    ]
+        header_elements = [
+            'bp4-navbar',
+            'tr-fadein',
+            'css-1ugviwv'
+        ]
 
-    border_width = 15
+        border_width = 15
 
-    top_left_x = top_left['x'] - border_width
-    top_left_y = top_left['y'] - border_width
-    bottom_right_y = bottom_right['y'] + size['height'] + border_width
+        top_left_x = top_left['x'] - border_width
+        top_left_y = top_left['y'] - border_width
+        bottom_right_y = bottom_right['y'] + size['height'] + border_width
 
-    if title_location + title_size > bottom_right['x'] + size['width']:
-        bottom_right_x = title_location + title_size + border_width
-    else:
-        bottom_right_x = bottom_right['x'] + size['width'] + border_width
+        if title_location + title_size > bottom_right['x'] + size['width']:
+            bottom_right_x = title_location + title_size + border_width
+        else:
+            bottom_right_x = bottom_right['x'] + size['width'] + border_width
 
-    print('test 3')
-    ob = Screenshot(bottom_right_y)
-    print('test 4')
-    im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=10, hide_elements=header_elements)
-    im = io.BytesIO(im)
-    im_image = Image.open(im)
-    im_image = im_image.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y))
+        #print('test 3')
+        ob = Screenshot(bottom_right_y)
+        #print('test 4')
+        im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=10, hide_elements=header_elements)
+        im = io.BytesIO(im)
+        im_image = Image.open(im)
+        im_image = im_image.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y))
 
-    imgByteArr = io.BytesIO()
-    im_image.save(imgByteArr, format='PNG')
-    final_im = imgByteArr.getvalue()
+        imgByteArr = io.BytesIO()
+        im_image.save(imgByteArr, format='PNG')
+        final_im = imgByteArr.getvalue()
+        ss = io.BytesIO(final_im)
+
+        del im
+        del im_image
+        del imgByteArr
+        del final_im
+        del ob
     
-    return final_im
+    except Exception as e:
+        print(e)
+        ss = "Web_Interaction/image_failed.png"
+    
+    return ss
     
     return im
     print('test 5')
@@ -1079,70 +1092,75 @@ def special_image(number, decimal, CE_ID, driver, objective_name : str):
         driver.get(url)
         time.sleep(5)
         objective_lst = []
-        while(len(objective_lst) < 1 or not objective_lst[0].is_displayed()):
+        timeout = False
+        start = time.time()
+        while(len(objective_lst) < 1 or not objective_lst[0].is_displayed() or timeout):
             objective_lst = []
             objective_lst = driver.find_elements(By.TAG_NAME, "tr")
+            timeout = time.time() - start > 5
+        
+        if timeout : return "Web_Interaction/image_failed.png"
+
+
+        print('\nobjective looking: ' + objective_name)
+        
+        objective_name = objective_name.lower()
+        objective_name = objective_name.replace(" ", '')
+        objective_name = objective_name.replace("\n", '')
+        objective_name = objective_name.replace("0", '')
+        print(objective_name)
+        print('objectives in objective list')
+        for objective in objective_lst:
+            check_name = str(objective.find_element(By.TAG_NAME, "h3").text)
+            check_name = check_name.lower()
+            check_name = check_name.replace(" ",'')
+            check_name = check_name.replace("\n", '')
+            check_name = check_name.replace("0", '')
+            print(check_name)
+            print(check_name == objective_name)
+            if objective_name == check_name:
+                print('yeayuhhhh"')
+                target_objective = objective
+                break
+        
+        try:
+            target_objective
+        except NameError:
+            print('not found!!')
+            return "none"
+        
+        
+        top_left = target_objective.location
+        bottom_right = target_objective.location
+        size = target_objective.size
+
+        header_elements = [
+            'bp4-navbar',
+            'tr-fadein',
+            'css-1ugviwv'
+        ]
+
+        border_width = 15
+
+        top_left_x = top_left['x'] - border_width
+        top_left_y = top_left['y'] - border_width
+        bottom_right_y = bottom_right['y'] + size['height'] + border_width
+        bottom_right_x = bottom_right['x'] + size['width'] + border_width
 
         
-    except :
-        print("I'm a doodoo head")
-        special_image(number, decimal, CE_ID, driver, objective_name)
+        ob = Screenshot(bottom_right_y)
+        im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=10, hide_elements=header_elements)
+        im = io.BytesIO(im)
+        im_image = Image.open(im)
+        im_image = im_image.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y))
 
-    print('\nobjective looking: ' + objective_name)
-    
-    objective_name = objective_name.lower()
-    objective_name = objective_name.replace(" ", '')
-    objective_name = objective_name.replace("\n", '')
-    objective_name = objective_name.replace("0", '')
-    print(objective_name)
-    print('objectives in objective list')
-    for objective in objective_lst:
-        check_name = str(objective.find_element(By.TAG_NAME, "h3").text)
-        check_name = check_name.lower()
-        check_name = check_name.replace(" ",'')
-        check_name = check_name.replace("\n", '')
-        check_name = check_name.replace("0", '')
-        print(check_name)
-        print(check_name == objective_name)
-        if objective_name == check_name:
-            print('yeayuhhhh"')
-            target_objective = objective
-            break
-    
-    try:
-        target_objective
-    except NameError:
-        print('not found!!')
-        return "none"
-    
-    
-    top_left = target_objective.location
-    bottom_right = target_objective.location
-    size = target_objective.size
-
-    header_elements = [
-        'bp4-navbar',
-        'tr-fadein',
-        'css-1ugviwv'
-    ]
-
-    border_width = 15
-
-    top_left_x = top_left['x'] - border_width
-    top_left_y = top_left['y'] - border_width
-    bottom_right_y = bottom_right['y'] + size['height'] + border_width
-    bottom_right_x = bottom_right['x'] + size['width'] + border_width
-
-    
-    ob = Screenshot(bottom_right_y)
-    im = ob.full_screenshot(driver, save_path=r'Pictures/', image_name="ss{}.png".format(number), is_load_at_runtime=True, load_wait_time=10, hide_elements=header_elements)
-    im = io.BytesIO(im)
-    im_image = Image.open(im)
-    im_image = im_image.crop((top_left_x, top_left_y, bottom_right_x, bottom_right_y))
-
-    imgByteArr = io.BytesIO()
-    im_image.save(imgByteArr, format='PNG')
-    final_im = imgByteArr.getvalue()
+        imgByteArr = io.BytesIO()
+        im_image.save(imgByteArr, format='PNG')
+        final_im = imgByteArr.getvalue()
+        final_im = io.BytesIO(final_im)
+    except Exception as e:
+        print(e)
+        final_im = "Web_Interaction/image_failed.png"
     
     return final_im
 

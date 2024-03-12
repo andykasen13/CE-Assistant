@@ -141,4 +141,8 @@ def timestamp_to_unix(timestamp : str) -> int :
     """Takes in the CE timestamp (`"2024-02-25T07:04:38.000Z"`) and converts it to unix timestamp (`1708862678`)"""
     return int(time.mktime(datetime.datetime.strptime(str(timestamp[:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple()))
 
+def is_valid_t0(name : str) -> bool:
+    """Takes in a T0 and checks to see if it's one of the permanent ones (CE, Puzzle, clown town, Retro)."""
+    return name in ['- Challenge Enthusiasts -', 'Puzzle Games', 'clown town 1443', 'RetroArch']
+
 # ----------------------------------------------------------------------------------------------------------------------------
