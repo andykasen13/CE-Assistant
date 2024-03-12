@@ -330,7 +330,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             print("NEW: " + game['name'])
             if hm:
                 ss = (get_image(number, game['id'], driver))
-                ss = io.BytesIO(ss)
             new_game = get_game(game, json_response[i])
             new_data[game['name']] = new_game
 
@@ -410,7 +409,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 print("NEW (oops): " + game['name'])
                 if hm:
                     ss = (get_image(number, game['id'], driver))
-                    ss = io.BytesIO(ss)
                 new_game = get_game(game, json_response[i])
                 new_data[game['name']] = new_game
 
@@ -575,8 +573,6 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
         objective = objective_info[objective_info.find("'")+3:objective_info.rfind("'")-2:]
         image = special_image(number, decimal, new_game['CE ID'], driver, objective)
         if(image == "none") : removed = True
-        else:
-            image = io.BytesIO(image)
 
         if(not removed):
             embed = {
@@ -1158,6 +1154,12 @@ def special_image(number, decimal, CE_ID, driver, objective_name : str):
         im_image.save(imgByteArr, format='PNG')
         final_im = imgByteArr.getvalue()
         final_im = io.BytesIO(final_im)
+        
+        del im
+        del ob
+        del im_image
+        del imgByteArr
+
     except Exception as e:
         print(e)
         final_im = "Web_Interaction/image_failed.png"
