@@ -104,8 +104,8 @@ async def master_loop(client : discord.Client):
     await curate(correct_channel)
 
     # start the scrape function
-    try: # timeout the function after 10 minutes. it keeps getting stuck smh my head
-        async with asyncio.timeout(600):
+    try: # timeout the function after 15 minutes. it keeps getting stuck smh my head
+        async with asyncio.timeout(900):
             scrape_message = await scrape(correct_channel)
     except TimeoutError:
         scrape_message = "function timed out!!!"

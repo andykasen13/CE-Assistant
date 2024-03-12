@@ -65,6 +65,7 @@ def single_scrape(curator_count):
 
     for game in json_response:
         if(game['genre'] == None or game['genre']['name'] == None) : continue
+        if(game['tier'] == 0 and not is_valid_t0(game['name'])) : continue
         # if not game['finished'] : continue #
         print(game['name'])
         database_name[game['name']] = get_game(game)
@@ -265,7 +266,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
 
         # if game is a T0 and updated
-        if updated_time > current_newest and game['tier'] == 0 and game['name'] in list(new_data.keys()):
+        if updated_time > current_newest and game['tier'] == 0 and is_valid_t0(game['name']):
             print("T0 UPDATED: " + game['name'])
             # update game tracker
             game_tracker.remove(game['name'])
@@ -1165,6 +1166,7 @@ def special_image(number, decimal, CE_ID, driver, objective_name : str):
         print(e)
         final_im = "Web_Interaction/image_failed.png"
     
+    print('special image done')
     return final_im
 
     """im = Image.open('/CE-Assistant/Pictures/ss{}.png'.format(str(number) + '-' + str(decimal)))
