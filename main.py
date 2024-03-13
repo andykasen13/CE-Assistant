@@ -1180,6 +1180,7 @@ async def update(interaction : discord.Interaction) :
 
     dump = await dump_mongo('user', returns[0])
     del returns[0]
+    del dump
 
     for return_value in returns :
         # you've reached the end
