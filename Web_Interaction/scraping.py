@@ -376,7 +376,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 }
                 embed['Embed'].set_image(url='attachment://image.png')
                 embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
-                embed['Embed'].set_thumbnail(url=ce_hex_icon)
+                embed['Embed'].set_thumbnail(url=ce_mountain_icon)
                 embed['Embed'].set_footer(text="CE Assistant",
                     icon_url=final_ce_icon)
             
@@ -614,6 +614,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
 def objective_update(type, new_game, old_game):
 
     update = ""
+    type = "{} Objectives".format(type)
 
     if new_game['{} Objectives'.format(type)] != old_game['{} Objectives'.format(type)]:
 
@@ -621,6 +622,13 @@ def objective_update(type, new_game, old_game):
 
         # primary objective loop
         for objective in new_game['{} Objectives'.format(type)]:
+
+            # if objective name is changed
+            """if objective in new_game[type] and not objective in old_game[type]:
+                for old_obj in old_game[type] : 
+                    if (old_obj["CE ID"] == objective["CE ID"]) : 
+                        update += "🧑‍🦲😼💀😩🥵"
+            """
 
             # if objective is new
             if objective in list(new_game['{} Objectives'.format(type)].keys()) and not objective in list(old_game['{} Objectives'.format(type)].keys()):
@@ -640,6 +648,7 @@ def objective_update(type, new_game, old_game):
             
             # remove objective from tracker
             if objective in objective_tracker : objective_tracker.remove(objective)
+            if objective + " (UNCLEARED)" in objective_tracker : objective_tracker.remove(objective + " (UNCLEARED)")
             try:
                 if objective[0:len(objective)-12] in objective_tracker : objective_tracker.remove(objective)
             except:

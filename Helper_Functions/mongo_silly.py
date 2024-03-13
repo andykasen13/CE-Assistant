@@ -104,6 +104,7 @@ icons = {
     "Shake" : '<:shake:894912425869074462>',
     "Safety" : '<:safety:802615322858487838>'
 }
+"""All of the CE emojis that CE Assistant uses."""
 
 
 # ---------------------------------------------functions-----------------------------------------------------------------
@@ -125,14 +126,10 @@ def get_unix(days = 0, minutes = -1, months = -1) -> int:
     """Returns a unix timestamp for `days` days (or `minutes` minutes, or `months` months) from the current time."""
     # return right now
     if(days == "now") : return int(time.mktime((datetime.datetime.now()).timetuple()))
-    
     # return minutes
     elif (minutes != -1) : return int(time.mktime((datetime.datetime.now()+timedelta(minutes=minutes)).timetuple()))
-
     # return months
-    elif (months != -1) : 
-        return get_unix(months_to_days(months))
-
+    elif (months != -1) : return get_unix(months_to_days(months))
     # return days
     else: return int(time.mktime((datetime.datetime.now()+timedelta(days)).timetuple()))
 
@@ -141,6 +138,7 @@ def timestamp_to_unix(timestamp : str) -> int :
     """Takes in the CE timestamp (`"2024-02-25T07:04:38.000Z"`) and converts it to unix timestamp (`1708862678`)"""
     return int(time.mktime(datetime.datetime.strptime(str(timestamp[:-5:]), "%Y-%m-%dT%H:%M:%S").timetuple()))
 
+# ------ check if a t0 is valid ------
 def is_valid_t0(name : str) -> bool:
     """Takes in a T0 and checks to see if it's one of the permanent ones (CE, Puzzle, clown town, Retro)."""
     return name in ['- Challenge Enthusiasts -', 'Puzzle Games', 'clown town 1443', 'RetroArch']
