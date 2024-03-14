@@ -1513,17 +1513,26 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
         "ffb558c1-5a45-4b8c-856c-e9622ce54f00" : "Strategy",
         "00000000-0000-0000-0000-000000000000" : None
     }
-    genrestr = ""
+    genres_local = {}
+    tiers_local = {}
+    tiergenrestr = ""
     for item in user_api_data['userTierSummaries'] :
         if item['genreId'] == "00000000-0000-0000-0000-000000000000" : 
-            tierstr = ""
             total = item['total']
             for i in range(1,6) :
-                tierstr += f"{icons['Tier ' + str(i)]}: {item['tier' + str(i)]}\n"
+                tiers_local['Tier ' + str(i)] = item['tier' + str(i)]
             #tierstr += "Total Completions: " + str(total)
         else:
             genreName = stupid_horribleness[item['genreId']]
-            genrestr += f"{icons[genreName]}: {item['total']}\n"
+            #genrestr += f"{icons[genreName]}: {item['total']}\n"
+            genres_local[genreName] = item['total']
+
+    for i in range(1, 7) :
+        tiergenrestr += f"{icons[all_genres[i]]}: {genres_local[all_genres[i]]}\t\t"
+        if i != 7: tiergenrestr += f"{icons['Tier ' + str(i)]}: {tiers_local['Tier ' + str(i)]}\n"
+        else : tiergenrestr += f"Total: {total}"
+        
+
 
 
     embed = discord.Embed(
@@ -1535,8 +1544,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     embed.add_field(name="Current Points", value=f"{total_points} {icons["Points"]} - CR: {str(total_cr)}", inline=True)
     embed.add_field(name="Recent Completions", value="Not done yet", inline=False)
     embed.add_field(name="Points", value=f"Points this month (currMonth) : {points} {icons['Points']}\nPoints last month (lastMonth) : {points_old} {icons["Points"]}", inline=False)
-    embed.add_field(name="Comps", value=tierstr, inline=True)
-    embed.add_field(name=" ", value=genrestr, inline=True)
+    embed.add_field(name="Comps", value=tiergenrestr, inline=True)
     #embed.set_image(url=user.avatar.url)
     embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=user.avatar.url)
     embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
