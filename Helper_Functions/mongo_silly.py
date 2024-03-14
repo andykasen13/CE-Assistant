@@ -155,6 +155,7 @@ async def get_ce_id(discord_id : str) -> str:
     database_user = await get_mongo("user")
 
     for user in database_user :
+        if user == '_id' : continue
         if database_user[user]['Discord ID'] == discord_id :
             return user
     
