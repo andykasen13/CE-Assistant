@@ -1425,6 +1425,7 @@ def get_points(user_api_data) :
     points = 0
     points_old = 0
     total_points = 0
+    three = {0 : "", 1: "", 2 : ""}
     for item in user_api_data['userObjectives'] :
         if timestamp_to_unix(item['updatedAt']) > date_limit :
             if item['partial'] :
@@ -1438,10 +1439,25 @@ def get_points(user_api_data) :
                 points_old += item['objective']['points']
         if item['partial'] : total_points += item['objective']['pointsPartial']
         else : total_points += item['objective']['points']
+
+        old_entry = -1
+        for i in three :
+            if timestamp_to_unix(item['updatedAt']) > i:
+                three[timestamp_to_unix(item['updatedAt'])] = item['objective']['name'] + " ("
+                if item['partial'] : three[timestamp_to_unix(item['updatedAt'])] += item['objective']['pointsPartial']
+                else : three[timestamp_to_unix(item['updatedAt'])] += item['objective']['points']
+                three[timestamp_to_unix(item['updatedAt'])] += icons['Points'] + ") - " + item['objective']['game']['name']
+            old_entry = i
+            break
+        if old_entry != -1 : del timestamp_to_unix[old_entry]
+    
+    if 0 in three : del three[0]
+    if 1 in three : del three[1]
+    if 2 in three : del three[2]
     
     
     
-    return [points, points_old, date_limit, date_limit_2, total_points]
+    return [points, points_old, date_limit, date_limit_2, total_points, three]
 
 
 
@@ -1495,6 +1511,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     date_limit = array[2]
     date_limit_2 = array[3]
     total_points = array[4]
+    recents = array[5]
 
     # get cr
     array2 = calculate_cr(ce_id, database_user, database_name)
@@ -1531,7 +1548,11 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
         tiergenrestr += f"{icons[all_genres[i-1]]}: {genres_local[all_genres[i-1]]}\t　\t"
         if i != 6: tiergenrestr += f"{icons['Tier ' + str(i)]}: {tiers_local['Tier ' + str(i)]}\n"
         else : tiergenrestr += f"Total: {total}"
-        
+    
+
+    recentsstr = ""
+    for item in recents:
+        recentsstr += recents[item] + "\n"
 
 
 
@@ -1542,9 +1563,9 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     )
     embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]["Rank"]]}", inline=True)
     embed.add_field(name="Current Points", value=f"{total_points} {icons["Points"]} - CR: {str(total_cr)}", inline=True)
-    embed.add_field(name="Recent Completions", value="Not done yet", inline=False)
+    embed.add_field(name="Recent Completions", value=recentsstr, inline=False)
     embed.add_field(name="Points", value=f"Points this month (currMonth) : {points} {icons['Points']}\nPoints last month (lastMonth) : {points_old} {icons["Points"]}", inline=False)
-    embed.add_field(name="Comps", value=tiergenrestr, inline=True)
+    embed.add_field(name="Completions", value=tiergenrestr, inline=True)
     #embed.set_image(url=user.avatar.url)
     embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=user.avatar.url)
     embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
