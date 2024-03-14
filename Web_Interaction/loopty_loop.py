@@ -26,6 +26,7 @@ import shutil
 # thread management
 import asyncio
 from asyncio import timeout, CancelledError
+from urllib3.exceptions import ReadTimeoutError
 import typing
 from bson import ObjectId
 from discord.ext import tasks
@@ -113,6 +114,9 @@ async def master_loop(client : discord.Client):
         scrape_message = "function timed out!!!!"
     except StaleElementReferenceException as e:
         scrape_message = "stale element!!! wahoo!! please ping andy even though he will cry"
+        print(e)
+    except ReadTimeoutError as e :
+        scrape_message = "connection lost, but do not worry - it will work again next time (probably)"
         print(e)
     except Exception as e:
         scrape_message = "something else went wrong. someone ping andy pls\n\n" + str(e)
