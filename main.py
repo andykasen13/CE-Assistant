@@ -430,7 +430,7 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
     
     # make the embed that you're going to send
     embed = discord.Embed(colour=0x000000, timestamp=datetime.datetime.now())
-    embed.add_field(name="User", value = "<@" + str(user.id) + ">", inline=False)
+    embed.add_field(name="User", value = "<@" + str(user.id) + "> " + str(icons[userInfo[steam_user_name]['Rank']]), inline=True)
     embed.add_field(name="Current Rolls", value=current_roll_str, inline=False)
     embed.add_field(name="Completed Rolls", value=completed_roll_str, inline=False)
     if overflow:
