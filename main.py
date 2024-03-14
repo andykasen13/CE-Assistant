@@ -441,8 +441,34 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
     del user
     
 
+async def checkRollsEmbed(user : discord.Member, database_name, database_user, ce_id : str) -> discord.Embed :
+    """Returns the embed for the /check-rolls command."""
+    # iterate through the json file until you find the
+    # designated user
+    steam_user_name = ce_id
 
+    current_roll_str = get_roll_string(database_user, steam_user_name, database_name, user, 'Current Rolls')
+    completed_roll_str = get_roll_string(database_user, steam_user_name, database_name, user, 'Completed Rolls')
 
+    if len(current_roll_str) > 1020 : 
+        current_roll_str = current_roll_str[:1020]
+        overflow = True
+    if len(completed_roll_str) > 1020 : 
+        completed_roll_str = completed_roll_str[:1020]
+        overflow = True
+    
+    # make the embed that you're going to send
+    embed = discord.Embed(colour=0x000000, timestamp=datetime.datetime.now())
+    embed.add_field(name="User", value = "<@" + str(user.id) + "> " + str(icons[database_user[steam_user_name]['Rank']]), inline=True)
+    embed.add_field(name="Current Rolls", value=current_roll_str, inline=False)
+    embed.add_field(name="Completed Rolls", value=completed_roll_str, inline=False)
+    if overflow:
+        embed.add_field(name="Overflow Error!", value="If this doesn't look right, please DM me <@413427677522034727>. This will be fixed in v1.1.", inline=False)
+    embed.set_thumbnail(url=user.avatar.url)
+    embed.set_footer(text="CE Assistant",
+        icon_url=final_ce_icon)
+
+    return embed
 
 
 
@@ -978,10 +1004,11 @@ async def initiate_master_loop(interaction : discord.Interaction) :
 @app_commands.describe(ce_id="Please use the link to your personal CE user page!")
 async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
-    
+    """
     if interaction.user.id == 476213685073739798 : return await interaction.followup.send("kingconn banned lol")
     if interaction.user.id == 73648432367013888  : return await interaction.followup.send(
         "hey laura when you fix /api/games/full/ i'll give you access")
+    """
     #Open the user database
     database_user = await get_mongo('user')
 
@@ -1547,22 +1574,58 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     else : past_month = 12  
 
     # make the embed
-    embed = discord.Embed(
+    main_embed = discord.Embed(
         title="Profile",
         timestamp=datetime.datetime.now(),
         color=0xff9494
     )
-    embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]["Rank"]]}", inline=True)
-    embed.add_field(name="Current Points", value=f"{total_points} {icons["Points"]} - CR: {str(total_cr)}", inline=True)
-    embed.add_field(name="Recent Completions", value=recentsstr, inline=False)
-    embed.add_field(name="Points", value=f"Points this month ({calendar.month_name[curr_month]}) : {points} {icons['Points']}\nPoints last month ({calendar.month_name[past_month]}) : {points_old} {icons["Points"]}", inline=False)
-    embed.add_field(name="Completions", value=tiergenrestr, inline=True)
+    main_embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]["Rank"]]}", inline=True)
+    main_embed.add_field(name="Current Points", value=f"{total_points} {icons["Points"]} - CR: {str(total_cr)}", inline=True)
+    main_embed.add_field(name="Recent Completions", value=recentsstr, inline=False)
+    main_embed.add_field(name="Points", value=f"Points this month ({calendar.month_name[curr_month]}) : {points} {icons['Points']}\nPoints last month ({calendar.month_name[past_month]}) : {points_old} {icons["Points"]}", inline=False)
+    main_embed.add_field(name="Completions", value=tiergenrestr, inline=True)
     #embed.set_image(url=user.avatar.url)
-    embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=user.avatar.url)
-    embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
+    main_embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=user.avatar.url)
+    main_embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
+
+    # make roll embed
+    roll_embed = checkRollsEmbed(user, database_name, database_user, ce_id)
+
+    # make cr embed
+    cr_embed = discord.Embed(title="CR Values", description="The calculation of all of your (<@{}>'s) CRs!".format(interaction.user.id), timestamp=datetime.datetime.now(), color=0x000000)
+    cr_embed.add_field(name="Total CR", value=str(round(total_cr, 2)), inline=False)
+    for genre in groups :
+        cr_embed.add_field(name=str(genre) + " CR", value=str(groups[genre]), inline=True)
+
+    # make discord.ui.view
+    view = discord.ui.View(timeout=600)
+    mainButton = discord.ui.Button(label="Main", disabled=True)
+    rollButton = discord.ui.Button(label="Rolls", disabled=False)
+    crButton = discord.ui.Button(label="CR", disabled=False)
+    async def mainCallback(interaction : discord.Interaction):
+        rollButton.disabled = False
+        crButton.disabled = False
+        mainButton.disabled = True
+        await interaction.response.edit_message(embed=main_embed, view=view)
+    async def rollCallback(interaction : discord.Interaction):
+        mainButton.disabled = False
+        rollButton.disabled = True
+        crButton.disabled = False
+        await interaction.response.edit_message(embed=roll_embed, view=view)
+    async def crCallback(interaction : discord.Interaction):
+        mainButton.disabled = False
+        rollButton.disabled = False
+        crButton.disabled = True
+        await interaction.response.edit_message(embed=cr_embed, view=view)
+    mainButton.callback = mainCallback
+    rollButton.callback = rollCallback
+    crButton.callback = crCallback
+    view.add_item(mainButton)
+    view.add_item(rollButton)
+    view.add_item(crButton)
 
     # and send the message
-    return await interaction.followup.send(embed=embed)
+    return await interaction.followup.send(embed=main_embed, view=view)
 
 
 @tree.command(name='stop-scrape', description='stop scrape (ADMIN ONLY!!!)', guild=discord.Object(id=guild_ID)) 
