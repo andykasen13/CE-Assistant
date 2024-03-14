@@ -614,7 +614,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
 def objective_update(type, new_game, old_game):
 
     update = ""
-    type = "{} Objectives".format(type)
+    #type = "{} Objectives".format(type)
 
     if new_game['{} Objectives'.format(type)] != old_game['{} Objectives'.format(type)]:
 
