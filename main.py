@@ -1556,7 +1556,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     # get recent string
     recentsstr = ""
     for item in recents:
-        recentsstr += recents[item] + "\n"
+        recentsstr += item + "\n"
 
     # get month names
     curr_month = datetime.datetime.now().month
