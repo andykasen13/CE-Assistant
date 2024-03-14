@@ -441,7 +441,7 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
     del user
     
 
-async def checkRollsEmbed(user : discord.Member, database_name, database_user, ce_id : str) -> discord.Embed :
+def checkRollsEmbed(user : discord.Member, database_name, database_user, ce_id : str) -> discord.Embed :
     """Returns the embed for the /check-rolls command."""
     # iterate through the json file until you find the
     # designated user
