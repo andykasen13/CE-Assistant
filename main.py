@@ -1519,7 +1519,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     for item in user_api_data['userTierSummaries'] :
         if item['genreId'] == "00000000-0000-0000-0000-000000000000" : continue
         genreName = stupid_horribleness[item['genreId']]
-        genrestr += f"{icons[genreName]} ({genreName}): {item['total']}"
+        genrestr += f"{icons[genreName]}: {item['total']}\n"
 
 
     embed = discord.Embed(
