@@ -112,6 +112,8 @@ icons = {
 }
 """All of the CE emojis that CE Assistant uses."""
 
+# ------ genres ------
+all_genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
 
 # ---------------------------------------------functions-----------------------------------------------------------------
 
