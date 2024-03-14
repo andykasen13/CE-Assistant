@@ -49,6 +49,8 @@ def get_roll_string(database_user, ce_id, database_name, target_user, roll_type)
             roll_string += "\t\t- Just DM me <@413427677522034727> for details. This will be updated in v1.1.\n"
             continue
 
+        if end_time == None and games == None and partner == None : continue
+        
         roll_string += ":\n"
 
         gameNum = 1
