@@ -1502,11 +1502,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     groups = array2[1]
 
     # tier and genre stuff
-    tierstr = ""
-    total = user_api_data['userTierSummaries'][0]['total']
-    for i in range(1,6) :
-        tierstr += f"{icons['Tier ' + str(i)]}: {user_api_data['userTierSummaries'][0]['tier' + str(i)]}\n"
-    tierstr += "Total Completions: " + str(total)
+ 
 
     stupid_horribleness = {
         "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd" : "Platformer",
@@ -1519,7 +1515,12 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     }
     genrestr = ""
     for item in user_api_data['userTierSummaries'] :
-        if item['genreId'] == "00000000-0000-0000-0000-000000000000" : continue
+        if item['genreId'] == "00000000-0000-0000-0000-000000000000" : 
+            tierstr = ""
+            total = item['total']
+            for i in range(1,6) :
+                tierstr += f"{icons['Tier ' + str(i)]}: {item['tier' + str(i)]}\n"
+            tierstr += "Total Completions: " + str(total)
         genreName = stupid_horribleness[item['genreId']]
         genrestr += f"{icons[genreName]}: {item['total']}\n"
 
