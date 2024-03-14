@@ -648,11 +648,13 @@ def objective_update(type, new_game, old_game):
             
             # remove objective from tracker
             if objective in objective_tracker : objective_tracker.remove(objective)
+            """
             if objective + " (UNCLEARED)" in objective_tracker : objective_tracker.remove(objective + " (UNCLEARED)")
             try:
                 if objective[0:len(objective)-12] in objective_tracker : objective_tracker.remove(objective)
             except:
                 print('hahahaha')
+            """
 
         for objective in objective_tracker:
             # if objective is removed
@@ -780,7 +782,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
         stand_in += " added"
 
         # add to message if pertinent
-        if len(stand_in) > 26:
+        if len(stand_in) > 25:
             update += stand_in
 
         stand_in2 = ""

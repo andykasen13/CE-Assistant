@@ -1387,28 +1387,42 @@ async def most_recent_points(interaction : discord.Interaction, user: discord.Us
 
     # grab their ce_id, and return if they're not registered
     ce_id = await get_ce_id(user)
-    if ce_id == None : return await interaction.followup.send("You (or your friend) aren't registered in the CE Assistant database!")
+    if ce_id == None : return await interaction.followup.send(f"<@{user}> isn't registered in the CE Assistant database!")
 
     # grab their most recent ce data
     user_api_data = get_api("user", ce_id)
 
     # get the unix timecode of the first of the month
-    date_time = datetime.datetime(year=int(time.strftime('%Y')), month=int(time.strftime('%m')), day=1, hour=0, minute=0, second=0)
+    year1 = int(time.strftime('%Y'))
+    month1 = int(time.strftime('%m'))
+    date_time = datetime.datetime(year=year1, month=month1, day=1, hour=0, minute=0, second=0)
     date_limit = int(time.mktime(date_time.timetuple()))
     del date_time
 
+
+    if month1 != 1 : date_time_2 = datetime.datetime(year=year1, month=month1 - 1, day=1, hour=0, minute=0, second=0)
+    else : date_time_2 = datetime.datetime(year=year1 - 1, month=12, day=1, hour=0, minute=0, second=0)
+    date_limit_2 = int(time.mktime(date_time_2.timetuple()))
+    del date_time_2
+
     # iterate through the objectives
     points = 0
+    points_old = 0
     for item in user_api_data['userObjectives'] :
         if timestamp_to_unix(item['updatedAt']) > date_limit :
             if item['partial'] :
                 points += item['objective']['pointsPartial']
             else :
                 points += item['objective']['points']
+        elif timestamp_to_unix(item['updatedAt']) > date_limit_2 :
+            if item['partial'] :
+                points_old += item['objective']['pointsPartial']
+            else:
+                points_old += item['objective']['points']
     
     del user_api_data
 
-    return await interaction.followup.send(f"<@{user}> has achieved {points} points since <t:{date_limit}>.")
+    return await interaction.followup.send(f"<@{user}> has achieved {points} points since <t:{date_limit}>, and {points_old} points last month.")
 
 
 
