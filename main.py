@@ -1453,15 +1453,18 @@ def get_points(user_api_data) :
                 break
                 
 
-        if old_entry != -1 : del three[old_entry]
+        if old_entry != -1 : 
+            del three[old_entry]
+            print('heee')
+            print(three)
     
-
+    print(three)
     
     if 0 in three : del three[0]
     if 1 in three : del three[1]
     if 2 in three : del three[2]
 
-
+    print(three)
     
     
     
@@ -1508,6 +1511,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     ce_id = await get_ce_id(user.id)
     if ce_id == None : return await interaction.followup.send(f"<@{user.id}> is not registered in the CE Assistant database.")
 
+    # pull data
     user_api_data = get_api("user", ce_id)
     database_user = await get_mongo('user')
     database_name = await get_mongo('name')
@@ -1527,8 +1531,6 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     groups = array2[1]
 
     # tier and genre stuff
- 
-
     stupid_horribleness = {
         "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd" : "Platformer",
         "4d43349a-43a8-4755-9d52-41ece63ec5b1" : "Action",
@@ -1546,10 +1548,8 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
             total = item['total']
             for i in range(1,6) :
                 tiers_local['Tier ' + str(i)] = item['tier' + str(i)]
-            #tierstr += "Total Completions: " + str(total)
         else:
             genreName = stupid_horribleness[item['genreId']]
-            #genrestr += f"{icons[genreName]}: {item['total']}\n"
             genres_local[genreName] = item['total']
 
     for i in range(1, 7) :
@@ -1557,15 +1557,17 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
         if i != 6: tiergenrestr += f"{icons['Tier ' + str(i)]}: {tiers_local['Tier ' + str(i)]}\n"
         else : tiergenrestr += f"Total: {total}"
     
-
+    # get recent string
     recentsstr = ""
     for item in recents:
         recentsstr += recents[item] + "\n"
 
+    # get month names
     curr_month = datetime.datetime.now().month
     if curr_month != 1 : past_month = curr_month - 1
     else : past_month = 12  
 
+    # make the embed
     embed = discord.Embed(
         title="Profile",
         timestamp=datetime.datetime.now(),
@@ -1580,6 +1582,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=user.avatar.url)
     embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
 
+    # and send the message
     return await interaction.followup.send(embed=embed)
 
 
