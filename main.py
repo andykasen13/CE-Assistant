@@ -1448,19 +1448,18 @@ def get_points(user_api_data) :
                 if item['partial'] : three[timestamp_to_unix(item['updatedAt'])] += str(item['objective']['pointsPartial'])
                 else : three[timestamp_to_unix(item['updatedAt'])] += str(item['objective']['points'])
                 three[timestamp_to_unix(item['updatedAt'])] += icons['Points'] + ") - " + item['objective']['game']['name']
-            old_entry = i
-            break
-        print(three)
-        print('hjfkldsa')
+                old_entry = i
+                break
+
         if old_entry != -1 : del three[old_entry]
     
-    print(three)
+
     
     if 0 in three : del three[0]
     if 1 in three : del three[1]
     if 2 in three : del three[2]
 
-    print(three)
+
     
     
     
