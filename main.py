@@ -1074,15 +1074,15 @@ async def register(interaction : discord.Interaction, ce_id: str) :
 
     # Get the user's rank
     rank = ""
-    if total_points < 50 : rank = "Rank E"
-    elif total_points < 250 : rank = "Rank D"
-    elif total_points < 500 : rank = "Rank C"
-    elif total_points < 1000 : rank = "Rank B"
-    elif total_points < 2500 : rank = "Rank A"
-    elif total_points < 5000 : rank = "Rank S"
-    elif total_points < 7500 : rank = "Rank SS"
-    elif total_points < 10000 : rank = "Rank SSS"
-    else : rank = "Rank EX"
+    if total_points < 50 : rank = "E Rank"
+    elif total_points < 250 : rank = "D Rank"
+    elif total_points < 500 : rank = "C Rank"
+    elif total_points < 1000 : rank = "B Rank"
+    elif total_points < 2500 : rank = "A Rank"
+    elif total_points < 5000 : rank = "S Rank"
+    elif total_points < 7500 : rank = "SS Rank"
+    elif total_points < 10000 : rank = "SSS Rank"
+    else : rank = "EX Rank"
 
     user_dict[ce_id]['Rank'] = rank
 
