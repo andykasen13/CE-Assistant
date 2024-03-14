@@ -57,16 +57,10 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     userInfo = await get_mongo('user')
     
     # grab the user
-    i = 0
-    target_user = ""
-    for current_user in userInfo :
-        if current_user == '_id' : continue
-        if(userInfo[current_user]['Discord ID'] == interaction.user.id) :
-            target_user = current_user
-            break
+    target_user = await get_ce_id(interaction.user.id)
     
     # Inform the user that they are not registered.
-    if(target_user == "") :
+    if(target_user == None) :
         return await interaction.followup.send("You are not registered in the CE Assistant database. Please try /register with your CE link.")
 
     # Check if the event is on cooldown...
@@ -90,7 +84,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
         # Get one random (rollable) game in Tier 1, non-genre specific
-        games.append(get_rollable_game(10, 10, "Tier 1", userInfo[current_user], database_name=database_name, database_tier=database_tier))
+        games.append(get_rollable_game(10, 10, "Tier 1", userInfo[target_user], database_name=database_name, database_tier=database_tier))
 
         # Create the embed
         embed = getEmbed(games[0], interaction.user.id, database_name=database_name)
@@ -208,7 +202,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         genres.remove("Strategy")
         i = 0
         while i < 5:
-            games.append(get_rollable_game(10, 10, "Tier 1", userInfo[current_user], genres, database_name=database_name, database_tier=database_tier))
+            games.append(get_rollable_game(10, 10, "Tier 1", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier))
             genres.remove(database_name[games[i]]['Genre'])
             i+=1
 
@@ -362,7 +356,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         
         if(roll_num == -1) :
             # one t3
-            games.append(get_rollable_game(40, 20, "Tier 3", userInfo[current_user], database_name=database_name, database_tier=database_tier))
+            games.append(get_rollable_game(40, 20, "Tier 3", userInfo[target_user], database_name=database_name, database_tier=database_tier))
 
             ends = False
 

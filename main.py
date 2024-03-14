@@ -334,13 +334,9 @@ async def force_add(interaction: discord.Interaction, user: discord.Member, roll
 
     database_user = await get_mongo('user')
 
-    ce_id = ""
-    for u in database_user:
-        if u == "_id" : continue
-        if database_user[u]['Discord ID'] == user.id:
-            ce_id = u
+    ce_id = await get_ce_id(user.id)
 
-    if ce_id == "" : return await interaction.followup.send(f"<@{user.id}> is not registered in the CE Assistant database. Please have them use /register.")
+    if ce_id == None : return await interaction.followup.send(f"<@{user.id}> is not registered in the CE Assistant database. Please have them use /register.")
 
     database_user[ce_id]['Completed Rolls'].append({"Event Name" : roll_event})
 
@@ -407,14 +403,9 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
 
     # iterate through the json file until you find the
     # designated user
-    steam_user_name = ""
-    for user_name in list(userInfo) :
-        if user_name == "_id" : continue
-        if(userInfo[user_name]['Discord ID'] == user.id) :
-            steam_user_name = user_name
-            break
+    steam_user_name = await get_ce_id(user.id)
     
-    if(steam_user_name == "") : 
+    if(steam_user_name == None) : 
         if selfy: return await interaction.followup.send("You are not registered in the CE Assistant database. Please use `/register`!")
         else: return await interaction.followup.send("This user is not registered in the CE Assistant database. Please make sure they use `/register`!")
     #print(steam_user_name) 
@@ -615,11 +606,8 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
     database_user = await get_mongo('user')
     
     # find the user
-    ce_id = 0
-    for u in database_user:
-        if u == "_id" : continue
-        if(database_user[u]['Discord ID'] == user.id): ce_id = u
-    if ce_id == 0:
+    ce_id = await get_ce_id(user.id)
+    if ce_id == None:
         return await interaction.followup.send("<@{}> is not registered in the CE Assistant database.".format(user.id))
     
     # find the roll
@@ -1017,9 +1005,9 @@ async def register(interaction : discord.Interaction, ce_id: str) :
         elif(database_user[user]['CE ID'] == ce_id) : return await interaction.followup.send(
             f"This CE-ID is already registered to <@{database_user[user]['Discord ID']}>, silly!")
     
+    
     # Grab user info from CE API
-    response = requests.get(f"https://cedb.me/api/user/{ce_id}")
-    user_ce_data = json.loads(response.text)
+    user_ce_data = get_api("user", ce_id)
 
     # Set up the user's JSON file
     user_dict = {
@@ -1290,15 +1278,10 @@ async def cr(interaction : discord.Interaction, ephemeral : bool) :
     database_name = await get_mongo('name')
     
     # find them in the users2.json
-    ce_id = ""
-    for user in database_user :
-        if user == '_id' : continue
-        if database_user[user]['Discord ID'] == interaction.user.id :
-            ce_id = user
-            break
+    ce_id = await get_ce_id(interaction.user.id)
     
     # if not found, stop
-    if ce_id == "" : return await interaction.followup.send('You have not registered with CE Assistant! Please use /register with the link to your personal CE page :)')
+    if ce_id == None : return await interaction.followup.send('You have not registered with CE Assistant! Please use /register with the link to your personal CE page :)')
 
     # set up grouping
     groups = {"Action" : [], "Arcade" : [], "Bullet Hell" : [], "First-Person" : [], "Platformer" : [], "Strategy" : []}
