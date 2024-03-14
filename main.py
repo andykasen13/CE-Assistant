@@ -1238,8 +1238,40 @@ async def update(interaction : discord.Interaction) :
 
 
 
+def calculate_cr(ce_id, database_user, database_name) :
+    # set up grouping
+    groups = {"Action" : [], "Arcade" : [], "Bullet Hell" : [], "First-Person" : [], "Platformer" : [], "Strategy" : []}
+
+    # go through all of their games
+    for game in database_user[ce_id]['Owned Games'] :
+
+        points_in_game = 0
+
+        # does the user have any points in the game?
+        if "Primary Objectives" in database_user[ce_id]['Owned Games'][game] :
+
+            # go through all of their objectives
+            for obj in database_user[ce_id]['Owned Games'][game]['Primary Objectives'] :
+
+                # add up all of their points
+                points_in_game += database_user[ce_id]['Owned Games'][game]['Primary Objectives'][obj]
+        
+        if points_in_game != 0 :
+            groups[database_name[game]['Genre']].append(points_in_game)
+        else : continue
 
 
+    # now that we have all the values, 
+    # go through each category and actually calculate the CR
+    total_cr = 0.0
+    for genre in groups :
+        genre_value = 0.0
+        for index, value in enumerate(groups[genre]) :
+            genre_value += (0.85**index)*(float(value))
+        groups[genre] = round(genre_value, 2)
+        total_cr += genre_value
+    
+    return [total_cr, groups]
 
 
 
@@ -1374,6 +1406,42 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
     await interaction.followup.send("worked", ephemeral=True)
 
 
+def get_points(user_api_data) :
+    # get the unix timecode of the first of the month
+    year1 = int(time.strftime('%Y'))
+    month1 = int(time.strftime('%m'))
+    date_time = datetime.datetime(year=year1, month=month1, day=1, hour=0, minute=0, second=0)
+    date_limit = int(time.mktime(date_time.timetuple()))
+    del date_time
+
+
+    if month1 != 1 : date_time_2 = datetime.datetime(year=year1, month=month1 - 1, day=1, hour=0, minute=0, second=0)
+    else : date_time_2 = datetime.datetime(year=year1 - 1, month=12, day=1, hour=0, minute=0, second=0)
+    date_limit_2 = int(time.mktime(date_time_2.timetuple()))
+    del date_time_2
+
+    # iterate through the objectives
+    points = 0
+    points_old = 0
+    total_points = 0
+    for item in user_api_data['userObjectives'] :
+        if timestamp_to_unix(item['updatedAt']) > date_limit :
+            if item['partial'] :
+                points += item['objective']['pointsPartial']
+            else :
+                points += item['objective']['points']
+        elif timestamp_to_unix(item['updatedAt']) > date_limit_2 :
+            if item['partial'] :
+                points_old += item['objective']['pointsPartial']
+            else:
+                points_old += item['objective']['points']
+        if item['partial'] : total_points += item['objective']['pointsPartial']
+        else : total_points += item['objective']['points']
+    
+    
+    
+    return [points, points_old, date_limit, date_limit_2, total_points]
+
 
 
 @tree.command(name="most-recent-points", description="See the points you (or a friend) have accumulated since the start of the month", guild=discord.Object(id=guild_ID))
@@ -1392,34 +1460,13 @@ async def most_recent_points(interaction : discord.Interaction, user: discord.Us
     # grab their most recent ce data
     user_api_data = get_api("user", ce_id)
 
-    # get the unix timecode of the first of the month
-    year1 = int(time.strftime('%Y'))
-    month1 = int(time.strftime('%m'))
-    date_time = datetime.datetime(year=year1, month=month1, day=1, hour=0, minute=0, second=0)
-    date_limit = int(time.mktime(date_time.timetuple()))
-    del date_time
+    array = get_points(user_api_data)
+    points = array[0]
+    points_old = array[1]
+    date_limit = array[2]
+    date_limit_2 = array[3]
+    total_points = array[4]
 
-
-    if month1 != 1 : date_time_2 = datetime.datetime(year=year1, month=month1 - 1, day=1, hour=0, minute=0, second=0)
-    else : date_time_2 = datetime.datetime(year=year1 - 1, month=12, day=1, hour=0, minute=0, second=0)
-    date_limit_2 = int(time.mktime(date_time_2.timetuple()))
-    del date_time_2
-
-    # iterate through the objectives
-    points = 0
-    points_old = 0
-    for item in user_api_data['userObjectives'] :
-        if timestamp_to_unix(item['updatedAt']) > date_limit :
-            if item['partial'] :
-                points += item['objective']['pointsPartial']
-            else :
-                points += item['objective']['points']
-        elif timestamp_to_unix(item['updatedAt']) > date_limit_2 :
-            if item['partial'] :
-                points_old += item['objective']['pointsPartial']
-            else:
-                points_old += item['objective']['points']
-    
     del user_api_data
 
     return await interaction.followup.send(f"<@{user}> has achieved {points} points since <t:{date_limit}>, and {points_old} points last month.")
@@ -1427,8 +1474,46 @@ async def most_recent_points(interaction : discord.Interaction, user: discord.Us
 
 
 
+@tree.command(name="profile", description="Get general info about anyone in CE!", guild=discord.Object(id=guild_ID))
+async def profile(interaction : discord.Interaction, user : discord.User = None):
+    await interaction.response.defer()
 
+    if user == None : user = interaction.user
 
+    ce_id = await get_ce_id(user.id)
+    if ce_id == None : return await interaction.followup.send(f"<@{user.id}> is not registered in the CE Assistant database.")
+
+    user_api_data = get_api("user", ce_id)
+    database_user = await get_mongo('user')
+    database_name = await get_mongo('name')
+
+    # get stuff
+    array = get_points(user_api_data)
+    points = array[0]
+    points_old = array[1]
+    date_limit = array[2]
+    date_limit_2 = array[3]
+    total_points = array[4]
+
+    # get cr
+    array2 = calculate_cr(ce_id, database_user, database_name)
+    total_cr = array2[0]
+    groups = array2[1]
+
+    embed = discord.Embed(
+        title="Profile",
+        timestamp=datetime.datetime.now(),
+        color=0xff9494
+    )
+    embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]["Rank"]]}", inline=True)
+    embed.add_field(name="Current Points", value=f"{total_points} {icons["Points"]} - CR : {str(total_cr)}", inline=True)
+    embed.add_field(name="Recent Completions", value="Not done yet", inline=False)
+    embed.add_field(name="Points", value=f"Points this month (currMonth) : {points}\nPoints last month (lastMonth) : {points_old}")
+    embed.add_field(name="Tier Completions", value="havent done this yet lol", inline=True)
+    embed.add_field(name="Genre Completions", value="also havent done this haha", inline=True)
+    embed.set_thumbnail(user.avatar.url)
+
+    return await interaction.followup.send(embed=embed)
 
 
 
