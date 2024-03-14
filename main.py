@@ -1506,6 +1506,22 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     for i in range(1,6) :
         tierstr += f"{icons['Tier ' + str(i)]}: {user_api_data['userTierSummaries'][0]['tier' + str(i)]}\n"
 
+    stupid_horribleness = {
+        "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd" : "Platformer",
+        "4d43349a-43a8-4755-9d52-41ece63ec5b1" : "Action",
+        "7f8676fe-4900-400b-9284-c073388d88f7" : "Bullet Hell",
+        "a6d00cc0-9481-47cb-bb52-a7011041915a" : "First-Person",
+        "ec499226-0913-4db1-890e-093b366bcb3c" : "Arcade",
+        "ffb558c1-5a45-4b8c-856c-e9622ce54f00" : "Strategy",
+        "00000000-0000-0000-0000-000000000000" : None
+    }
+    genrestr = ""
+    for item in user_api_data['userTierSummaries'] :
+        if item['genreId'] == "00000000-0000-0000-0000-000000000000" : continue
+        genreName = stupid_horribleness[item['genreId']]
+        genrestr += f"{icons[genreName]} ({genreName}): {item['total']}"
+
+
     embed = discord.Embed(
         title="Profile",
         timestamp=datetime.datetime.now(),
@@ -1516,8 +1532,10 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     embed.add_field(name="Recent Completions", value="Not done yet", inline=False)
     embed.add_field(name="Points", value=f"Points this month (currMonth) : {points}\nPoints last month (lastMonth) : {points_old}", inline=False)
     embed.add_field(name="Tier Completions", value=tierstr, inline=True)
-    embed.add_field(name="Genre Completions", value="also havent done this haha", inline=True)
+    embed.add_field(name="Genre Completions", value=genrestr, inline=True)
     embed.set_thumbnail(url=user.avatar.url)
+    embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}")
+    embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
 
     return await interaction.followup.send(embed=embed)
 
