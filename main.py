@@ -1503,8 +1503,10 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
 
     # tier and genre stuff
     tierstr = ""
+    total = user_api_data['userTierSummaries'][0]['total']
     for i in range(1,6) :
         tierstr += f"{icons['Tier ' + str(i)]}: {user_api_data['userTierSummaries'][0]['tier' + str(i)]}\n"
+    tierstr += "Total: " + str(total)
 
     stupid_horribleness = {
         "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd" : "Platformer",
@@ -1530,7 +1532,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]["Rank"]]}", inline=True)
     embed.add_field(name="Current Points", value=f"{total_points} {icons["Points"]} - CR: {str(total_cr)}", inline=True)
     embed.add_field(name="Recent Completions", value="Not done yet", inline=False)
-    embed.add_field(name="Points", value=f"Points this month (currMonth) : {points}\nPoints last month (lastMonth) : {points_old}", inline=False)
+    embed.add_field(name="Points", value=f"Points this month (currMonth) : {points} {icons['Points']}\nPoints last month (lastMonth) : {points_old} {icons["Points"]}", inline=False)
     embed.add_field(name="Tier Completions", value=tierstr, inline=True)
     embed.add_field(name="Genre Completions", value=genrestr, inline=True)
     embed.set_thumbnail(url=user.avatar.url)
