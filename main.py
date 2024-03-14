@@ -459,7 +459,7 @@ def checkRollsEmbed(user : discord.Member, database_name, database_user, ce_id :
         overflow = True
     
     # make the embed that you're going to send
-    embed = discord.Embed(colour=0x000000, timestamp=datetime.datetime.now())
+    embed = discord.Embed(colour=0xff9494, timestamp=datetime.datetime.now())
     embed.add_field(name="User", value = "<@" + str(user.id) + "> " + str(icons[database_user[steam_user_name]['Rank']]), inline=True)
     embed.add_field(name="Current Rolls", value=current_roll_str, inline=False)
     embed.add_field(name="Completed Rolls", value=completed_roll_str, inline=False)
@@ -1593,7 +1593,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     roll_embed = checkRollsEmbed(user, database_name, database_user, ce_id)
 
     # make cr embed
-    cr_embed = discord.Embed(title="CR Values", description="The calculation of all of <@{}>'s CRs!".format(user.id), timestamp=datetime.datetime.now(), color=0x000000)
+    cr_embed = discord.Embed(title="CR Values", description="The calculation of all of <@{}>'s CRs!".format(user.id), timestamp=datetime.datetime.now(), color=0xff9494)
     cr_embed.add_field(name="Total CR", value=str(round(total_cr, 2)), inline=False)
     for genre in groups :
         cr_embed.add_field(name=str(genre) + " CR", value=str(groups[genre]), inline=True)
