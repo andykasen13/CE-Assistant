@@ -445,6 +445,7 @@ def checkRollsEmbed(user : discord.Member, database_name, database_user, ce_id :
     """Returns the embed for the /check-rolls command."""
     # iterate through the json file until you find the
     # designated user
+    overflow = False
     steam_user_name = ce_id
 
     current_roll_str = get_roll_string(database_user, steam_user_name, database_name, user, 'Current Rolls')
