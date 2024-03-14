@@ -1506,7 +1506,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     total = user_api_data['userTierSummaries'][0]['total']
     for i in range(1,6) :
         tierstr += f"{icons['Tier ' + str(i)]}: {user_api_data['userTierSummaries'][0]['tier' + str(i)]}\n"
-    tierstr += "Total: " + str(total)
+    tierstr += "Total Completions: " + str(total)
 
     stupid_horribleness = {
         "3c3fd562-525c-4e24-a1fa-5b5eda85ebbd" : "Platformer",
