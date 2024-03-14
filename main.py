@@ -1593,7 +1593,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     roll_embed = checkRollsEmbed(user, database_name, database_user, ce_id)
 
     # make cr embed
-    cr_embed = discord.Embed(title="CR Values", description="The calculation of all of your (<@{}>'s) CRs!".format(interaction.user.id), timestamp=datetime.datetime.now(), color=0x000000)
+    cr_embed = discord.Embed(title="CR Values", description="The calculation of all of <@{}>'s CRs!".format(user.id), timestamp=datetime.datetime.now(), color=0x000000)
     cr_embed.add_field(name="Total CR", value=str(round(total_cr, 2)), inline=False)
     for genre in groups :
         cr_embed.add_field(name=str(genre) + " CR", value=str(groups[genre]), inline=True)
