@@ -1,4 +1,5 @@
 # --------- web imports ---------
+import json
 import requests
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -33,12 +34,17 @@ _uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.n
 _mongo_client = AsyncIOMotorClient(_uri)
 _mongo_database = _mongo_client['database_name']
 collection = _mongo_client['database_name']['ce-collection']
+"""The MongoDB collection used to pull and push all the databases."""
 
 # ------------- image icons -------------
 ce_mountain_icon = "https://i.imgur.com/4PPsX4o.jpg"
+"""The mountain icon used most commonly by CE."""
 ce_hex_icon = "https://i.imgur.com/FLq0rFQ.png"
+"""The hex icon used by CE's banner."""
 ce_james_icon = "https://i.imgur.com/fcdHTvx.png"
+"""The icon made by James that was previously used."""
 final_ce_icon = "https://i.imgur.com/O9J7fg2.png"
+"""The icon made by crappy for CE Assistant."""
 
 # ------------- discord channel numbers -------------
 # ce ids
@@ -142,5 +148,27 @@ def timestamp_to_unix(timestamp : str) -> int :
 def is_valid_t0(name : str) -> bool:
     """Takes in a T0 and checks to see if it's one of the permanent ones (CE, Puzzle, clown town, Retro)."""
     return name in ['- Challenge Enthusiasts -', 'Puzzle Games', 'clown town 1443', 'RetroArch']
+
+# ------ get a ce-id from a discord id ------
+async def get_ce_id(discord_id : str) -> str:
+    """Takes in a Discord ID (`347900490668965888`) and returns their CE ID (`835afaad-0059-4e39-b24f-24b2c76b1d08`), or `None` if they aren't registered."""
+    database_user = await get_mongo("user")
+
+    for user in database_user :
+        if database_user[user]['Discord ID'] == discord_id :
+            return user
+    
+    del database_user
+    return None
+
+# ------ get a specific api page ------
+_ce_api_types = Literal["game", "user"]
+def get_api(type : _ce_api_types, id : str) -> dict:
+    """Return the CE-api page of any user or game."""
+    response = requests.get(f"https://cedb.me/api/{type}/{id}")
+    data = json.loads(response.text)
+
+    del response
+    return data
 
 # ----------------------------------------------------------------------------------------------------------------------------
