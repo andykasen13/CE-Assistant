@@ -1528,7 +1528,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
             genres_local[genreName] = item['total']
 
     for i in range(1, 7) :
-        tiergenrestr += f"{icons[all_genres[i-1]]}: {genres_local[all_genres[i-1]]}\t\t"
+        tiergenrestr += f"{icons[all_genres[i-1]]}: {genres_local[all_genres[i-1]]}\t　\t"
         if i != 6: tiergenrestr += f"{icons['Tier ' + str(i)]}: {tiers_local['Tier ' + str(i)]}\n"
         else : tiergenrestr += f"Total: {total}"
         
