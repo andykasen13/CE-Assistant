@@ -1520,7 +1520,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
             total = item['total']
             for i in range(1,6) :
                 tierstr += f"{icons['Tier ' + str(i)]}: {item['tier' + str(i)]}\n"
-            tierstr += "Total Completions: " + str(total)
+            #tierstr += "Total Completions: " + str(total)
         else:
             genreName = stupid_horribleness[item['genreId']]
             genrestr += f"{icons[genreName]}: {item['total']}\n"
