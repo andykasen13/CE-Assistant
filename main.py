@@ -1376,6 +1376,41 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
 
 
 
+@tree.command(name="most-recent-points", description="See the points you (or a friend) have accumulated since the start of the month", guild=discord.Object(id=guild_ID))
+async def most_recent_points(interaction : discord.Interaction, user: discord.User = None) :
+    # defer the message
+    await interaction.response.defer()
+    
+    # if no user is provided, use the sender's
+    if user == None : user = interaction.user.id
+    else : user = user.id
+
+    # grab their ce_id, and return if they're not registered
+    ce_id = await get_ce_id(user)
+    if ce_id == None : return await interaction.followup.send("You (or your friend) aren't registered in the CE Assistant database!")
+
+    # grab their most recent ce data
+    user_api_data = get_api("user", ce_id)
+
+    # get the unix timecode of the first of the month
+    date_time = datetime.datetime(year=datetime.datetime.strftime('%Y'), month=datetime.datetime.strftime('%m'), day=1, hour=0, minute=0, second=0)
+    date_limit = int(time.mktime(date_time.timetuple()))
+    del date_time
+
+    # iterate through the objectives
+    points = 0
+    for item in user_api_data['userObjectives'] :
+        if timestamp_to_unix(item['updatedAt']) > date_limit :
+            if item['partial'] :
+                points += item['objective']['pointsPartial']
+            else :
+                points += item['objective']['points']
+    
+    del user_api_data
+
+    return await interaction.followup.send(f"<@{user}> has achieved {points} points since <t:{date_limit}>.")
+
+
 
 
 
