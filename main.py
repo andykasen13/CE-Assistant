@@ -1501,16 +1501,21 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     total_cr = array2[0]
     groups = array2[1]
 
+    # tier and genre stuff
+    tierstr = ""
+    for i in range(1,6) :
+        tierstr += f"{icons['Tier ' + str(i)]}: {user_api_data['userTierSummaries'][0]['tier' + str(i)]}\n"
+
     embed = discord.Embed(
         title="Profile",
         timestamp=datetime.datetime.now(),
         color=0xff9494
     )
     embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]["Rank"]]}", inline=True)
-    embed.add_field(name="Current Points", value=f"{total_points} {icons["Points"]} - CR : {str(total_cr)}", inline=True)
+    embed.add_field(name="Current Points", value=f"{total_points} {icons["Points"]} - CR: {str(total_cr)}", inline=True)
     embed.add_field(name="Recent Completions", value="Not done yet", inline=False)
     embed.add_field(name="Points", value=f"Points this month (currMonth) : {points}\nPoints last month (lastMonth) : {points_old}", inline=False)
-    embed.add_field(name="Tier Completions", value="havent done this yet lol", inline=True)
+    embed.add_field(name="Tier Completions", value=tierstr, inline=True)
     embed.add_field(name="Genre Completions", value="also havent done this haha", inline=True)
     embed.set_thumbnail(url=user.avatar.url)
 
