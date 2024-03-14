@@ -1511,7 +1511,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     embed.add_field(name="Points", value=f"Points this month (currMonth) : {points}\nPoints last month (lastMonth) : {points_old}")
     embed.add_field(name="Tier Completions", value="havent done this yet lol", inline=True)
     embed.add_field(name="Genre Completions", value="also havent done this haha", inline=True)
-    embed.set_thumbnail(user.avatar.url)
+    embed.set_thumbnail(url=user.avatar.url)
 
     return await interaction.followup.send(embed=embed)
 
