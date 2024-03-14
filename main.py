@@ -1426,7 +1426,7 @@ def get_points(user_api_data) :
     points = 0
     points_old = 0
     total_points = 0
-    three = {0 : "", 1: "", 2 : ""}
+    three = {"0" : 0, "1": 1, "2" : 2}
     for item in user_api_data['userObjectives'] :
         if timestamp_to_unix(item['updatedAt']) > date_limit :
             if item['partial'] :
@@ -1457,9 +1457,9 @@ def get_points(user_api_data) :
             del three[old_entry]
     
     
-    if 0 in three : del three[0]
-    if 1 in three : del three[1]
-    if 2 in three : del three[2]
+    if "0" in three : del three["0"]
+    if "1" in three : del three["1"]
+    if "2" in three : del three["2"]
 
     
     
