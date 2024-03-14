@@ -1393,7 +1393,7 @@ async def most_recent_points(interaction : discord.Interaction, user: discord.Us
     user_api_data = get_api("user", ce_id)
 
     # get the unix timecode of the first of the month
-    date_time = datetime.datetime(year=datetime.datetime.strftime('%Y'), month=datetime.datetime.strftime('%m'), day=1, hour=0, minute=0, second=0)
+    date_time = datetime.datetime(year=time.strftime('%Y'), month=time.strftime('%m'), day=1, hour=0, minute=0, second=0)
     date_limit = int(time.mktime(date_time.timetuple()))
     del date_time
 
