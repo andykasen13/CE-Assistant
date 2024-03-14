@@ -153,9 +153,8 @@ def is_valid_t0(name : str) -> bool:
 async def get_ce_id(discord_id : str) -> str:
     """Takes in a Discord ID (`347900490668965888`) and returns their CE ID (`835afaad-0059-4e39-b24f-24b2c76b1d08`), or `None` if they aren't registered."""
     database_user = await get_mongo("user")
-
+    del database_user['_id']
     for user in database_user :
-        if user == '_id' : continue
         if database_user[user]['Discord ID'] == discord_id :
             return user
     
