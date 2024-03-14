@@ -1271,6 +1271,7 @@ def calculate_cr(ce_id, database_user, database_name) :
         groups[genre] = round(genre_value, 2)
         total_cr += genre_value
     
+    total_cr = round(total_cr, 2)
     return [total_cr, groups]
 
 
