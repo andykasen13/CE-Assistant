@@ -1442,6 +1442,7 @@ def get_points(user_api_data) :
 
         old_entry = -1
         for i in three :
+            print(i)
             if timestamp_to_unix(item['updatedAt']) > i:
                 three[timestamp_to_unix(item['updatedAt'])] = item['objective']['name'] + " ("
                 if item['partial'] : three[timestamp_to_unix(item['updatedAt'])] += str(item['objective']['pointsPartial'])
