@@ -1,5 +1,6 @@
 # ---------- time imports -----------
 import asyncio
+import calendar
 from datetime import datetime, timedelta
 import datetime
 import functools
@@ -1442,15 +1443,15 @@ def get_points(user_api_data) :
 
         old_entry = -1
         for i in three :
-            print(i)
             if timestamp_to_unix(item['updatedAt']) > i:
                 three[timestamp_to_unix(item['updatedAt'])] = item['objective']['name'] + " ("
                 if item['partial'] : three[timestamp_to_unix(item['updatedAt'])] += str(item['objective']['pointsPartial'])
                 else : three[timestamp_to_unix(item['updatedAt'])] += str(item['objective']['points'])
                 three[timestamp_to_unix(item['updatedAt'])] += icons['Points'] + ") - " + item['objective']['game']['name']
                 old_entry = i
+                print(three)
                 break
-            print(three)
+                
 
         if old_entry != -1 : del three[old_entry]
     
@@ -1561,7 +1562,9 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     for item in recents:
         recentsstr += recents[item] + "\n"
 
-
+    curr_month = datetime.datetime.now().month
+    if curr_month != 1 : past_month = curr_month - 1
+    else : past_month = 12  
 
     embed = discord.Embed(
         title="Profile",
@@ -1571,7 +1574,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]["Rank"]]}", inline=True)
     embed.add_field(name="Current Points", value=f"{total_points} {icons["Points"]} - CR: {str(total_cr)}", inline=True)
     embed.add_field(name="Recent Completions", value=recentsstr, inline=False)
-    embed.add_field(name="Points", value=f"Points this month (currMonth) : {points} {icons['Points']}\nPoints last month (lastMonth) : {points_old} {icons["Points"]}", inline=False)
+    embed.add_field(name="Points", value=f"Points this month ({calendar.month_name[curr_month]}) : {points} {icons['Points']}\nPoints last month ({calendar.month_name[past_month]}) : {points_old} {icons["Points"]}", inline=False)
     embed.add_field(name="Completions", value=tiergenrestr, inline=True)
     #embed.set_image(url=user.avatar.url)
     embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=user.avatar.url)
