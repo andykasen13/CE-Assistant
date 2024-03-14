@@ -846,8 +846,7 @@ def get_game(game, big_game = ""):
 
 # get objective info
 def get_objectives(CE_ID):
-    api_response = requests.get('https://cedb.me/api/game/{}'.format(CE_ID))
-    json_response = json.loads(api_response.text)
+    json_response = get_api("game", CE_ID)
 
     objectives = [{}, {}, ""]
     achievements = {}

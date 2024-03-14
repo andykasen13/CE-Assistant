@@ -142,11 +142,7 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
         database_user = await get_mongo("user")
         
         # grab the target user
-        for user in database_user :
-            if user == '_id' : continue
-            if(database_user[user]['Discord ID'] == user_id) : 
-                target_user = user
-                break
+        target_user = await get_ce_id(user_id)
         
         # find the roll to replace (if it exists)
         roll_num = -1

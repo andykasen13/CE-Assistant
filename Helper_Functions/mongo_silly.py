@@ -167,8 +167,12 @@ async def get_ce_id(discord_id : str) -> str:
 _ce_api_types = Literal["game", "user"]
 def get_api(type : _ce_api_types, id : str) -> dict:
     """Return the CE-api page of any user or game."""
-    response = requests.get(f"https://cedb.me/api/{type}/{id}")
-    data = json.loads(response.text)
+    try:
+        response = requests.get(f"https://cedb.me/api/{type}/{id}")
+        data = json.loads(response.text)
+    except Exception as e:
+        print(e)
+        data = {}
 
     del response
     return data

@@ -77,8 +77,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
     # Grab user info from CE API
     try:
-        response = requests.get(f"https://cedb.me/api/user/{ce_id}")
-        user_ce_data = json.loads(response.text)
+        user_ce_data = get_api("user", ce_id)
     except:
         return "failed"
     

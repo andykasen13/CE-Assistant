@@ -19,8 +19,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     database_tier = await get_mongo("tier")
     
     # Set up variables
-    interaction_user_data = ""
-    target_user_data = ""
+    interaction_user_data = None
+    target_user_data = None
     view = discord.ui.View(timeout=600)
     user_a_avatar = interaction.user.avatar
 
@@ -28,19 +28,15 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     if interaction.user.id == partner.id : return await interaction.followup.send("You cannot enter a co-op roll with yourself.")
 
     # Grab the information for both users
-    for user in database_user :
-        if user == "_id" : continue
-        if database_user[user]['Discord ID'] == interaction.user.id : 
-            interaction_user_data = database_user[user]
-            int_user_id = user
-        if database_user[user]['Discord ID'] == partner.id : 
-            target_user_data = database_user[user]
-            part_user_id = user
+    int_user_id = await get_ce_id(interaction.user.id)
+    interaction_user_data = database_user[int_user_id]
+    part_user_id = await get_ce_id(partner.id)
+    target_user_data = database_user[part_user_id]
 
     # Make sure both users are registered in the database,
     # and return a message if they're not
-    if interaction_user_data == "" : return await interaction.followup.send("You are not registered in the CE Assistant database.")
-    if target_user_data == "" : return await interaction.followup.send(f"<@{partner.id}> is not registered in the CE Assistant database.")
+    if interaction_user_data == None : return await interaction.followup.send("You are not registered in the CE Assistant database.")
+    if target_user_data == None : return await interaction.followup.send(f"<@{partner.id}> is not registered in the CE Assistant database.")
     
     # check to see if either are pending or if either are currently participating...
     if (event in database_user[int_user_id]['Pending Rolls']) :
@@ -64,6 +60,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     database_user[part_user_id]['Pending Rolls'][event] = get_unix(minutes=10)
 
     dump = await dump_mongo('user', database_user)
+    del dump
     database_user = await get_mongo('user')
     
 
