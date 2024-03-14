@@ -1449,7 +1449,7 @@ def get_points(user_api_data) :
                 three[timestamp_to_unix(item['updatedAt'])] += icons['Points'] + ") - " + item['objective']['game']['name']
             old_entry = i
             break
-        if old_entry != -1 : del timestamp_to_unix[old_entry]
+        if old_entry != -1 : del three[old_entry]
     
     if 0 in three : del three[0]
     if 1 in three : del three[1]
