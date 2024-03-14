@@ -1580,7 +1580,11 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     return await interaction.followup.send(embed=embed)
 
 
-
+@tree.command(name='stop-scrape', description='stop scrape (ADMIN ONLY!!!)', guild=discord.Object(id=guild_ID)) 
+async def stop_scrape(interaction : discord.Interaction) :
+    await interaction.response.defer()
+    await interaction.followup.send('stopping...')
+    raise ValueError
 
 
 
