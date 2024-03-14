@@ -1521,8 +1521,9 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
             for i in range(1,6) :
                 tierstr += f"{icons['Tier ' + str(i)]}: {item['tier' + str(i)]}\n"
             tierstr += "Total Completions: " + str(total)
-        genreName = stupid_horribleness[item['genreId']]
-        genrestr += f"{icons[genreName]}: {item['total']}\n"
+        else:
+            genreName = stupid_horribleness[item['genreId']]
+            genrestr += f"{icons[genreName]}: {item['total']}\n"
 
 
     embed = discord.Embed(
