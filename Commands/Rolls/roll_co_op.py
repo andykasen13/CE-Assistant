@@ -325,7 +325,6 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 view.clear_items()
                 embed = getEmbed(game, interaction.user.id, database_name)
                 embed.set_field_at(index=1, name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
-                embed.add_field(name="Tier", value=database_name[game]['Tier'])
 
                 end_db = {
                     "Tier 1" : (2),
