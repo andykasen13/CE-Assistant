@@ -791,9 +791,12 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     # -------------------------------------------- Russian Roulette --------------------------------------------
     elif event == "Russian Roulette" :
         # choose six t5s and get one at random
-        embed = discord.Embed(title=("⚠️ Russian Roulette ⚠️"))
-
-        dont_save = True
+        embed = discord.Embed(title=("⚠️ Russian Roulette ⚠️"), description="Sorry, but CE Assistant does not handle Russian Roulette. Please ping Folkius for this!",
+                              timestamp=datetime.datetime.now())
+        embed.set_thumbnail(url=ce_mountain_icon)
+        embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
+        embed.set_author(name='Challenge Enthusiasts')
+        dont_save = True    
 
         ends = False
 

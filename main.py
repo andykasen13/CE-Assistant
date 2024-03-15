@@ -96,36 +96,11 @@ async def aaaa_auto(interaction : discord.Interaction, current:str) -> typing.Li
 """
 @tree.command(name="aaaaa", description="afjdals", guild=discord.Object(id=guild_ID))
 #@app_commands.autocomplete(item=aaaa_auto)
-async def aaaaa(interaction : discord.Interaction, item : str):
-    await interaction.response.defer()
-
-    db = {
-        "_id" : ObjectId('64f8bd1b094bdbfc3f7d0051'),
-        "Template User" : {
-            "Discord ID" : 0,
-            "Rank" : "Rank E",
-            "Casino Score" : 0,
-            "Owned Games" : {
-                "Neon White" :{
-                    "Primary Objectives": {
-                        "Demon Exterminator" : 35,
-                        "Rocket League" : 10,
-                        "Heaven's Janitor" : 5
-                    },
-                    "Community Objectives" : {
-                        "My Dick and Balls" : True
-                    }
-                }
-            },
-            "Current Rolls" : [],
-            "Completed Rolls" : [],
-            "Cooldowns" : {}
-        }
-    }
-
-    dump = await dump_mongo('user', db)
-
+async def aaaaa(interaction : discord.Interaction, item : str, date):
+    await interaction.response.defer()  
 """
+
+
 
 
 
