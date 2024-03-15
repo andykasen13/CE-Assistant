@@ -66,6 +66,18 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
 
         if avg_completion_time_limit == "nope" : avg_completion_time_limit = 9999999
         
+        if tier_number == 'Tier 5+':
+            database_tier['Tier 5+'] = {
+                "Action" : 0,
+                "Arcade" : 0,
+                "Bullet Hell" : 0,
+                "First-Person" : 0,
+                "Platformer" : 0,
+                "Strategy" : 0
+            }
+
+            for g in genres :
+                database_tier["Tier 5+"][g] = database_tier['Tier 5'][g] + database_tier['Tier 6'][g]
     
         while not rollable :
             # ----- Grab random game -----

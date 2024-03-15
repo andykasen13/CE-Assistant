@@ -56,7 +56,7 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # --------------------------------------------------------- GET EMBED FUNCTION ------------------------------------------------------ #
 # ----------------------------------------------------------------------------------------------------------------------------------- #
-def getEmbed(game_name, authorID, database_name):
+def getEmbed(game_name, authorID, database_name) -> discord.Embed:
 
     total_points = 0
     #TODO add error exceptions

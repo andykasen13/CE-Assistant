@@ -265,12 +265,15 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             buttons.append(discord.ui.Button(label=f"Tier {i}"))
             view.add_item(buttons[i-1])
             i+=1
+        buttons.append(discord.ui.Button(label="Tier 5+"))
+        view.add_item(buttons[5])
     
         async def t1_callback(interaction) : return await soulmate_callback(interaction, "Tier 1")
         async def t2_callback(interaction) : return await soulmate_callback(interaction, "Tier 2")
         async def t3_callback(interaction) : return await soulmate_callback(interaction, "Tier 3")
         async def t4_callback(interaction) : return await soulmate_callback(interaction, "Tier 4")
         async def t5_callback(interaction) : return await soulmate_callback(interaction, "Tier 5")
+        async def t5plus_callback(interaction) : return await soulmate_callback(interaction, "Tier 5+")
 
         async def soulmate_callback(interaction : discord.Interaction, tier_num) :
             await interaction.response.defer()
@@ -281,7 +284,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 "Tier 3" : 80,
                 "Tier 4" : 160,
                 "Tier 5" : "nope",
-                "Tier 6" : "nope"
+                "Tier 5+" : "nope"
             }
             
             if interaction.user.id != interaction_user_data['Discord ID'] : return
@@ -316,7 +319,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             view.add_item(deny_button)
             view.add_item(agree_button)
             
-            async def agree_callback(interaction) :
+            async def agree_callback(interaction : discord.Interaction) :
                 await interaction.response.defer()
                 if interaction.user.id != target_user_data['Discord ID'] : return
                 view.clear_items()
@@ -331,7 +334,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     "Tier 4" : (56)
                 }
 
-                if(tier_num == "Tier 5") : 
+                if(tier_num == "Tier 5" or tier_num == "Tier 5+") : 
 
                     database_user[int_user_id]['Current Rolls'].append({
                         "Event Name" : event,
@@ -402,6 +405,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         buttons[2].callback = t3_callback
         buttons[3].callback = t4_callback
         buttons[4].callback = t5_callback
+        buttons[5].callback = t5plus_callback
         """
         - send a message asking what tier should be picked from
             - only user A should be able to respond
