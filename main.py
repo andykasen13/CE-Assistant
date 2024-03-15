@@ -299,7 +299,7 @@ events_total = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a
           "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", "Fourward Thinking",
           "Russian Roulette", "Destiny Alignment", "Soul Mates", "Teamwork Makes the Dream Work", 
           "Winner Takes All", "Game Theory"]
-
+"""List of all events."""
 
 
 
