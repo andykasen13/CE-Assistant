@@ -394,7 +394,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             # Set up embed for user B
             embed = discord.Embed(title="Do you accept?", timestamp=datetime.datetime.now())
             embed.add_field(name="Tier", value="<@{}> has chosen {}. Do you, <@{}>, agree to participate in Soul Mates with them?".format(interaction_user_data['Discord ID'], tier_num, target_user_data['Discord ID']))
-            if tier_num != "Tier 5" : embed.add_field(name="Time Limit", value="You will have a time limit of {}.".format(shmilly[tier_num]))
+            if tier_num != "Tier 5" and tier_num != "Tier 5+" : embed.add_field(name="Time Limit", value="You will have a time limit of {}.".format(shmilly[tier_num]))
             embed.set_thumbnail(url=ce_mountain_icon)
             embed.set_footer(text="CE Assistant",icon_url=final_ce_icon)
 
