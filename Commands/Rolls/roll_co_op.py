@@ -302,16 +302,10 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 game = get_rollable_game(soul_mate_hours[tier_num], 20, tier_num, database_tier=database_tier, database_name=database_name)
                 
                 # check to see if user B owns the game and if they have points in the game
-                target_user_owns_game = list(target_user_data['Owned Games'].keys()).count(game) > 0
-                if(target_user_owns_game) : 
-                    target_user_has_points_in_game = list(target_user_data['Owned Games'][game].keys()).count("Primary Objectives") > 0
-                else : target_user_has_points_in_game = False
+                target_user_has_points_in_game = has_points(target_user_data, game)
 
                 # check to see if user A owns the game and if they have points in the game
-                interaction_user_owns_game = list(interaction_user_data['Owned Games'].keys()).count(game) > 0
-                if(interaction_user_owns_game) :
-                    interaction_user_has_points_in_game = list(interaction_user_data['Owned Games'][game].keys()).count("Primary Objectives") > 0
-                else : interaction_user_has_points_in_game = False
+                interaction_user_has_points_in_game = has_points(interaction_user_data, game)
 
             # ----- Set up agreement buttons for User B -----
             agree_button = discord.ui.Button(label="Agree", style=discord.ButtonStyle.success)
@@ -488,19 +482,11 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                     # grab a rollable game
                     game = get_rollable_game(40, 20, "Tier 3", database_tier=database_tier, database_name=database_name, games=games)
 
-                    
-                    
                     # check to see if user B owns the game and if they have points in the game
-                    target_user_owns_game = list(target_user_data['Owned Games'].keys()).count(game) > 0
-                    if(target_user_owns_game) : 
-                        target_user_has_points_in_game = list(target_user_data['Owned Games'][game].keys()).count("Primary Objectives") > 0
-                    else : target_user_has_points_in_game = False
+                    target_user_has_points_in_game = has_points(target_user_data, game)
 
                     # check to see if user A owns the game and if they have points in the game
-                    interaction_user_owns_game = list(interaction_user_data['Owned Games'].keys()).count(game) > 0
-                    if(interaction_user_owns_game) :
-                        interaction_user_has_points_in_game = list(interaction_user_data['Owned Games'][game].keys()).count("Primary Objectives") > 0
-                    else : interaction_user_has_points_in_game = False
+                    interaction_user_has_points_in_game = has_points(interaction_user_data, game)
 
                 # ----- Append the game -----
                 games.append(game)
