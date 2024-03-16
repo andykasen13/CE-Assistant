@@ -1556,10 +1556,10 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
         timestamp=datetime.datetime.now(),
         color=0xff9494
     )
-    main_embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]["Rank"]]}", inline=True)
-    main_embed.add_field(name="Current Points", value=f"{total_points} {icons["Points"]} - CR: {str(total_cr)}", inline=True)
+    main_embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]['Rank']]}", inline=True)
+    main_embed.add_field(name="Current Points", value=f"{total_points} {icons['Points']} - CR: {str(total_cr)}", inline=True)
     main_embed.add_field(name="Recent Completions", value=recentsstr, inline=False)
-    main_embed.add_field(name="Points", value=f"Points this month ({calendar.month_name[curr_month]}) : {points} {icons['Points']}\nPoints last month ({calendar.month_name[past_month]}) : {points_old} {icons["Points"]}", inline=False)
+    main_embed.add_field(name="Points", value=f"Points this month ({calendar.month_name[curr_month]}) : {points} {icons['Points']}\nPoints last month ({calendar.month_name[past_month]}) : {points_old} {icons['Points']}", inline=False)
     main_embed.add_field(name="Completions", value=tiergenrestr, inline=True)
     #embed.set_image(url=user.avatar.url)
     main_embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=user.avatar.url)
@@ -1628,7 +1628,7 @@ async def stop_scrape(interaction : discord.Interaction) :
 @tree.command(name="manual-restart", description="Will restart the computer the bot is currently hosted on", guild=discord.Object(id=guild_ID))
 async def manual_restart(interaction : discord.Interaction):
     await interaction.response.send_message('rebooting...')
-    restart()
+    await restart()
     
 
 # ----------------------------------- LOG IN ----------------------------
