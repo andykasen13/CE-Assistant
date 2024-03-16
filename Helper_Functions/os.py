@@ -1,5 +1,6 @@
 import os
 import getpass
+import platform
 
 # hee hee I hope this works
 
@@ -8,12 +9,12 @@ bat_path = r'C:\Users\%s\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\S
 
 
 async def restart(file):
-    if not os.path.isfile(bat_path + "/open.bat"):
-        await add_to_startup(file)
+    if not os.path.isfile(bat_path + "/open.bat") and platform.platform() == 'Windows':
+        await add_to_windows_startup(file)
     os.system("shutdown /r /t 0")
 
 
-async def add_to_startup(file, file_path=""):
+async def add_to_windows_startup(file, file_path=""):
     
     if file_path == "":
         file_path = os.path.dirname(os.path.realpath(file))
