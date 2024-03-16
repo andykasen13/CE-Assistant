@@ -1,6 +1,8 @@
 import os
 import getpass
 
+# hee hee I hope this works
+
 USER_NAME = getpass.getuser()
 bat_path = r'C:\Users\%s\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup' % USER_NAME
 
