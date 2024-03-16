@@ -43,6 +43,7 @@ from selenium.webdriver.chrome.service import Service
 from PIL import Image
 from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix, collection #TODO: i dont need this anymore but too lazy to figure it out
 from Helper_Functions.mongo_silly import *
+from Helper_Functions.os import restart
 
 
 # ---------- command imports --------------
@@ -1612,6 +1613,22 @@ async def stop_scrape(interaction : discord.Interaction) :
 
 
 
+
+
+
+
+
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ----------------------------------------------------- Operational Restart -------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+@tree.command(name="manual-restart", description="Will restart the computer the bot is currently hosted on", guild=discord.Object(id=guild_ID))
+async def manual_restart(interaction : discord.Interaction):
+    await interaction.response.send_message('rebooting...')
+    restart()
     
 
 # ----------------------------------- LOG IN ----------------------------
