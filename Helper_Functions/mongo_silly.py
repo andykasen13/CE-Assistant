@@ -44,7 +44,7 @@ ce_hex_icon = "https://i.imgur.com/FLq0rFQ.png"
 ce_james_icon = "https://i.imgur.com/fcdHTvx.png"
 """The icon made by James that was previously used."""
 final_ce_icon = "https://i.imgur.com/O9J7fg2.png"
-"""The icon made by crappy for CE Assistant."""
+"""The icon made by @crappy for CE Assistant."""
 
 # ------------- discord channel numbers -------------
 # ce ids
