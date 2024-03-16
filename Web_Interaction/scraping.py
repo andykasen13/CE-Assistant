@@ -59,7 +59,7 @@ def single_scrape(curator_count):
     api_response = requests.get('https://cedb.me/api/games')
     json_response = json.loads(api_response.text)
 
-    curator_count['Updated Time'] = int(time.mktime(datetime.datetime.now().timetuple()))
+    curator_count['Updated Time'] = get_unix('now')
 
     database_name = {}
 
@@ -83,7 +83,7 @@ def single_scrape_v2(curator_count) :
     database_name_v2 = {}
 
     for game in json_response:
-        if(game['genre'] == None or game['genre']['name'] == None) : continue
+        if(game['genre'] == None or game['genre']['name'] == None) or (game['tier'] == 0 and not is_valid_t0(game['name'])) : continue
         print(game['name'])
         database_name_v2[game['id']] = get_game(game)
     
@@ -840,9 +840,8 @@ def get_game(game, big_game = ""):
         'Community Objectives' : objectives[1],
         'Last Updated' : objectives[2]
         }
-    if big_game != "":
-        returnable['Full Completions'] = big_game['completion']['completed']
-        returnable['Total Owners'] = big_game['completion']['total']
+    if 'completion' in game and 'completed' in game['completion'] : returnable['Full Completions'] = game['completion']['completed']
+    if 'completion' in game and 'total' in game['completion'] : returnable['Total Owners'] = game['completion']['total']
     
     return returnable
 

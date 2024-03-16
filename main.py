@@ -30,7 +30,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 # --------- other file imports ---------
 from Web_Interaction.loopty_loop import master_loop
 from Web_Interaction.curator import single_run
-from Web_Interaction.scraping import single_scrape, get_image
+from Web_Interaction.scraping import single_scrape, get_image, single_scrape_v2
 from Helper_Functions.create_embed import getEmbed
 from Helper_Functions.roll_string import get_roll_string
 from Helper_Functions.buttons import get_buttons
@@ -70,8 +70,8 @@ intents.message_content = True
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-discord_token = localJSONData['discord_token']  
-guild_ID = localJSONData['ce_guild_ID']
+discord_token = localJSONData['third_discord_token']  
+guild_ID = localJSONData['test_guild_ID']
 
 
 
@@ -636,24 +636,24 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @to_thread
 def scrape_thread_call(curator_count):
-    return single_scrape(curator_count)
+    return single_scrape_v2(curator_count)
 
 
 @tree.command(name="scrape", description="Force update every game without creating embeds. DO NOT RUN UNLESS NECESSARY.", guild=discord.Object(id=guild_ID))
 async def scrape(interaction : discord.Interaction):
-    await interaction.response.send_message('scraping...')
+    await interaction.response.send_message('scraping... (v2)')
 
     curator_count = await get_mongo('curator')
 
     objects = await scrape_thread_call(curator_count)
 
     # add the id back to database_name
-    objects[0]['_id'] = ObjectId('64f8d47f827cce7b4ac9d35b')
-    objects[2]['_id'] = ObjectId('64f8bc4d094bdbfc3f7d0050')
+    objects[0]['_id'] = mongo_ids['name_new']
+    objects[2]['_id'] = mongo_ids["tier"]
     
     # dump the databases back onto mongoDB
     dump1 = await dump_mongo('curator', objects[1]) #curator
-    dump2 = await dump_mongo('name', objects[0]) #name
+    dump2 = await dump_mongo('name_new', objects[0]) #name
     dump3 = await dump_mongo('tier', objects[2]) #tier
 
     await interaction.channel.send('scraped')
@@ -1621,8 +1621,8 @@ async def on_ready():
     
     test_log = client.get_channel(log_id)
     await test_log.send("The bot has now been restarted.")    #get_tasks(client)
-    await master_loop.start(client)
-    await check_roll_status.start()
+    #await master_loop.start(client)
+    #await check_roll_status.start()
 
 
 client.run(discord_token)

@@ -62,7 +62,7 @@ def get_roll_string(database_user, ce_id, database_name, target_user, roll_type)
         
             for game in x['Games'] : # Iterate through all games in the roll event
                 game_info = database_name[game] # Grab the dictionary containing all info about that game
-                game_title = game # Set the game title
+                game_title = game['name'] # Set the game title
                 roll_string += "  " + str(gameNum) + ". "+ str(game_title) # Add the game number and the game title to the string
                 
                 # set up points
