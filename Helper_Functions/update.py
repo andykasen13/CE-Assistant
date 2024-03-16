@@ -177,14 +177,12 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         # ---------------------------- deal with deleted games -------------------------------
         f = False
         for g in current_roll['Games'] :
-            for dbg in database_name :
-                if g not in database_name[dbg] :
+                if g not in database_name :
                     if len(current_roll['Games']) > 1: current_roll['Games'].remove(g)
                     else : 
                         returns.append("log: <@{}>: unfortunately, the game(s) in your roll were removed from the site. please ping andy for support and/or reroll")
                         remove_indexes.append(m_index)
                         f = True
-                    break
         if f : continue
 
         print("checking {}".format(current_roll['Event Name']))

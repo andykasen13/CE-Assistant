@@ -115,6 +115,16 @@ icons = {
 
 # ------ genres ------
 all_genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
+game_to_id = {
+    '- Challenge Enthusiasts -' : "76574ec1-42df-4488-a511-b9f2d9290e5d",
+    '- Puzzle Games - ' : "27578157-10b2-4f29-acee-452c2dc59477",
+    'clown town 1443' : "09f100aa-caa7-4154-a224-1c3e9277eea4",
+    'RetroArch' : "5144e054-d64e-465f-9d0e-3c517a0fe92b"
+}
+
+ce_squared_id = "76574ec1-42df-4488-a511-b9f2d9290e5d"
+"""The CE ID for the game `- Challenge Enthusiasts -`."""
+
 
 # ---------------------------------------------functions-----------------------------------------------------------------
 

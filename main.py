@@ -1030,26 +1030,26 @@ async def register(interaction : discord.Interaction, ce_id: str) :
 
     # Go through owned games in CE JSON
     for game in user_ce_data['userGames'] :
-        game_name = game['game']['name']
+        game_id = game['gameId']
         
         # Add the games to the local JSON
-        user_dict[ce_id]['Owned Games'][game_name] = {}
+        user_dict[ce_id]['Owned Games'][game_id] = {}
 
     # Go through all objectives 
     for objective in user_ce_data['userObjectives'] :
-        game_name = objective['objective']['game']['name']
-        obj_name = objective['objective']['name']
+        game_id = objective['objective']['gameId']
+        obj_id = objective['objectiveId']
         
         # If the objective is community, set the value to true
         if objective['objective']['community'] : 
-            if(list(user_dict[ce_id]['Owned Games'][game_name].keys()).count("Community Objectives") == 0) :
-                user_dict[ce_id]['Owned Games'][game_name]['Community Objectives'] = {}
-            user_dict[ce_id]['Owned Games'][game_name]['Community Objectives'][obj_name] = True
+            if "Community Objectives" not in user_dict[ce_id]['Owned Games'][game_id]:
+                user_dict[ce_id]['Owned Games'][game_id]['Community Objectives'] = {}
+            user_dict[ce_id]['Owned Games'][game_id]['Community Objectives'][obj_id] = True
 
         # If the objective is primary...
         else : 
             # ... and there are partial points AND no one has assigned requirements...
-            if(objective['objective']['pointsPartial'] != 0 and objective['assignerId'] == None) :
+            if(objective['partial']) :
                 # ... set the points earned to the partial points value.
                 points = objective['objective']['pointsPartial']
             # ... and there are no partial points, set the points earned to the total points value.
@@ -1059,9 +1059,9 @@ async def register(interaction : discord.Interaction, ce_id: str) :
             total_points += points
 
             # Now actually update the value in the user's dictionary.
-            if(list(user_dict[ce_id]['Owned Games'][game_name].keys()).count("Primary Objectives") == 0) :
-                user_dict[ce_id]['Owned Games'][game_name]['Primary Objectives'] = {}
-            user_dict[ce_id]['Owned Games'][game_name]['Primary Objectives'][obj_name] = points
+            if(list(user_dict[ce_id]['Owned Games'][game_id].keys()).count("Primary Objectives") == 0) :
+                user_dict[ce_id]['Owned Games'][game_id]['Primary Objectives'] = {}
+            user_dict[ce_id]['Owned Games'][game_id]['Primary Objectives'][obj_id] = points
 
 
     # Get the user's rank
@@ -1084,16 +1084,16 @@ async def register(interaction : discord.Interaction, ce_id: str) :
                   "Soul Mates", "Teamwork Makes the Dream Work", "Winner Takes All", "Game Theory"]
 
     # Check and see if the user has any completed rolls
-    if(list(user_dict[ce_id]['Owned Games'].keys()).count("- Challenge Enthusiasts -") > 0) :
+    if ce_squared_id in user_dict[ce_id]['Owned Games']:
         x=0
         
         for event_name in all_events :
-            if(list(user_dict[ce_id]['Owned Games']['- Challenge Enthusiasts -']['Community Objectives'].keys()).count(event_name) > 0) :
+            if event_name in user_dict[ce_id]['Owned Games'][ce_squared_id]['Community Objectives']:
                 x=0
                 user_dict[ce_id]['Completed Rolls'].append({"Event Name" : event_name})
             if(event_name == "Two \"Two Week T2 Streak\" Streak" 
                and "Two \"Two Week T2 Streak\" Streak" in 
-               user_dict[ce_id]['Owned Games']['- Challenge Enthusiasts -']['Community Objectives']):
+               user_dict[ce_id]['Owned Games'][ce_squared_id]['Community Objectives']):
                     user_dict[ce_id]['Completed Rolls'].append({"Event Name" : "Two 'Two Week T2 Streak' Streak"})
 
     # Add the user file to the database
