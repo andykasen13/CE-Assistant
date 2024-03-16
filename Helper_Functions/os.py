@@ -20,6 +20,7 @@ async def add_to_startup(file, file_path=""):
         bat_file.write(r'''@echo off
 pip install discord selenium pillow requests bs4 apscheduler pymongo motor chromedriver_binary webdriver_manager
 cd %s
+git pull
 python main.py
 pause''' % file_path)
                        
