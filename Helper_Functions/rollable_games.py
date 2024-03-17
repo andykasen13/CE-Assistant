@@ -152,7 +152,8 @@ def get_rollable_game(avg_completion_time_limit,
 
             # ---- Check to see if the user has already completed the game -----
             if(user_info != -1) :
-                if((returned_game in user_info['Owned Games'].keys()) 
+                if 'Owned Games' not in user_info : ""
+                elif((returned_game in user_info['Owned Games'].keys()) 
                 and "Primary Objectives" in user_info['Owned Games'][returned_game]
                 # TODO: this is so so cheating because if someone has partial points in some and finished all others this says theyre done. lets fix that
                 and set(user_info['Owned Games'][returned_game]['Primary Objectives'].keys()) == set(database_name[returned_game]['Primary Objectives'].keys())) :
