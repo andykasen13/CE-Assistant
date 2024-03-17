@@ -5,7 +5,7 @@ import discord
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------------------- ROLL STRING ---------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-def get_roll_string(database_user, ce_id, database_name, target_user : discord.User, roll_type) :
+def get_roll_string(database_user, ce_id, database_name, target_user : discord.Member, roll_type) :
     # set up this bullshit
     roll_string = ""
 
@@ -86,7 +86,7 @@ def get_roll_string(database_user, ce_id, database_name, target_user : discord.U
     
     # account for no current rolls
     if(roll_string == "") :
-        if(roll_type == 'Current Rolls') : roll_string = f"{target_user.name} has no current rolls."
-        elif(roll_type == 'Completed Rolls') : roll_string = f"{target_user.name} has no completed rolls."
+        if(roll_type == 'Current Rolls') : roll_string = f"{target_user.nick} has no current rolls."
+        elif(roll_type == 'Completed Rolls') : roll_string = f"{target_user.nick} has no completed rolls."
 
     return roll_string
