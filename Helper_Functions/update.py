@@ -84,26 +84,26 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
     # Go through owned games in CE JSON
     for game in user_ce_data['userGames'] :
-        game_name = game['game']['name']
+        game_id = game['gameId']
         
         # Add the games to the local JSON
-        user_dict[ce_id]['Owned Games'][game_name] = {}
+        user_dict[ce_id]['Owned Games'][game_id] = {}
 
     # Go through all objectives 
     for objective in user_ce_data['userObjectives'] :
-        game_name = objective['objective']['game']['name']
-        obj_name = objective['objective']['name']
+        game_id = objective['objective']['gameId']
+        obj_id = objective['objectiveId']
         
         # If the objective is community, set the value to true
         if objective['objective']['community'] : 
-            if(list(user_dict[ce_id]['Owned Games'][game_name].keys()).count("Community Objectives") == 0) :
-                user_dict[ce_id]['Owned Games'][game_name]['Community Objectives'] = {}
-            user_dict[ce_id]['Owned Games'][game_name]['Community Objectives'][obj_name] = True
+            if(list(user_dict[ce_id]['Owned Games'][game_id].keys()).count("Community Objectives") == 0) :
+                user_dict[ce_id]['Owned Games'][game_id]['Community Objectives'] = {}
+            user_dict[ce_id]['Owned Games'][game_id]['Community Objectives'][obj_id] = True
 
         # If the objective is primary...
         else : 
             # ... and there are partial points AND no one has assigned requirements...
-            if(objective['objective']['pointsPartial'] != 0 and objective['assignerId'] == None) :
+            if(objective['partial']) :
                 # ... set the points earned to the partial points value.
                 points = objective['objective']['pointsPartial']
             # ... and there are no partial points, set the points earned to the total points value.
@@ -113,9 +113,9 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             total_points += points
 
             # Now actually update the value in the user's dictionary.
-            if(list(user_dict[ce_id]['Owned Games'][game_name].keys()).count("Primary Objectives") == 0) :
-                user_dict[ce_id]['Owned Games'][game_name]['Primary Objectives'] = {}
-            user_dict[ce_id]['Owned Games'][game_name]['Primary Objectives'][obj_name] = points
+            if(list(user_dict[ce_id]['Owned Games'][game_id].keys()).count("Primary Objectives") == 0) :
+                user_dict[ce_id]['Owned Games'][game_id]['Primary Objectives'] = {}
+            user_dict[ce_id]['Owned Games'][game_id]['Primary Objectives'][obj_id] = points
 
 
     # Get the user's rank
@@ -177,12 +177,12 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         # ---------------------------- deal with deleted games -------------------------------
         f = False
         for g in current_roll['Games'] :
-            if g not in database_name :
-                if len(current_roll['Games']) > 1: current_roll['Games'].remove(g)
-                else : 
-                    returns.append("log: <@{}>: unfortunately, the game(s) in your roll were removed from the site. please ping andy for support and/or reroll")
-                    remove_indexes.append(m_index)
-                    f = True
+                if g not in database_name :
+                    if len(current_roll['Games']) > 1: current_roll['Games'].remove(g)
+                    else : 
+                        returns.append("log: <@{}>: unfortunately, the game(s) in your roll were removed from the site. please ping andy for support and/or reroll")
+                        remove_indexes.append(m_index)
+                        f = True
         if f : continue
 
         print("checking {}".format(current_roll['Event Name']))

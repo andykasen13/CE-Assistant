@@ -129,8 +129,9 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
                     else : random_num -= len(database_tier[tier_number][genre])
 
             # ----- Check to see if it's banned -----
-            print(f"Seeing if {returned_game} is rollable...")
-            if returned_game in banned_games :
+            returned_game_name = database_name[returned_game]['Name']
+            print(f"Seeing if {returned_game_name} is rollable...")
+            if returned_game_name in banned_games :
                 del database_tier[tier_number][genre][random_num]
                 print(f"{returned_game} is banned.\n")
                 continue
@@ -138,7 +139,7 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
             # ----- Check if the game has already been rolled -----
             if returned_game in games :
                 del database_tier[tier_number][genre][random_num]
-                print("{} already rolled! Continuing...".format(returned_game))
+                print("{} already rolled! Continuing...".format(returned_game_name))
                 continue
 
             # ---- Check to see if the user has already completed the game -----

@@ -25,7 +25,7 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
     games_value = ""
     i = 1
     for selected_game in game_list:
-        games_value += "\n" + str(i) + ". " + selected_game
+        games_value += "\n" + str(i) + ". " + database_name[selected_game]['Name']
         i+=1
     embeds[0].add_field(name="Rolled Games", value = games_value)
 
@@ -61,9 +61,14 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
     total_points = 0
     #TODO add error exceptions
     #TODO turn this into a class with getters and setters for wider versatility
+    if(len(game_name) == 36 and game_name[8:9] == game_name[13:14] == game_name[18:19] == game_name[23:24] == "-") : 
+        game_id = game_name
+        game_name = database_name[game_name]['Name']
+        print(True)
     
-    if(game_name in list(database_name)) : 
-        correct_app_id = database_name[game_name]['Steam ID']
+    
+    if(game_id in (database_name)) : 
+        correct_app_id = database_name[game_id]['Steam ID']
         print(f"found {game_name} with app id {correct_app_id} in local json file :)")
     else :
         print(f"couldn't find {game_name} in local json file, searching steam :(")
@@ -133,15 +138,15 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
     embed.set_footer(text="CE Assistant",
         icon_url=final_ce_icon)
     embed.add_field(name="Rolled by", value = "<@" + str(authorID) + ">", inline=True)
-    if game_name in database_name.keys() :
-        for objective in database_name[game_name]['Primary Objectives'] :
-            total_points += int(database_name[game_name]['Primary Objectives'][objective]['Point Value'])
+    if game_id in database_name.keys() :
+        for objective in database_name[game_id]['Primary Objectives'] :
+            total_points += int(database_name[game_id]['Primary Objectives'][objective]['Point Value'])
         embed.add_field(name="CE Status", 
-                        value=icons[database_name[game_name]['Tier']] + icons[database_name[game_name]['Genre']] + f" - {total_points} Points" + icons['Points'], 
+                        value=icons[database_name[game_id]['Tier']] + icons[database_name[game_id]['Genre']] + f" - {total_points} Points" + icons['Points'], 
                         inline=True)
         try:
-            embed.add_field(name="CE Owners", value= database_name[game_name]['Total Owners'], inline=True)
-            embed.add_field(name="CE Completions", value= database_name[game_name]['Full Completions'], inline=True)
+            embed.add_field(name="CE Owners", value= database_name[game_id]['Total Owners'], inline=True)
+            embed.add_field(name="CE Completions", value= database_name[game_id]['Full Completions'], inline=True)
         except:""
     else : embed.add_field(name="CE Status", value="Not on Challenge Enthusiasts", inline=True)
 
