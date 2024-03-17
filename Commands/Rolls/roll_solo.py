@@ -29,7 +29,7 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 
 
 #@to_thread
-async def solo_command(interaction : discord.Interaction, event : str, reroll : bool, collection) :
+async def solo_command(interaction : discord.Interaction, event : str, reroll : bool, collection, log_channel) :
     # Set up variables
     view = discord.ui.View(timeout=600)
     games = []
@@ -83,6 +83,9 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     database_tier = await get_mongo('tier')
 
     specific_user_info = userInfo[target_user]
+
+    i = random.randint(0, 100)
+    if i == 0 : log_channel.send("<@{}>, you have rolled a jackpot! Please see <@687876105473884174> for your reward :)".format(interaction.user.id))
 
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
