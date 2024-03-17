@@ -1626,7 +1626,7 @@ async def on_ready():
     
     test_log = client.get_channel(log_id)
     await test_log.send("The bot has now been restarted.")    #get_tasks(client)
-    #await master_loop.start(client)
+    await master_loop.start(client)
     #await check_roll_status.start()
 
 
