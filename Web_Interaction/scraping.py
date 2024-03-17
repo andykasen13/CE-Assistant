@@ -486,11 +486,15 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
     # games removed
     for game in game_tracker:
-        print("REMOVED: " + game)
+        game_name = game
+        try:
+            game_name = new_data[game]['Name']
+        except:""
+        print("REMOVED: " + game_name)
         if hm:
             embed = {
                 'Embed' : discord.Embed(
-                    title=game,
+                    title=game_name + " was removed from the site.",
                     colour= 0xce4e2c,
                     timestamp=datetime.datetime.now()
                 ),
