@@ -65,6 +65,8 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
         game_id = game_name
         game_name = database_name[game_name]['Name']
         print(True)
+    else :
+        game_id = game_name
     
     
     if(game_id in (database_name)) : 

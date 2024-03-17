@@ -82,6 +82,8 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     database_name = await get_mongo('name')
     database_tier = await get_mongo('tier')
 
+    specific_user_info = userInfo[target_user]
+
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
         # Get one random (rollable) game in Tier 1, non-genre specific
