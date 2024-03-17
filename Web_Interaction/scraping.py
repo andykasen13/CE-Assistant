@@ -438,12 +438,16 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
                 # grab total points
                 points = 0
+                uncleareds = 0
+                num_po = 0
                 for objective in new_game['Primary Objectives']:
-                    points += new_game['Primary Objectives'][objective]['Point Value']
+                    if new_game['Primary Objectives'][objective]['Point Value'] == 1 : uncleareds += 1
+                    else :
+                        points += new_game['Primary Objectives'][objective]['Point Value']
+                        num_po += 1
                 
                 second_part = ""
                 third_part = ""
-                num_po = len(list(new_game['Primary Objectives']))
                 num_co = len(list(new_game['Community Objectives']))
 
                 # grammar police
@@ -454,6 +458,11 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                     third_part = "\n- {} Community Objectives".format(num_co)
                 elif num_co == 1:
                     third_part = "\n- 1 Community Objective"
+                
+                if uncleareds > 1 :
+                    third_part += "\n- {} Uncleared Objectives".format(uncleareds)
+                elif uncleareds == 1:
+                    third_part += "\n- 1 Uncleared Objective"
                 
 
                 # make embed
@@ -558,6 +567,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
     fake_update = update
     fake_update.replace('\n','')
     fake_update.replace('\t','')
+    fake_update.replace('\n- Overall points unchanged','')
     if fake_update == "" : return "hiya!"
 
     # ------------------- make final embed -------------------
