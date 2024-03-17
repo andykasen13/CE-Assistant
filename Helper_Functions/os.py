@@ -15,7 +15,8 @@ async def restart(file):
 
 
 async def add_to_windows_startup(file, file_path=""):
-    
+    print(getpass.getuser())
+    print(USER_NAME)
     if file_path == "":
         file_path = os.path.dirname(os.path.realpath(file))
 
