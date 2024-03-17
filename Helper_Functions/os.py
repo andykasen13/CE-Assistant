@@ -9,7 +9,7 @@ bat_path = r'C:\Users\%s\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\S
 
 
 async def restart(file):
-    if not os.path.isfile(bat_path + "/Boot_CE_Assistant.bat") and platform.platform() == 'Windows':
+    if not os.path.isfile(bat_path + "/Boot_CE_Assistant.bat") : #and platform.platform() == 'Windows'
         await add_to_windows_startup(file)
     os.system("shutdown /r /t 0")
 
