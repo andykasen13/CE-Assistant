@@ -725,7 +725,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
     old_name = old_game['{} Objectives'.format(type)][objective]['Name']
     new_name = new_game['{} Objectives'.format(type)][objective]['Name']
     if new_name + " (UNCLEARED)" == old_name or new_name + " (UNVALUED)" == old_name:
-        cleared = True
+        cleared = False
     elif new_name != old_name : name_change = True
 
 
