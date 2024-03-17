@@ -59,7 +59,15 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
     return wrapper
 
 
-def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_info = -1, specific_genre = "any", games : list = [], database_tier = "", database_name = "") :
+def get_rollable_game(avg_completion_time_limit, 
+                      price_limit, 
+                      tier_number, 
+                      user_info = -1, 
+                      specific_genre = "any", 
+                      games : list = [], 
+                      database_tier = "", 
+                      database_name = "",
+                      steamhunters = "") :
         returned_game = ""
         rollable = False
         genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"] 
@@ -178,7 +186,7 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
                 gamePrice = 999999
             
             # ----- Grab SteamHunters completion time -----
-            completion_time = get_completion_data(gameID)
+            completion_time = get_completion_data(gameID, steamhunters)
             if(completion_time == "none") :
                 print(f"No completion data for {returned_game}.") 
                 continue
@@ -216,6 +224,7 @@ def get_rollable_game(avg_completion_time_limit, price_limit, tier_number, user_
 
 async def get_rollable_game_from_list(games, collection) :
     database_name = await get_mongo('name')
+    steamhunters = await get_mongo('steamhunters')
     rollable = False
     while not rollable :
         random_num = random.randint(0, len(games)-1)
@@ -237,7 +246,7 @@ async def get_rollable_game_from_list(games, collection) :
             gamePrice = float(str(jsonData[str(game_id)]['data']['price_overview']['final_formatted'])[1::])
         
         # ----- Grab SteamHunters completion time -----
-        completion_time = get_completion_data(game_id)
+        completion_time = get_completion_data(game_id, steamhunters)
         if(completion_time == "none") : continue
         else : completion_time = int(completion_time)
 

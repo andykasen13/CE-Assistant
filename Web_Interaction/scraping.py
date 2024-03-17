@@ -156,15 +156,22 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         
     else :
         #print('fetching /api/games/full/...')
-        
-        #print('fetched.\n')
-        try:
-            api_response = requests.get('https://cedb.me/api/games/full')
-            json_response = json.loads(api_response.text)
-        except:
-            print('fetching failed lolW (api/games/full)!!!')
-            if hm: del driver
-            return
+        done_fetching = False
+        j = []
+        i = 1
+        while(not done_fetching) :
+            try:
+                print('fetching{}'.format(str(i*100)))
+                api_response = requests.get('https://cedb.me/api/games/expanded?limit=100&offset={}'.format(str((i-1)*100)))
+                json_response = json.loads(api_response.text)
+                j += json_response
+                done_fetching = len(json_response) == 0
+                i+=1
+            except:
+                print('fetching failed lolW (api/games/full)!!!')
+                if hm: del driver
+                return
+        json_response = j
 
     # grab last updated time
     current_newest = current_dict['Updated Time']
@@ -262,7 +269,10 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
         #print(updated_time)
 
-
+        if(not game['isFinished']):
+            print('unfinished game: {}'.format(game['name']))
+            if game['id'] not in unfinished_games['unfinished'] : unfinished_games['unfinished'].append(game['id'])
+            continue
 
 
 
@@ -297,11 +307,13 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             # update data
             new_data[game['id']] = get_game(game, json_response[i])
         
-        # game is new BUT! unfinished
-        elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None or game['information'] == "WIP"):
-            print('unfinished game: ' + game['name'])
-            if game['id'] not in unfinished_games['unfinished'] : unfinished_games['unfinished'].append(game['id'])
-            continue
+            """ this is tabbed
+            # game is new BUT! unfinished
+            elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None or game['information'] == "WIP"):
+                print('unfinished game: ' + game['name'])
+                if game['id'] not in unfinished_games['unfinished'] : unfinished_games['unfinished'].append(game['id'])
+                continue
+            """
 
         # if game is updated
         elif updated_time > current_newest and game['name'] in list(new_data.keys()):
@@ -329,7 +341,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         # ORRRRR
         # the game is in unfininshed games and is ready to go 
         #TODO: this might be redundant code but i'm not gonna find out so lol
-        elif (created_time > current_newest) or (game['id'] in unfinished_games['unfinished'] and (game['tier'] != 0 and game['genre'] != None)):
+        elif (created_time > current_newest) or (game['id'] in unfinished_games['unfinished'] and (game['isFinished'])):
             print("NEW: " + game['name'])
             if hm:
                 ss = (get_image(number, game['id'], driver))
@@ -396,8 +408,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         # either the games name was changed 
         # - OR 
         # the game is not registered in the CE Assistant database.
-        elif not game['id'] in list(new_data.keys()) and game['genreId'] != None:
-            if game['tier'] == 0 and not is_valid_t0(game['name']) : continue
+        elif not game['id'] in list(new_data.keys()):
             silly = False
             
             # code for checking if a game's name was changed (outdated because we store by id)
@@ -1014,15 +1025,19 @@ def get_by_tier(games):
 
 
 
-def get_completion_data(steam_id):
+def get_completion_data(steam_id, steamhunters = None):
     """Takes in a steam app id `steam_id` and returns either the medianCompletionTime in hours or `"none"`."""
-    response = requests.get("https://steamhunters.com/api/apps/{}/".format(steam_id))
-    json_response = response.json()
+    if steamhunters == None:
+        print('getting steamhunters  the old way')
+        response = requests.get("https://steamhunters.com/api/apps/{}/".format(steam_id))
+        json_response = response.json()
 
-    if "medianCompletionTime" not in json_response.keys(): 
-        return "none"
-    else:
-        return int(json_response['medianCompletionTime'] / 60)
+        if "medianCompletionTime" not in json_response.keys(): 
+            return "none"
+        else:
+            return int(json_response['medianCompletionTime'] / 60)
+    else :
+        return steamhunters[steam_id]
 
 
     response = requests.get("https://steamhunters.com/apps/{}/achievements".format(steam_id))

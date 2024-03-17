@@ -29,8 +29,10 @@ mongo_ids = {
     "tasks" : ObjectId('64f8d6b292d3fe5849c1ba37'),
     "user" : ObjectId('64f8bd1b094bdbfc3f7d0051'),
     "unfinished" : ObjectId('650076a9e35bbc49b06c9881'),
-    "name" : ObjectId('6500f7d3b3e4253bef9f51e6')
+    "name" : ObjectId('6500f7d3b3e4253bef9f51e6'),
+    "steamhunters" : ObjectId('65f64af8ba6efd911038594c')
 }
+"""The :class:`ObjectID` values stored under the `_id` value in each document."""
 _uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
 _mongo_client = AsyncIOMotorClient(_uri)
 _mongo_database = _mongo_client['database_name']
@@ -116,7 +118,7 @@ icons = {
 
 # ------ genres ------
 all_genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
-game_to_id = {
+_game_to_id = {
     '- Challenge Enthusiasts -' : "76574ec1-42df-4488-a511-b9f2d9290e5d",
     '- Puzzle Games - ' : "27578157-10b2-4f29-acee-452c2dc59477",
     'clown town 1443' : "09f100aa-caa7-4154-a224-1c3e9277eea4",
@@ -131,7 +133,7 @@ ce_squared_id = "76574ec1-42df-4488-a511-b9f2d9290e5d"
 
 
 # -------- get and set mongo databases --------
-_mongo_names = Literal["name_old", "tier", "curator", "user", "tasks", "unfinished", "name"]
+_mongo_names = Literal["name_old", "tier", "curator", "user", "tasks", "unfinished", "name", "steamhunters"]
 async def get_mongo(title : _mongo_names):
     """Returns the MongoDB associated with `title`."""
     return await collection.find_one({'_id' : mongo_ids[title]})
