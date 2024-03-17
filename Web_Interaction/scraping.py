@@ -552,8 +552,6 @@ def update(new_game, old_game, driver, number, icon, icons, name):
 
     if new_points != old_points and (len(old_game['Primary Objectives']) != 1 or len(new_game['Primary Objectives']) != 1):
         update += "\n- {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(old_points, new_points)
-    else :
-        update += "\n- Overall points unchanged"
 
     # ------------------- check Genre -------------------
     if new_game['Genre'] != old_game['Genre']:
@@ -567,8 +565,9 @@ def update(new_game, old_game, driver, number, icon, icons, name):
     fake_update = update
     fake_update.replace('\n','')
     fake_update.replace('\t','')
-    fake_update.replace('\n- Overall points unchanged','')
     if fake_update == "" : return "hiya!"
+    else :
+        update += "\n- Overall points unchanged"
 
     # ------------------- make final embed -------------------
     embed = {
