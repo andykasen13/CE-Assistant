@@ -1083,13 +1083,15 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     user_dict[ce_id]['Rank'] = rank
 
     all_events = ["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
-                  "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", 
+                  "Two \"Two Week T2 Streak\" Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", 
                   "Fourward Thinking", "Russian Roulette", "Destiny Alignment",
                   "Soul Mates", "Teamwork Makes the Dream Work", "Winner Takes All", "Game Theory"]
     all_events_final = {}
     for e in all_events:
         for o in database_name[ce_squared_id]['Community Objectives'] :
-            if e == database_name[ce_squared_id]['Community Objectives'][o]['Name'] : all_events_final[e] = o
+            if e == database_name[ce_squared_id]['Community Objectives'][o]['Name'] : 
+                if e == "Two \"Two Week T2 Streak\" Streak" : e = "Two 'Two Week T2 Streak' Streak"
+                all_events_final[e] = o
 
     # Check and see if the user has any completed rolls
     if ce_squared_id in user_dict[ce_id]['Owned Games']:
