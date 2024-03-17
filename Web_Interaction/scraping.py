@@ -59,7 +59,7 @@ def single_scrape(curator_count):
     api_response = requests.get('https://cedb.me/api/games')
     json_response = json.loads(api_response.text)
 
-    curator_count['Updated Time'] = int(time.mktime(datetime.datetime.now().timetuple()))
+    curator_count['Updated Time'] = get_unix('now')
 
     database_name = {}
 
@@ -83,7 +83,7 @@ def single_scrape_v2(curator_count) :
     database_name_v2 = {}
 
     for game in json_response:
-        if(game['genre'] == None or game['genre']['name'] == None) : continue
+        if(game['genre'] == None or game['genre']['name'] == None) or (game['tier'] == 0 and not is_valid_t0(game['name'])) : continue
         print(game['name'])
         database_name_v2[game['id']] = get_game(game)
     
@@ -156,9 +156,10 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         
     else :
         #print('fetching /api/games/full/...')
-        api_response = requests.get('https://cedb.me/api/games/full')
+        
         #print('fetched.\n')
         try:
+            api_response = requests.get('https://cedb.me/api/games/full')
             json_response = json.loads(api_response.text)
         except:
             print('fetching failed lolW (api/games/full)!!!')
@@ -215,12 +216,13 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         local_objective_names = []
 
         if option3:
-            api_response_current = requests.get('https://cedb.me/api/game/' + game['id'])
+            
             try:   
+                api_response_current = requests.get('https://cedb.me/api/game/' + game['id'])
                 json_response_current = json.loads(api_response_current.text)
             except:
                 print(f"{game['name']} not pulled correctly...")
-                game_tracker.remove(game['name'])
+                game_tracker.remove(game['id'])
                 continue
 
             game = json_response_current
@@ -234,7 +236,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
         for objective in game['objectives'] :
             # store the objective names
-            import_objective_names.append(objective['name'])
+            import_objective_names.append(objective['id'])
 
             # was the objective updated
             objupdatedtime = timestamp_to_unix(objective['updatedAt'])
@@ -246,11 +248,11 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
         
         # if the game is locally stored, set current_newest to that updatedvalue
-        if(game['name'] in list(new_data.keys())) : 
-            current_newest = new_data[game['name']]['Last Updated']
+        if(game['id'] in list(new_data.keys())) : 
+            current_newest = new_data[game['id']]['Last Updated']
 
             # also grab the names of objectives
-            local_objective_names = list(new_data[game['name']]['Primary Objectives'].keys()) + list(new_data[game['name']]['Community Objectives'].keys())
+            local_objective_names = list(new_data[game['id']]['Primary Objectives'].keys()) + list(new_data[game['id']]['Community Objectives'].keys())
         
         if set(import_objective_names) != set(local_objective_names): updated_time = current_newest + 1
             
@@ -258,7 +260,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         # grab the game's icon
         icon = game['icon']
 
-
+        #print(updated_time)
 
 
 
@@ -269,10 +271,10 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         if updated_time > current_newest and game['tier'] == 0 and is_valid_t0(game['name']):
             print("T0 UPDATED: " + game['name'])
             # update game tracker
-            game_tracker.remove(game['name'])
+            game_tracker.remove(game['id'])
 
             # get old data
-            test_old = new_data[game['name']]
+            test_old = new_data[game['id']]
 
             # get new data that wont be mutated
             to_keep = get_game(game, json_response[i])
@@ -289,23 +291,23 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             # compare old and new data excluding completion data
             if test_old != test_new:    
                 if hm:
-                    updated_games.extend(special_update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name']))
+                    updated_games.extend(special_update(to_keep, new_data[game['id']], driver, number, icon, icons, game['name']))
                     number += 1
 
             # update data
-            new_data[game['name']] = get_game(game, json_response[i])
+            new_data[game['id']] = get_game(game, json_response[i])
         
         # game is new BUT! unfinished
         elif created_time > current_newest and (game['tier'] == 0 or game['genre'] == None or game['information'] == "WIP"):
             print('unfinished game: ' + game['name'])
-            if game['id'] in unfinished_games['unfinished'] : continue
-            else: unfinished_games['unfinished'].append(game['id'])
+            if game['id'] not in unfinished_games['unfinished'] : unfinished_games['unfinished'].append(game['id'])
+            continue
 
         # if game is updated
         elif updated_time > current_newest and game['name'] in list(new_data.keys()):
             print("UPDATED: " + game['name'])
-            game_tracker.remove(game['name'])
-            test_old = new_data[game['name']]
+            game_tracker.remove(game['id'])
+            test_old = new_data[game['id']]
             to_keep = get_game(game, json_response[i])
             test_new = to_keep
             test_new['Full Completions'] = None
@@ -314,11 +316,11 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             test_old['Total Owners'] = None
             if test_old != test_new:
                 if hm:
-                    upppp = update(to_keep, new_data[game['name']], driver, number, icon, icons, game['name'])
+                    upppp = update(to_keep, new_data[game['id']], driver, number, icon, icons, game['name'])
                     if upppp != "hiya!":
                         updated_games.append(upppp)
                         number += 1
-            new_data[game['name']] = get_game(game, json_response[i])
+            new_data[game['id']] = get_game(game, json_response[i])
 
         # if game is new
         # elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
@@ -332,7 +334,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             if hm:
                 ss = (get_image(number, game['id'], driver))
             new_game = get_game(game, json_response[i])
-            new_data[game['name']] = new_game
+            new_data[game['id']] = new_game
 
             # grab total points
             points = 0
@@ -387,16 +389,19 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             if hm: del ss
 
         # game is neither new nor updated
-        elif game['name'] in game_tracker:
-            game_tracker.remove(game['name'])
+        elif game['id'] in game_tracker:
+            game_tracker.remove(game['id'])
         
         # two options: 
         # either the games name was changed 
         # - OR 
         # the game is not registered in the CE Assistant database.
-        elif not game['name'] in list(new_data.keys()) and game['genreId'] != None:
+        elif not game['id'] in list(new_data.keys()) and game['genreId'] != None:
+            if game['tier'] == 0 and not is_valid_t0(game['name']) : continue
             silly = False
             
+            # code for checking if a game's name was changed (outdated because we store by id)
+            """ 
             # check if the game's name was changed
             for other_game in new_data:
                 if other_game == '_id' : continue
@@ -405,6 +410,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                     del(new_data[other_game])
                     new_data[game['name']] = get_game(game, json_response[i])
                     silly = True
+            """
 
             # new game that wasn't caught above
             if not silly:
@@ -412,7 +418,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 if hm:
                     ss = (get_image(number, game['id'], driver))
                 new_game = get_game(game, json_response[i])
-                new_data[game['name']] = new_game
+                new_data[game['id']] = new_game
 
                 # grab total points
                 points = 0
@@ -461,8 +467,8 @@ def game_list(new_data, current_dict, unfinished_games : dict):
 
 
         # if the game exists in database_name
-        if game['genre'] != None and game['name'] in list(new_data.keys()):
-            new_data[game['name']]['Last Updated'] = updated_time
+        if game['genre'] != None and game['id'] in list(new_data.keys()):
+            new_data[game['id']]['Last Updated'] = updated_time
 
 
     # games removed
@@ -636,9 +642,7 @@ def objective_update(type, new_game, old_game):
             # if objective is new
             if objective in list(new_game['{} Objectives'.format(type)].keys()) and not objective in list(old_game['{} Objectives'.format(type)].keys()):
                 update += "🧑‍🦲😼💀😩🥵"
-                if objective + " (UNCLEARED)" in list(old_game['{} Objectives'.format(type)].keys()):
-                    update += update_embed(new_game, old_game, objective, type, cleared=False)
-                elif type == 'Primary':
+                if type == 'Primary':
                     update += "\n- New Primary Objective '**{}**' added:\n\t- {} points <:CE_points:1128420207329816597>\n  - {}".format(objective, new_game['{} Objectives'.format(type)][objective]['Point Value'], new_game['{} Objectives'.format(type)][objective]['Description'])
                 else:
                     update += "\n- New Community Objective '**{}**' added:\n\t  - {}".format(objective, new_game['{} Objectives'.format(type)][objective]['Description'])
@@ -671,39 +675,62 @@ def objective_update(type, new_game, old_game):
 
 # final touches for objective updates
 def update_embed(new_game, old_game, objective, type, cleared=True):
+    """Returns a string to put in the embed regarding what updated about `objective` objective.
+
+    Parameters
+    -----------
+    new_game : :class:`dict`
+        The newer data about the objective.
+    old_game : :class:`dict`
+        The older data about the objective.
+    objective : :class:`str`
+        The id of the objective.
+    type : :class:`str`
+        The type of the objective (either Primary or Community)
+    cleared : :class:`bool`
+        If the game is an uncleared turning into a cleared or not (out of date, not required)
+    """
     update = ""
+    name_change = False
+    old_name = old_game['{} Objectives'.format(type)][objective]['Name']
+    new_name = new_game['{} Objectives'.format(type)][objective]['Name']
+    if new_name + " (UNCLEARED)" == old_name or new_name + " (UNVALUED)" == old_name:
+        cleared = True
+    elif new_name != old_name : name_change = True
+
 
     # initialize some shit
     new = new_game['{} Objectives'.format(type)][objective]
-    if cleared:
-        old = old_game['{} Objectives'.format(type)][objective]
-    else:
-        old = old_game['{} Objectives'.format(type)][objective + ' (UNCLEARED)']
+    old = old_game['{} Objectives'.format(type)][objective]
+
 
 
     # ------------------- check points -------------------
     # points increased
     if not cleared and type == 'Primary':
-        update += "\n- '**{}**' cleared, valued at {} points <:CE_points:1128420207329816597>".format(objective, new['Point Value'])
+        update += "\n- '**{}**' cleared, valued at {} points <:CE_points:1128420207329816597>".format(new_name, new['Point Value'])
     elif type == 'Primary':
         if new['Point Value'] > old['Point Value']:
-            update += "\n- '**{}**' increased from {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(objective, old['Point Value'], new['Point Value'])
+            update += "\n- '**{}**' increased from {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(new_name, old['Point Value'], new['Point Value'])
                                 #<:CE_points:1128420207329816597>
 
         # points decreased
         elif new['Point Value'] < old['Point Value']:
-            update += "\n- '**{}**' decreased from {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(objective, old['Point Value'], new['Point Value'])
+            update += "\n- '**{}**' decreased from {} <:CE_points:1128420207329816597> ➡ {} points <:CE_points:1128420207329816597>".format(new_name, old['Point Value'], new['Point Value'])
         
         # points unchanged
         else:
-            update += "\n- '**{}**' updated".format(objective)
+            update += "\n- '**{}**' updated".format(new_name)
     else:
-        update += "\n- '**{}**' updated".format(objective)
+        update += "\n- '**{}**' updated".format(new_name)
 
 
     # ------------------- check description -------------------
     if new['Description'] != old['Description']:
         update += "\n\t- Description updated"
+
+    if name_change:
+        update += "\n\t- Name changed from {} to {}".format(old_name, new_name)
 
 
     # ------------------- check requirements -------------------
@@ -840,15 +867,15 @@ def get_game(game, big_game = ""):
         'Community Objectives' : objectives[1],
         'Last Updated' : objectives[2]
         }
-    if big_game != "":
-        returnable['Full Completions'] = big_game['completion']['completed']
-        returnable['Total Owners'] = big_game['completion']['total']
+    if 'completion' in game and 'completed' in game['completion'] : returnable['Full Completions'] = game['completion']['completed']
+    if 'completion' in game and 'total' in game['completion'] : returnable['Total Owners'] = game['completion']['total']
     
     return returnable
 
 
 # get objective info
 def get_objectives(CE_ID):
+    """Takes in a ce id `CE_ID` and returns the Primary Objectives, Community Objectives, and Updated Time as `[{}, {}, ""]`."""
     json_response = get_api("game", CE_ID)
 
     objectives = [{}, {}, ""]
@@ -875,22 +902,22 @@ def get_objectives(CE_ID):
                 requirements = requirement['data']
 
         # grab the objective's description
-        objectives[index][objective['name']] = {
+        objectives[index][objective['id']] = {
             'Description' : objective['description'],
         }
 
         # if PO, grab the point value
         if not objective['community']:
-            objectives[index][objective['name']]['Point Value'] = objective['points']
+            objectives[index][objective['id']]['Point Value'] = objective['points']
 
         # put in the achievements and requirements
         if achievement_name != {}:
-            objectives[index][objective['name']]['Achievements'] = achievement_name
+            objectives[index][objective['id']]['Achievements'] = achievement_name
         if requirements != '':
-            objectives[index][objective['name']]['Requirements'] = requirements
+            objectives[index][objective['id']]['Requirements'] = requirements
 
         # add in the objective's CE ID
-        objectives[index][objective['name']]['CE ID'] = objective['id']
+        objectives[index][objective['id']]['Name'] = objective['name']
     
     # grab the most recent updated time
     updated_time = timestamp_to_unix(json_response['updatedAt'])
@@ -911,6 +938,7 @@ def get_objectives(CE_ID):
 
 # categorize by tier
 def get_by_tier(games):
+    """Takes in `database_name` and returns `database_tier` from scratch."""
     tier_based_data = {
         'Tier 0' : {
             'Action' : [],
@@ -987,6 +1015,7 @@ def get_by_tier(games):
 
 
 def get_completion_data(steam_id):
+    """Takes in a steam app id `steam_id` and returns either the medianCompletionTime in hours or `"none"`."""
     response = requests.get("https://steamhunters.com/api/apps/{}/".format(steam_id))
     json_response = response.json()
 
@@ -1026,10 +1055,13 @@ def get_image(number, CE_ID, driver):
         objective_lst = []
         timeout = False
         start = time.time()
-        while(len(objective_lst) < 1 or not objective_lst[0].is_displayed() or timeout):
+        print(start)
+        while((len(objective_lst) < 1 or not objective_lst[0].is_displayed()) and not timeout):
             objective_lst = []
             objective_lst = driver.find_elements(By.CLASS_NAME, "bp4-html-table-striped")
             timeout = time.time() - start > 5
+            print(time.time())
+            print(timeout)
 
         # if it takes more than 5 seconds to get the image
         if timeout : return "Web_Interaction/image_failed.png"
@@ -1113,7 +1145,7 @@ def special_image(number, decimal, CE_ID, driver, objective_name : str):
         objective_lst = []
         timeout = False
         start = time.time()
-        while(len(objective_lst) < 1 or not objective_lst[0].is_displayed() or timeout):
+        while((len(objective_lst) < 1 or not objective_lst[0].is_displayed()) and not timeout):
             objective_lst = []
             objective_lst = driver.find_elements(By.TAG_NAME, "tr")
             timeout = time.time() - start > 5

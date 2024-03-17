@@ -185,10 +185,10 @@ async def scrape(channel):
 
     # dump the data back onto mongodb
     dump1 = await dump_mongo("name", updates[2]) # name
-    updates[3]['_id'] = ObjectId('64f8d63592d3fe5849c1ba35')
+    updates[3]['_id'] = mongo_ids['curator']
     dump2 = await dump_mongo("curator", updates[3]) # curator
     dump2andahalf = await dump_mongo('unfinished', updates[4]) # unfinished
-    updates[5]['_id'] = ObjectId('64f8bc4d094bdbfc3f7d0050')
+    updates[5]['_id'] = mongo_ids['tier']
     dump3 = await dump_mongo('tier', updates[5]) # tier
 
     # send out each update

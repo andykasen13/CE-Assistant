@@ -22,13 +22,14 @@ from Helper_Functions.end_time import months_to_days
 # ---------------------------------------------variables-----------------------------------------------------------------
 
 # ------------- mongo variables -------------
-_mongo_ids = {
-    "name" : ObjectId('64f8d47f827cce7b4ac9d35b'),
+mongo_ids = {
+    "name_old" : ObjectId('64f8d47f827cce7b4ac9d35b'),
     "tier" : ObjectId('64f8bc4d094bdbfc3f7d0050'),
     "curator" : ObjectId('64f8d63592d3fe5849c1ba35'),
     "tasks" : ObjectId('64f8d6b292d3fe5849c1ba37'),
     "user" : ObjectId('64f8bd1b094bdbfc3f7d0051'),
-    "unfinished" : ObjectId('650076a9e35bbc49b06c9881')
+    "unfinished" : ObjectId('650076a9e35bbc49b06c9881'),
+    "name" : ObjectId('6500f7d3b3e4253bef9f51e6')
 }
 _uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
 _mongo_client = AsyncIOMotorClient(_uri)
@@ -55,6 +56,7 @@ _ce_game_additions_id = 949482536726298666   # game additions
 # bot test ids
 _test_log_id = 1141886539157221457
 _test_casino_id = 811286469251039333
+_test_game_additions_id = 1128742486416834570
 # go-to channels 
 # NOTE: replace these with the ids as needed
 game_additions_id = _test_log_id
@@ -114,19 +116,29 @@ icons = {
 
 # ------ genres ------
 all_genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"]
+game_to_id = {
+    '- Challenge Enthusiasts -' : "76574ec1-42df-4488-a511-b9f2d9290e5d",
+    '- Puzzle Games - ' : "27578157-10b2-4f29-acee-452c2dc59477",
+    'clown town 1443' : "09f100aa-caa7-4154-a224-1c3e9277eea4",
+    'RetroArch' : "5144e054-d64e-465f-9d0e-3c517a0fe92b"
+}
+
+ce_squared_id = "76574ec1-42df-4488-a511-b9f2d9290e5d"
+"""The CE ID for the game `- Challenge Enthusiasts -`."""
+
 
 # ---------------------------------------------functions-----------------------------------------------------------------
 
 
 # -------- get and set mongo databases --------
-_mongo_names = Literal["name", "tier", "curator", "user", "tasks", "unfinished"]
+_mongo_names = Literal["name_old", "tier", "curator", "user", "tasks", "unfinished", "name"]
 async def get_mongo(title : _mongo_names):
     """Returns the MongoDB associated with `title`."""
-    return await collection.find_one({'_id' : _mongo_ids[title]})
+    return await collection.find_one({'_id' : mongo_ids[title]})
 
 async def dump_mongo(title : _mongo_names, data) :
     """Dumps the MongoDB given by `title` and passed by `data`."""
-    return await collection.replace_one({'_id' : _mongo_ids[title]}, data)
+    return await collection.replace_one({'_id' : mongo_ids[title]}, data)
 
 
 # ----- get unix timestamp for x days from now -----
@@ -149,7 +161,7 @@ def timestamp_to_unix(timestamp : str) -> int :
 # ------ check if a t0 is valid ------
 def is_valid_t0(name : str) -> bool:
     """Takes in a T0 and checks to see if it's one of the permanent ones (CE, Puzzle, clown town, Retro)."""
-    return name in ['- Challenge Enthusiasts -', 'Puzzle Games', 'clown town 1443', 'RetroArch']
+    return name in ['- Challenge Enthusiasts -', '- Puzzle Games -', 'clown town 1443', 'RetroArch']
 
 # ------ get a ce-id from a discord id ------
 async def get_ce_id(discord_id : str) -> str:

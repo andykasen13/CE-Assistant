@@ -30,7 +30,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 # --------- other file imports ---------
 from Web_Interaction.loopty_loop import master_loop
 from Web_Interaction.curator import single_run
-from Web_Interaction.scraping import single_scrape, get_image
+from Web_Interaction.scraping import single_scrape, get_image, single_scrape_v2
 from Helper_Functions.create_embed import getEmbed
 from Helper_Functions.roll_string import get_roll_string
 from Helper_Functions.buttons import get_buttons
@@ -638,20 +638,20 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @to_thread
 def scrape_thread_call(curator_count):
-    return single_scrape(curator_count)
+    return single_scrape_v2(curator_count)
 
 
 @tree.command(name="scrape", description="Force update every game without creating embeds. DO NOT RUN UNLESS NECESSARY.", guild=discord.Object(id=guild_ID))
 async def scrape(interaction : discord.Interaction):
-    await interaction.response.send_message('scraping...')
+    await interaction.response.send_message('scraping... (v2)')
 
     curator_count = await get_mongo('curator')
 
     objects = await scrape_thread_call(curator_count)
 
     # add the id back to database_name
-    objects[0]['_id'] = ObjectId('64f8d47f827cce7b4ac9d35b')
-    objects[2]['_id'] = ObjectId('64f8bc4d094bdbfc3f7d0050')
+    objects[0]['_id'] = mongo_ids['name']
+    objects[2]['_id'] = mongo_ids["tier"]
     
     # dump the databases back onto mongoDB
     dump1 = await dump_mongo('curator', objects[1]) #curator
@@ -989,6 +989,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     """
     #Open the user database
     database_user = await get_mongo('user')
+    database_name = await get_mongo('name')
 
     # Set up total_points to calculate rank
     total_points = 0
@@ -1032,26 +1033,26 @@ async def register(interaction : discord.Interaction, ce_id: str) :
 
     # Go through owned games in CE JSON
     for game in user_ce_data['userGames'] :
-        game_name = game['game']['name']
+        game_id = game['gameId']
         
         # Add the games to the local JSON
-        user_dict[ce_id]['Owned Games'][game_name] = {}
+        user_dict[ce_id]['Owned Games'][game_id] = {}
 
     # Go through all objectives 
     for objective in user_ce_data['userObjectives'] :
-        game_name = objective['objective']['game']['name']
-        obj_name = objective['objective']['name']
+        game_id = objective['objective']['gameId']
+        obj_id = objective['objectiveId']
         
         # If the objective is community, set the value to true
         if objective['objective']['community'] : 
-            if(list(user_dict[ce_id]['Owned Games'][game_name].keys()).count("Community Objectives") == 0) :
-                user_dict[ce_id]['Owned Games'][game_name]['Community Objectives'] = {}
-            user_dict[ce_id]['Owned Games'][game_name]['Community Objectives'][obj_name] = True
+            if "Community Objectives" not in user_dict[ce_id]['Owned Games'][game_id]:
+                user_dict[ce_id]['Owned Games'][game_id]['Community Objectives'] = {}
+            user_dict[ce_id]['Owned Games'][game_id]['Community Objectives'][obj_id] = True
 
         # If the objective is primary...
         else : 
             # ... and there are partial points AND no one has assigned requirements...
-            if(objective['objective']['pointsPartial'] != 0 and objective['assignerId'] == None) :
+            if(objective['partial']) :
                 # ... set the points earned to the partial points value.
                 points = objective['objective']['pointsPartial']
             # ... and there are no partial points, set the points earned to the total points value.
@@ -1061,9 +1062,9 @@ async def register(interaction : discord.Interaction, ce_id: str) :
             total_points += points
 
             # Now actually update the value in the user's dictionary.
-            if(list(user_dict[ce_id]['Owned Games'][game_name].keys()).count("Primary Objectives") == 0) :
-                user_dict[ce_id]['Owned Games'][game_name]['Primary Objectives'] = {}
-            user_dict[ce_id]['Owned Games'][game_name]['Primary Objectives'][obj_name] = points
+            if(list(user_dict[ce_id]['Owned Games'][game_id].keys()).count("Primary Objectives") == 0) :
+                user_dict[ce_id]['Owned Games'][game_id]['Primary Objectives'] = {}
+            user_dict[ce_id]['Owned Games'][game_id]['Primary Objectives'][obj_id] = points
 
 
     # Get the user's rank
@@ -1084,18 +1085,23 @@ async def register(interaction : discord.Interaction, ce_id: str) :
                   "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", 
                   "Fourward Thinking", "Russian Roulette", "Destiny Alignment",
                   "Soul Mates", "Teamwork Makes the Dream Work", "Winner Takes All", "Game Theory"]
+    all_events_final = {}
+    for e in all_events:
+        for o in database_name[ce_squared_id]['Community Objectives'] :
+            if e == database_name[ce_squared_id]['Community Objectives'][o]['Name'] : all_events_final[e] = o
 
     # Check and see if the user has any completed rolls
-    if(list(user_dict[ce_id]['Owned Games'].keys()).count("- Challenge Enthusiasts -") > 0) :
+    if ce_squared_id in user_dict[ce_id]['Owned Games']:
         x=0
         
-        for event_name in all_events :
-            if(list(user_dict[ce_id]['Owned Games']['- Challenge Enthusiasts -']['Community Objectives'].keys()).count(event_name) > 0) :
+        for event in all_events_final :
+            event_id = all_events_final[event]
+            if event_id in user_dict[ce_id]['Owned Games'][ce_squared_id]['Community Objectives']:
                 x=0
-                user_dict[ce_id]['Completed Rolls'].append({"Event Name" : event_name})
-            if(event_name == "Two \"Two Week T2 Streak\" Streak" 
+                user_dict[ce_id]['Completed Rolls'].append({"Event Name" : event})
+            if(event == "Two \"Two Week T2 Streak\" Streak" 
                and "Two \"Two Week T2 Streak\" Streak" in 
-               user_dict[ce_id]['Owned Games']['- Challenge Enthusiasts -']['Community Objectives']):
+               user_dict[ce_id]['Owned Games'][ce_squared_id]['Community Objectives']):
                     user_dict[ce_id]['Completed Rolls'].append({"Event Name" : "Two 'Two Week T2 Streak' Streak"})
 
     # Add the user file to the database
@@ -1364,7 +1370,6 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
     await interaction.response.defer(ephemeral=True)
 
     # grab the site additions channel
-    # TODO: update this in the CE server
     site_additions_channel = client.get_channel(game_additions_id)
 
     # try to get the message
@@ -1648,7 +1653,7 @@ async def on_ready():
     test_log = client.get_channel(log_id)
     await test_log.send("The bot has now been restarted.")    #get_tasks(client)
     await master_loop.start(client)
-    await check_roll_status.start()
+    #await check_roll_status.start()
 
 
 client.run(discord_token)
