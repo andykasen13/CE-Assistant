@@ -44,6 +44,7 @@ from PIL import Image
 from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix, collection #TODO: i dont need this anymore but too lazy to figure it out
 from Helper_Functions.mongo_silly import *
 from Helper_Functions.os import restart, add_to_windows_startup
+from Helper_Functions.spreadsheet import csv_conversion
 
 
 # ---------- command imports --------------
@@ -1644,7 +1645,24 @@ async def manual_restart(interaction : discord.Interaction):
 async def add_to_boot(interaction : discord.Interaction):
     await interaction.response.send_message('adding directories...')
     await add_to_windows_startup(__file__)
-    
+
+
+
+
+
+
+
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ----------------------------------------------------- Operational Restart -------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+@tree.command(name="steal-schmoles-schmeat", description="Will restart the computer the bot is currently hosted on", guild=discord.Object(id=guild_ID))
+async def steal_schmoles_schmeat(interaction):
+    await interaction.response.send_message('stealing schmoles schmeat')
+    await csv_conversion()
 
 
 
