@@ -130,7 +130,7 @@ async def help(interaction : discord.Interaction) :
     basic_options = page_data['Options']
     selections = []
 
-    roll_options = page_data['Rolls']
+    roll_options = page_data['Rollsy']
     rolls = []
 
     admin_options = page_data['Admin']
