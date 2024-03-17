@@ -1060,7 +1060,9 @@ def get_completion_data(steam_id, steamhunters = None):
         else:
             return int(json_response['medianCompletionTime'] / 60)
     else :
-        if str(steam_id) in steamhunters.keys() : return steamhunters[str(steam_id)]
+        if str(steam_id) in steamhunters.keys() : 
+            if steamhunters[str(steam_id)] == 0 : return "none"
+            return steamhunters[str(steam_id)]
         else : return "none"
         return steamhunters[steam_id]
 
