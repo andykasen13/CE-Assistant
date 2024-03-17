@@ -567,7 +567,8 @@ def update(new_game, old_game, driver, number, icon, icons, name):
     fake_update.replace('\t','')
     if fake_update == "" : return "hiya!"
     else :
-        update += "\n- Overall points unchanged"
+        if new_points != old_points:
+            update += "\n- Overall points unchanged"
 
     # ------------------- make final embed -------------------
     embed = {
