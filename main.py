@@ -1455,9 +1455,6 @@ def get_points(user_api_data) :
 
     sorted_dict = dict(sorted(three.items(), key=lambda x: x[0], reverse=True))
     final_dict = dict(list(sorted_dict.items())[:3:])
-
-    for i in sorted_dict:
-        print("{} - {}".format(i, sorted_dict[i]))
     
     
     
