@@ -257,6 +257,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 for objrequirement in objective['objectiveRequirements'] :
                     objrequpdatedtime = timestamp_to_unix(objrequirement['updatedAt'])
                     if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
+
+        updated_time -= 3600*4
+        created_time -= 3600*4
         
         # if the game is locally stored, set current_newest to that updatedvalue
         if(game['id'] in list(new_data.keys())) : 
@@ -320,7 +323,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             """
 
         # if game is updated
-        elif updated_time > current_newest and game['name'] in list(new_data.keys()):
+        elif updated_time > current_newest and game['id'] in list(new_data.keys()):
             print("UPDATED: " + game['name'])
             game_tracker.remove(game['id'])
             test_old = new_data[game['id']]
