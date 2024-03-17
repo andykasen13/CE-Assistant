@@ -368,7 +368,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 "There is no time limit on " + embed.title + "."
                 + "\nNever Lucky has a one month cooldown."
                 + "\nCooldown ends on <t:" + str(get_unix(months=1))
-                + f">\nhttps://cedb.me/game/{database_name[embed.title]['CE ID']}/", inline=False)
+                + f">\nhttps://cedb.me/game/{games[0]}/", inline=False)
             
             userInfo[target_user]['Current Rolls'].append({
                 'Event Name' : 'Never Lucky',
@@ -399,7 +399,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 if interaction.user.id != userInfo[target_user]['Discord ID'] : return
 
                 # get a new t3
-                new_game = get_rollable_game(40, 20, "Tier 3", userInfo[target_user], database_name=database_name, database_tier=database_tier)
+                new_game = get_rollable_game(40, 20, "Tier 3", userInfo[target_user], database_name=database_name, database_tier=database_tier, games=games)
 
                 # make the embed
                 embed = getEmbed(new_game, interaction.user.id, database_name)

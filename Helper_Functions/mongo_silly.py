@@ -23,13 +23,13 @@ from Helper_Functions.end_time import months_to_days
 
 # ------------- mongo variables -------------
 mongo_ids = {
-    "name" : ObjectId('64f8d47f827cce7b4ac9d35b'),
+    "name_old" : ObjectId('64f8d47f827cce7b4ac9d35b'),
     "tier" : ObjectId('64f8bc4d094bdbfc3f7d0050'),
     "curator" : ObjectId('64f8d63592d3fe5849c1ba35'),
     "tasks" : ObjectId('64f8d6b292d3fe5849c1ba37'),
     "user" : ObjectId('64f8bd1b094bdbfc3f7d0051'),
     "unfinished" : ObjectId('650076a9e35bbc49b06c9881'),
-    "name_new" : ObjectId('6500f7d3b3e4253bef9f51e6')
+    "name" : ObjectId('6500f7d3b3e4253bef9f51e6')
 }
 _uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
 _mongo_client = AsyncIOMotorClient(_uri)
@@ -56,6 +56,7 @@ _ce_game_additions_id = 949482536726298666   # game additions
 # bot test ids
 _test_log_id = 1141886539157221457
 _test_casino_id = 811286469251039333
+_test_game_additions_id = 1128742486416834570
 # go-to channels 
 # NOTE: replace these with the ids as needed
 game_additions_id = _test_log_id
@@ -130,7 +131,7 @@ ce_squared_id = "76574ec1-42df-4488-a511-b9f2d9290e5d"
 
 
 # -------- get and set mongo databases --------
-_mongo_names = Literal["name", "tier", "curator", "user", "tasks", "unfinished", "name_new"]
+_mongo_names = Literal["name_old", "tier", "curator", "user", "tasks", "unfinished", "name"]
 async def get_mongo(title : _mongo_names):
     """Returns the MongoDB associated with `title`."""
     return await collection.find_one({'_id' : mongo_ids[title]})

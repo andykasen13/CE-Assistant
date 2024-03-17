@@ -648,12 +648,12 @@ async def scrape(interaction : discord.Interaction):
     objects = await scrape_thread_call(curator_count)
 
     # add the id back to database_name
-    objects[0]['_id'] = mongo_ids['name_new']
+    objects[0]['_id'] = mongo_ids['name']
     objects[2]['_id'] = mongo_ids["tier"]
     
     # dump the databases back onto mongoDB
     dump1 = await dump_mongo('curator', objects[1]) #curator
-    dump2 = await dump_mongo('name_new', objects[0]) #name
+    dump2 = await dump_mongo('name', objects[0]) #name
     dump3 = await dump_mongo('tier', objects[2]) #tier
 
     await interaction.channel.send('scraped')
@@ -987,6 +987,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     """
     #Open the user database
     database_user = await get_mongo('user')
+    database_name = await get_mongo('name')
 
     # Set up total_points to calculate rank
     total_points = 0
@@ -1082,16 +1083,21 @@ async def register(interaction : discord.Interaction, ce_id: str) :
                   "Two 'Two Week T2 Streak' Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", 
                   "Fourward Thinking", "Russian Roulette", "Destiny Alignment",
                   "Soul Mates", "Teamwork Makes the Dream Work", "Winner Takes All", "Game Theory"]
+    all_events_final = {}
+    for e in all_events:
+        for o in database_name[ce_squared_id]['Community Objectives'] :
+            if e == database_name[ce_squared_id]['Community Objectives'][o]['Name'] : all_events_final[e] = o
 
     # Check and see if the user has any completed rolls
     if ce_squared_id in user_dict[ce_id]['Owned Games']:
         x=0
         
-        for event_name in all_events :
-            if event_name in user_dict[ce_id]['Owned Games'][ce_squared_id]['Community Objectives']:
+        for event in all_events_final :
+            event_id = all_events_final[event]
+            if event_id in user_dict[ce_id]['Owned Games'][ce_squared_id]['Community Objectives']:
                 x=0
-                user_dict[ce_id]['Completed Rolls'].append({"Event Name" : event_name})
-            if(event_name == "Two \"Two Week T2 Streak\" Streak" 
+                user_dict[ce_id]['Completed Rolls'].append({"Event Name" : event})
+            if(event == "Two \"Two Week T2 Streak\" Streak" 
                and "Two \"Two Week T2 Streak\" Streak" in 
                user_dict[ce_id]['Owned Games'][ce_squared_id]['Community Objectives']):
                     user_dict[ce_id]['Completed Rolls'].append({"Event Name" : "Two 'Two Week T2 Streak' Streak"})
@@ -1362,7 +1368,6 @@ async def reason(interaction : discord.Interaction, reason : str, embed_id : str
     await interaction.response.defer(ephemeral=True)
 
     # grab the site additions channel
-    # TODO: update this in the CE server
     site_additions_channel = client.get_channel(game_additions_id)
 
     # try to get the message
