@@ -1430,7 +1430,7 @@ def get_points(user_api_data) :
     points = 0
     points_old = 0
     total_points = 0
-    three = {"0" : 0, "1": 1, "2" : 2}
+    three : dict[int, str] = {}
     for item in user_api_data['userObjectives'] :
         if timestamp_to_unix(item['updatedAt']) > date_limit :
             if item['partial'] :
@@ -1445,30 +1445,20 @@ def get_points(user_api_data) :
         if item['partial'] : total_points += item['objective']['pointsPartial']
         else : total_points += item['objective']['points']
 
-        old_entry = -1
-        for i in three :
-            if timestamp_to_unix(item['updatedAt']) > three[i]:
-                silly_str = item['objective']['name'] + " ("
-                if item['partial'] : silly_str += str(item['objective']['pointsPartial'])
-                else : silly_str += str(item['objective']['points'])
-                silly_str += icons['Points'] + ") - " + item['objective']['game']['name']
-                three[silly_str] = timestamp_to_unix(item['updatedAt']) 
-                old_entry = i
-                break
-                
+        # put all objectives in a dictionary
+        silly_str = item['objective']['name'] + " ("
+        if item['partial'] : silly_str += str(item['objective']['pointsPartial'])
+        else : silly_str += str(item['objective']['points'])
+        silly_str += icons['Points'] + ") - " + item['objective']['game']['name']
 
-        if old_entry != -1 : 
-            del three[old_entry]
-    
-    
-    if "0" in three : del three["0"]
-    if "1" in three : del three["1"]
-    if "2" in three : del three["2"]
+        three[timestamp_to_unix(item['updatedAt'])] = silly_str
 
+    sorted_dict = dict(sorted(three.items(), key=lambda x: x[0], reverse=True))
+    final_dict = dict(list(sorted_dict.items())[:3:])
     
     
     
-    return [points, points_old, date_limit, date_limit_2, total_points, three]
+    return [points, points_old, date_limit, date_limit_2, total_points, final_dict]
 
 
 """
@@ -1560,7 +1550,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     # get recent string
     recentsstr = ""
     for item in recents:
-        recentsstr += item + "\n"
+        recentsstr += recents[item] + "\n"
 
     # get month names
     curr_month = datetime.datetime.now().month
