@@ -765,7 +765,9 @@ async def curate(interaction : discord.Interaction, num : int = 0):
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="steam-game", description="Get information on any steam game", guild=discord.Object(id=guild_ID))
-async def steam_command(interaction : discord.Interaction, game_name: str):
+@app_commands.describe(game_name="The name of the game you're trying to look up.")
+@app_commands.describe(visible="Whether you want the message to be viewable to others (true) or only viewable to yourself (false)")
+async def steam_command(interaction : discord.Interaction, game_name: str, visible : bool = True):
 
     # Log the command
     print("Recieved steam_game command with parameter: " + game_name + ".")
@@ -774,7 +776,7 @@ async def steam_command(interaction : discord.Interaction, game_name: str):
     database_name = await get_mongo('name')
 
     # Defer the interaction
-    await interaction.response.defer(ephemeral=True)
+    await interaction.response.defer(ephemeral=(not visible))
 
     # Get the embed
     embed = getEmbed(game_name, interaction.user.id, database_name=database_name)
@@ -1507,7 +1509,7 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
     if user == None : user = interaction.user
 
     ce_id = await get_ce_id(user.id)
-    if ce_id == None : return await interaction.followup.send(f"<@{user.id}> is not registered in the CE Assistant database.")
+    if ce_id == None : return await interaction.followup.send(f"<@{user.id}> is not registered in the CE Assistant database. Please run `/register` with the link to your CE page!")
 
     # pull data
     user_api_data = get_api("user", ce_id)
