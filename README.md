@@ -95,6 +95,8 @@ You will need to `pip install` the following:
 - `chromedriver_binary` (don't ask bruh i have no idea)
 - `webdriver_manager` (sets correct webdriver for selenium)
 
+`pip install discord selenium pillow requests bs4 apscheduler pymongo motor chromedriver_binary webdriver_manager`
+
 
 # CE-Assistant
 This discord bot, using `discord.py` and made by myself and @TheronBoozer, handles automation in the Challenge Enthusiasts Discord Server.

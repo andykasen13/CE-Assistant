@@ -57,9 +57,9 @@ _test_log_id = 1141886539157221457
 _test_casino_id = 811286469251039333
 # go-to channels 
 # NOTE: replace these with the ids as needed
-game_additions_id = _ce_log_id
-casino_id = _ce_casino_test_id
-log_id = _ce_log_id
+game_additions_id = _test_log_id
+casino_id = _test_casino_id
+log_id = _test_log_id
 
 # ------------- emoji icons -------------
 icons = {

@@ -43,6 +43,7 @@ from selenium.webdriver.chrome.service import Service
 from PIL import Image
 from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix, collection #TODO: i dont need this anymore but too lazy to figure it out
 from Helper_Functions.mongo_silly import *
+from Helper_Functions.os import restart, add_to_windows_startup
 
 
 # ---------- command imports --------------
@@ -62,7 +63,8 @@ tree = app_commands.CommandTree(client)
 
 intents.message_content = True
 
-
+with open('Jasons/help_embed_data.json') as f:
+    test = json.load(f)
 
 
 
@@ -70,8 +72,8 @@ intents.message_content = True
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-discord_token = localJSONData['discord_token']  
-guild_ID = localJSONData['ce_guild_ID']
+discord_token = localJSONData['other_discord_token']  
+guild_ID = localJSONData['test_guild_ID']
 
 
 
@@ -1555,10 +1557,10 @@ async def profile(interaction : discord.Interaction, user : discord.User = None)
         timestamp=datetime.datetime.now(),
         color=0xff9494
     )
-    main_embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]["Rank"]]}", inline=True)
-    main_embed.add_field(name="Current Points", value=f"{total_points} {icons["Points"]} - CR: {str(total_cr)}", inline=True)
+    main_embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]['Rank']]}", inline=True)
+    main_embed.add_field(name="Current Points", value=f"{total_points} {icons['Points']} - CR: {str(total_cr)}", inline=True)
     main_embed.add_field(name="Recent Completions", value=recentsstr, inline=False)
-    main_embed.add_field(name="Points", value=f"Points this month ({calendar.month_name[curr_month]}) : {points} {icons['Points']}\nPoints last month ({calendar.month_name[past_month]}) : {points_old} {icons["Points"]}", inline=False)
+    main_embed.add_field(name="Points", value=f"Points this month ({calendar.month_name[curr_month]}) : {points} {icons['Points']}\nPoints last month ({calendar.month_name[past_month]}) : {points_old} {icons['Points']}", inline=False)
     main_embed.add_field(name="Completions", value=tiergenrestr, inline=True)
     #embed.set_image(url=user.avatar.url)
     main_embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=user.avatar.url)
@@ -1612,7 +1614,31 @@ async def stop_scrape(interaction : discord.Interaction) :
 
 
 
+
+
+
+
+
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ----------------------------------------------------- Operational Restart -------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------------------------------------------------------------- #
+@tree.command(name="manual-restart", description="Will restart the computer the bot is currently hosted on", guild=discord.Object(id=guild_ID))
+async def manual_restart(interaction : discord.Interaction):
+    await interaction.response.send_message('rebooting...')
+    await restart(__file__)
+
+
+@tree.command(name="add-to-boot", description="Will add the bot to startup on boot", guild=discord.Object(id=guild_ID))
+async def add_to_boot(interaction : discord.Interaction):
+    await interaction.response.send_message('adding directories...')
+    await add_to_windows_startup(__file__)
     
+
+
 
 # ----------------------------------- LOG IN ----------------------------
 @client.event
