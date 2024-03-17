@@ -1010,6 +1010,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
         else : ce_id = ce_id[21::]
     elif ce_id[:22:] == "https://ce.iys.io/user" and len(ce_id) >= 31 and (ce_id[31] == '-'):
         if(ce_id[(len(ce_id)-5)::] == "games") : ce_id = ce_id[23:(len(ce_id)-6)]
+        else : ce_id = ce_id[23::]
     else: return await interaction.followup.send(
         f"'{ce_id}' is not a valid user link. Please try again or contact <@413427677522034727> for assistance.")
     print(f"Working ID = {ce_id}")
