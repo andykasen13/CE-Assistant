@@ -214,8 +214,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         print('json failed lol')
         return
 
-    print(game_tracker)
-
     #print('scraping....')
     # game loop adding updated parts
     for i, game in enumerate(json_response):
