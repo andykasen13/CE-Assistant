@@ -1,10 +1,11 @@
 import time
 import datetime
+import discord
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------------------- ROLL STRING ---------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
-def get_roll_string(database_user, ce_id, database_name, target_user, roll_type) :
+def get_roll_string(database_user, ce_id, database_name, target_user : discord.User, roll_type) :
     # set up this bullshit
     roll_string = ""
 

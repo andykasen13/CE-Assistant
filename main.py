@@ -1007,6 +1007,8 @@ async def register(interaction : discord.Interaction, ce_id: str) :
     if(ce_id[:20:] == "https://cedb.me/user" and len(ce_id) >= 29 and (ce_id[29] == '-')) :
         if(ce_id[(len(ce_id)-5)::] == "games") : ce_id = ce_id[21:(len(ce_id)-6):]
         else : ce_id = ce_id[21::]
+    elif ce_id[:22:] == "https://ce.iys.io/user" and len(ce_id) >= 31 and (ce_id[31] == '-'):
+        if(ce_id[(len(ce_id)-5)::] == "games") : ce_id = ce_id[23:(len(ce_id)-6)]
     else: return await interaction.followup.send(
         f"'{ce_id}' is not a valid user link. Please try again or contact <@413427677522034727> for assistance.")
     print(f"Working ID = {ce_id}")
@@ -1455,6 +1457,9 @@ def get_points(user_api_data) :
 
     sorted_dict = dict(sorted(three.items(), key=lambda x: x[0], reverse=True))
     final_dict = dict(list(sorted_dict.items())[:3:])
+
+    del three
+    del sorted_dict
     
     
     
@@ -1493,7 +1498,7 @@ async def most_recent_points(interaction : discord.Interaction, user: discord.Us
 
 
 @tree.command(name="profile", description="Get general info about anyone in CE!", guild=discord.Object(id=guild_ID))
-async def profile(interaction : discord.Interaction, user : discord.User = None):
+async def profile(interaction : discord.Interaction, user : discord.Member = None):
     await interaction.response.defer()
 
     if user == None : user = interaction.user
