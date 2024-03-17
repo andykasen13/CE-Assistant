@@ -11,6 +11,7 @@ from bson import ObjectId
 import time
 import json
 from discord.ext import tasks
+import random
 
 # ----------- discord imports ---------
 import discord
@@ -255,6 +256,11 @@ events_solo = Literal["One Hell of a Day", "One Hell of a Week", "One Hell of a 
 async def roll_solo_command(interaction : discord.Interaction, event: events_solo) :   
 
     await interaction.response.defer()
+
+    # run 1/100 chance of pinging jarvis
+    log_channel = client.get_channel(log_id)
+    i = random.randint(0, 100)
+    if i == 0 : log_channel.send("<@{}>, you have rolled a jackpot! Please see <@687876105473884174> for your reward :)".format(interaction.user.id))
 
     await solo_command(interaction, event, reroll = False, collection=collection)
     
