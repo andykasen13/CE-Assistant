@@ -109,6 +109,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     hm = True # use this if you want selenium and #game-additions stuff
     option3 = False # use this if /api/games/expanded/ fails
     pi = False # use this if on the pi
+    objectiveRequirementsWorking = False
 
     # ------------- actual stuff ----------
     # Set selenium driver and preferences
@@ -249,10 +250,11 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             objupdatedtime = timestamp_to_unix(objective['updatedAt'])
             if updated_time < objupdatedtime : updated_time = objupdatedtime
 
-            # was the objective's requirement updated
-            for objrequirement in objective['objectiveRequirements'] :
-                objrequpdatedtime = timestamp_to_unix(objrequirement['updatedAt'])
-                if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
+            if objectiveRequirementsWorking:
+                # was the objective's requirement updated
+                for objrequirement in objective['objectiveRequirements'] :
+                    objrequpdatedtime = timestamp_to_unix(objrequirement['updatedAt'])
+                    if updated_time < objrequpdatedtime : updated_time = objrequpdatedtime
         
         # if the game is locally stored, set current_newest to that updatedvalue
         if(game['id'] in list(new_data.keys())) : 
