@@ -72,8 +72,8 @@ with open('Jasons/help_embed_data.json') as f:
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-discord_token = localJSONData['other_discord_token']  
-guild_ID = localJSONData['test_guild_ID']
+discord_token = localJSONData['discord_token']  
+guild_ID = localJSONData['ce_guild_ID']
 
 
 
