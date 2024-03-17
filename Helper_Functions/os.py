@@ -9,7 +9,7 @@ bat_path = r'C:\Users\%s\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\S
 
 
 async def restart(file):
-    if not os.path.isfile(bat_path + "/open.bat") and platform.platform() == 'Windows':
+    if not os.path.isfile(bat_path + "/Boot_CE_Assistant.bat") and platform.platform() == 'Windows':
         await add_to_windows_startup(file)
     os.system("shutdown /r /t 0")
 
@@ -21,7 +21,7 @@ async def add_to_windows_startup(file, file_path=""):
 
     with open(bat_path + '\\' + "Boot_CE_Assistant.bat", "w+") as bat_file:
         bat_file.write(r'''@echo off
-pip install discord selenium pillow requests bs4 apscheduler pymongo motor chromedriver_binary webdriver_manager
+pip install discord selenium pillow requests bs4 apscheduler pymongo motor chromedriver_binary webdriver_manager pandas
 cd %s
 git pull
 python main.py
