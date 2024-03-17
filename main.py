@@ -149,7 +149,7 @@ async def help(interaction : discord.Interaction) :
 
 
     for option in basic_options:
-        if option == 'Admin Options' and (not mod_role in interaction.user.roles and not admin_role in interaction.user.roles):
+        if option == 'Admin Options' and (not mod_role in interaction.user.roles and not admin_role in interaction.user.roles and 413427677522034727 != interaction.user.id):
             continue
         selections.append(discord.SelectOption(
             label=basic_options[option]['Name'],
