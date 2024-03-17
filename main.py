@@ -218,8 +218,8 @@ async def help(interaction : discord.Interaction) :
             super().__init__(timeout=timeout)
             self.add_item(HelpSelect(selections, message))
             if menu != "" :
-                #if message_2 == 'Rolls':
-                #    message_2 = "Select an option"
+                if message_2 == 'Rolls':
+                    message_2 = "Select an option"
                 self.add_item(HelpSelect(menu, message_2))
 
         async def on_timeout(self):
