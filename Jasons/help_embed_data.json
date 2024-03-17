@@ -51,10 +51,28 @@
             "Content" : "We designed /curate to return the last n games added to the Steam Curator. This should only be used if for some reason the bot misses a curator addition."
         },
         "Add Reason" : {
-            "Name" : "Add Reason",
+            "Name" : "Add Notes",
             "Emoji" : "\uD83E\uDD14",
-            "Description" : "Learn how to add reasoning to any game change!",
-            "Content" : "The /add-reason command takes in two parameters: the \"reason\" and the embed-id. This command is intended to be used for adding any specific reasoning to any game changes - ideally removals but this command will work with any kind of embed in the site-additions channel. You do have to retrieve the message-id of the embed you are trying to edit. To learn more about that, look up Discord Developer Mode."
+            "Description" : "Learn how to add notes to any game change!",
+            "Content" : "The /add-notes command takes in two parameters: the \"note\" and the embed-id. This command is intended to be used for adding any specific reasoning to any game changes - ideally removals, but this command will work with any kind of embed in the site-additions channel. You do have to retrieve the message-id of the embed you are trying to edit. To learn more about that, look up Discord Developer Mode."
+        },
+        "Force Add" : {
+            "Name" : "Force Add",
+            "Emoji" : "\u0031\u20E3",
+            "Description" : "Learn how to force-add a completed roll to any user!",
+            "Content" : "filler"
+        },
+        "Initiate Loop" : {
+            "Name" : "Initiate Loop",
+            "Emoji" : "\ud83c\udfa8",
+            "Description" : "Learn about initiating the scraping/curating loop!",
+            "Content" : "filler"
+        },
+        "Purge Roll" : {
+            "Name" : "Purge Roll",
+            "Emoji" : "\uD83E\uDD14",
+            "Description" : "Learn about purging a current roll from any user!",
+            "Content" : "filler"
         }
     },
     "Rolls" : {
@@ -85,32 +103,32 @@
         "Two 'Two Week T2 Streak' Streak" : {
             "Name" : "Two 'Two Week T2 Streak' Streak",
             "Emoji" : "\u23E9",
-            "Description" : "",
-            "Content" : ""
+            "Description" : "Learn about Two 'Two Week T2 Streak' Streak!",
+            "Content" : "A random <:tier2:1126268395483037776> will be rolled for you. It will be less than $20 and have less than 40 hours on SteamHunter's Median Completion Time. You must complete this game within one week. This process will then be repeated three times."
         },
         "Never Lucky" : {
             "Name" : "Never Lucky",
             "Emoji" : "\uD83C\uDF40",
-            "Description" : "",
-            "Content" : ""
+            "Description" : "Learn about Never Lucky!",
+            "Content" : "filler"
         },
         "Triple Threat" : {
             "Name" : "Triple Threat",
             "Emoji" : "\u2744\uFE0F",
-            "Description" : "",
-            "Content" : ""
+            "Description" : "Learn about Triple Threat!",
+            "Content" : "filler"
         },
         "Let Fate Decide" : {
             "Name" : "Let Fate Decide",
             "Emoji" : "\uD83C\uDF3B",
-            "Description" : "",
-            "Content" : ""
+            "Description" : "Learn about Let Fate Decide!",
+            "Content" : "filler"
         },
         "Fourward Thinking" : {
             "Name" : "Fourward Thinking",
             "Emoji" : "\uD83D\uDE48",
-            "Description" : "",
-            "Content" : ""
+            "Description" : "Learn about Fourward Thinking!",
+            "Content" : "filler"
         },
         "Russian Roulette" : {
             "Name" : "Russian Roulette",
