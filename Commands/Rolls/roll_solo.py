@@ -55,6 +55,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
     # grab user info
     userInfo = await get_mongo('user')
+    steamhunters = await get_mongo('steamhunters')
     
     # grab the user
     target_user = await get_ce_id(interaction.user.id)
@@ -84,7 +85,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
     if event == "One Hell of a Day" :
         # Get one random (rollable) game in Tier 1, non-genre specific
-        games.append(get_rollable_game(10, 10, "Tier 1", userInfo[target_user], database_name=database_name, database_tier=database_tier))
+        games.append(get_rollable_game(10, 10, "Tier 1", userInfo[target_user], database_name=database_name, database_tier=database_tier, steamhunters=steamhunters))
 
         # Create the embed
         embed = getEmbed(games[0], interaction.user.id, database_name=database_name)
@@ -120,7 +121,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
             view = discord.ui.View(timeout=600)
             embeds = [embed]
-            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], database_name=database_name, database_tier=database_tier)
+            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], database_name=database_name, database_tier=database_tier, steamhunters=steamhunters)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
 
             await get_buttons(view, embeds)
@@ -149,7 +150,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             genres.remove(database_name[existing_games[0]]['Genre'])
 
             # get the game and embed
-            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier)
+            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier, steamhunters=steamhunters)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
             await get_buttons(view, embeds)
             
@@ -202,7 +203,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         genres.remove("Strategy")
         i = 0
         while i < 5:
-            games.append(get_rollable_game(10, 10, "Tier 1", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier))
+            games.append(get_rollable_game(10, 10, "Tier 1", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier, steamhunters=steamhunters))
             genres.remove(database_name[games[i]]['Genre'])
             i+=1
 
@@ -230,7 +231,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         for ggenre in genres :
             i=0
             while(i < 5) :
-                games.append(get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre, games=games, database_name=database_name, database_tier=database_tier))
+                games.append(get_rollable_game(10, 10, "Tier 1", specific_genre=ggenre, games=games, database_name=database_name, database_tier=database_tier, steamhunters=steamhunters))
                 i+=1
         embeds = create_multi_embed("One Hell of a Month", months_to_days(1), games, months_to_days(3), interaction, database_name)
         embed = embeds[0]
@@ -268,7 +269,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             # setup view and embeds
             view = discord.ui.View(timeout=600)
             embeds = [embed]
-            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], database_name=database_name, database_tier=database_tier)
+            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], database_name=database_name, database_tier=database_tier, steamhunters=steamhunters)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
             await get_buttons(view, embeds)
 
@@ -300,7 +301,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             for g in existing_games:
                 genres.remove(database_name[g]['Genre'])
             
-            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier)
+            game = get_rollable_game(40, 20, "Tier 2", userInfo[target_user], genres, database_name=database_name, database_tier=database_tier, steamhunters=steamhunters)
             embeds.append(getEmbed(game, interaction.user.id, database_name))
             await get_buttons(view, embeds)
 
@@ -356,7 +357,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         
         if(roll_num == -1) :
             # one t3
-            games.append(get_rollable_game(40, 20, "Tier 3", userInfo[target_user], database_name=database_name, database_tier=database_tier))
+            games.append(get_rollable_game(40, 20, "Tier 3", userInfo[target_user], database_name=database_name, database_tier=database_tier, steamhunters=steamhunters))
 
             ends = False
 
@@ -399,7 +400,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                 if interaction.user.id != userInfo[target_user]['Discord ID'] : return
 
                 # get a new t3
-                new_game = get_rollable_game(40, 20, "Tier 3", userInfo[target_user], database_name=database_name, database_tier=database_tier, games=games)
+                new_game = get_rollable_game(40, 20, "Tier 3", userInfo[target_user], database_name=database_name, database_tier=database_tier, games=games, steamhunters=steamhunters)
 
                 # make the embed
                 embed = getEmbed(new_game, interaction.user.id, database_name)
@@ -540,7 +541,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
                 # get a new t4
                 new_game = get_rollable_game(1000, 20, "Tier 4", userInfo[target_user], database_name=database_name, database_tier=database_tier,
-                                                   specific_genre=[database_name[original_game]['Genre']])
+                                                   specific_genre=[database_name[original_game]['Genre']], steamhunters=steamhunters)
 
                 # make the embed
                 embed = getEmbed(new_game, interaction.user.id, database_name)
@@ -705,7 +706,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
                     genre = database_name[most_recent_game]['Genre']
 
                     # get a new game of the same tier and genre
-                    new_game = get_rollable_game(40*num_of_games, 20, "Tier " + str(num_of_games), userInfo[target_user], genre, database_tier=database_tier, database_name=database_name, games=[most_recent_game])
+                    new_game = get_rollable_game(40*num_of_games, 20, "Tier " + str(num_of_games), userInfo[target_user], genre, database_tier=database_tier, database_name=database_name, games=[most_recent_game], steamhunters=steamhunters)
                     
                     # create the embed for it
                     embed = getEmbed(new_game, interaction.user.id, database_name)
