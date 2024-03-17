@@ -1212,7 +1212,10 @@ async def update(interaction : discord.Interaction) :
             else :
                 for rankrole in rankroles :
                     if rankrole in interaction.user.roles : await interaction.user.remove_roles(rankrole)
-                    if rankrole.name == return_value[6::] : await interaction.user.add_roles(rankrole)
+                    if rankrole.name == return_value[6::] : 
+                        await interaction.user.add_roles(rankrole)
+                        await log_channel.send("Congratulations <@{}>! You've ranked up to {}!".format(interaction.user.id, return_value[6::]))
+
         
         # log channel shit
         elif return_value[:4:] == "log:" :
