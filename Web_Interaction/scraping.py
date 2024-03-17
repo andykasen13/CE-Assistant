@@ -602,6 +602,8 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
     update += objective_update('Primary', new_game, old_game)
     update += objective_update('Community', new_game, old_game)
 
+    print(update)
+
 
     objective_list = update.split("🧑‍🦲😼💀😩🥵")
 
@@ -661,6 +663,7 @@ def objective_update(type, new_game, old_game):
         # primary objective loop
         for objective in new_game['{} Objectives'.format(type)]:
             if "CE ID" in objective : del objective['CE ID']
+            name = new_game['{} Objectives'.format(type)][objective]['Name']
 
             # if objective name is changed
             """if objective in new_game[type] and not objective in old_game[type]:
@@ -673,9 +676,9 @@ def objective_update(type, new_game, old_game):
             if objective in list(new_game['{} Objectives'.format(type)].keys()) and not objective in list(old_game['{} Objectives'.format(type)].keys()):
                 update += "🧑‍🦲😼💀😩🥵"
                 if type == 'Primary':
-                    update += "\n- New Primary Objective '**{}**' added:\n\t- {} points <:CE_points:1128420207329816597>\n  - {}".format(objective, new_game['{} Objectives'.format(type)][objective]['Point Value'], new_game['{} Objectives'.format(type)][objective]['Description'])
+                    update += "\n- New Primary Objective '**{}**' added:\n\t- {} points <:CE_points:1128420207329816597>\n  - {}".format(name, new_game['{} Objectives'.format(type)][objective]['Point Value'], new_game['{} Objectives'.format(type)][objective]['Description'])
                 else:
-                    update += "\n- New Community Objective '**{}**' added:\n\t  - {}".format(objective, new_game['{} Objectives'.format(type)][objective]['Description'])
+                    update += "\n- New Community Objective '**{}**' added:\n\t  - {}".format(name, new_game['{} Objectives'.format(type)][objective]['Description'])
 
 
             # if objective is updated
@@ -695,9 +698,10 @@ def objective_update(type, new_game, old_game):
 
         for objective in objective_tracker:
             # if objective is removed
+            name = old_game['{} Objectives'.format(type)][objective]['Name']
             if objective in list(old_game['{} Objectives'.format(type)].keys()) and not objective in list(new_game['{} Objectives'.format(type)].keys()):
                 update += "🧑‍🦲😼💀😩🥵"
-                update += "\n- '**{}**' was removed from the site".format(objective)
+                update += "\n- '**{}**' was removed from the site".format(name)
     
 
     return update
