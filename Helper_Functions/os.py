@@ -21,7 +21,7 @@ async def add_to_windows_startup(file, file_path=""):
 
     with open(bat_path + '\\' + "Boot_CE_Assistant.bat", "w+") as bat_file:
         bat_file.write(r'''@echo off
-pip install discord selenium pillow requests bs4 apscheduler pymongo motor chromedriver_binary webdriver_manager
+pip install discord selenium pillow requests bs4 apscheduler pymongo motor chromedriver_binary webdriver_manager pandas
 cd %s
 git pull
 python main.py

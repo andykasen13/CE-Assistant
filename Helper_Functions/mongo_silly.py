@@ -22,13 +22,14 @@ from Helper_Functions.end_time import months_to_days
 # ---------------------------------------------variables-----------------------------------------------------------------
 
 # ------------- mongo variables -------------
-_mongo_ids = {
+mongo_ids = {
     "name" : ObjectId('64f8d47f827cce7b4ac9d35b'),
     "tier" : ObjectId('64f8bc4d094bdbfc3f7d0050'),
     "curator" : ObjectId('64f8d63592d3fe5849c1ba35'),
     "tasks" : ObjectId('64f8d6b292d3fe5849c1ba37'),
     "user" : ObjectId('64f8bd1b094bdbfc3f7d0051'),
-    "unfinished" : ObjectId('650076a9e35bbc49b06c9881')
+    "unfinished" : ObjectId('650076a9e35bbc49b06c9881'),
+    "steamhunters" : ObjectId('65f64af8ba6efd911038594c')
 }
 _uri = "mongodb+srv://andrewgarcha:KUTo7dCtGRy4Nrhd@ce-cluster.inrqkb3.mongodb.net/?retryWrites=true&w=majority"
 _mongo_client = AsyncIOMotorClient(_uri)
@@ -122,11 +123,11 @@ all_genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "
 _mongo_names = Literal["name", "tier", "curator", "user", "tasks", "unfinished"]
 async def get_mongo(title : _mongo_names):
     """Returns the MongoDB associated with `title`."""
-    return await collection.find_one({'_id' : _mongo_ids[title]})
+    return await collection.find_one({'_id' : mongo_ids[title]})
 
 async def dump_mongo(title : _mongo_names, data) :
     """Dumps the MongoDB given by `title` and passed by `data`."""
-    return await collection.replace_one({'_id' : _mongo_ids[title]}, data)
+    return await collection.replace_one({'_id' : mongo_ids[title]}, data)
 
 
 # ----- get unix timestamp for x days from now -----
