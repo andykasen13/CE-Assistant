@@ -156,9 +156,10 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         
     else :
         #print('fetching /api/games/full/...')
-        api_response = requests.get('https://cedb.me/api/games/full')
+        
         #print('fetched.\n')
         try:
+            api_response = requests.get('https://cedb.me/api/games/full')
             json_response = json.loads(api_response.text)
         except:
             print('fetching failed lolW (api/games/full)!!!')
@@ -215,8 +216,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         local_objective_names = []
 
         if option3:
-            api_response_current = requests.get('https://cedb.me/api/game/' + game['id'])
+            
             try:   
+                api_response_current = requests.get('https://cedb.me/api/game/' + game['id'])
                 json_response_current = json.loads(api_response_current.text)
             except:
                 print(f"{game['name']} not pulled correctly...")
@@ -873,6 +875,7 @@ def get_game(game, big_game = ""):
 
 # get objective info
 def get_objectives(CE_ID):
+    """Takes in a ce id `CE_ID` and returns the Primary Objectives, Community Objectives, and Updated Time as `[{}, {}, ""]`."""
     json_response = get_api("game", CE_ID)
 
     objectives = [{}, {}, ""]
@@ -935,6 +938,7 @@ def get_objectives(CE_ID):
 
 # categorize by tier
 def get_by_tier(games):
+    """Takes in `database_name` and returns `database_tier` from scratch."""
     tier_based_data = {
         'Tier 0' : {
             'Action' : [],
@@ -1011,6 +1015,7 @@ def get_by_tier(games):
 
 
 def get_completion_data(steam_id):
+    """Takes in a steam app id `steam_id` and returns either the medianCompletionTime in hours or `"none"`."""
     response = requests.get("https://steamhunters.com/api/apps/{}/".format(steam_id))
     json_response = response.json()
 
