@@ -128,11 +128,12 @@ async def get_genre_buttons(view : discord.ui.View, completion_time : int, price
         database_name = await get_mongo("name")
         database_tier = await get_mongo("tier")
         steamhunters = await get_mongo('steamhunters')
+        database_user = await get_mongo('user')
 
 
         i=0
         while i < num_of_games :
-            games.append(get_rollable_game(completion_time, price_limit, tier_number, specific_genre =genre_name, database_tier=database_tier, database_name=database_name, games=games, steamhunters=steamhunters))
+            games.append(get_rollable_game(completion_time, price_limit, tier_number, specific_genre =genre_name, database_tier=database_tier, database_name=database_name, games=games, steamhunters=steamhunters, user_info=database_user))
             i+=1
 
         embeds = create_multi_embed(event_name, time_limit, games, cooldown_time, interaction, database_name)
