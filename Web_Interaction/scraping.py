@@ -107,7 +107,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     
     # -------------- variables ------------
     hm = True # use this if you want selenium and #game-additions stuff
-    option3 = True # use this if /api/games/full/ fails
+    option3 = False # use this if /api/games/expanded/ fails
     pi = False # use this if on the pi
 
     # ------------- actual stuff ----------
