@@ -332,7 +332,7 @@ async def force_add(interaction: discord.Interaction, user: discord.Member, roll
 
 
 
-
+"""
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------- CHECK_ROLLS COMMAND ----------------------------------------------------- # 
@@ -347,7 +347,7 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
     overflow = False
 
     # this is me trying to fix it but i will deal with this later
-    """
+
     if user is None : user = interaction.user
 
     # get mongo data
@@ -366,7 +366,7 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
 
 
     return await interaction.followup.send("Feature under construction!! Coming soon.")
-    """
+
 
     # if no user is provided default to sender
     selfy = False
@@ -417,7 +417,7 @@ async def checkRolls(interaction : discord.Interaction, user: discord.Member=Non
     del embed
     del database_name_info
     del user
-    
+    """
 
 def checkRollsEmbed(user : discord.Member, database_name, database_user, ce_id : str) -> discord.Embed :
     """Returns the embed for the /check-rolls command."""
@@ -478,7 +478,7 @@ def to_thread(func: typing.Callable) -> typing.Coroutine:
 
 
 
-
+"""
 @tasks.loop(time=datetime.time(hour=0, minute=20, tzinfo=datetime.timezone.utc))
 async def check_roll_status():
     print('it ran omg it actually ran')
@@ -595,7 +595,7 @@ async def check_roll_status():
     del database_name
     del all_returns
     del returns
-
+"""
         
 
 
@@ -1282,8 +1282,7 @@ def calculate_cr(ce_id, database_user, database_name) :
 
 
 
-
-    
+"""
 @tree.command(name="calculate-cr", description="Calculate your CR for each individual genre!", guild=discord.Object(id=guild_ID))
 @app_commands.describe(ephemeral="Decide if you want the reply to be visible to you only (ephemeral) or visible to everyone.")
 async def cr(interaction : discord.Interaction, ephemeral : bool) :
@@ -1341,7 +1340,7 @@ async def cr(interaction : discord.Interaction, ephemeral : bool) :
     
 
     return await interaction.followup.send(embed=embed)
-
+"""
 
 
 
@@ -1464,7 +1463,7 @@ def get_points(user_api_data) :
     return [points, points_old, date_limit, date_limit_2, total_points, three]
 
 
-
+"""
 @tree.command(name="most-recent-points", description="See the points you (or a friend) have accumulated since the start of the month", guild=discord.Object(id=guild_ID))
 async def most_recent_points(interaction : discord.Interaction, user: discord.User = None) :
     # defer the message
@@ -1491,7 +1490,7 @@ async def most_recent_points(interaction : discord.Interaction, user: discord.Us
     del user_api_data
 
     return await interaction.followup.send(f"<@{user}> has achieved {points} points since <t:{date_limit}>, and {points_old} points last month.")
-
+"""
 
 
 
