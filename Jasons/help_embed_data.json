@@ -35,12 +35,6 @@
             "Emoji": "\ud83c\udfa8",
             "Description": "Learn how to change your color!",
             "Content": "Try /set-color to adjust the color of your name to any unlocked color you have! For example, B Rank users would have access to blue (B), green (C), brown (D), and grey (E)."
-        },
-        "Check Rolls" : {
-            "Name" : "Check Rolls",
-            "Emoji" : "\uD83E\uDD2F",
-            "Description" : "Learn how to check your rolls!",
-            "Content" : "To check your progress on your current (and completed) rolls, try /check-rolls - see what comes up!"
         }
     },
     "Admin" : {
@@ -50,7 +44,7 @@
             "Description" : "Learn about /curate!",
             "Content" : "We designed /curate to return the last n games added to the Steam Curator. This should only be used if for some reason the bot misses a curator addition."
         },
-        "Add Reason" : {
+        "Add Notes" : {
             "Name" : "Add Notes",
             "Emoji" : "\uD83E\uDD14",
             "Description" : "Learn how to add notes to any game change!",
