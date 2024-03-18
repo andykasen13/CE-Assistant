@@ -152,7 +152,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             #print('fetched.\n')
         except:
             print('fetching failed lol!!!!!!! (api/games)')
-            if hm: del driver
+            if hm: 
+                driver.close()
+                del driver
             return
         
     else :
@@ -170,7 +172,9 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 i+=1
             except:
                 print('fetching failed lolW (api/games/full)!!!')
-                if hm: del driver
+                if hm: 
+                    driver.close()
+                    del driver
                 return
         json_response = j
 
