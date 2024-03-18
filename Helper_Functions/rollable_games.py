@@ -229,12 +229,13 @@ async def get_rollable_game_from_list(games, collection) :
     rollable = False
     while not rollable :
         random_num = random.randint(0, len(games)-1)
-        random_game = games[random_num]
+        random_game_id = games[random_num]
+        random_game_name = database_name[random_game_id]['Name']
 
-        print(f"Seeing if {random_game} is rollable...")
+        print(f"Seeing if {random_game_name} is rollable...")
 
         # check for price and avg completion time
-        game_id = database_name[random_game]['Steam ID']
+        game_id = database_name[random_game_id]['Steam ID']
         # ----- Grab Steam JSON file -----
         payload = {'appids': game_id, 'cc' : 'US'}
         response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload)
@@ -257,6 +258,6 @@ async def get_rollable_game_from_list(games, collection) :
         # ----- Check to see if rollable -----
         if(gamePrice < 20 and completion_time < 40) :
             rollable = True
-            return random_game
+            return random_game_id
         print(' ')
 
