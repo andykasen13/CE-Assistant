@@ -144,7 +144,7 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
 
     embed.add_field(name="Price", value = gamePrice, inline=True)
     if game_id != "" :
-        embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/game/{database_name[game_name]['CE ID']}/")
+        embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/game/{database_name[game_id]['CE ID']}/")
     else:
         embed.set_author(name="Challenge Enthusiasts")
     embed.set_image(url=imageLink)
