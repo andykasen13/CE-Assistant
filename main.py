@@ -162,6 +162,8 @@ async def help(interaction : discord.Interaction) :
             label=roll_options[option]['Name'],
             emoji=roll_options[option]['Emoji'],
             description=roll_options[option]['Description']))
+        
+        
 
     for option in admin_options:
         admin.append(discord.SelectOption(
@@ -223,8 +225,8 @@ async def help(interaction : discord.Interaction) :
                     message_2 = "peepo"
                 self.add_item(HelpSelect(menu, message_2))
 
-        async def on_timeout(self):
-            self.clear_items()
+        """async def on_timeout(self):
+            self.clear_items()"""
 
     return await interaction.followup.send(embed=embed, view=HelpSelectView(), ephemeral=True)
 
