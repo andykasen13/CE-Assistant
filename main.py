@@ -171,8 +171,9 @@ async def help(interaction : discord.Interaction) :
             label=admin_options[option]['Name'],
             emoji=admin_options[option]['Emoji'],
             description=admin_options[option]['Description']))
-  
 
+    print('\n')
+    print(admin)
     
 
     class HelpSelect(discord.ui.Select):
