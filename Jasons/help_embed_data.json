@@ -70,36 +70,7 @@
         }
     },
     "Rollsy" : {
-        "One Hell of a Day" : {
-            "Name" : "One Hell of a Day",
-            "Emoji" : "\uD83E\uDD14",
-            "Description" : "Learn about One Hell of a Day!",
-            "Content" : "filler"
-        },
-        "One Hell of a Week" : {
-            "Name" : "One Hell of a Week",
-            "Emoji" : "\uD83E\uDD14",
-            "Description" : "Learn about One Hell of a Week!",
-            "Content" : "filler"
-        },
-        "One Hell of a Month" : {
-            "Name" : "One Hell of a Month",
-            "Emoji" : "\uD83E\uDD14",
-            "Description" : "Learn about One Hell of a Month!",
-            "Content" : "filler"
-        },
-        "Two Week T2 Streak" : {
-            "Name" : "Two Week T2 Streak",
-            "Emoji" : "\uD83E\uDD14",
-            "Description" : "Learn about Two Week T2 Streak!",
-            "Content" : "filler"
-        },
-        "Two \"Two Week T2 Streak\" Streak" : {
-            "Name" : "Two \"Two Week T2 Streak\" Streak",
-            "Emoji" : "\uD83E\uDD14",
-            "Description" : "Learn about Two 'Two Week T2 Streak' Streak!",
-            "Content" : "filler"
-        },
+        
         "Never Lucky" : {
             "Name" : "Never Lucky",
             "Emoji" : "\uD83E\uDD14",
