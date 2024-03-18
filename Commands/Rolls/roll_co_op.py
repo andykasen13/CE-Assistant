@@ -147,7 +147,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             while user_b_pts :
                 # grab a rollable game
-                interaction_user_selected_game = get_rollable_game_from_list(interaction_user_completed_games, collection)
+                interaction_user_selected_game = await get_rollable_game_from_list(interaction_user_completed_games, collection)
                 # check to see if they own the game and if they have points in the game
                 user_b_pts = has_points(target_user_data, interaction_user_selected_game)
 
@@ -155,7 +155,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             while user_a_pts:
                 # grab a rollable game
-                target_user_selected_game = get_rollable_game_from_list(target_user_completed_games, collection)
+                target_user_selected_game = await get_rollable_game_from_list(target_user_completed_games, collection)
                 # check to see if they own the game and if they have points in the game
                 user_a_pts = has_points(interaction_user_data, target_user_selected_game)
 
