@@ -505,7 +505,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
             # set up the embeds and buttons
             embed = discord.Embed(title=("Let Fate Decide"), description="A random " + icons["Tier 4"] + " in a genre of you choosing will be rolled." +
                                 " There is no time limit for Let Fate Decide. You win once you complete all Primary Objectives in your rolled game!")
-            await get_genre_buttons(view, 1000, 20, "Tier 4", event, 1, months_to_days(3), 1, interaction.user.id, collection=collection)
+            await get_genre_buttons(view, 1000, 20, "Tier 4", event, 0, months_to_days(3), 1, interaction.user.id, collection=collection)
             dont_save = True
         
         # User has rolled before and is ready to reroll...

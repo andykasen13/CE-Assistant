@@ -84,9 +84,12 @@ def get_roll_string(database_user, ce_id, database_name, target_user : discord.M
                 roll_string += " (" + str(total_user_points) + "/" + str(total_default_points) +")\n"
                 gameNum += 1 # Add to the gameNum
     
+    name = target_user.nick
+    if name == None : name = target_user.name
+
     # account for no current rolls
     if(roll_string == "") :
-        if(roll_type == 'Current Rolls') : roll_string = f"{target_user.nick} has no current rolls."
-        elif(roll_type == 'Completed Rolls') : roll_string = f"{target_user.nick} has no completed rolls."
+        if(roll_type == 'Current Rolls') : roll_string = f"{name} has no current rolls."
+        elif(roll_type == 'Completed Rolls') : roll_string = f"{name} has no completed rolls."
 
     return roll_string

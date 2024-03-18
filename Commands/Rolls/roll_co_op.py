@@ -171,8 +171,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
             # Make adjustments to embeds
             embeds[0].set_field_at(index=0, name="Rolled Games",
-                                  value=f"<@{target_user_data['Discord ID']}>: {interaction_user_selected_game}"
-                                  + f"\n<@{interaction_user_data['Discord ID']}>: {target_user_selected_game}")
+                                  value=f"<@{target_user_data['Discord ID']}>: {database_name[interaction_user_selected_game]['Name']}"
+                                  + f"\n<@{interaction_user_data['Discord ID']}>: {database_name[target_user_selected_game]['Name']}")
             embeds[0].set_thumbnail(url = ce_mountain_icon)
             embeds[2].set_field_at(index = 1, name = "Rolled by", value = f"<@{interaction_user_data['Discord ID']}>")
             embeds[2].set_thumbnail(url = user_a_avatar)
@@ -631,7 +631,6 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 view.clear_items()
                 embed = getEmbed(game, interaction.user.id, database_name)
                 embed.set_field_at(index=1, name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>")
-                embed.add_field(name="Tier", value=database_name[game]['Tier'])
                 embed.add_field(name="Completion", value="When you have completed, submit your proof to <#747384873320448082>. The first to do so wins.")
 
                 # update database_user

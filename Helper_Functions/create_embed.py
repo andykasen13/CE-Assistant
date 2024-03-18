@@ -29,10 +29,16 @@ def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interac
         i+=1
     embeds[0].add_field(name="Rolled Games", value = games_value)
 
+
+    roll_req_value = ""
+    if time_limit != 0:
+        roll_req_value += "\nYou must complete " + str(event_name) + " by <t:" + str(get_unix(time_limit)) + f">.\n"
+    else :
+        roll_req_value += f"\n{event_name} has no time limit.\n"
+    roll_req_value += f"{event_name} has a cooldown time of {cooldown_time} day(s)."
+
     # ----- Display Roll Requirements -----
-    embeds[0].add_field(name="Roll Requirements", value =
-        "\nYou must complete " + str(event_name) + " by <t:" + str(get_unix(time_limit))
-        + f">.\n{event_name} has a cooldown time of {cooldown_time} days.", inline=False)
+    embeds[0].add_field(name="Roll Requirements", value = roll_req_value, inline=False)
     embeds[0].timestamp = datetime.datetime.now()
     embeds[0].set_thumbnail(url = interaction.user.avatar)
     
@@ -66,7 +72,7 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
         game_name = database_name[game_name]['Name']
         print(True)
     else :
-        game_id = game_name
+        game_id = ""
     
     
     if(game_id in (database_name)) : 
@@ -102,12 +108,18 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
         
         if correct_app_id == None : return discord.Embed(title=f"Could not find game \"{game_name}\".")
 
+        for game in database_name:
+            if database_name[game]['Steam ID'] == int(correct_app_id) or database_name[game]['Steam ID'] == str(correct_app_id): game_id = game
+        if game_id != "" : print('jk! we found it :)')
+
 # --- DOWNLOAD JSON FILE ---
 
     # Open and save the JSON data
     payload = {'appids': correct_app_id, 'cc' : 'US'}
-    response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload) #TODO: possible error here
-    jsonData = json.loads(response.text)
+    try:
+        response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload) #TODO: possible error here
+        jsonData = json.loads(response.text)
+    except : return discord.Embed(title='Error fetching Steam info')
     
     # Save important information
     imageLink = jsonData[correct_app_id]['data']['header_image']
@@ -119,19 +131,19 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
         gamePrice = jsonData[correct_app_id]['data']['price_overview']['final_formatted']
     else :
         gamePrice = "No price listed."
-    gameNameWithLinkFormat = game_name.replace(" ", "_")
+    game_name = jsonData[correct_app_id]['data']['name']
 
 # --- CREATE EMBED ---
 
     # and create the embed!
     embed = discord.Embed(title=f"{game_name}",
-        url=f"https://store.steampowered.com/app/{correct_app_id}/{gameNameWithLinkFormat}/",
+        url=f"https://store.steampowered.com/app/{correct_app_id}/",
         description=(f"{gameDescription}"),
         colour=0x000000,
         timestamp=datetime.datetime.now())
 
     embed.add_field(name="Price", value = gamePrice, inline=True)
-    if game_name in database_name :
+    if game_id != "" :
         embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/game/{database_name[game_name]['CE ID']}/")
     else:
         embed.set_author(name="Challenge Enthusiasts")
@@ -140,7 +152,7 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
     embed.set_footer(text="CE Assistant",
         icon_url=final_ce_icon)
     embed.add_field(name="Rolled by", value = "<@" + str(authorID) + ">", inline=True)
-    if game_id in database_name.keys() :
+    if game_id != "" :
         for objective in database_name[game_id]['Primary Objectives'] :
             total_points += int(database_name[game_id]['Primary Objectives'][objective]['Point Value'])
         embed.add_field(name="CE Status", 
