@@ -1252,7 +1252,12 @@ async def update(interaction : discord.Interaction) :
 
 
 
-
+@tree.command(name='shutdown', description='(ONLY RUN IF NECESSARY) A command to shut down the bot', guild=discord.Object(id=guild_ID))
+async def stop(interaction : discord.Interaction) :
+    await interaction.response.defer()
+    await interaction.followup.send("Bot is shutting down.... (goodbye).....")
+    client.close()
+    exit()
 
 
 
