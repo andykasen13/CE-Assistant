@@ -188,7 +188,6 @@ async def help(interaction : discord.Interaction) :
             await interaction.response.defer()
             embed = self.get_embed()
             if self.values[0] == 'Rolls' or self.values[0] in list(roll_options.keys()):
-                print(True)
                 await interaction.followup.edit_message(embed = embed, view=HelpSelectView(
                     menu=rolls, 
                     message="Select an option...", 
