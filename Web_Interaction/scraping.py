@@ -906,7 +906,7 @@ def update_embed(new_game, old_game, objective, type, cleared=True):
 
 # get the game info
 def get_game(game, big_game = ""):
-    objectives = get_objectives(game['id'], game)
+    objectives = get_objectives(game['id'])
     returnable = {
         'Name' : game['name'],
         "CE ID" : game['id'],
@@ -926,10 +926,9 @@ def get_game(game, big_game = ""):
 
 
 # get objective info
-def get_objectives(CE_ID, json_response = None):
+def get_objectives(CE_ID):
     """Takes in a ce id `CE_ID` and returns the Primary Objectives, Community Objectives, and Updated Time as `[{}, {}, ""]`."""
-    if json_response == None:
-        json_response = get_api("game", CE_ID)
+    json_response = get_api("game", CE_ID)
 
     objectives = [{}, {}, ""]
     achievements = {}
