@@ -53,11 +53,12 @@ final_ce_icon = "https://i.imgur.com/O9J7fg2.png"
 
 # ------------- discord channel numbers -------------
 # ce ids
-_ce_log_old_id = 1208259110638985246         # log
-_ce_log_id = 1218980203209035938
+_ce_log_old_id = 1208259110638985246         # old log
+_ce_log_id = 1218980203209035938             # current log
 _ce_casino_test_id = 1208259878381031485     # fake casino
 _ce_casino_id = 1080137628604694629          # real casino
 _ce_game_additions_id = 949482536726298666   # game additions
+_ce_private_log_id = 1208259110638985246     # private log
 # bot test ids
 _test_log_id = 1141886539157221457
 _test_casino_id = 811286469251039333
@@ -68,10 +69,12 @@ if _in_ce:
     game_additions_id = _ce_game_additions_id
     casino_id = _ce_casino_id
     log_id = _ce_log_id
+    private_log_id = _ce_private_log_id
 else :
     game_additions_id = _test_game_additions_id
     casino_id = _test_casino_id
     log_id = _test_log_id
+    private_log_id = _test_log_id
 
 # ------------- emoji icons -------------
 icons = {

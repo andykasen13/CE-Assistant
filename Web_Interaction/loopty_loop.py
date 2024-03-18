@@ -126,7 +126,7 @@ async def master_loop(client : discord.Client):
             print('printing traceback failed lol')
 
     if scrape_message != "loop successful" : 
-        log = client.get_channel(log_id)
+        log = client.get_channel(private_log_id)
         await log.send(scrape_message)
 
     print('done\n')

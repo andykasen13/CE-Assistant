@@ -1682,7 +1682,7 @@ async def steal_schmoles_schmeat(interaction):
 async def on_ready():
     await tree.sync(guild=discord.Object(id=guild_ID))
     
-    test_log = client.get_channel(log_id)
+    test_log = client.get_channel(private_log_id)
     await test_log.send("The bot has now been restarted.")    #get_tasks(client)
     if _in_ce:
         await master_loop.start(client)
