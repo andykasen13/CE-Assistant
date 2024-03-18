@@ -158,12 +158,13 @@ async def help(interaction : discord.Interaction) :
             description=basic_options[option]['Description']))
 
     for option in roll_options:
+        print(option)
         rolls.append(discord.SelectOption(
             label=roll_options[option]['Name'],
             emoji=roll_options[option]['Emoji'],
             description=roll_options[option]['Description']))
         
-        
+    print(rolls)
 
     for option in admin_options:
         admin.append(discord.SelectOption(
