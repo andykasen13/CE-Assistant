@@ -1256,7 +1256,7 @@ async def update(interaction : discord.Interaction) :
 async def stop(interaction : discord.Interaction) :
     await interaction.response.defer()
     await interaction.followup.send("Bot is shutting down.... (goodbye).....")
-    client.close()
+    await client.close()
     exit()
 
 
