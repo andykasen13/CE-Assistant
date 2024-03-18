@@ -20,6 +20,8 @@ from Helper_Functions.end_time import months_to_days
 """
 
 # ---------------------------------------------variables-----------------------------------------------------------------
+_in_ce = True
+"""Determines if you'd like to run the CE Bot or a test bot."""
 
 # ------------- mongo variables -------------
 mongo_ids = {
@@ -62,9 +64,14 @@ _test_casino_id = 811286469251039333
 _test_game_additions_id = 1128742486416834570
 # go-to channels 
 # NOTE: replace these with the ids as needed
-game_additions_id = _ce_game_additions_id
-casino_id = _ce_casino_id
-log_id = _ce_log_id
+if _in_ce:
+    game_additions_id = _ce_game_additions_id
+    casino_id = _ce_casino_id
+    log_id = _ce_log_id
+else :
+    game_additions_id = _test_game_additions_id
+    casino_id = _test_casino_id
+    log_id = _test_log_id
 
 # ------------- emoji icons -------------
 icons = {
@@ -128,6 +135,7 @@ _game_to_id = {
 
 ce_squared_id = "76574ec1-42df-4488-a511-b9f2d9290e5d"
 """The CE ID for the game `- Challenge Enthusiasts -`."""
+
 
 
 # ---------------------------------------------functions-----------------------------------------------------------------

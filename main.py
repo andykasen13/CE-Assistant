@@ -44,6 +44,7 @@ from selenium.webdriver.chrome.service import Service
 from PIL import Image
 from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix, collection #TODO: i dont need this anymore but too lazy to figure it out
 from Helper_Functions.mongo_silly import *
+from Helper_Functions.mongo_silly import _in_ce
 from Helper_Functions.os import restart, add_to_windows_startup
 from Helper_Functions.spreadsheet import csv_conversion
 
@@ -74,8 +75,13 @@ with open('Jasons/help_embed_data.json') as f:
 with open('Jasons/secret_info.json') as f :
     localJSONData = json.load(f)
 
-discord_token = localJSONData['discord_token']  
-guild_ID = localJSONData['ce_guild_ID']
+
+if _in_ce:
+    discord_token = localJSONData['discord_token']  
+    guild_ID = localJSONData['ce_guild_ID']
+else :
+    discord_token = localJSONData['third_discord_token']
+    guild_ID = localJSONData['test_guild_ID']
 
 
 
@@ -158,28 +164,24 @@ async def help(interaction : discord.Interaction) :
             description=basic_options[option]['Description']))
 
     for option in roll_options:
-        print(option)
         rolls.append(discord.SelectOption(
             label=roll_options[option]['Name'],
             emoji=roll_options[option]['Emoji'],
             description=roll_options[option]['Description']))
         
-    print(rolls)
+
 
     for option in admin_options:
         admin.append(discord.SelectOption(
             label=admin_options[option]['Name'],
             emoji=admin_options[option]['Emoji'],
             description=admin_options[option]['Description']))
-
-    print('\n')
-    print(admin)
     
 
     class HelpSelect(discord.ui.Select):
-        def __init__(self, select, message="Select an option"):
+        def __init__(self, select, message="Select an option...", row=1):
             options=select
-            super().__init__(placeholder=message, max_values=1,min_values=1,options=options)
+            super().__init__(placeholder=message, max_values=1,min_values=1,options=options, row=row)
 
 
         async def callback(self, interaction: discord.Interaction):
@@ -192,7 +194,7 @@ async def help(interaction : discord.Interaction) :
                     message="Select an option...", 
                     message_2="Select a roll option..."), 
                     message_id = interaction.message.id)
-            if self.values[0] == 'Admin Options' or self.values[0] in list(admin_options.keys()):
+            elif self.values[0] == 'Admin Options' or self.values[0] in list(admin_options.keys()):
                 await interaction.followup.edit_message(embed = embed, view=HelpSelectView(
                     menu=admin, 
                     message="Select an option...", 
@@ -221,9 +223,9 @@ async def help(interaction : discord.Interaction) :
     class HelpSelectView(discord.ui.View):
         def __init__(self, *, timeout = 180, menu="", message="Select an option", message_2="Select an option"):
             super().__init__(timeout=timeout)
-            self.add_item(HelpSelect(selections, message))
+            self.add_item(HelpSelect(selections, message, 1))
             if menu != "" :
-                self.add_item(HelpSelect(menu, message_2))
+                self.add_item(HelpSelect(menu, message_2, 2))
 
         """async def on_timeout(self):
             self.clear_items()"""
@@ -1683,7 +1685,8 @@ async def on_ready():
     
     test_log = client.get_channel(log_id)
     await test_log.send("The bot has now been restarted.")    #get_tasks(client)
-    await master_loop.start(client)
+    if _in_ce:
+        await master_loop.start(client)
     #await check_roll_status.start()
 
 
