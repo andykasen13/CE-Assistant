@@ -774,7 +774,7 @@ async def curate(interaction : discord.Interaction, num : int = 0):
 @tree.command(name="steam-game", description="Get information on any steam game", guild=discord.Object(id=guild_ID))
 @app_commands.describe(game_name="The name of the game you're trying to look up.")
 @app_commands.describe(visible="Whether you want the message to be viewable to others (true) or only viewable to yourself (false)")
-async def steam_command(interaction : discord.Interaction, game_name: str, visible : bool = True):
+async def steam_command(interaction : discord.Interaction, game_name: str, visible : bool = False):
 
     # Log the command
     print("Recieved steam_game command with parameter: " + game_name + ".")
