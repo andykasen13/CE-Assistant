@@ -187,14 +187,14 @@ async def help(interaction : discord.Interaction) :
                 print(True)
                 await interaction.followup.edit_message(embed = embed, view=HelpSelectView(
                     menu=rolls, 
-                    message="Rolls", 
-                    message_2=self.values[0]), 
+                    message="Select an option...", 
+                    message_2="Select a roll option..."), 
                     message_id = interaction.message.id)
             if self.values[0] == 'Admin Options' or self.values[0] in list(admin_options.keys()):
                 await interaction.followup.edit_message(embed = embed, view=HelpSelectView(
                     menu=admin, 
-                    message="Admin Options", 
-                    message_2=self.values[0]), 
+                    message="Select an option...", 
+                    message_2="Select an admin option..."), 
                     message_id = interaction.message.id)
             else:
                 await interaction.followup.edit_message(embed=embed, view=HelpSelectView(message="Select an option..."), message_id = interaction.message.id)
