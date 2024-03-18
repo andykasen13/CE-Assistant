@@ -75,15 +75,29 @@ def single_scrape(curator_count):
     return [database_name, curator_count, database_tier]
 
 def single_scrape_v2(curator_count) :
-    api_response = requests.get('https://cedb.me/api/games/')
-    json_response = json.loads(api_response.text)
+
+    done_fetching = False
+    j = []
+    i = 1
+    while(not done_fetching) :
+        try:
+            print('fetching{}'.format(str(i*100)))
+            api_response = requests.get('https://cedb.me/api/games/full?limit=100&offset={}'.format(str((i-1)*100)))
+            json_response = json.loads(api_response.text)
+            j += json_response
+            done_fetching = len(json_response) == 0
+            i+=1
+        except:
+            print('fetching failed lolW (api/games/full)!!!')
+            return
+    json_response = j
 
     curator_count['Updated Time'] = get_unix('now')
 
     database_name_v2 = {}
 
     for game in json_response:
-        if(game['genre'] == None or game['genre']['name'] == None) or (game['tier'] == 0 and not is_valid_t0(game['name'])) : continue
+        if(not game['isFinished']) : continue
         print(game['name'])
         database_name_v2[game['id']] = get_game(game)
     
@@ -165,7 +179,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
         while(not done_fetching) :
             try:
                 print('fetching{}'.format(str(i*100)))
-                api_response = requests.get('https://cedb.me/api/games/expanded?limit=100&offset={}'.format(str((i-1)*100)))
+                api_response = requests.get('https://cedb.me/api/games/full?limit=100&offset={}'.format(str((i-1)*100)))
                 json_response = json.loads(api_response.text)
                 j += json_response
                 done_fetching = len(json_response) == 0
