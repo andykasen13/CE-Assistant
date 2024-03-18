@@ -35,6 +35,12 @@
             "Emoji": "\ud83c\udfa8",
             "Description": "Learn how to change your color!",
             "Content": "Try /set-color to adjust the color of your name to any unlocked color you have! For example, B Rank users would have access to blue (B), green (C), brown (D), and grey (E)."
+        },
+        "Check Rolls" : {
+            "Name" : "Check Rolls",
+            "Emoji" : "\uD83E\uDD2F",
+            "Description" : "Learn how to check your rolls!",
+            "Content" : "To check your progress on your current (and completed) rolls, try /check-rolls - see what comes up!"
         }
     },
     "Admin" : {
@@ -44,7 +50,7 @@
             "Description" : "Learn about /curate!",
             "Content" : "We designed /curate to return the last n games added to the Steam Curator. This should only be used if for some reason the bot misses a curator addition."
         },
-        "Add Notes" : {
+        "Add Reason" : {
             "Name" : "Add Notes",
             "Emoji" : "\uD83E\uDD14",
             "Description" : "Learn how to add notes to any game change!",
@@ -72,61 +78,61 @@
     "Rollsy" : {
         "One Hell of a Day" : {
             "Name" : "One Hell of a Day",
-            "Emoji" : "\uD83E\uDD14",
+            "Emoji" : "\u0030\uFE0F\u20E3",
             "Description" : "Learn about One Hell of a Day!",
-            "Content" : "filler"
+            "Content" : "One <:tier1:1126268393725644810> game will be rolled for you in a random category. It will be less than $10 and have less than 10 hours on SteamHunter's Median Completion Time. You must complete this game within 24 hours. The cooldown is one week."
         },
         "One Hell of a Week" : {
             "Name" : "One Hell of a Week",
-            "Emoji" : "\uD83E\uDD14",
+            "Emoji" : "\u0031\u20E3",
             "Description" : "Learn about One Hell of a Week!",
-            "Content" : "filler"
+            "Content" : "Five <:tier1:1126268393725644810>s will be rolled for you (all in different genres). They will all be less than $10 and have less than 10 hours on SteamHunter's Median Completion Time. You must complete all five of these games within one week. The cooldown is one month."
         },
         "One Hell of a Month" : {
             "Name" : "One Hell of a Month",
-            "Emoji" : "\uD83E\uDD14",
+            "Emoji" : "\u0032\u20E3",
             "Description" : "Learn about One Hell of a Month!",
-            "Content" : "filler"
+            "Content" : "Five genres will be chosen at random. In each of those genres, five <:tier1:1126268393725644810>s will be rolled for you. They will all be less than $10 and have less than 10 hours on SteamHunter's Median Completion Time. You must complete three of the five in each genre. The cooldown is three months."
         },
         "Two Week T2 Streak" : {
             "Name" : "Two Week T2 Streak",
-            "Emoji" : "\uD83E\uDD14",
+            "Emoji" : "\u25B6\uFE0F",
             "Description" : "Learn about Two Week T2 Streak!",
-            "Content" : "filler"
+            "Content" : "A random <:tier2:1126268395483037776> will be rolled for you. It will be less than $20 and have less than 40 hours on SteamHunter's Median Completion Time. You must complete this game within one week. Then, another <:tier2:1126268395483037776> will be rolled for you, and you must complete that within a week. There is no cooldown."
         },
-        "Two \"Two Week T2 Streak\" Streak" : {
+        "Two 'Two Week T2 Streak' Streak" : {
             "Name" : "Two \"Two Week T2 Streak\" Streak",
-            "Emoji" : "\uD83E\uDD14",
+            "Emoji" : "\u25B6\uFE0F",
             "Description" : "Learn about Two 'Two Week T2 Streak' Streak!",
-            "Content" : "filler"
+            "Content" : "A random <:tier2:1126268395483037776> will be rolled for you. It will be less than $20 and have less than 40 hours on SteamHunter's Median Completion Time. You must complete this game within one week. This process will then be repeated three times."
         },
         "Never Lucky" : {
             "Name" : "Never Lucky",
-            "Emoji" : "\uD83E\uDD14",
+            "Emoji" : "\uD83C\uDF40",
             "Description" : "Learn about Never Lucky!",
             "Content" : "filler"
         },
         "Triple Threat" : {
             "Name" : "Triple Threat",
-            "Emoji" : "\uD83E\uDD14",
+            "Emoji" : "\u2744\uFE0F",
             "Description" : "Learn about Triple Threat!",
             "Content" : "filler"
         },
         "Let Fate Decide" : {
             "Name" : "Let Fate Decide",
-            "Emoji" : "\uD83E\uDD14",
+            "Emoji" : "\uD83C\uDF3B",
             "Description" : "Learn about Let Fate Decide!",
             "Content" : "filler"
         },
         "Fourward Thinking" : {
             "Name" : "Fourward Thinking",
-            "Emoji" : "\uD83E\uDD14",
+            "Emoji" : "\uD83D\uDE48",
             "Description" : "Learn about Fourward Thinking!",
             "Content" : "filler"
         },
         "Russian Roulette" : {
             "Name" : "Russian Roulette",
-            "Emoji" : "\uD83E\uDD14",
+            "Emoji" : "\uD83D\uDCA5",
             "Description" : "Learn about Russian Roulette!",
             "Content" : "Russian Roulette is not handled by CE Assistant. Please ping Folkius for assistance."
         }
