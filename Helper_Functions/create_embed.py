@@ -108,6 +108,7 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
         
         if correct_app_id == None : return discord.Embed(title=f"Could not find game \"{game_name}\".")
 
+        del database_name['_id']
         for game in database_name:
             if database_name[game]['Steam ID'] == int(correct_app_id) or database_name[game]['Steam ID'] == str(correct_app_id): game_id = game
         if game_id != "" : print('jk! we found it :)')

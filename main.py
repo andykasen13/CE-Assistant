@@ -778,12 +778,12 @@ async def steam_command(interaction : discord.Interaction, game_name: str, visib
 
     # Log the command
     print("Recieved steam_game command with parameter: " + game_name + ".")
-
+    # Defer the interaction
+    await interaction.response.defer(ephemeral=(not visible))
     # open database
     database_name = await get_mongo('name')
 
-    # Defer the interaction
-    await interaction.response.defer(ephemeral=(not visible))
+
 
     # Get the embed
     embed = getEmbed(game_name, interaction.user.id, database_name=database_name)
