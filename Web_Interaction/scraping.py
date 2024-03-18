@@ -915,6 +915,8 @@ def get_objectives(CE_ID):
     objectives = [{}, {}, ""]
     achievements = {}
 
+    if json_response == None : return objectives
+
     for achievement in json_response['achievements']:
         achievements[achievement['id']] = achievement['name']
 
