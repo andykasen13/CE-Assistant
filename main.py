@@ -197,7 +197,7 @@ async def help(interaction : discord.Interaction) :
                     message_2=self.values[0]), 
                     message_id = interaction.message.id)
             else:
-                await interaction.followup.edit_message(embed=embed, view=HelpSelectView(message=self.values[0]), message_id = interaction.message.id)
+                await interaction.followup.edit_message(embed=embed, view=HelpSelectView(message="Select an option..."), message_id = interaction.message.id)
 
         def get_embed(self):
             if self.values[0] in list(roll_options.keys()):
