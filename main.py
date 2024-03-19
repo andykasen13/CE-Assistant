@@ -1049,6 +1049,8 @@ async def color(interaction) :
                                                             and not sss_rank_role in interaction.user.roles
                                                             and not ex_rank_role in interaction.user.roles)))
     grey_button = discord.ui.Button(label="⚪")
+    clear_button = discord.ui.Button(label="Clear")
+    roles = [grey_role, brown_role, green_role, blue_role, purple_role, orange_role, yellow_role, red_role, black_role]
     
     async def black_callback(interaction) : return await assign_role(interaction, black_role)
     async def red_callback(interaction) : return await assign_role(interaction, red_role)
@@ -1059,6 +1061,11 @@ async def color(interaction) :
     async def green_callback(interaction) : return await assign_role(interaction, green_role)
     async def brown_callback(interaction) : return await assign_role(interaction, brown_role)
     async def grey_callback(interaction) : return await assign_role(interaction, grey_role)
+    async def clear_callback(interaction : discord.Interaction) :
+        for role in roles :
+            if role in interaction.user.roles : await interaction.user.remove_roles(role)
+            return await interaction.response.edit_message(embed=discord.Embed(title="Colors cleared."))
+
 
     black_button.callback = black_callback
     red_button.callback = red_callback
@@ -1069,6 +1076,7 @@ async def color(interaction) :
     green_button.callback = green_callback
     brown_button.callback = brown_callback
     grey_button.callback = grey_callback
+    clear_button.callback = clear_callback
 
     view.add_item(black_button)
     view.add_item(red_button)
@@ -1079,6 +1087,7 @@ async def color(interaction) :
     view.add_item(green_button)
     view.add_item(brown_button)
     view.add_item(grey_button)
+    view.add_item(clear_button)
 
     async def assign_role(interaction, role) :
         if(role in interaction.user.roles) : return await interaction.response.edit_message(embed=discord.Embed(title = f"You already have the {role.name} role!", color = role.color))
