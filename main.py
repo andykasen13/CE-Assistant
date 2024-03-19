@@ -1060,8 +1060,9 @@ async def color(interaction : discord.Interaction) :
         roles.append(discord.utils.get(interaction.guild.roles, name=name))
         print(roles[i].color)
     
-    for role in roles :
-        print(role.color)
+    for i, role in enumerate(roles) :
+        try: print(role.color)
+        except: print(f"failed on {i}")
 
     
     async def black_callback(interaction) : return await assign_role(interaction, black_role)
