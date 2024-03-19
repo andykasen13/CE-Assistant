@@ -987,7 +987,7 @@ async def steam_command(interaction : discord.Interaction, game_name: str, visib
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @tree.command(name="set-color", description="Set your name color to any color you've unlocked!", guild=discord.Object(id=guild_ID))
-async def color(interaction) :
+async def color(interaction : discord.Interaction) :
     await interaction.response.defer(ephemeral=True)
 
     ex_rank_role = discord.utils.get(interaction.guild.roles, name = "EX Rank")
@@ -1049,7 +1049,8 @@ async def color(interaction) :
                                                             and not sss_rank_role in interaction.user.roles
                                                             and not ex_rank_role in interaction.user.roles)))
     grey_button = discord.ui.Button(label="⚪")
-    clear_button = discord.ui.Button(label="Clear")
+    t1_emoji = interaction.guild.fetch_emoji(id=1126268393725644810)
+    clear_button = discord.ui.Button(label="Clear", emoji=t1_emoji)
     roles = [grey_role, brown_role, green_role, blue_role, purple_role, orange_role, yellow_role, red_role, black_role]
     
     async def black_callback(interaction) : return await assign_role(interaction, black_role)
