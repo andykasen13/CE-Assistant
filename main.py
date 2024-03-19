@@ -719,7 +719,158 @@ async def get_times(interaction):
 
 """
 
+class NewModal(discord.ui.Modal):
+    def __init__(self, visible) :
+        super().__init__(title="My first Modal!")
 
+    name = discord.ui.TextInput(label="Peepo")
+    answer = discord.ui.TextInput(label="Response", style=discord.TextStyle.paragraph)
+
+    async def on_submit(self, interaction : discord.Interaction) :
+        await interaction.response.send_message(f'Thank you for your response, {self.name}!', ephemeral=False)
+
+class RequestCEGame(discord.ui.Modal):
+    def __init__(self, visible : bool = False) :
+        super().__init__(title="Request CE Game...")
+        self.visible = visible
+    game_name = discord.ui.TextInput(label="Game Name", required=False, placeholder="Select a game name")
+    tier = discord.ui.TextInput(label="Tier", style=discord.TextStyle.short, min_length=1, max_length=1, required=False, placeholder="Select a tier number.")
+    max_points = discord.ui.TextInput(label="Min-Max Points", style=discord.TextStyle.short, required=False, placeholder="Please format as such: min-max, or 20-100", max_length=9)
+    genre = discord.ui.TextInput(label="Genre", style=discord.TextStyle.short, required=False, placeholder="Select a genre.", max_length=12)
+    owned = discord.ui.TextInput(label="Owned", style=discord.TextStyle.short, required=False, placeholder="Separate games by owned (\"true\") or not owned (\"false\").", max_length=5)
+
+    async def on_submit(self, interaction : discord.Interaction) :
+        # d efer
+        await interaction.response.defer(ephemeral=(not self.visible))
+
+        # grab all submitted queries
+        game_name = str(self.game_name)
+        tier = str(self.tier)
+        points = str(self.max_points)
+        genre = str(self.genre)
+        owned = str(self.owned)
+
+        # format them correctly
+        if tier != "": 
+            try:
+                tier = int(tier)
+                if tier > 7 : tier = "invalid"
+                elif tier < 1 : tier = "invalid"
+            except ValueError:
+                tier = "invalid"
+
+        if points != "":
+            splitter = points.find('-')
+            if splitter == -1 : points = "invalid"
+            try:
+                min_points = points[0:splitter]
+                max_points = points[splitter+1:]
+                min_points = int(min_points)
+                max_points = int(max_points)
+                if max_points < min_points : points = "invalid"
+            except ValueError:
+                points = "invalid"
+        
+        if genre != "":
+            genre = genre.replace('-','').replace(' ','')
+            g_changed = False
+            for g in all_genres:
+                g_save = g
+                g = g.replace('-','').replace(' ','')
+                if g.lower() == genre.lower() : 
+                    genre = g_save
+                    g_changed = True
+                    break
+            if not g_changed : genre = "invalid"
+
+        if owned == "False" or owned == "false" or owned == "f" : owned = False
+        elif owned == "True" or owned == "true" or owned == "t" : owned = True
+        elif owned != "" : owned = "invalid"
+
+        # -------- all variables formatted. start grabbing -----------
+        if True:
+            description_str = ""
+            description_str += f"✅Game recieved: {game_name}.\n" if game_name != "" else "🛑No game name recieved.\n"
+            if tier == "invalid" : 
+                description_str += "⚠️Invalid tier recieved.\n"
+                tier = None
+            elif tier == "": 
+                description_str += "🛑No tier recieved.\n"
+                tier = None
+            else: description_str += f"✅Tier recieved: {icons['Tier {}'.format(tier)]}.\n"
+            if points == "" : 
+                description_str += "🛑No min-max points recieved.\n"
+                points = None
+            elif points == "invalid" : 
+                description_str += "⚠️Invalid min-max syntax."
+                points = None
+            else : description_str += f"✅Min points recieved: {min_points} {icons['Points']}\n✅Max points recieved: {max_points} {icons['Points']}.\n"
+            if genre == "": 
+                description_str += "🛑No genre recieved.\n"
+                genre = None
+            elif genre == "invalid": 
+                description_str += "⚠️Invalid genre recieved.\n"
+                genre = None
+            else: description_str += f"✅Genre recieved: {genre}{icons[genre]}.\n"
+            if owned == "" : 
+                description_str += "🛑No ownership query recieved.\n"
+                owned = None
+            elif owned == "invalid" : 
+                description_str += "⚠️Invalid ownership (not \"true\" or \"false\").\n"
+                owned = None
+            else: description_str += f"✅Ownership recieved: {owned}"
+
+        database_name = await get_mongo('name')
+        del database_name['_id']
+        database_user = await get_mongo('user')
+        if '_id' in database_user: del database_user['_id']
+        game_list : list[str] = []
+
+        ce_id = get_ce_id_normal(interaction.user.id, database_user)
+        if ce_id == None and type(owned) == bool:
+            return await interaction.followup.send("You selected \"true\" or \"false\" for Owned, but you are not registered. Please use `/register` with the link to your CE page!")
+        elif game_name == "" and tier == None and points == None and genre == None and owned == None:
+            return await interaction.followup.send("You either left all the options blank or inputted only invalid answers. Please try again!")
+
+        for game_id in database_name:
+            valid = True
+            if game_name != "" and not database_name[game_id]['Name'].lower()[0:len(game_name)] == game_name.lower() : valid = False
+            if tier != None and not database_name[game_id]['Tier'] == f"Tier {tier}" : valid = False
+            if points != None:
+                total_points = 0
+                for obj_id in database_name[game_id]['Primary Objectives'] : total_points += database_name[game_id]['Primary Objectives'][obj_id]['Point Value']
+                if total_points < min_points or total_points > max_points : valid = False
+            if genre != None and not database_name[game_id]['Genre'] == genre : valid = False
+            if owned != None and not game_id in database_user[ce_id]['Owned Games'] : valid = False
+            if valid : game_list.append(game_id)
+        
+        del database_user
+        
+        d2_str = ""
+        for item in game_list:
+            d2_str += f"[{database_name[item]['Name']}](https://cedb.me/game/{item})\n"
+        if len(d2_str) > 4096:
+            d2_str = ""
+            for item in game_list:
+                d2_str += f"{database_name[item]['Name']}\n"
+
+        if d2_str == "" : d2_str = "No games on CE fit the queries provided."
+        
+        embed = discord.Embed(title="Requested games...", description=d2_str, timestamp=datetime.datetime.now(), color=0x000000)
+        embed.add_field(name="Parameters", value=description_str)
+        embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=final_ce_icon)
+
+        del database_name
+
+        try:
+            await interaction.followup.send(embed=embed)
+        except:
+            await interaction.followup.send('Too many games!')
+
+
+@tree.command(name='test-moda', description='fhsdjaiklu', guild=discord.Object(id=guild_ID))
+async def testagain(interaction : discord.Interaction, visible : bool = False) :
+    await interaction.response.send_modal(RequestCEGame(visible))
 
 
 

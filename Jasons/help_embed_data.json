@@ -1,7 +1,7 @@
 {
     "Options" : {
-        "Registration": {
-            "Name": "Registration",
+        "/register": {
+            "Name": "/register",
             "Emoji": "\ud83e\udd2f",
             "Description": "Register for future use of the CE Assistant!",
             "Content": "Registration is key to accessing the functions of CE Assistant. You need to register to use any roll-related commands, check your CR, or update your color! Please use /register with the link to your personal CE page."
@@ -10,19 +10,19 @@
             "Name": "Rolls",
             "Emoji": "\ud83e\uddfb",
             "Description": "Learn how to roll and about different rolls!",
-            "Content": "Rolling is a fun way to try new games! Click below to find out more about all of the solo and co-op roll events!"
+            "Content": "Rolling is a fun way to try new games! CE Assistant hosts two commands: /solo-roll and /co-op-roll. Both are quite self explanatory. To learn more about each individual event, please scroll through the new menu below!"
         },
-        "Update": {
-            "Name": "Update",
+        "/update": {
+            "Name": "/update",
             "Emoji": "\ud83d\udcc8",
             "Description": "Learn how to update your profile!",
             "Content": "Updating your profile is simple and quick. Type in /update and within seconds CE Assistant will grab all of your new, updated data from your CE page. P.S. be sure to use this command whenever you complete a rolled game!"
         },
-        "Steam Game": {
-            "Name": "Steam Game",
+        "/steam-game": {
+            "Name": "/steam-game",
             "Emoji": "\ud83c\udfae",
             "Description": "Learn about /steam-game!",
-            "Content": "/steam-game is a very simple functoin that just takes in the name of a game and returns information about it from steam and CE. Give it a try with your favorite game!"
+            "Content": "/steam-game is a very simple function that just takes in the name of a game and returns information about it from steam and CE. Give it a try with your favorite game!"
         },
         "Admin Options": {
             "Name": "Admin Options",
@@ -30,43 +30,55 @@
             "Description": "Ssh! This is the secret admin command :)",
             "Content": "As an admin, you have access to more commands than regular users. `/add-reason` will add any text you provide to it to the bottom of any message sent by CE Assistant in <#949482536726298666>. This is meant as a way to explain any changes made to games (including removal)."
         },
-        "Color Editing": {
-            "Name": "Color Editing",
+        "/set-color": {
+            "Name": "/set-color",
             "Emoji": "\ud83c\udfa8",
             "Description": "Learn how to change your color!",
             "Content": "Try /set-color to adjust the color of your name to any unlocked color you have! For example, B Rank users would have access to blue (B), green (C), brown (D), and grey (E)."
+        },
+        "/profile" : {
+            "Name" : "/profile",
+            "Emoji" : "\ud83c\udfae",
+            "Description" : "Learn how to view yours (and any registered user's) information!",
+            "Content" : "Running /profile will bring up loads of CE-related information on whoever you call it upon. It will list your rank, total points, all of your CRs and Roll Events, and so much more. Feel free to give it a try!"
         }
     },
     "Admin" : {
-        "Curate" : {
-            "Name" : "Curate",
+        "/curate" : {
+            "Name" : "/curate",
             "Emoji" : "\uD83C\uDF0A",
             "Description" : "Learn about /curate!",
             "Content" : "We designed /curate to return the last n games added to the Steam Curator. This should only be used if for some reason the bot misses a curator addition."
         },
-        "Add Notes" : {
-            "Name" : "Add Notes",
+        "/add-notes" : {
+            "Name" : "/add-notes",
             "Emoji" : "\uD83E\uDD14",
             "Description" : "Learn how to add notes to any game change!",
             "Content" : "The /add-notes command takes in two parameters: the \"note\" and the embed-id. This command is intended to be used for adding any specific reasoning to any game changes - ideally removals, but this command will work with any kind of embed in the site-additions channel. You do have to retrieve the message-id of the embed you are trying to edit. To learn more about that, look up Discord Developer Mode."
         },
-        "Force Add" : {
-            "Name" : "Force Add",
+        "/force-add" : {
+            "Name" : "/force-add",
             "Emoji" : "\u0031\u20E3",
             "Description" : "Learn how to force-add a completed roll to any user!",
             "Content" : "filler"
         },
-        "Initiate Loop" : {
-            "Name" : "Initiate Loop",
+        "/initiate-loop" : {
+            "Name" : "/initiate-loop",
             "Emoji" : "\ud83c\udfa8",
             "Description" : "Learn about initiating the scraping/curating loop!",
             "Content" : "filler"
         },
-        "Purge Roll" : {
-            "Name" : "Purge Roll",
+        "/purge-roll" : {
+            "Name" : "/purge-roll",
             "Emoji" : "\uD83E\uDD14",
             "Description" : "Learn about purging a current roll from any user!",
             "Content" : "filler"
+        }, 
+        "/scrape" : {
+            "Name" : "/scrape",
+            "Emoji" : "\u0030\uFE0F\u20E3",
+            "Description" : "Learn about manual scraping!",
+            "Content" : "This command should ONLY be run on special occasions. This completely resets CE Assistant's game-database without any reporting."
         }
     },
     "Rollsy" : {
@@ -80,13 +92,13 @@
             "Name" : "One Hell of a Week",
             "Emoji" : "\u0031\u20E3",
             "Description" : "Learn about One Hell of a Week!",
-            "Content" : "Five <:tier1:1126268393725644810>s will be rolled for you (all in different genres). They will all be less than $10 and have less than 10 hours on SteamHunter's Median Completion Time. You must complete all five of these games within one week. The cooldown is one month."
+            "Content" : "(Requires completion of One Hell of a Day) Five <:tier1:1126268393725644810>s will be rolled for you (all in different genres). They will all be less than $10 and have less than 10 hours on SteamHunter's Median Completion Time. You must complete all five of these games within one week. The cooldown is one month."
         },
         "One Hell of a Month" : {
             "Name" : "One Hell of a Month",
             "Emoji" : "\u0032\u20E3",
             "Description" : "Learn about One Hell of a Month!",
-            "Content" : "Five genres will be chosen at random. In each of those genres, five <:tier1:1126268393725644810>s will be rolled for you. They will all be less than $10 and have less than 10 hours on SteamHunter's Median Completion Time. You must complete three of the five in each genre. The cooldown is three months."
+            "Content" : "(Requires completion of One Hell of a Week) Five genres will be chosen at random. In each of those genres, five <:tier1:1126268393725644810>s will be rolled for you. They will all be less than $10 and have less than 10 hours on SteamHunter's Median Completion Time. You must complete three of the five in each genre. The cooldown is three months."
         },
         "Two Week T2 Streak" : {
             "Name" : "Two Week T2 Streak",
@@ -98,37 +110,67 @@
             "Name" : "Two \"Two Week T2 Streak\" Streak",
             "Emoji" : "\u25B6\uFE0F",
             "Description" : "Learn about Two 'Two Week T2 Streak' Streak!",
-            "Content" : "A random <:tier2:1126268395483037776> will be rolled for you. It will be less than $20 and have less than 40 hours on SteamHunter's Median Completion Time. You must complete this game within one week. This process will then be repeated three times."
+            "Content" : "(Requires completion of Two Week T2 Streak) A random <:tier2:1126268395483037776> will be rolled for you. It will be less than $20 and have less than 40 hours on SteamHunter's Median Completion Time. You must complete this game within one week. This process will then be repeated three times."
         },
         "Never Lucky" : {
             "Name" : "Never Lucky",
             "Emoji" : "\uD83C\uDF40",
             "Description" : "Learn about Never Lucky!",
-            "Content" : "filler"
+            "Content" : "A random <:tier3:1126268398561677364> will be rolled for you. This event has no time limit, so take as long as you want. After three months (92 days), if you still have not completed the game provided for you, you may opt to reroll Never Lucky by running /solo-roll Never Lucky. Beware, however - rerolling will remove the current game from the roll!"
         },
         "Triple Threat" : {
             "Name" : "Triple Threat",
             "Emoji" : "\u2744\uFE0F",
             "Description" : "Learn about Triple Threat!",
-            "Content" : "filler"
+            "Content" : "(Requires completion of Never Lucky) Three <:tier3:1126268398561677364>s will be rolled in a category of your choosing. You will then have one month to finish all three of those games. The cooldown is three months."
         },
         "Let Fate Decide" : {
             "Name" : "Let Fate Decide",
             "Emoji" : "\uD83C\uDF3B",
             "Description" : "Learn about Let Fate Decide!",
-            "Content" : "filler"
+            "Content" : "A <:tier4:1126268402596585524> will be rolled for you in a category of your choosing. There is no time limit on Let Fate Decide, so take your time! After three months, if you still have not completed the game rolled for you, you may opt to reroll Let Fate Decide by running /solo-roll Let Fate Decide. However, be warned - rerolling this event will remove the previous game from the roll!"
         },
         "Fourward Thinking" : {
             "Name" : "Fourward Thinking",
             "Emoji" : "\uD83D\uDE48",
             "Description" : "Learn about Fourward Thinking!",
-            "Content" : "filler"
+            "Content" : "This roll event is quite convoluted, so strap in. This is a four-part roll. When you run /solo-roll Fourward Thinking for the first time, you will be given a <:tier1:1126268393725644810> to complete within a week. If you do so, you can then roll again with /solo-roll Fourward Thinking to recieve your <:tier2:1126268395483037776> to complete within two weeks. For every completed game, you will recieve a reroll token to reroll whatever game you're on. Once you've completed your <:tier2:1126268395483037776>, you'll recieve a <:tier3:1126268398561677364> to complete within three weeks, and finally a <:tier4:1126268402596585524> to complete within four weeks. If you manage all of this, you win!"
         },
         "Russian Roulette" : {
             "Name" : "Russian Roulette",
             "Emoji" : "\uD83D\uDCA5",
             "Description" : "Learn about Russian Roulette!",
             "Content" : "Russian Roulette is not handled by CE Assistant. Please ping Folkius for assistance."
+        },
+        "Destiny Alignment" : {
+            "Name" : "Destiny Alignment",
+            "Emoji" : "\u0030\uFE0F\u20E3",
+            "Description" : "Learn about Destiny Alignment!",
+            "Content" : "filler"
+        },
+        "Soul Mates" : {
+            "Name" : "Soul Mates",
+            "Emoji" : "\u0030\uFE0F\u20E3",
+            "Description" : "Learn about Soul Mates!",
+            "Content" : "filler"
+        },
+        "Teamwork Makes the Dream Work" : {
+            "Name" : "Teamwork Makes the Dream Work",
+            "Emoji" : "\u0030\uFE0F\u20E3",
+            "Description" : "Learn about Teamwork Makes the Dream Work",
+            "Content" : "filler"
+        },
+        "Winner Takes All" : {
+            "Name" : "Winner Takes All",
+            "Emoji" : "\u0030\uFE0F\u20E3",
+            "Description" : "Learn about Winner Takes All!",
+            "Content" : "filler"
+        },
+        "Game Theory" : {
+            "Name" : "Game Theory",
+            "Emoji" : "\u0030\uFE0F\u20E3",
+            "Description" : "Learn about Game Theory!",
+            "Content" : "filler"
         }
     }
 }

@@ -87,6 +87,7 @@ def single_scrape_v2(curator_count) :
             j += json_response
             done_fetching = len(json_response) == 0
             i+=1
+            time.sleep(2)
         except:
             print('fetching failed lolW (api/games/full)!!!')
             return
