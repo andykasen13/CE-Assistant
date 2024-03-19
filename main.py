@@ -789,30 +789,30 @@ class RequestCEGame(discord.ui.Modal):
         # -------- all variables formatted. start grabbing -----------
         if True:
             description_str = ""
-            description_str += f"✅Game recieved: {game_name}.\n" if game_name != "" else "🛑No game name recieved.\n"
+            description_str += f"✅Game recieved: {game_name}.\n" if game_name != "" else "" #"🛑No game name recieved.\n"
             if tier == "invalid" : 
                 description_str += "⚠️Invalid tier recieved.\n"
                 tier = None
             elif tier == "": 
-                description_str += "🛑No tier recieved.\n"
+                #description_str += "🛑No tier recieved.\n"
                 tier = None
             else: description_str += f"✅Tier recieved: {icons['Tier {}'.format(tier)]}.\n"
             if points == "" : 
-                description_str += "🛑No min-max points recieved.\n"
+                #description_str += "🛑No min-max points recieved.\n"
                 points = None
             elif points == "invalid" : 
                 description_str += "⚠️Invalid min-max syntax."
                 points = None
             else : description_str += f"✅Min points recieved: {min_points} {icons['Points']}\n✅Max points recieved: {max_points} {icons['Points']}.\n"
             if genre == "": 
-                description_str += "🛑No genre recieved.\n"
+                #description_str += "🛑No genre recieved.\n"
                 genre = None
             elif genre == "invalid": 
                 description_str += "⚠️Invalid genre recieved.\n"
                 genre = None
             else: description_str += f"✅Genre recieved: {genre}{icons[genre]}.\n"
             if owned == "" : 
-                description_str += "🛑No ownership query recieved.\n"
+                #description_str += "🛑No ownership query recieved.\n"
                 owned = None
             elif owned == "invalid" : 
                 description_str += "⚠️Invalid ownership (not \"true\" or \"false\").\n"
