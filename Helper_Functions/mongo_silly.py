@@ -10,6 +10,7 @@ import time
 import datetime
 from datetime import timedelta
 from Helper_Functions.end_time import months_to_days
+from typing import overload
 
 """
 ####################################################################
@@ -178,6 +179,7 @@ def is_valid_t0(name : str) -> bool:
     return name in ['- Challenge Enthusiasts -', '- Puzzle Games -', 'clown town 1443', 'RetroArch']
 
 # ------ get a ce-id from a discord id ------
+@overload
 async def get_ce_id(discord_id : str) -> str | None:
     """(ASYNC) Takes in a Discord ID (`347900490668965888`) and returns their CE ID (`835afaad-0059-4e39-b24f-24b2c76b1d08`), or `None` if they aren't registered."""
     database_user = await get_mongo("user")
@@ -188,8 +190,8 @@ async def get_ce_id(discord_id : str) -> str | None:
     
     del database_user
     return None
-
-def get_ce_id_normal(discord_id : str, database_user) -> str | None :
+@overload
+def get_ce_id(discord_id : str, database_user) -> str | None :
     """(SYNC) Takes in a Discord ID (`347900490668965888`) and returns their CE ID (`835afaad-0059-4e39-b24f-24b2c76b1d08`), or `None` if they aren't registered."""
     if '_id' in database_user : del database_user['_id']
     for user in database_user:

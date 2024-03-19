@@ -825,7 +825,7 @@ class RequestCEGame(discord.ui.Modal):
         if '_id' in database_user: del database_user['_id']
         game_list : list[str] = []
 
-        ce_id = get_ce_id_normal(interaction.user.id, database_user)
+        ce_id = get_ce_id(interaction.user.id, database_user)
         if ce_id == None and type(owned) == bool:
             return await interaction.followup.send("You selected \"true\" or \"false\" for Owned, but you are not registered. Please use `/register` with the link to your CE page!")
         elif game_name == "" and tier == None and points == None and genre == None and owned == None:
@@ -1051,7 +1051,18 @@ async def color(interaction : discord.Interaction) :
     grey_button = discord.ui.Button(label="⚪")
     t1_emoji = await interaction.guild.fetch_emoji(1126268393725644810)
     clear_button = discord.ui.Button(label="Clear", emoji=t1_emoji)
-    roles = [grey_role, brown_role, green_role, blue_role, purple_role, orange_role, yellow_role, red_role, black_role]
+    roles : list[discord.Role] = [grey_role, brown_role, green_role, blue_role, purple_role, orange_role, yellow_role, red_role, black_role]
+
+    # bounty colors
+    bounty_roles : list[discord.Role] = []
+    _bounty_names = ['Cotton Candy', 'Aquamarine', 'Ice', 'Forest', 'Blood', 'Abyss', 'Nuclear']
+    for i, name in enumerate(_bounty_names) :
+        roles.append(discord.utils.get(interaction.guild.roles, name=name))
+        print(roles[i].color)
+    
+    for role in roles :
+        print(role.color)
+
     
     async def black_callback(interaction) : return await assign_role(interaction, black_role)
     async def red_callback(interaction) : return await assign_role(interaction, red_role)
@@ -1217,6 +1228,7 @@ async def register(interaction : discord.Interaction, ce_id: str) :
             "Rank" : "",
             "Reroll Tickets" : 0,
             "Casino Score" : 0,
+            "Bounty Points" : 0,
             "Owned Games" : {},
             "Cooldowns" : {},
             "Current Rolls" : [],

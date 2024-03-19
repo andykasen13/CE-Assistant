@@ -64,6 +64,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             "Rank" : "",
             "Reroll Tickets" : 0,
             "Casino Score" : 0,
+            "Bounty Points" : 0,
             "Owned Games" : {},
             "Cooldowns" : {},
             "Current Rolls" : [],
@@ -140,6 +141,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     user_dict[ce_id]['Cooldowns'] = database_user[user]['Cooldowns']
     user_dict[ce_id]['Casino Score'] = database_user[user]['Casino Score']
     user_dict[ce_id]['Pending Rolls'] = database_user[user]['Pending Rolls']
+    if 'Bounty Points' in database_user[user] : user_dict[ce_id]['Bounty Points'] = database_user[user]['Bounty Points']
 
     
 
