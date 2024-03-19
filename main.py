@@ -1064,7 +1064,7 @@ async def color(interaction) :
     async def clear_callback(interaction : discord.Interaction) :
         for role in roles :
             if role in interaction.user.roles : await interaction.user.remove_roles(role)
-            return await interaction.response.edit_message(embed=discord.Embed(title="Colors cleared."))
+        return await interaction.response.edit_message(embed=discord.Embed(title="Colors cleared."))
 
 
     black_button.callback = black_callback
