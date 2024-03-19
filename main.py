@@ -1120,8 +1120,9 @@ async def color(interaction : discord.Interaction) :
         if(grey_role in interaction.user.roles and not(role == grey_role)) : await interaction.user.remove_roles(grey_role)
 
         return await interaction.response.edit_message(embed=discord.Embed(title = f"You have recieved the {role.name} role!", color=role.color))
-        
-    embed = discord.Embed(title="COLORS", description="choose your colors wisely.")
+    
+    print(len(string))
+    embed = discord.Embed(title="COLORS", description=string)
     await interaction.followup.send(embed=embed, view=view, ephemeral=True, content = string)
 
 
