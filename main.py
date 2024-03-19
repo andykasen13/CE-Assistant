@@ -989,6 +989,7 @@ async def steam_command(interaction : discord.Interaction, game_name: str, visib
 @tree.command(name="set-color", description="Set your name color to any color you've unlocked!", guild=discord.Object(id=guild_ID))
 async def color(interaction : discord.Interaction) :
     await interaction.response.defer(ephemeral=True)
+    string = ""
 
     ex_rank_role = discord.utils.get(interaction.guild.roles, name = "EX Rank")
     sss_rank_role = discord.utils.get(interaction.guild.roles, name = "SSS Rank")
@@ -1056,14 +1057,14 @@ async def color(interaction : discord.Interaction) :
     # bounty colors
     bounty_roles : list[discord.Role] = []
     _bounty_names = ['Cotton Candy', 'Aquamarine', 'Ice', 'Forest', 'Blood', 'Abyss', 'Nuclear']
-    string = ""
     for i, name in enumerate(_bounty_names) :
         bounty_roles.append(discord.utils.get(interaction.guild.roles, name=name))
-        string += f"{bounty_roles[i].color}"
-    string += ('-----------')
-    for i, role in enumerate(roles) :
-        try: string += f"{role.color}"
-        except: string += f"failed on {i}"
+
+    # testing bullshit
+    string = ""
+    for item in interaction.guild.roles:
+        string += (item.name) + "\n"
+
 
     
     async def black_callback(interaction) : return await assign_role(interaction, black_role)
@@ -1121,7 +1122,7 @@ async def color(interaction : discord.Interaction) :
         return await interaction.response.edit_message(embed=discord.Embed(title = f"You have recieved the {role.name} role!", color=role.color))
         
     embed = discord.Embed(title="COLORS", description="choose your colors wisely.")
-    await interaction.followup.send(embed=embed, view=view, ephemeral=True, content=string)
+    await interaction.followup.send(embed=embed, view=view, ephemeral=True, content = string)
 
 
 
