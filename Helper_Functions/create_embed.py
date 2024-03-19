@@ -9,10 +9,10 @@ from Helper_Functions.mongo_silly import *
 
 
 # ------------------------------------------------ CREATE MULTI EMBED ------------------------------------------------------------ #
-def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interaction, database_name) :
+def create_multi_embed(event_name, time_limit, game_list, cooldown_time, interaction : discord.Interaction, database_name) -> list[discord.Embed] :
 
     # ----- Set up initial embed -----
-    embeds = []
+    embeds : list[discord.Embed] = []
     embeds.append(discord.Embed(
         color = 0x000000,
         title=event_name,

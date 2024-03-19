@@ -94,7 +94,11 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         This has no time limit."""
 
         # Make sure both users are the same rank
-        if(interaction_user_data['Rank'] != target_user_data['Rank']) : return await interaction.followup.send("You are not the same rank!")
+        if(interaction_user_data['Rank'] != target_user_data['Rank']) : 
+            def rank_is_valid(rank : str) -> bool : return rank in ["SS Rank", "SSS Rank", "EX Rank"]
+            if (not rank_is_valid(interaction_user_data['Rank'])
+                or not rank_is_valid(target_user_data['Rank'])):
+                    return await interaction.followup.send("You are not the same rank!")
 
         # Send confirmation embed
         embed = discord.Embed(title="Destiny Alignment", timestamp=datetime.datetime.now())
@@ -458,7 +462,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
 
         # --------------------------------------- Agree Button --------------------------------
-        async def agree_callback(interaction) :
+        async def agree_callback(interaction : discord.Interaction) :
             await interaction.response.defer()
             # make sure only target can use button
             if interaction.user.id != target_user_data['Discord ID'] : return
@@ -499,6 +503,9 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             # ----------- Get embeds ---------------------
             embeds = create_multi_embed("Teamwork Makes the Dream Work", months_to_days(1), games, months_to_days(3), interaction, database_name)
             embeds[0].set_thumbnail(url = ce_mountain_icon)
+            embeds[0].insert_field_at(index=0, name="Rolled by", value=f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>", inline=False)
+            for embed in embeds :
+                embed.set_field_at(index=1, name="Rolled by", value = f"<@{interaction_user_data['Discord ID']}> and <@{target_user_data['Discord ID']}>", inline=False)
             await get_buttons(view, embeds)
 
             end_time = get_unix(months=1)
@@ -526,7 +533,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             return await interaction.followup.edit_message(embed=embeds[0], view=view, message_id=interaction.message.id)
         
         # ---------------------------------------- Deny Button ----------------------------------
-        async def deny_callback(interaction) :
+        async def deny_callback(interaction : discord.Interaction) :
             await interaction.response.defer()
             if interaction.user.id != target_user_data['Discord ID'] : return
             if event in database_user[int_user_id]['Pending Rolls'] : del database_user[int_user_id]['Pending Rolls'][event]
@@ -739,10 +746,10 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         # set up embed
         embed = discord.Embed(title="Game Theory", timestamp=datetime.datetime.now())
         embed.add_field(name="Roll Requirements", value="You and your partner will secretly select a genre for the other person. " 
-                                                        + "A T3 in your selected genre will be rolled for your partner. The first to complete theirs wins!")
+                                                        + "A " + icons['Tier 1'] + " in your selected genre will be rolled for your partner. The first to complete theirs wins!")
         embed.add_field(name="Genre Choices",
                         value=f"<@{interaction.user.id}>, please select the genre for the other user. Remember, if you choose the same genre for each other,"
-                        + " you both will both be put on cooldown for one week.")
+                        + " you both will both be put on cooldown for one week!")
         embed.set_thumbnail(url = ce_mountain_icon)
         embed.set_author(name="Challenge Enthusiasts")
         embed.set_footer(text="CE Assistant", icon_url=ce_mountain_icon)
@@ -775,8 +782,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
             if(interaction.user.id != interaction_user_data['Discord ID']) : return
 
             view.clear_items()
-            embed.set_field_at(index=1, name="Tier Choices", 
-                               value=f"Tier chosen. <@{target_user_data['Discord ID']}>, please select the genre for the other user.")
+            embed.set_field_at(index=1, name="Genre Choices", 
+                               value=f"Genre chosen. <@{target_user_data['Discord ID']}>, please select the genre for the other user.")
 
             buttons = []
 
@@ -841,21 +848,22 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 # ----- Make sure the target user doesn't have any points in the game they rolled -----
                 target_user_has_points_in_game = True
                 while target_user_has_points_in_game :
-                    target_user_selected_game = get_rollable_game(40, 20, "Tier 3", specific_genre=targets_genre, database_tier=database_tier, database_name=database_name)
+                    target_user_selected_game = get_rollable_game(40, 20, "Tier 1", specific_genre=targets_genre, database_tier=database_tier, database_name=database_name)
                     target_user_has_points_in_game = has_points(target_user_data, target_user_selected_game)
 
                 # ----- Make sure the interaction user doesn't have any points in the game they rolled -----
                 interaction_user_has_points_in_game = True
                 while interaction_user_has_points_in_game :
-                    interaction_user_selected_game = get_rollable_game(40, 20, "Tier 3", specific_genre=interactions_genre, database_name=database_name, database_tier=database_tier)
+                    interaction_user_selected_game = get_rollable_game(40, 20, "Tier 1", specific_genre=interactions_genre, database_name=database_name, database_tier=database_tier)
                     interaction_user_has_points_in_game = has_points(interaction_user_data, interaction_user_selected_game)
                 
                 games = [interaction_user_selected_game, target_user_selected_game]
+                games_w_name = [database_name[interaction_user_selected_game]['Name'], database_name[target_user_selected_game]['Name']]
 
                 # Get the embeds and buttons
                 embeds = create_multi_embed("Game Theory", 0, games, months_to_days(1), interaction, database_name)
                 embeds[0].set_field_at(index=0, name="Rolled Games",
-                                      value=f"<@{interaction_user_data['Discord ID']}>: {interaction_user_selected_game} ({interactions_genre})"
+                                      value=f"<@{interaction_user_data['Discord ID']}>: {games_w_name[0]} ({games_w_name[1]})"
                                       + f"\n<@{target_user_data['Discord ID']}>: {target_user_selected_game} ({targets_genre})", inline=False)
                 embeds[0].set_field_at(index=1, name="Roll Requirements",
                                        value="Whoever completes their roll first will win Game Theory."

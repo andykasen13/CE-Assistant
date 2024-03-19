@@ -68,6 +68,7 @@ def get_rollable_game(avg_completion_time_limit,
                       database_tier = "", 
                       database_name = "",
                       steamhunters = None) :
+        """Takes in a fuck ton of parameters and returns the CE-ID of a rollable game."""
         returned_game = ""
         rollable = False
         genres = ["Action", "Arcade", "Bullet Hell", "First-Person", "Platformer", "Strategy"] 

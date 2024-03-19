@@ -1260,9 +1260,23 @@ async def stop(interaction : discord.Interaction) :
     exit()
 
 
+"""
+@tree.command(name='fix-my-horribleness', description='fix the onslaught of march 18', guild=discord.Object(id=guild_ID))
+@tree.is_owner()
+async def fix(interaction : discord.Interaction) :
+    await interaction.response.defer()
+    await interaction.followup.send('purging....')
 
-
-
+    def meets_req(m : discord.Message) :
+        return (m.author == client.user 
+                and m.created_at > datetime.datetime(2024, 3, 18, 12, 30, 0) 
+                and m.created_at < datetime.datetime(2024, 3, 18, 20, 30, 0))
+    
+    game_additions = client.get_channel(game_additions_id)
+    
+    deleted = await game_additions.purge(limit=1000, check=meets_req)
+    await game_additions.send(f"Deleted {len(deleted)} of my messages. Sorry guys. May March 18 be forever remembered, and long live Soundodger 2 🙏")
+"""
 
 
 

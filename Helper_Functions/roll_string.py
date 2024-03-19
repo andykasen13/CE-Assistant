@@ -64,6 +64,9 @@ def get_roll_string(database_user, ce_id, database_name, target_user : discord.M
             for game in x['Games'] : # Iterate through all games in the roll event
                 game_info = database_name[game] # Grab the dictionary containing all info about that game
                 game_title = database_name[game]['Name'] # Set the game title
+                game_id = game
+
+
                 roll_string += "  " + str(gameNum) + ". "+ str(game_title) # Add the game number and the game title to the string
                 
                 # set up points
@@ -71,15 +74,13 @@ def get_roll_string(database_user, ce_id, database_name, target_user : discord.M
                 total_user_points = 0
 
                 # get points
-                for objective_title in game_info['Primary Objectives'] : # Iterate through all of the games' objectives
-                    total_default_points += game_info['Primary Objectives'][objective_title]['Point Value']
+                for objective_id in game_info['Primary Objectives'] : # Iterate through all of the games' objectives
+                    total_default_points += game_info['Primary Objectives'][objective_id]['Point Value']
 
-                    if(game_title in list(database_user[ce_id]['Owned Games'].keys())
-                    and
-                    "Primary Objectives" in list(database_user[ce_id]['Owned Games'][game_title].keys())
-                    and
-                    objective_title in list(database_user[ce_id]['Owned Games'][game_title]['Primary Objectives'].keys())) : 
-                            total_user_points += database_user[ce_id]['Owned Games'][game_title]['Primary Objectives'][objective_title]
+                    if(game_id in list(database_user[ce_id]['Owned Games'].keys())
+                    and "Primary Objectives" in list(database_user[ce_id]['Owned Games'][game_id].keys())
+                    and objective_id in list(database_user[ce_id]['Owned Games'][game_id]['Primary Objectives'].keys())) : 
+                        total_user_points += database_user[ce_id]['Owned Games'][game_title]['Primary Objectives'][objective_id]
 
                 roll_string += " (" + str(total_user_points) + "/" + str(total_default_points) +")\n"
                 gameNum += 1 # Add to the gameNum

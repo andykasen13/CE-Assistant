@@ -13,7 +13,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     
     
     cooldowns = {
-        "One Hell of a Day" : (14),
+        "One Hell of a Day" : (7),
         "One Hell of a Week" : (months_to_days(1)),
         "One Hell of a Month" : (months_to_days(3)),
         "Two Week T2 Streak" : 0, # multi-stage roll

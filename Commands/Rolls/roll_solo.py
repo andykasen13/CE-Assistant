@@ -97,7 +97,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
         embed.add_field(name="Roll Requirements", value = 
             "You have one day to complete One Hell of a Day."
             + "\nMust be completed by <t:" + str(get_unix(1))
-            + ">\nOne Hell of a Day has a two week cooldown."
+            + ">\nOne Hell of a Day has a one week cooldown."
             + "\nCooldown ends on <t:" + str(get_unix(14)) + ">.", inline=False)
         embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
 
