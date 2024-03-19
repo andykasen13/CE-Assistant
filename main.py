@@ -730,9 +730,8 @@ class NewModal(discord.ui.Modal):
         await interaction.response.send_message(f'Thank you for your response, {self.name}!', ephemeral=False)
 
 class RequestCEGame(discord.ui.Modal):
-    def __init__(self, visible : bool = False) :
+    def __init__(self) :
         super().__init__(title="Request CE Game...")
-        self.visible = visible
     game_name = discord.ui.TextInput(label="Game Name", required=False, placeholder="Select a game name")
     tier = discord.ui.TextInput(label="Tier", style=discord.TextStyle.short, min_length=1, max_length=1, required=False, placeholder="Select a tier number.")
     max_points = discord.ui.TextInput(label="Min-Max Points", style=discord.TextStyle.short, required=False, placeholder="Please format as such: min-max, or 20-100", max_length=9)
@@ -741,7 +740,7 @@ class RequestCEGame(discord.ui.Modal):
 
     async def on_submit(self, interaction : discord.Interaction) :
         # d efer
-        await interaction.response.defer(ephemeral=(not self.visible))
+        await interaction.response.defer()
 
         # grab all submitted queries
         game_name = str(self.game_name)
@@ -853,31 +852,39 @@ class RequestCEGame(discord.ui.Modal):
         
         del database_user
         
-        d2_str = ""
-        for item in game_list:
-            d2_str += f"[{database_name[item]['Name']}](https://cedb.me/game/{item})\n"
-        if len(d2_str) > 4096:
-            d2_str = ""
-            for item in game_list:
-                d2_str += f"{database_name[item]['Name']}\n"
+        list_strings : list[str] = []
+        for i in range(0, 25) :
+            list_strings.append("")
+        index = -1
+        for i, item in enumerate(game_list):
+            if(i % 15 == 0) : index += 1
+            if index > 24 : return await interaction.followup.send("Too many games! Please lower your search queries.")
+            list_strings[index] += f"[{database_name[item]['Name']}](https://cedb.me/game/{item})\n"
 
-        if d2_str == "" : d2_str = "No games on CE fit the queries provided."
-        
-        embed = discord.Embed(title="Requested games...", description=d2_str, timestamp=datetime.datetime.now(), color=0x000000)
-        embed.add_field(name="Parameters", value=description_str)
-        embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=final_ce_icon)
+        if len(game_list) == 0: d2_str = "No games on CE fit the queries provided."
+
+        embeds : list[discord.Embed] = []
+        for i in range(0, index+1) :
+            embed = discord.Embed(title="Requested games...", description=list_strings[i], timestamp=datetime.datetime.now(), color=0x000000)
+            embed.add_field(name="Parameters", value=description_str)
+            embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=final_ce_icon)
+            embed.set_footer(text=f"Page {i+1} of {index+1}")
+            embeds.append(embed)
 
         del database_name
 
+        view = discord.ui.View(timeout=600)
+        await get_buttons(view, embeds)
+
         try:
-            await interaction.followup.send(embed=embed)
+            await interaction.followup.send(embed=embeds[0], view=view)
         except:
             await interaction.followup.send('Too many games!')
 
 
 @tree.command(name='test-moda', description='fhsdjaiklu', guild=discord.Object(id=guild_ID))
-async def testagain(interaction : discord.Interaction, visible : bool = False) :
-    await interaction.response.send_modal(RequestCEGame(visible))
+async def testagain(interaction : discord.Interaction) :
+    await interaction.response.send_modal(RequestCEGame())
 
 
 
