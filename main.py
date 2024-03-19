@@ -1123,7 +1123,7 @@ async def color(interaction : discord.Interaction) :
     
     print(len(string))
     embed = discord.Embed(title="COLORS", description=string)
-    await interaction.followup.send(embed=embed, view=view, ephemeral=True, content = string)
+    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
 
 
 
