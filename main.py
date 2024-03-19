@@ -1059,7 +1059,7 @@ async def color(interaction : discord.Interaction) :
     for i, name in enumerate(_bounty_names) :
         bounty_roles.append(discord.utils.get(interaction.guild.roles, name=name))
         print(roles[i].color)
-    
+    print('-----------')
     for i, role in enumerate(roles) :
         try: print(role.color)
         except: print(f"failed on {i}")
