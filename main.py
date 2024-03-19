@@ -861,7 +861,7 @@ class RequestCEGame(discord.ui.Modal):
             if index > 24 : return await interaction.followup.send("Too many games! Please lower your search queries.")
             list_strings[index] += f"[{database_name[item]['Name']}](https://cedb.me/game/{item})\n"
 
-        if len(game_list) == 0: await interaction.followup.send("No games on CE fit the queries provided.")
+        if len(game_list) == 0: return await interaction.followup.send("No games on CE fit the queries provided.")
 
         embeds : list[discord.Embed] = []
         for i in range(0, index+1) :
