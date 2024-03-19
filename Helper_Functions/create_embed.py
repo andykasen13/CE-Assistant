@@ -93,6 +93,7 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
         divs = BeautifulSoup(response.text, features="html.parser").find_all('div')
         ass = BeautifulSoup(response.text, features="html.parser").find_all('a')
         options = []
+        correct_app_id = None
         for div in divs:
             try:
                 if div['class'][0] == "match_name":
