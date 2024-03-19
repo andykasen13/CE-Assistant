@@ -80,7 +80,7 @@ def get_roll_string(database_user, ce_id, database_name, target_user : discord.M
                     if(game_id in list(database_user[ce_id]['Owned Games'].keys())
                     and "Primary Objectives" in list(database_user[ce_id]['Owned Games'][game_id].keys())
                     and objective_id in list(database_user[ce_id]['Owned Games'][game_id]['Primary Objectives'].keys())) : 
-                        total_user_points += database_user[ce_id]['Owned Games'][game_title]['Primary Objectives'][objective_id]
+                        total_user_points += database_user[ce_id]['Owned Games'][game_id]['Primary Objectives'][objective_id]
 
                 roll_string += " (" + str(total_user_points) + "/" + str(total_default_points) +")\n"
                 gameNum += 1 # Add to the gameNum

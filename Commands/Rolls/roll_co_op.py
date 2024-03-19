@@ -863,8 +863,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
                 # Get the embeds and buttons
                 embeds = create_multi_embed("Game Theory", 0, games, months_to_days(1), interaction, database_name)
                 embeds[0].set_field_at(index=0, name="Rolled Games",
-                                      value=f"<@{interaction_user_data['Discord ID']}>: {games_w_name[0]} ({games_w_name[1]})"
-                                      + f"\n<@{target_user_data['Discord ID']}>: {target_user_selected_game} ({targets_genre})", inline=False)
+                                      value=f"<@{interaction_user_data['Discord ID']}>: {games_w_name[0]} ({interactions_genre})"
+                                      + f"\n<@{target_user_data['Discord ID']}>: {games_w_name[1]} ({targets_genre})", inline=False)
                 embeds[0].set_field_at(index=1, name="Roll Requirements",
                                        value="Whoever completes their roll first will win Game Theory."
                                        + "\nGame Theory has a cooldown of one month (for the loser).")
