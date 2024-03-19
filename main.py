@@ -1057,7 +1057,7 @@ async def color(interaction : discord.Interaction) :
     bounty_roles : list[discord.Role] = []
     _bounty_names = ['Cotton Candy', 'Aquamarine', 'Ice', 'Forest', 'Blood', 'Abyss', 'Nuclear']
     for i, name in enumerate(_bounty_names) :
-        roles.append(discord.utils.get(interaction.guild.roles, name=name))
+        bounty_roles.append(discord.utils.get(interaction.guild.roles, name=name))
         print(roles[i].color)
     
     for i, role in enumerate(roles) :
