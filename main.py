@@ -835,11 +835,14 @@ class RequestCEGame(discord.ui.Modal):
         for game_id in database_name:
             valid = True
             if game_name != "" and not database_name[game_id]['Name'].lower()[0:len(game_name)] == game_name.lower() : valid = False
-            if tier != None and not database_name[game_id]['Tier'] == f"Tier {tier}" : valid = False
+            if tier != None :
+                if not database_name[game_id]['Tier'] == f"Tier {tier}" and tier != 6 and tier != 7 : valid = False
             if points != None:
                 total_points = 0
                 for obj_id in database_name[game_id]['Primary Objectives'] : total_points += database_name[game_id]['Primary Objectives'][obj_id]['Point Value']
                 if total_points < min_points or total_points > max_points : valid = False
+                if tier == 6 and (not total_points >= 500 or not total_points < 1000) : valid = False
+                elif tier == 7 and not total_points >= 1000 : valid = False 
             if genre != None and not database_name[game_id]['Genre'] == genre : valid = False
             if owned != None and not game_id in database_user[ce_id]['Owned Games'] : valid = False
             if valid : game_list.append(game_id)
