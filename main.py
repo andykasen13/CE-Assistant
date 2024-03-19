@@ -1049,7 +1049,7 @@ async def color(interaction : discord.Interaction) :
                                                             and not sss_rank_role in interaction.user.roles
                                                             and not ex_rank_role in interaction.user.roles)))
     grey_button = discord.ui.Button(label="⚪")
-    t1_emoji = interaction.guild.fetch_emoji(emoji_id=1126268393725644810)
+    t1_emoji = interaction.guild.fetch_emoji(1126268393725644810)
     clear_button = discord.ui.Button(label="Clear", emoji=t1_emoji)
     roles = [grey_role, brown_role, green_role, blue_role, purple_role, orange_role, yellow_role, red_role, black_role]
     
