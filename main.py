@@ -841,7 +841,7 @@ class RequestCEGame(discord.ui.Modal):
                     total_points = 0
                     for obj_id in database_name[game_id]['Primary Objectives'] : total_points += database_name[game_id]['Primary Objectives'][obj_id]['Point Value']
                     if tier == 6 and (total_points < 500 or total_points >= 1000) : valid = False
-                    elif tier == 7 and total_points >= 1000 : valid = False 
+                    elif tier == 7 and total_points <= 1000 : valid = False 
                 if not database_name[game_id]['Tier'] == f"Tier {tier}" and tier != 6 and tier != 7 : valid = False
             if points != None:
                 total_points = 0
