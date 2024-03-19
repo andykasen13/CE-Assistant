@@ -20,7 +20,7 @@ from Helper_Functions.end_time import months_to_days
 """
 
 # ---------------------------------------------variables-----------------------------------------------------------------
-_in_ce = False
+_in_ce = True
 """Determines if you'd like to run the CE Bot or a test bot."""
 
 # ------------- mongo variables -------------

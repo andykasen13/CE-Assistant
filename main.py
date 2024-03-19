@@ -720,7 +720,7 @@ async def get_times(interaction):
 """
 
 class NewModal(discord.ui.Modal):
-    def __init__(self, visible) :
+    def __init__(self) :
         super().__init__(title="My first Modal!")
 
     name = discord.ui.TextInput(label="Peepo")
