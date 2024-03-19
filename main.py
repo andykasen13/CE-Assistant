@@ -857,7 +857,7 @@ class RequestCEGame(discord.ui.Modal):
             list_strings.append("")
         index = -1
         for i, item in enumerate(game_list):
-            if(i % 15 == 0) : index += 1
+            if(i % 10 == 0) : index += 1
             if index > 24 : return await interaction.followup.send("Too many games! Please lower your search queries.")
             list_strings[index] += f"[{database_name[item]['Name']}](https://cedb.me/game/{item})\n"
 
