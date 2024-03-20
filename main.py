@@ -1800,6 +1800,7 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
         rollButton.disabled = False
         crButton.disabled = False
         siteButton.disabled = True
+        await interaction.response.edit_message(embed=site_achievements_embed, view=view)
     mainButton.callback = mainCallback
     rollButton.callback = rollCallback
     crButton.callback = crCallback
