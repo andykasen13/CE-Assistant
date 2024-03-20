@@ -21,7 +21,7 @@ from typing import overload
 """
 
 # ---------------------------------------------variables-----------------------------------------------------------------
-_in_ce = False
+_in_ce = True
 """Determines if you'd like to run the CE Bot or a test bot."""
 
 # ------------- mongo variables -------------
