@@ -825,7 +825,7 @@ class RequestCEGame(discord.ui.Modal):
         if '_id' in database_user: del database_user['_id']
         game_list : list[str] = []
 
-        ce_id = get_ce_id(interaction.user.id, database_user)
+        ce_id = get_ce_id_normal(interaction.user.id, database_user)
         if ce_id == None and type(owned) == bool:
             return await interaction.followup.send("You selected \"true\" or \"false\" for Owned, but you are not registered. Please use `/register` with the link to your CE page!")
         elif game_name == "" and tier == None and points == None and genre == None and owned == None:
@@ -991,6 +991,7 @@ async def color(interaction : discord.Interaction) :
     await interaction.response.defer(ephemeral=True)
     string = ""
 
+    # initialize all roles (this could still be shortened but i'm happy for today)
     ex_rank_role = discord.utils.get(interaction.guild.roles, name = "EX Rank")
     sss_rank_role = discord.utils.get(interaction.guild.roles, name = "SSS Rank")
     ss_rank_role = discord.utils.get(interaction.guild.roles, name = "SS Rank")
@@ -999,7 +1000,8 @@ async def color(interaction : discord.Interaction) :
     b_rank_role = discord.utils.get(interaction.guild.roles, name = "B Rank")
     c_rank_role = discord.utils.get(interaction.guild.roles, name = "C Rank")
     d_rank_role = discord.utils.get(interaction.guild.roles, name = "D Rank")
-
+    e_rank_role = discord.utils.get(interaction.guild.roles, name="E Rank")
+    rank_roles = [e_rank_role, d_rank_role, c_rank_role, b_rank_role, a_rank_role, s_rank_role, ss_rank_role, sss_rank_role, ex_rank_role]
     black_role = discord.utils.get(interaction.guild.roles, name = "Black")
     red_role = discord.utils.get(interaction.guild.roles, name = "Red")
     yellow_role = discord.utils.get(interaction.guild.roles, name = "Yellow")
@@ -1009,51 +1011,10 @@ async def color(interaction : discord.Interaction) :
     green_role = discord.utils.get(interaction.guild.roles, name = "Green")
     brown_role = discord.utils.get(interaction.guild.roles, name = "Brown")  
     grey_role = discord.utils.get(interaction.guild.roles, name = "Gray")
-
-
-    view = discord.ui.View(timeout=60)
-
-    black_button = (discord.ui.Button(label="⚫", disabled=(not ex_rank_role in interaction.user.roles)))
-    red_button = discord.ui.Button(label = "🔴", disabled = (not sss_rank_role in interaction.user.roles
-                                                             and not ex_rank_role in interaction.user.roles))
-    yellow_button = (discord.ui.Button(label="🟡", disabled=(not ss_rank_role in interaction.user.roles
-                                                            and not sss_rank_role in interaction.user.roles
-                                                            and not ex_rank_role in interaction.user.roles)))  
-    orange_button = (discord.ui.Button(label="🟠", disabled=(not s_rank_role in interaction.user.roles
-                                                            and not ss_rank_role in interaction.user.roles
-                                                            and not sss_rank_role in interaction.user.roles
-                                                            and not ex_rank_role in interaction.user.roles)))
-    purple_button = (discord.ui.Button(label="🟣", disabled=(not a_rank_role in interaction.user.roles
-                                                            and not s_rank_role in interaction.user.roles
-                                                            and not ss_rank_role in interaction.user.roles
-                                                            and not sss_rank_role in interaction.user.roles
-                                                            and not ex_rank_role in interaction.user.roles)))
-    blue_button = (discord.ui.Button(label="🔵", disabled=(not b_rank_role in interaction.user.roles
-                                                            and not a_rank_role in interaction.user.roles
-                                                            and not s_rank_role in interaction.user.roles
-                                                            and not ss_rank_role in interaction.user.roles
-                                                            and not sss_rank_role in interaction.user.roles
-                                                            and not ex_rank_role in interaction.user.roles)))
-    green_button = (discord.ui.Button(label="🟢", disabled=(not c_rank_role in interaction.user.roles
-                                                            and not b_rank_role in interaction.user.roles
-                                                            and not a_rank_role in interaction.user.roles
-                                                            and not s_rank_role in interaction.user.roles
-                                                            and not ss_rank_role in interaction.user.roles
-                                                            and not sss_rank_role in interaction.user.roles
-                                                            and not ex_rank_role in interaction.user.roles)))
-    brown_button = (discord.ui.Button(label="🟤", disabled=(not d_rank_role in interaction.user.roles
-                                                            and not c_rank_role in interaction.user.roles
-                                                            and not b_rank_role in interaction.user.roles
-                                                            and not a_rank_role in interaction.user.roles
-                                                            and not s_rank_role in interaction.user.roles
-                                                            and not ss_rank_role in interaction.user.roles
-                                                            and not sss_rank_role in interaction.user.roles
-                                                            and not ex_rank_role in interaction.user.roles)))
-    grey_button = discord.ui.Button(label="⚪")
-    t1_emoji = await interaction.guild.fetch_emoji(1126268393725644810)
-    #clear_button = discord.ui.Button(label="Clear", emoji=t1_emoji)
-    clear_button = discord.ui.Button(label="🚫")
     roles : list[discord.Role] = [grey_role, brown_role, green_role, blue_role, purple_role, orange_role, yellow_role, red_role, black_role]
+
+    # set up view
+    view = discord.ui.View(timeout=60)
 
     # bounty colors
     bounty_roles : list[discord.Role] = []
@@ -1061,8 +1022,7 @@ async def color(interaction : discord.Interaction) :
     for i, name in enumerate(_bounty_names) :
         bounty_roles.append(discord.utils.get(interaction.guild.roles, name=name))
 
-
-    
+    # initialize callbacks for all buttons
     async def black_callback(interaction) : return await assign_role(interaction, black_role)
     async def red_callback(interaction) : return await assign_role(interaction, red_role)
     async def yellow_callback(interaction) : return await assign_role(interaction, yellow_role)
@@ -1076,47 +1036,51 @@ async def color(interaction : discord.Interaction) :
         for role in roles :
             if role in interaction.user.roles : await interaction.user.remove_roles(role)
         return await interaction.response.edit_message(embed=discord.Embed(title="Colors cleared."))
+    
 
-
-    black_button.callback = black_callback
-    red_button.callback = red_callback
-    yellow_button.callback = yellow_callback
-    orange_button.callback = orange_callback
-    purple_button.callback = purple_callback
-    blue_button.callback = blue_callback
-    green_button.callback = green_callback
-    brown_button.callback = brown_callback
-    grey_button.callback = grey_callback
+    # link emojis, callbacks, etc
+    emojis = ["⚫","🔴","🟡","🟠","🟣","🔵","🟢","🟤","⚪"]
+    buttons : list[discord.ui.Button] = []
+    i = 8
+    print(interaction.user.roles)
+    print('\n')
+    for emoji in (emojis) : 
+        disabled = not any(role in interaction.user.roles for role in rank_roles[i:9])
+        print(emoji)
+        print(rank_roles[i:9])
+        print('\n')
+        buttons.append(discord.ui.Button(label=emoji, disabled=disabled))
+        i -= 1
+    callbacks = [grey_callback, brown_callback, green_callback, blue_callback, purple_callback, 
+                 orange_callback, yellow_callback, red_callback, black_callback]
+    callbacks.reverse()
+    for i, button in enumerate(buttons) :
+        button.callback = callbacks[i]
+        print(callbacks[i].__name__)
+        view.add_item(button)
+    
+    # set up clear button
+    #t1_emoji = await interaction.guild.fetch_emoji(1126268393725644810) #clear_button = discord.ui.Button(label="Clear", emoji=t1_emoji)
+    clear_button = discord.ui.Button(label="🚫")
     clear_button.callback = clear_callback
-
-    view.add_item(black_button)
-    view.add_item(red_button)
-    view.add_item(yellow_button)
-    view.add_item(orange_button)
-    view.add_item(purple_button)
-    view.add_item(blue_button)
-    view.add_item(green_button)
-    view.add_item(brown_button)
-    view.add_item(grey_button)
     view.add_item(clear_button)
 
-    async def assign_role(interaction, role) :
+    # assigning role function
+    async def assign_role(interaction : discord.Interaction, role : discord.Role) :
+        # check to see if they already have the color
         if(role in interaction.user.roles) : return await interaction.response.edit_message(embed=discord.Embed(title = f"You already have the {role.name} role!", color = role.color))
-        
+
+        # remove all colors
+        for roley in roles: 
+            if roley in interaction.user.roles: await interaction.user.remove_roles(roley) 
+
+        # add correct color
         await (interaction.user.add_roles(role))
-
-        if(black_role in interaction.user.roles and not(role == black_role)) : await interaction.user.remove_roles(black_role)
-        if(red_role in interaction.user.roles and not(role == red_role)) : await interaction.user.remove_roles(red_role)
-        if(yellow_role in interaction.user.roles and not(role == yellow_role)) : await interaction.user.remove_roles(yellow_role)
-        if(orange_role in interaction.user.roles and not(role == orange_role)) : await interaction.user.remove_roles(orange_role)
-        if(purple_role in interaction.user.roles and not(role == purple_role)) : await interaction.user.remove_roles(purple_role)
-        if(blue_role in interaction.user.roles and not(role == blue_role)) : await interaction.user.remove_roles(blue_role)
-        if(green_role in interaction.user.roles and not(role == green_role)) : await interaction.user.remove_roles(green_role)
-        if(brown_role in interaction.user.roles and not(role == brown_role)) : await interaction.user.remove_roles(brown_role)
-        if(grey_role in interaction.user.roles and not(role == grey_role)) : await interaction.user.remove_roles(grey_role)
-
-        return await interaction.response.edit_message(embed=discord.Embed(title = f"You have recieved the {role.name} role!", color=role.color))
         
+        # update embed
+        return await interaction.response.edit_message(embed=discord.Embed(title = f"You have recieved the {role.name} role!", color=role.color))
+    
+    # set up embed and send it
     embed = discord.Embed(title="COLORS", description="choose your colors wisely.")
     await interaction.followup.send(embed=embed, view=view, ephemeral=True, content = string)
 
