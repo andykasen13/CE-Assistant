@@ -1,6 +1,6 @@
 import discord
 import datetime
-from mongo_silly import *
+from Helper_Functions.mongo_silly import *
 
 async def check_site_achievements(user : discord.Member) :
     """Takes in the interaction and returns """
