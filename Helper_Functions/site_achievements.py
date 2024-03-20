@@ -75,7 +75,7 @@ async def check_site_achievements(user : discord.Member) :
     # set values
     achievements["\"I'll add it to the backlog\""] = len(user_api['userGames']) >= 365
     #achievements["Chase the Rainbow"] = False
-    achievements["Happy Anniversary"] = (datetime.datetime.now() - user.joined_at) > datetime.timedelta(days=365)
+    achievements["Happy Anniversary"] = (datetime.datetime.now(datetime.timezone.utc) - user.joined_at) > datetime.timedelta(days=365)
     #achievements["Insert Tired Old Meme Here"] = False
     #achievements["Supporter"] = False
     achievements["Veteran"] = (datetime.datetime.now() - user.joined_at) > datetime.timedelta(days=(365*3))
