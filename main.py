@@ -89,26 +89,28 @@ else :
 
 
 # test function that never really worked lol
-"""
 async def aaaa_auto(interaction : discord.Interaction, current:str) -> typing.List[app_commands.Choice[str]]:
     data = []
     database_name = await get_mongo("name")
-    print(database_name) 
+    if '_id' in database_name : del database_name['_id']
 
-    for game in list(database_name.keys()):
-        data.append(app_commands.Choice(name=game,value=game))
-    print(data)
-    return data
-"""
+    for game in database_name:
+        name : str = database_name[game]['Name']
+        if current.lower() in name.lower() :
+            data.append(app_commands.Choice(name=name,value=name))
+        if len(data) >= 25 : break
+    return data[0:25]
 
 
 
-"""
-@tree.command(name="aaaaa", description="afjdals", guild=discord.Object(id=guild_ID))
-#@app_commands.autocomplete(item=aaaa_auto)
-async def aaaaa(interaction : discord.Interaction, item : str, date):
-    await interaction.response.defer()  
-"""
+
+
+@tree.command(name="ce-game", description="Find information on any CE game!", guild=discord.Object(id=guild_ID))
+@app_commands.autocomplete(item=aaaa_auto)
+async def aaaaa(interaction : discord.Interaction, item : str):
+    await interaction.response.defer(ephemeral=True)
+    await interaction.followup.send(f"You chose {item} (testing still in progress!)")
+
 
 
 
@@ -834,7 +836,7 @@ class RequestCEGame(discord.ui.Modal):
 
         for game_id in database_name:
             valid = True
-            if game_name != "" and not database_name[game_id]['Name'].lower()[0:len(game_name)] == game_name.lower() : valid = False
+            if game_name != "" and not game_name.lower() in database_name[game_id]['Name'].lower() : valid = False #database_name[game_id]['Name'].lower()[0:len(game_name)] == game_name.lower() : valid = False
             if tier != None :
                 if tier == 6 or tier == 7:
                     total_points = 0
@@ -1677,6 +1679,8 @@ async def most_recent_points(interaction : discord.Interaction, user: discord.Us
 
 @tree.command(name="profile", description="Get general info about anyone in CE!", guild=discord.Object(id=guild_ID))
 async def profile(interaction : discord.Interaction, user : discord.Member = None):
+    from Helper_Functions.site_achievements import check_site_achievements
+
     await interaction.response.defer()
 
     if user == None : user = interaction.user
@@ -1702,6 +1706,9 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
     array2 = calculate_cr(ce_id, database_user, database_name)
     total_cr = array2[0]
     groups = array2[1]
+
+    # get site achievements
+    site_achievements_embed = await check_site_achievements(user)
 
     # tier and genre stuff
     stupid_horribleness = {
@@ -1769,27 +1776,38 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
     mainButton = discord.ui.Button(label="Main", disabled=True)
     rollButton = discord.ui.Button(label="Rolls", disabled=False)
     crButton = discord.ui.Button(label="CR", disabled=False)
+    siteButton = discord.ui.Button(label="Site Achievements", disabled=False)
     async def mainCallback(interaction : discord.Interaction):
         rollButton.disabled = False
         crButton.disabled = False
         mainButton.disabled = True
+        siteButton.disabled = False
         await interaction.response.edit_message(embed=main_embed, view=view)
     async def rollCallback(interaction : discord.Interaction):
         mainButton.disabled = False
         rollButton.disabled = True
         crButton.disabled = False
+        siteButton.disabled = False
         await interaction.response.edit_message(embed=roll_embed, view=view)
     async def crCallback(interaction : discord.Interaction):
         mainButton.disabled = False
         rollButton.disabled = False
         crButton.disabled = True
+        siteButton.disabled = False
         await interaction.response.edit_message(embed=cr_embed, view=view)
+    async def siteCallback(interaction : discord.Interaction) :
+        mainButton.disabled = False
+        rollButton.disabled = False
+        crButton.disabled = False
+        siteButton.disabled = True
     mainButton.callback = mainCallback
     rollButton.callback = rollCallback
     crButton.callback = crCallback
+    siteButton.callback = siteCallback
     view.add_item(mainButton)
     view.add_item(rollButton)
     view.add_item(crButton)
+    view.add_item(siteButton)
 
     # and send the message
     return await interaction.followup.send(embed=main_embed, view=view)
