@@ -78,7 +78,7 @@ async def check_site_achievements(user : discord.Member) :
     achievements["Happy Anniversary"] = (datetime.datetime.now(datetime.timezone.utc) - user.joined_at) > datetime.timedelta(days=365)
     #achievements["Insert Tired Old Meme Here"] = False
     #achievements["Supporter"] = False
-    achievements["Veteran"] = (datetime.datetime.now() - user.joined_at) > datetime.timedelta(days=(365*3))
+    achievements["Veteran"] = (datetime.datetime.now(datetime.timezone.utc) - user.joined_at) > datetime.timedelta(days=(365*3))
     achievements["As God Intended"] = _made_ofs >= 5
     achievements["Objectively Cracked"] = _objectively_crackeds >= 140
     achievements["Puzzle Grandmaster"] = _puzzle_games_objectives >= 10
