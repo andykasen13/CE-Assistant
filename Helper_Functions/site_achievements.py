@@ -91,6 +91,7 @@ async def check_site_achievements(user : discord.Member) :
     for site_achievement in achievements :
         description += site_achievement + " "
         description += "✅" if achievements[site_achievement] else "🚫"
+        description += "\n"
     
     # make the embed
     embed = discord.Embed(
