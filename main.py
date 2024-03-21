@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import datetime
 import functools
 import io
+import traceback
 import typing
 import os
 from bson import ObjectId
@@ -1377,6 +1378,10 @@ async def update(interaction : discord.Interaction) :
         returns = update_p(interaction.user.id, False, database_user, database_name)
     except Exception as e:
         print(e)
+        try: 
+            traceback.print_exception(e)
+        except:
+            print('printing traceback failed lol')
         return await interaction.followup.send("something went wrong. please ping andy!!\n" + str(e))
     if returns == "failed" : return await interaction.followup.send("Something went wrong with the API. Please try again in five minutes.")
     if returns == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
