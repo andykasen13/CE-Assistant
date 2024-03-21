@@ -878,6 +878,17 @@ class RequestCEGame(discord.ui.Modal):
         view = discord.ui.View(timeout=600)
         await get_buttons(view, embeds)
 
+        dice_emoji = await interaction.guild.fetch_emoji(1128844342732263464)
+        random_button = discord.ui.Button(emoji=dice_emoji)
+        async def random_callback(interaction : discord.Interaction) :
+            await interaction.response.defer(ephemeral=True)
+            r = random.choice(game_list)
+            r = f"Randomly selected: [{database_name[r]['Name']}](https://cedb.me/game/{r})"
+            return await interaction.followup.send(r)
+        random_button.callback = random_callback
+        view.add_item(random_button)
+
+
         try:
             await interaction.followup.send(embed=embeds[0], view=view)
         except:
