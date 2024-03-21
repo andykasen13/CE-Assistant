@@ -1441,14 +1441,11 @@ def calculate_cr(ce_id, database_user, database_name) :
 
         points_in_game = 0
 
-        # does the user have any points in the game?
-        if "Primary Objectives" in database_user[ce_id]['Owned Games'][game] :
-
-            # go through all of their objectives
-            for obj in database_user[ce_id]['Owned Games'][game]['Primary Objectives'] :
-
-                # add up all of their points
-                points_in_game += database_user[ce_id]['Owned Games'][game]['Primary Objectives'][obj]
+        
+        if "Primary Objectives" in database_user[ce_id]['Owned Games'][game] : # does the user have any points in the game?
+            for obj in database_user[ce_id]['Owned Games'][game]['Primary Objectives'] : # go through all of their objectives
+                points_in_game += database_user[ce_id]['Owned Games'][game]['Primary Objectives'][obj]  # and add up all of their points
+                if points_in_game > 1000 : points_in_game = 1000 # new cap!
         
         if points_in_game != 0 :
             groups[database_name[game]['Genre']].append(points_in_game)
@@ -1461,7 +1458,7 @@ def calculate_cr(ce_id, database_user, database_name) :
     for genre in groups :
         genre_value = 0.0
         for index, value in enumerate(groups[genre]) :
-            genre_value += (0.85**index)*(float(value))
+            genre_value += (0.90**index)*(float(value))
         groups[genre] = round(genre_value, 2)
         total_cr += genre_value
     
@@ -1770,6 +1767,7 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
     cr_embed.add_field(name="Total CR", value=str(round(total_cr, 2)), inline=False)
     for genre in groups :
         cr_embed.add_field(name=str(genre) + " CR", value=str(groups[genre]), inline=True)
+    cr_embed.set_footer(text="If this doesn't look right, try using /update.", icon_url=final_ce_icon)
 
     # make discord.ui.view
     view = discord.ui.View(timeout=600)
