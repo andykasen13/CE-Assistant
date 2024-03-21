@@ -1766,7 +1766,7 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
     cr_embed = discord.Embed(title="CR Values", description="The calculation of all of <@{}>'s CRs!".format(user.id), timestamp=datetime.datetime.now(), color=0xff9494)
     cr_embed.add_field(name="Total CR", value=str(round(total_cr, 2)), inline=False)
     for genre in groups :
-        cr_embed.add_field(name=str(genre) + " CR", value=str(groups[genre]), inline=True)
+        cr_embed.add_field(name=str(genre), value=str(groups[genre]), inline=True)
     cr_embed.set_footer(text="If this doesn't look right, try using /update.", icon_url=final_ce_icon)
 
     # make discord.ui.view
