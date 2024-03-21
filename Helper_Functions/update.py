@@ -172,6 +172,16 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         del user_dict[ce_id]['Pending Rolls'][event]
 
 
+    def format_game(game : str) :
+        for dbN_objective in database_name[game]['Primary Objectives']:
+            if(type(database_name[game]['Primary Objectives'][dbN_objective]) is int) : continue
+            if("Achievements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Achievements']
+            if("Requirements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Requirements']
+            if "Description"  in database_name[game]['Primary Objectives'][dbN_objective] :  del database_name[game]['Primary Objectives'][dbN_objective]['Description']
+            if "Name"         in database_name[game]['Primary Objectives'][dbN_objective] :  del database_name[game]['Primary Objectives'][dbN_objective]['Description']
+            database_name[game]['Primary Objectives'][dbN_objective] = database_name[game]['Primary Objectives'][dbN_objective]['Point Value']
+
+
     # Check if any rolls have been completed
     for m_index, current_roll in enumerate(user_dict[ce_id]['Current Rolls']) :
         roll_completed = True
@@ -203,20 +213,10 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             game = current_roll['Games'][0]
 
             # format int game
-            for dbN_objective in database_name[game]['Primary Objectives'] :
-                if(type(database_name[game]['Primary Objectives'][dbN_objective]) is int) : continue
-                if("Achievements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Achievements']
-                if("Requirements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Requirements']
-                del database_name[game]['Primary Objectives'][dbN_objective]['Description']
-                database_name[game]['Primary Objectives'][dbN_objective] = database_name[game]['Primary Objectives'][dbN_objective]['Point Value']
+            format_game(game)
             
             # format part game
-            for dbN_objective in database_name[other_game]['Primary Objectives'] :
-                if(type(database_name[other_game]['Primary Objectives'][dbN_objective]) is int) : continue
-                if("Achievements" in database_name[other_game]['Primary Objectives'][dbN_objective]) : del database_name[other_game]['Primary Objectives'][dbN_objective]['Achievements']
-                if("Requirements" in database_name[other_game]['Primary Objectives'][dbN_objective]) : del database_name[other_game]['Primary Objectives'][dbN_objective]['Requirements']
-                del database_name[other_game]['Primary Objectives'][dbN_objective]['Description']
-                database_name[other_game]['Primary Objectives'][dbN_objective] = database_name[other_game]['Primary Objectives'][dbN_objective]['Point Value']
+            format_game(other_game)
 
             # do the checking
             if ((game not in user_dict[ce_id]['Owned Games'] or "Primary Objectives" not in user_dict[ce_id]['Owned Games'][game])
@@ -236,12 +236,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
         elif current_roll['Event Name'] == "Soul Mates" :
 
             # format the game
-            for dbN_objective in database_name[game]['Primary Objectives'] :
-                if(type(database_name[game]['Primary Objectives'][dbN_objective]) is int) : continue
-                if("Achievements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Achievements']
-                if("Requirements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Requirements']
-                del database_name[game]['Primary Objectives'][dbN_objective]['Description']
-                database_name[game]['Primary Objectives'][dbN_objective] = database_name[game]['Primary Objectives'][dbN_objective]['Point Value']
+            format_game(game)
 
             # do the checking
             if ((game not in user_dict[ce_id]['Owned Games'] or "Primary Objectives" not in user_dict[ce_id]['Owned Games'][game])
@@ -263,16 +258,15 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 del database_name[game]['Community Objectives']
 
                 # format database_name like users2.json
-                for dbN_objective in database_name[game]['Primary Objectives'] :
-                    if(type(database_name[game]['Primary Objectives'][dbN_objective]) is int) : continue
-                    if("Achievements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Achievements']
-                    if("Requirements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Requirements']
-                    del database_name[game]['Primary Objectives'][dbN_objective]['Description']
-                    database_name[game]['Primary Objectives'][dbN_objective] = database_name[game]['Primary Objectives'][dbN_objective]['Point Value']
+                format_game(game)
 
-                if(game not in user_dict[ce_id]['Owned Games'] or "Primary Objectives" not in user_dict[ce_id]['Owned Games'][game] or user_dict[ce_id]['Owned Games'][game]['Primary Objectives'] != database_name[game]['Primary Objectives']
+                if((game not in user_dict[ce_id]['Owned Games'] 
+                   or "Primary Objectives" not in user_dict[ce_id]['Owned Games'][game] 
+                   or user_dict[ce_id]['Owned Games'][game]['Primary Objectives'] != database_name[game]['Primary Objectives'])
                    and
-                   game not in database_user[current_roll['Partner']]['Owned Games'] or "Primary Objectives" not in database_user[current_roll['Partner']]['Owned Games'][game] or database_user[current_roll['Partner']]['Owned Games'][game]['Primary Objectives'] != database_name[game]['Primary Objectives']) :
+                   (game not in database_user[current_roll['Partner']]['Owned Games'] 
+                   or "Primary Objectives" not in database_user[current_roll['Partner']]['Owned Games'][game] 
+                   or database_user[current_roll['Partner']]['Owned Games'][game]['Primary Objectives'] != database_name[game]['Primary Objectives'])) :
                     roll_completed = False
             # end of teamwork makes the dream work
 
@@ -283,12 +277,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             # set the game
             game = current_roll['Games'][0]
             # formatting
-            for dbN_objective in database_name[game]['Primary Objectives'] :
-                if(type(database_name[game]['Primary Objectives'][dbN_objective]) is int) : continue
-                if("Achievements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Achievements']
-                if("Requirements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Requirements']
-                del database_name[game]['Primary Objectives'][dbN_objective]['Description']
-                database_name[game]['Primary Objectives'][dbN_objective] = database_name[game]['Primary Objectives'][dbN_objective]['Point Value']
+            format_game(game)
             # figure out who completed what game
             winner = ""
             bool_1 = game in user_dict[ce_id]['Owned Games'] and "Primary Objectives" in user_dict[ce_id]['Owned Games'][game] and user_dict[ce_id]['Owned Games'][game]['Primary Objectives'] == database_name[game]['Primary Objectives']
