@@ -873,8 +873,6 @@ class RequestCEGame(discord.ui.Modal):
             embed.set_footer(text=f"Page {i+1} of {index+1}")
             embeds.append(embed)
 
-        del database_name
-
         view = discord.ui.View(timeout=600)
         await get_buttons(view, embeds)
 
