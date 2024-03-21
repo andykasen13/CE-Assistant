@@ -1881,6 +1881,7 @@ async def role_info(interaction : discord.Interaction) :
     for key, value in final_dict :
         #print(key + " - " + value)
         if key == "nan" or key == "Last Updated" or key == "Rank" : continue
+        if key == "EX+ Rank" : value = "See final page"
         if key.lower() in [item.lower() for item in movers] or other_index >= 10:
             
             index += 1
