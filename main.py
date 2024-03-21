@@ -1879,25 +1879,22 @@ async def role_info(interaction : discord.Interaction) :
     current_mover_index : int = 0
     all_roles = list(interaction.guild.roles)
     for key, value in final_dict :
-        #print(key + " - " + value)
-        if key == "nan" or key == "Last Updated" or key == "Rank" : continue
-        if key == "EX+ Rank" : value = "See final page"
+        if key == "nan" or key == "Last Updated" or key == "Rank" : continue # skip these
+        if key == "EX+ Rank" : value = "See final page" # edit message
         if key.lower() in [item.lower() for item in movers] or other_index >= 10:
             
-            index += 1
-            embeds[index - 1].description = description
-            description = ""
-            if key.lower() in [item.lower() for item in movers]:
-                current_mover_index += 1
-                if value != "nan" : description += f"__{value}__\n"
+            index += 1 # adjust index of embed
+            embeds[index - 1].description = description # set the previous's embed's description
+            description = "" # reset the description
+            if key.lower() in [item.lower() for item in movers]: # if it's time for a new name...
+                current_mover_index += 1 # set the new name
+                if value != "nan" : description += f"__{value}__\n" # and 
 
             embeds.append(discord.Embed(title=movers[current_mover_index-1]))
             other_index = 0
             if key.lower() in [item.lower() for item in movers] : continue
         if current_mover_index != 0 and movers[current_mover_index-1] == "EX+ Requirements" :
-            print(f"key\n------------\n{key}\n")
             description += key + "\n"
-            print(f"description\n-----------\n{description}\n")
             continue
         if value == 'nan' : continue
         role = discord.utils.get(all_roles, name=key)
