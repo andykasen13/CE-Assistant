@@ -880,8 +880,10 @@ class RequestCEGame(discord.ui.Modal):
         random_button = discord.ui.Button(emoji=dice_emoji)
         async def random_callback(interaction : discord.Interaction) :
             await interaction.response.defer(ephemeral=True)
+            database_name = await get_mongo('name')
             r = random.choice(game_list)
             r = f"Randomly selected: [{database_name[r]['Name']}](https://cedb.me/game/{r})"
+            del database_name
             return await interaction.followup.send(r)
         random_button.callback = random_callback
         view.add_item(random_button)
@@ -893,14 +895,34 @@ class RequestCEGame(discord.ui.Modal):
             await interaction.followup.send('Too many games!')
 
 
-@tree.command(name='test-moda', description='fhsdjaiklu', guild=discord.Object(id=guild_ID))
+@tree.command(name='game-list', description='Get a list of games that meet certain queries!', guild=discord.Object(id=guild_ID))
 async def testagain(interaction : discord.Interaction) :
     await interaction.response.send_modal(RequestCEGame())
 
 
 
 
+@tree.command(name="bounty", description="Adjust bounty points and/or bounty-related Roles!", guild=discord.Object(id=guild_ID))
+@app_commands.describe(function="Whether you'd like to add points or remove them")
+@app_commands.describe(user="The user you'd like to adjust the bounty points/roles of")
+@app_commands.describe(points="The amount of points you'd like to add/remove")
+@app_commands.describe(role="The role you'd like to allow the user access to")
+async def bounty(interaction : discord.Interaction, function : Literal["add", "remove"], user : discord.Member, points : int = 0, role : discord.Role = None):
+    await interaction.response.defer()
+    
+    # get dbU and ce-id
+    database_user = await get_mongo('user')
+    ce_id = await get_ce_id(user.id)
+    if ce_id == None : return await interaction.followup.send(f"<@{user.id}> is not registered in CE Assistant's database!")
 
+    # check if the user has bounty points already
+    if 'Bounty Points' not in database_user[ce_id] :
+        database_user[ce_id]['Bounty Points'] = 0
+        await dump_mongo('user', database_user)
+        
+    if function == "remove" and points > database_user[ce_id]['Bounty Points'] : 
+        return await interaction.followup.send(f"<@{user.id}> has {database_user[ce_id]['Bounty Points']} bounty points!")
+    
 
 
 
