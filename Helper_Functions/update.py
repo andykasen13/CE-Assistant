@@ -178,7 +178,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             if("Achievements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Achievements']
             if("Requirements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Requirements']
             if "Description"  in database_name[game]['Primary Objectives'][dbN_objective] :  del database_name[game]['Primary Objectives'][dbN_objective]['Description']
-            if "Name"         in database_name[game]['Primary Objectives'][dbN_objective] :  del database_name[game]['Primary Objectives'][dbN_objective]['Description']
+            if "Name"         in database_name[game]['Primary Objectives'][dbN_objective] :  del database_name[game]['Primary Objectives'][dbN_objective]['Name']
             database_name[game]['Primary Objectives'][dbN_objective] = database_name[game]['Primary Objectives'][dbN_objective]['Point Value']
 
 
