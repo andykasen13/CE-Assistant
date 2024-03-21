@@ -14,12 +14,15 @@ from Helper_Functions.mongo_silly import *
 # -------------------------------------------- BUTTONS --------------------------------------------- #
 # -------------------------------------------------------------------------------------------------- #
 
-async def get_buttons(view : discord.ui.View, embeds):
+async def get_buttons(view : discord.ui.View, embeds : list[discord.Embed]):
     currentPage = 1
     page_limit = len(embeds)
     buttons = [discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False), discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)]
     view.add_item(buttons[1])
     view.add_item(buttons[0])
+
+    for i, embed in enumerate(embeds):
+        embed.set_footer(text=f"Page {i+1} of {page_limit}")
 
     async def hehe(interaction):
         return await callback(interaction, num=1)

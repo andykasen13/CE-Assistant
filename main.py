@@ -46,7 +46,7 @@ from Helper_Functions.mongo_silly import get_mongo, dump_mongo, get_unix, collec
 from Helper_Functions.mongo_silly import *
 from Helper_Functions.mongo_silly import _in_ce
 from Helper_Functions.os import restart, add_to_windows_startup
-from Helper_Functions.spreadsheet import csv_conversion
+from Helper_Functions.spreadsheet import csv_conversion, csv_conversion_roles
 
 
 # ---------- command imports --------------
@@ -1708,7 +1708,7 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
     groups = array2[1]
 
     # get site achievements
-    site_achievements_embed = await check_site_achievements(user)
+    #site_achievements_embed = await check_site_achievements(user)
 
     # tier and genre stuff
     stupid_horribleness = {
@@ -1776,39 +1776,39 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
     mainButton = discord.ui.Button(label="Main", disabled=True)
     rollButton = discord.ui.Button(label="Rolls", disabled=False)
     crButton = discord.ui.Button(label="CR", disabled=False)
-    siteButton = discord.ui.Button(label="Site Achievements", disabled=False)
+    #siteButton = discord.ui.Button(label="Site Achievements", disabled=False)
     async def mainCallback(interaction : discord.Interaction):
         rollButton.disabled = False
         crButton.disabled = False
         mainButton.disabled = True
-        siteButton.disabled = False
+        #siteButton.disabled = False
         await interaction.response.edit_message(embed=main_embed, view=view)
     async def rollCallback(interaction : discord.Interaction):
         mainButton.disabled = False
         rollButton.disabled = True
         crButton.disabled = False
-        siteButton.disabled = False
+        #siteButton.disabled = False
         await interaction.response.edit_message(embed=roll_embed, view=view)
     async def crCallback(interaction : discord.Interaction):
         mainButton.disabled = False
         rollButton.disabled = False
         crButton.disabled = True
-        siteButton.disabled = False
+        #siteButton.disabled = False
         await interaction.response.edit_message(embed=cr_embed, view=view)
     async def siteCallback(interaction : discord.Interaction) :
         mainButton.disabled = False
         rollButton.disabled = False
         crButton.disabled = False
-        siteButton.disabled = True
-        await interaction.response.edit_message(embed=site_achievements_embed, view=view)
+        #siteButton.disabled = True
+        #await interaction.response.edit_message(embed=site_achievements_embed, view=view)
     mainButton.callback = mainCallback
     rollButton.callback = rollCallback
     crButton.callback = crCallback
-    siteButton.callback = siteCallback
+    #siteButton.callback = siteCallback
     view.add_item(mainButton)
     view.add_item(rollButton)
     view.add_item(crButton)
-    view.add_item(siteButton)
+    #view.add_item(siteButton)
 
     # and send the message
     return await interaction.followup.send(embed=main_embed, view=view)
@@ -1863,6 +1863,56 @@ async def steal_schmoles_schmeat(interaction):
     await interaction.response.send_message('stealing schmoles schmeat')
     await csv_conversion()
 
+@tree.command(name="role-info", description="See information about all the earnable roles in CE!", guild=discord.Object(id=guild_ID))
+async def role_info(interaction : discord.Interaction) :
+    # defer the message
+    await interaction.response.defer(ephemeral=True)
+    
+    # grab the final dict
+    final_dict = await csv_conversion_roles()
+    movers : list[str] = ['Tier Specific', 'Category Specific', 'Game Specific', 'Special', 'Casino', 
+                          'Scouting / Bounty Hunter', 'Community', 'Leaderboard Specific', 'Administrative / Other', 'EX+ Requirements']
+    index : int = 0
+    embeds : list[discord.Embed] = [discord.Embed(title="Rank")]
+    other_index : int = 0
+    description : str = ""
+    current_mover_index : int = 0
+    all_roles = list(interaction.guild.roles)
+    for key, value in final_dict :
+        #print(key + " - " + value)
+        if key == "nan" or key == "Last Updated" or key == "Rank" : continue
+        if key.lower() in [item.lower() for item in movers] or other_index >= 10:
+            
+            index += 1
+            embeds[index - 1].description = description
+            description = ""
+            if key.lower() in [item.lower() for item in movers]:
+                current_mover_index += 1
+                if value != "nan" : description += f"__{value}__\n"
+
+            embeds.append(discord.Embed(title=movers[current_mover_index-1]))
+            other_index = 0
+            if key.lower() in [item.lower() for item in movers] : continue
+        if current_mover_index != 0 and movers[current_mover_index-1] == "EX+ Requirements" :
+            print(f"key\n------------\n{key}\n")
+            description += key + "\n"
+            print(f"description\n-----------\n{description}\n")
+            continue
+        if value == 'nan' : continue
+        role = discord.utils.get(all_roles, name=key)
+        if role == None : role = key
+        else : 
+            all_roles.remove(role)
+            role = f"<@&{role.id}>"
+        description += f"{role} - {value}\n"
+        other_index += 1
+    
+    embeds[index].description = description
+
+    view = discord.ui.View(timeout=600)
+
+    await get_buttons(view, embeds)
+    await interaction.followup.send(embed=embeds[0], view=view)
 
 
 # ----------------------------------- LOG IN ----------------------------
