@@ -907,9 +907,8 @@ async def testagain(interaction : discord.Interaction) :
 @app_commands.describe(function="Whether you'd like to add points or remove them")
 @app_commands.describe(user="The user you'd like to adjust the bounty points/roles of")
 @app_commands.describe(points="The amount of points you'd like to add/remove")
-@app_commands.describe(role="The role you'd like to allow the user access to")
-async def bounty(interaction : discord.Interaction, function : Literal["add", "remove"], user : discord.Member, points : int = 0, role : discord.Role = None):
-    await interaction.response.defer()
+async def bounty(interaction : discord.Interaction, user : discord.Member, function : Literal["add", "remove"], points : int):
+    await interaction.response.defer() # defer the message
     
     # get dbU and ce-id
     database_user = await get_mongo('user')
@@ -920,13 +919,30 @@ async def bounty(interaction : discord.Interaction, function : Literal["add", "r
     if 'Bounty Points' not in database_user[ce_id] :
         database_user[ce_id]['Bounty Points'] = 0
         await dump_mongo('user', database_user)
-        
-    if function == "remove" and points > database_user[ce_id]['Bounty Points'] : 
-        return await interaction.followup.send(f"<@{user.id}> has {database_user[ce_id]['Bounty Points']} bounty points!")
-    
+        database_user = await get_mongo('user')
+
+    # points removed
+    if function == "remove" : 
+        if points > database_user[ce_id]['Bounty Points']:
+            return await interaction.followup.send(f"<@{user.id}> has {database_user[ce_id]['Bounty Points']} bounty points. You can't remove {points} bounty points!")
+        database_user[ce_id]['Bounty Points'] -= points
+
+    # points added
+    elif function == "add" :
+        database_user[ce_id]['Bounty Points'] += points
+
+    await dump_mongo('user', database_user)
+    return await interaction.followup.send(f"{points} have been {function}" + "d" if function == "remove" else "ed" 
+                                           + f" to <@{user.id}>'s Bounty Points for a total of {database_user[ce_id]['Bounty Points']}.")
 
 
-
+@tree.command(name="user-data", description="Get CE Assistant's data on any user", guild=discord.Object(id=guild_ID))
+async def getuserdata(interaction : discord.Interaction, user : discord.Member) :
+    await interaction.response.defer(ephemeral=True)
+    ce_id = await get_ce_id(user.id)
+    if ce_id == None : return await interaction.followup.send('user not in database')
+    database_user = await get_mongo('user')
+    return await interaction.followup.send(f"{database_user[ce_id]}")
 
 
 
