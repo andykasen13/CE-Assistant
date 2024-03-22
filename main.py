@@ -942,7 +942,8 @@ async def getuserdata(interaction : discord.Interaction, user : discord.Member) 
     ce_id = await get_ce_id(user.id)
     if ce_id == None : return await interaction.followup.send('user not in database')
     database_user = await get_mongo('user')
-    return await interaction.followup.send(file=discord.File(io.BytesIO(str(database_user[ce_id])), "data.json"))
+    f = json.dumps(database_user[ce_id]).encode('utf-8')
+    return await interaction.followup.send(file=discord.File(io.BytesIO(f), "data.json"))
 
 
 
