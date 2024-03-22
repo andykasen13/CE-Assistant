@@ -55,6 +55,9 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     for eventInfo in database_user[part_user_id]['Current Rolls'] :
         if((eventInfo['Event Name'] == event)) : 
             return await interaction.followup.send(embed=discord.Embed(title=f"Your partner is already participating in {event}!"))
+    
+    if event in database_user[int_user_id]['Cooldowns'] : return await interaction.followup.send(f"You are on cooldown until <t:{database_user[int_user_id]["Cooldowns"][event]}>!")
+    if event in database_user[part_user_id]['Cooldowns'] : return await interaction.followup.send(f"Your partner is on cooldown until <t:{database_user[part_user_id]["Cooldowns"][event]}>!")
 
     database_user[int_user_id]['Pending Rolls'][event] = get_unix(minutes=10)
     database_user[part_user_id]['Pending Rolls'][event] = get_unix(minutes=10)
