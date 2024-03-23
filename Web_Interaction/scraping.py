@@ -1057,7 +1057,6 @@ def get_by_tier(games):
     }
     
     for game in games:
-            if game == "_id" : continue
             if games[game]['Tier'] == "Tier 5":
                 tot = 0
                 for obj in games[game]['Primary Objectives']:
