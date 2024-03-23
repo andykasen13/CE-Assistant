@@ -74,7 +74,12 @@ def single_scrape(curator_count):
 
     return [database_name, curator_count, database_tier]
 
-def single_scrape_v2(curator_count) :
+def single_scrape_v2(curator_count) -> list :
+    """
+    Returns
+    --------
+    [`database_name`, `curator_count`, `database_tier`]
+    """
 
     done_fetching = False
     j = []
@@ -202,7 +207,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
     number = 0
     updated_games = []
     game_tracker = list(new_data.keys())
-    game_tracker.remove('_id')
 
     """
     theron i love you but you did a shit ass job naming these variables so here's what they all mean
@@ -439,7 +443,6 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             """ 
             # check if the game's name was changed
             for other_game in new_data:
-                if other_game == '_id' : continue
                 if game['id'] == new_data[other_game]['CE ID']:
                     game_tracker.remove(other_game['name'])
                     del(new_data[other_game])

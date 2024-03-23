@@ -93,7 +93,6 @@ else :
 async def aaaa_auto(interaction : discord.Interaction, current:str) -> typing.List[app_commands.Choice[str]]:
     data = []
     database_name = await get_mongo("name")
-    if '_id' in database_name : del database_name['_id']
 
     for game in database_name:
         name : str = database_name[game]['Name']
@@ -655,6 +654,11 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 @to_thread
 def scrape_thread_call(curator_count):
+    """
+    Returns
+    --------
+    [`database_name`, `curator_count`, `database_tier`]
+    """
     return single_scrape_v2(curator_count)
 
 
@@ -665,10 +669,6 @@ async def scrape(interaction : discord.Interaction):
     curator_count = await get_mongo('curator')
 
     objects = await scrape_thread_call(curator_count)
-
-    # add the id back to database_name
-    objects[0]['_id'] = mongo_ids['name']
-    objects[2]['_id'] = mongo_ids["tier"]
     
     # dump the databases back onto mongoDB
     dump1 = await dump_mongo('curator', objects[1]) #curator
@@ -823,9 +823,7 @@ class RequestCEGame(discord.ui.Modal):
             else: description_str += f"✅Ownership recieved: {owned}"
 
         database_name = await get_mongo('name')
-        del database_name['_id']
         database_user = await get_mongo('user')
-        if '_id' in database_user: del database_user['_id']
         game_list : list[str] = []
 
         ce_id = get_ce_id_normal(interaction.user.id, database_user)
@@ -1224,7 +1222,6 @@ async def register(interaction : discord.Interaction, ce_id: str) :
 
     # Make sure user isn't already registered
     for user in database_user :
-        if user == '_id' : continue
         if(database_user[user]['Discord ID'] == interaction.user.id) : return await interaction.followup.send(
             "You are already registered in the database!")
         elif(database_user[user]['CE ID'] == ce_id) : return await interaction.followup.send(

@@ -149,10 +149,13 @@ ce_squared_id = "76574ec1-42df-4488-a511-b9f2d9290e5d"
 _mongo_names = Literal["name_old", "tier", "curator", "user", "tasks", "unfinished", "name", "steamhunters"]
 async def get_mongo(title : _mongo_names):
     """Returns the MongoDB associated with `title`."""
-    return await collection.find_one({'_id' : mongo_ids[title]})
+    _db = await collection.find_one({'_id' : mongo_ids[title]})
+    del _db["_id"]
+    return _db
 
 async def dump_mongo(title : _mongo_names, data) :
     """Dumps the MongoDB given by `title` and passed by `data`."""
+    if "_id" not in data : data["_id"] = mongo_ids[title]
     return await collection.replace_one({'_id' : mongo_ids[title]}, data)
 
 
@@ -193,7 +196,6 @@ async def get_ce_id(discord_id : str) -> str | None:
 #@overload
 def get_ce_id_normal(discord_id : str, database_user) -> str | None :
     """(SYNC) Takes in a Discord ID (`347900490668965888`) and returns their CE ID (`835afaad-0059-4e39-b24f-24b2c76b1d08`), or `None` if they aren't registered."""
-    if '_id' in database_user : del database_user['_id']
     for user in database_user:
         if database_user[user]['Discord ID'] == discord_id : return user
 

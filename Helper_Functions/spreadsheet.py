@@ -54,8 +54,6 @@ async def csv_conversion():
 
 async def dataframe_to_dict(slimmed_df):
     final_data = {}
-    final_data['_id'] = mongo_ids['steamhunters']
-
 
     for index, row in slimmed_df.iterrows():
         final_data[str(int(row["sh_appid"]))] = row['sh_median']

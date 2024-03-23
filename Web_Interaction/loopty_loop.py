@@ -180,15 +180,15 @@ async def scrape(channel):
 
     # thread call scraping the new data
     updates = await thread_scrape(database_name, curator_count, unfinished) #asyncio.to_thread(thread_scrape)
+    """ [{embeds}, number(?), database_name, curator_count, unfinished_games, database_tier]]
+    """
 
-    if updates == None : return "empty scrape?"
+    if updates == None : return "empty scrape"
 
     # dump the data back onto mongodb
     dump1 = await dump_mongo("name", updates[2]) # name
-    updates[3]['_id'] = mongo_ids['curator']
     dump2 = await dump_mongo("curator", updates[3]) # curator
     dump2andahalf = await dump_mongo('unfinished', updates[4]) # unfinished
-    updates[5]['_id'] = mongo_ids['tier']
     dump3 = await dump_mongo('tier', updates[5]) # tier
 
     # send out each update
