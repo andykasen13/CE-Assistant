@@ -178,6 +178,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
             if("Requirements" in database_name[game]['Primary Objectives'][dbN_objective]) : del database_name[game]['Primary Objectives'][dbN_objective]['Requirements']
             if "Description"  in database_name[game]['Primary Objectives'][dbN_objective] :  del database_name[game]['Primary Objectives'][dbN_objective]['Description']
             if "Name"         in database_name[game]['Primary Objectives'][dbN_objective] :  del database_name[game]['Primary Objectives'][dbN_objective]['Name']
+            if "CE ID"        in database_name[game]['Primary Objectives'][dbN_objective] :  del database_name[game]['Primary Objectives'][dbN_objective]["CE ID"]
             database_name[game]['Primary Objectives'][dbN_objective] = database_name[game]['Primary Objectives'][dbN_objective]['Point Value']
 
 
@@ -356,22 +357,10 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
                 continue
 
             # formatting int game
-            for dbN_objective in database_name[int_game]['Primary Objectives'] :
-                if(type(database_name[int_game]['Primary Objectives'][dbN_objective]) is int) : continue
-                if("Achievements" in database_name[int_game]['Primary Objectives'][dbN_objective]) : del database_name[int_game]['Primary Objectives'][dbN_objective]['Achievements']
-                if("Requirements" in database_name[int_game]['Primary Objectives'][dbN_objective]) : del database_name[int_game]['Primary Objectives'][dbN_objective]['Requirements']
-                del database_name[int_game]['Primary Objectives'][dbN_objective]['Description']
-                database_name[int_game]['Primary Objectives'][dbN_objective] = database_name[int_game]['Primary Objectives'][dbN_objective]['Point Value']
-            #print(database_name[int_game]['Primary Objectives'])
-            #print(user_dict[ce_id]['Owned Games'][int_game]['Primary Objectives'])
+            format_game(int_game)
 
             # formatting part game
-            for dbN_objective in database_name[other_game]['Primary Objectives'] :
-                if(type(database_name[other_game]['Primary Objectives'][dbN_objective]) is int) : continue
-                if("Achievements" in database_name[other_game]['Primary Objectives'][dbN_objective]) : del database_name[other_game]['Primary Objectives'][dbN_objective]['Achievements']
-                if("Requirements" in database_name[other_game]['Primary Objectives'][dbN_objective]) : del database_name[other_game]['Primary Objectives'][dbN_objective]['Requirements']
-                del database_name[other_game]['Primary Objectives'][dbN_objective]['Description']
-                database_name[other_game]['Primary Objectives'][dbN_objective] = database_name[other_game]['Primary Objectives'][dbN_objective]['Point Value']
+            format_game(other_game)
             
             # figure out who completed what game
             winner = ""

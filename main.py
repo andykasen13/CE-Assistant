@@ -1735,6 +1735,7 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
 
     # pull data
     user_api_data = get_api("user", ce_id)
+    if user_api_data == None : return await interaction.followup.send("Page not pulled correctly. Please try again in 10 seconds.")
     database_user = await get_mongo('user')
     database_name = await get_mongo('name')
 
@@ -1799,13 +1800,13 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
         color=0xff9494
     )
     main_embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]['Rank']]}", inline=True)
-    main_embed.add_field(name="Current Points", value=f"{total_points} {icons['Points']} - CR: {str(total_cr)}", inline=True)
+    main_embed.add_field(name="Current Points", value=f"{total_points} {icons['Points']} - CR: {str(total_cr)} - Casino Score: {database_user[ce_id]['Casino Score']}", inline=True)
     main_embed.add_field(name="Recent Completions", value=recentsstr, inline=False)
     main_embed.add_field(name="Points", value=f"Points this month ({calendar.month_name[curr_month]}) : {points} {icons['Points']}\nPoints last month ({calendar.month_name[past_month]}) : {points_old} {icons['Points']}", inline=False)
     main_embed.add_field(name="Completions", value=tiergenrestr, inline=True)
     #embed.set_image(url=user.avatar.url)
     main_embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/user/{ce_id}", icon_url=user.avatar.url)
-    main_embed.set_footer(text="CE Assistant", icon_url=final_ce_icon)
+    main_embed.set_footer(text="If this doesn't look right, try using /update.", icon_url=final_ce_icon)
 
     # make roll embed
     roll_embed = checkRollsEmbed(user, database_name, database_user, ce_id)
