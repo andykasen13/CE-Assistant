@@ -1800,7 +1800,7 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
         color=0xff9494
     )
     main_embed.add_field(name="User", value=f"<@{user.id}> {icons[database_user[ce_id]['Rank']]}", inline=True)
-    main_embed.add_field(name="Current Points", value=f"{total_points} {icons['Points']} - CR: {str(total_cr)} - Casino Score: {database_user[ce_id]['Casino Score']}", inline=True)
+    main_embed.add_field(name="Current Points", value=f"{total_points} {icons['Points']} - CR: {str(total_cr)}\nCasino Score: {database_user[ce_id]['Casino Score']}", inline=True)
     main_embed.add_field(name="Recent Completions", value=recentsstr, inline=False)
     main_embed.add_field(name="Points", value=f"Points this month ({calendar.month_name[curr_month]}) : {points} {icons['Points']}\nPoints last month ({calendar.month_name[past_month]}) : {points_old} {icons['Points']}", inline=False)
     main_embed.add_field(name="Completions", value=tiergenrestr, inline=True)
