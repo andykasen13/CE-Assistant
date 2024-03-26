@@ -9,7 +9,7 @@ from Helper_Functions.mongo_silly import *
 from Helper_Functions.end_time import months_to_days
 
 
-def update_p(user_id : int, roll_ended_name, database_user, database_name) :
+def update_p(user_id : int, roll_ended_name, database_user, database_name, user_ce_data = None) :
     
     
     cooldowns = {
@@ -40,20 +40,15 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     # Set up total-points
     total_points = 0
 
-    # Find the users data
-    user = -1
-    for for_user in database_user :
-        if(database_user[for_user]['Discord ID'] == user_id) : 
-            user = for_user
-            break
+    # grab ce-id
+    if user_ce_data == None : 
+        ce_id = get_ce_id_normal(user_id, database_user)
 
-    # If the user has no data, tell them to register
-    if(user == -1) : 
-        
-        return "Unregistered"
+        # if no ce-id, return 'unregistered'
+        if(ce_id == None): return "Unregistered"
 
-    # Grab the CE-ID
-    ce_id = user
+    # if no discord ID was provided, try and grab it from database_user
+    if (user_id == 0) : user_id = database_user[ce_id]['Discord ID']
 
     # Set up the new user-dict
     user_dict = {
@@ -76,10 +71,11 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     returns = []
 
     # Grab user info from CE API
-    try:
-        user_ce_data = get_api("user", ce_id)
-    except:
-        return "failed"
+    if user_ce_data == None:
+        try:
+            user_ce_data = get_api("user", ce_id)
+        except:
+            return "failed"
     
 
     # Go through owned games in CE JSON
@@ -135,12 +131,12 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
 
     user_dict[ce_id]['Rank'] = rank
 
-    user_dict[ce_id]['Current Rolls'] = database_user[user]['Current Rolls']
-    user_dict[ce_id]['Completed Rolls'] = database_user[user]['Completed Rolls']
-    user_dict[ce_id]['Cooldowns'] = database_user[user]['Cooldowns']
-    user_dict[ce_id]['Casino Score'] = database_user[user]['Casino Score']
-    user_dict[ce_id]['Pending Rolls'] = database_user[user]['Pending Rolls']
-    if 'Bounty Points' in database_user[user] : user_dict[ce_id]['Bounty Points'] = database_user[user]['Bounty Points']
+    user_dict[ce_id]['Current Rolls'] = database_user[ce_id]['Current Rolls']
+    user_dict[ce_id]['Completed Rolls'] = database_user[ce_id]['Completed Rolls']
+    user_dict[ce_id]['Cooldowns'] = database_user[ce_id]['Cooldowns']
+    user_dict[ce_id]['Casino Score'] = database_user[ce_id]['Casino Score']
+    user_dict[ce_id]['Pending Rolls'] = database_user[ce_id]['Pending Rolls']
+    if 'Bounty Points' in database_user[ce_id] : user_dict[ce_id]['Bounty Points'] = database_user[ce_id]['Bounty Points']
 
     
 
@@ -166,7 +162,6 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name) :
     
     # removed done pendings
     for event in pendings_to_remove:
-        returns.append(f"casino: <@{database_user[ce_id]['Discord ID']}>, you can now request {event} again.")
         print('removed pending')
         del user_dict[ce_id]['Pending Rolls'][event]
 

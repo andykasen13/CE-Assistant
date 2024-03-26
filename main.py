@@ -1369,6 +1369,7 @@ async def update(interaction : discord.Interaction) :
 
     log_channel = client.get_channel(log_id)
     casino_channel = client.get_channel(casino_id)
+    private_log_channel = client.get_channel(private_log_id)
     
     # rank silliness
     ranks = ["E Rank", "D Rank", "C Rank", "B Rank", "A Rank", "S Rank", "SS Rank", "SSS Rank", "EX Rank"]
@@ -1396,7 +1397,7 @@ async def update(interaction : discord.Interaction) :
             print('printing traceback failed lol')
         return await interaction.followup.send("something went wrong. please ping andy!!\n" + str(e))
     if returns == "failed" : return await interaction.followup.send("Something went wrong with the API. Please try again in five minutes.")
-    if returns == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register with the link to your CE page.")
+    if returns == "Unregistered" : return await interaction.followup.send("You have not registered. Please use /register` with the link to your CE page.")
 
     dump = await dump_mongo('user', returns[0])
     del returns[0]
@@ -1434,7 +1435,7 @@ async def update(interaction : discord.Interaction) :
                     if rankrole in interaction.user.roles : await interaction.user.remove_roles(rankrole)
                     if rankrole.name == return_value[6::] : 
                         await interaction.user.add_roles(rankrole)
-                        await log_channel.send("Congratulations <@{}>! You've ranked up to {}!".format(interaction.user.id, return_value[6::]))
+                        await casino_channel.send("Congratulations <@{}>! You've ranked up to {}!".format(interaction.user.id, return_value[6::]))
 
         
         # log channel shit
@@ -1447,7 +1448,7 @@ async def update(interaction : discord.Interaction) :
 
         # else
         else :
-            await log_channel.send("BOT ERROR: recieved unrecognized update code: \n'{}'".format(return_value))
+            await private_log_channel.send("BOT ERROR: recieved unrecognized update code: \n'{}'".format(return_value))
             
 
 

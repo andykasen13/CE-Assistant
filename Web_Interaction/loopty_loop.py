@@ -37,6 +37,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from Web_Interaction.curator import checkCuratorCount
 from Web_Interaction.scraping import get_games
 from Helper_Functions.mongo_silly import *
+from Helper_Functions.update import update_p
 
 
 # dedicate times every --fifteen-- thirty minutes
@@ -130,6 +131,15 @@ async def master_loop(client : discord.Client):
         await log.send(scrape_message)
 
     print('done\n')
+    
+    return
+
+    try:
+        await user_scrape(client)
+    except:
+        ""
+
+    
 
 
 async def curate(channel):
@@ -211,3 +221,63 @@ async def scrape(channel):
 def thread_scrape(database_name, curator_count, unfinished):
     # call to the scrape file
     return get_games(database_name, curator_count, unfinished)
+
+
+async def user_scrape(client : discord.Client):
+    """Takes in the `discord.Client` associated with the bot and sends messages."""
+    # databases
+    database_name = await get_mongo('name')
+    database_user = await get_mongo('user')
+
+    # channels
+    casino_channel = client.get_channel(casino_id)
+    log_channel = client.get_channel(log_id)
+    private_log_channel = client.get_channel(private_log_id)
+
+    # get returns
+    returns = thread_user(database_name, database_user)
+
+    # go through the returns
+    for return_value in returns :
+        # you've reached the end
+        if return_value == "Updated" : continue
+
+        # change the rank
+        elif return_value[:5:] == "rank:" : continue
+
+        # log channel shit
+        elif return_value[:4:] == "log:" :
+            await log_channel.send(return_value[5::])
+
+        # casino channel shit
+        elif return_value[:7:] == "casino:":
+            await casino_channel.send(return_value[8::])
+
+        # else
+        else :
+            await private_log_channel.send("BOT ERROR: recieved unrecognized update code: \n'{}'".format(return_value))
+            
+
+@to_thread
+def thread_user(database_name, database_user):
+    json_response = []
+    i = 0
+    done_fetching = False
+    returns : list[str] = []
+    while (not done_fetching):
+        try:
+            api_response = requests.get("https://cedb.me/api/users/all?limit=100&offset={}".format(str((i-1)*100)))
+            j = json.loads(api_response.text)
+            json_response += j
+            i += 1
+            done_fetching = len(j) == 0
+        except:
+            print("fetching failed... :(")
+            return None
+    
+    for user in json_response:
+        if user['id'] not in database_user : continue
+        try: returns += update_p(0, "", database_user, database_name, challenge_enthusiasts_id=user)
+        except: continue
+
+    return returns
