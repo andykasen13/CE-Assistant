@@ -266,7 +266,7 @@ def thread_user(database_name, database_user):
     returns : list[str] = []
     while (not done_fetching):
         try:
-            api_response = requests.get("https://cedb.me/api/users/all?limit=100&offset={}".format(str((i-1)*100)))
+            api_response = requests.get("https://cedb.me/api/users/all?limit=100offset={}".format(str((i-1)*100)))
             j = json.loads(api_response.text)
             json_response += j
             i += 1
