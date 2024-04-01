@@ -132,6 +132,7 @@ async def master_loop(client : discord.Client):
 
     print('done\n')
     
+    return
 
 
     try:
@@ -275,9 +276,12 @@ def thread_user(database_name, database_user):
             print("fetching failed... :(")
             return None
     
+    print('done fetching')
     for user in json_response:
         if user['id'] not in database_user : continue
-        try: returns += update_p(0, "", database_user, database_name, challenge_enthusiasts_id=user)
+        try: returns += update_p(0, "", database_user, database_name, user_ce_data=user)
         except: continue
+    
+    print('done updating')
 
     return returns
