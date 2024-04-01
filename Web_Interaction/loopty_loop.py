@@ -235,7 +235,7 @@ async def user_scrape(client : discord.Client):
     private_log_channel = client.get_channel(private_log_id)
 
     # get returns
-    returns = thread_user(database_name, database_user)
+    returns = await thread_user(database_name, database_user)
 
     # go through the returns
     for return_value in returns :
