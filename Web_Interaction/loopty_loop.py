@@ -132,7 +132,7 @@ async def master_loop(client : discord.Client):
 
     print('done\n')
     
-    return
+
 
     try:
         await user_scrape(client)
