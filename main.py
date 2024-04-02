@@ -625,7 +625,7 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
         return await interaction.followup.send("<@{}> is not registered in the CE Assistant database.".format(user.id))
     
     if roll_event in database_user[ce_id]['Pending Rolls'] : del database_user[ce_id]['Pending Rolls'][roll_event]
-    if roll_event in database_user[ce_id]['Cooldowns'] : del database_user[ce_id]['Pending Rolls'][roll_event]
+    if roll_event in database_user[ce_id]['Cooldowns'] : del database_user[ce_id]['Cooldowns'][roll_event]
     await dump_mongo('user', database_user)
     
     # find the roll
