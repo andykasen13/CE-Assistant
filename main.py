@@ -632,7 +632,7 @@ async def purge_roll(interaction : discord.Interaction, user : discord.User, rol
     r_index = -1
     for i, r in enumerate(database_user[ce_id]['Current Rolls']):
         if r['Event Name'] == roll_event : r_index = i
-    if r_index == -1 and roll_event not in database_user[ce_id]['Cooldowns']:
+    if r_index == -1 and roll_event:
         return await interaction.followup.send("<@{}> does not have {} in their Current Rolls array.".format(user.id, roll_event))
 
 
