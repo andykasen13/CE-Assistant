@@ -206,11 +206,11 @@ def get_api(type : _ce_api_types, id : str) -> dict | None:
     try:
         response = requests.get(f"https://cedb.me/api/{type}/{id}")
         data = json.loads(response.text)
+        del response
     except Exception as e:
         print(e)
         data = None
-
-    del response
+    
     return data
 
 # ----------------------------------------------------------------------------------------------------------------------------
