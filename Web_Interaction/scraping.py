@@ -500,7 +500,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                     }
                     embed['Embed'].set_image(url='attachment://image.png')
                     embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
-                    embed['Embed'].set_thumbnail(url=ce_hex_icon)
+                    embed['Embed'].set_thumbnail(url=ce_mountain_icon)
                     embed['Embed'].set_footer(text="CE Assistant",
                         icon_url=final_ce_icon)
                 
@@ -660,7 +660,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
             }
         embed['Embed'].set_image(url='attachment://image.png')
         embed['Embed'].set_author(name="Challenge Enthusiasts", url=("https://cedb.me/game/" + new_game['CE ID']), icon_url=icon)
-        embed['Embed'].set_thumbnail(url=ce_hex_icon)
+        embed['Embed'].set_thumbnail(url=ce_mountain_icon)
         embed['Embed'].set_footer(text="CE Assistant",
             icon_url=final_ce_icon)
         
