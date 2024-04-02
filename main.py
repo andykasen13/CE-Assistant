@@ -662,6 +662,13 @@ def scrape_thread_call(curator_count):
     """
     return single_scrape_v2(curator_count)
 
+"""
+@tree.command(name="jaaaarviiiissssss", description="make daddy fix what he broke", guild=discord.Object(id=guild_ID))
+async def jarvis(interaction : discord.Interaction):
+    general_channel = client.get_channel(639112509445505046)
+    await general_channel.send("<@687876105473884174> fix it")
+"""
+
 
 @tree.command(name="scrape", description="Force update every game without creating embeds. DO NOT RUN UNLESS NECESSARY.", guild=discord.Object(id=guild_ID))
 async def scrape(interaction : discord.Interaction):
