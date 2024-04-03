@@ -15,6 +15,7 @@ from Helper_Functions.mongo_silly import *
 # -------------------------------------------------------------------------------------------------- #
 
 async def get_buttons(view : discord.ui.View, embeds : list[discord.Embed]):
+    if len(embeds) == 1 : return
     currentPage = 1
     page_limit = len(embeds)
     buttons = [discord.ui.Button(label=">", style=discord.ButtonStyle.green, disabled=False), discord.ui.Button(label="<", style=discord.ButtonStyle.red, disabled=True)]
