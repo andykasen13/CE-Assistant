@@ -194,7 +194,7 @@ def get_rollable_game(avg_completion_time_limit,
                 continue
 
             # ---- Check price ----
-            if (gamePrice > price_limit) :
+            if (gamePrice > price_limit and returned_game not in user_info['Owned Games']) :
                 del database_tier[tier_number][genre][random_num]
                 print("Too pricey.")
                 continue
