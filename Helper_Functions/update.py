@@ -628,7 +628,11 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name, user_
             # if its forward thinking, check the stage and run accordingly
             if(current_roll['Event Name'] == "Fourward Thinking") :
                 if len(current_roll['Games']) == 4 : 
-                    returns.append("log: Congratulations to <@{}>! They have completed Fourward Thinking!".format(user_dict[ce_id]['Discord ID']))
+                    string = "log: Congratulations to <@{}>! They have completed Fourward Thinking!\n".format(user_dict[ce_id]['Discord ID'])
+                    for i, game in enumerate(current_roll['Games']):
+                        string += (f"{icons[f'Tier {i+1}']}: {database_name[game]['Name']}\n")
+                        string += "nice work :)"
+                    returns.append(string)
                 else: 
                     del current_roll['End Time']
                     returns.append("casino: <@{}>, you have completed the T{} in your Fourward Thinking roll. Use `/solo-roll Fourward Thinking` to move to your next stage!".format(user_dict[ce_id]['Discord ID'], str(len(current_roll['Games']))))
