@@ -409,7 +409,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
             if hm:
                 embed = {
                     'Embed' : discord.Embed(
-                        title="__" + game['name'] + "__ added to the site:", 
+                        title="__ " + game['name'] + " __ added to the site:", 
                         colour= 0x48b474,
                         timestamp=datetime.datetime.now(),
                         description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], num_po, second_part, points, third_part)
@@ -491,7 +491,7 @@ def game_list(new_data, current_dict, unfinished_games : dict):
                 if hm:
                     embed = {
                         'Embed' : discord.Embed(
-                            title="__" + game['name'] + "__ added to the site:", 
+                            title="__ " + game['name'] + " __ added to the site:", 
                             colour= 0x48b474,
                             timestamp=datetime.datetime.now(),
                             description="\n- {} {}\n- {} Primary Objective{} worth {} points{}".format(icons[new_game['Tier']], icons[new_game['Genre']], num_po, second_part, points, third_part)
@@ -595,7 +595,7 @@ def update(new_game, old_game, driver, number, icon, icons, name):
     # ------------------- make final embed -------------------
     embed = {
         'Embed' : discord.Embed(
-            title="__" + name + "__ updated on the site:",
+            title="__ " + name + " __ updated on the site:",
             colour= 0xefd839,
             timestamp=datetime.datetime.now(),
             description=update.strip()
@@ -641,7 +641,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
         if(not removed):
             embed = {
                 'Embed' : discord.Embed(
-                    title="__" + name + "__ updated on the site:",
+                    title="__ " + name + " __ updated on the site:",
                     colour= 0xefd839,
                     timestamp=datetime.datetime.now(),
                     description=objective_info.strip()
@@ -651,7 +651,7 @@ def special_update(new_game, old_game, driver, number, icon, icons, name):
         else:
             embed = {
                 'Embed' : discord.Embed(
-                    title="__" + name + "__ updated on the site:",
+                    title="__ " + name + " __ updated on the site:",
                     colour= 0xefd839,
                     timestamp=datetime.datetime.now(),
                     description=objective_info.strip()

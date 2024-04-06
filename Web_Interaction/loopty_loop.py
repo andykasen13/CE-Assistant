@@ -236,7 +236,11 @@ async def user_scrape(client : discord.Client):
     private_log_channel = client.get_channel(private_log_id)
 
     # get returns
-    returns = await thread_user(database_name, database_user)
+    returns_local = await thread_user(database_name, database_user)
+    returns = returns_local[0]
+    database_user = returns_local[1]
+
+    await dump_mongo('user', database_user)
 
     # go through the returns
     for return_value in returns :
@@ -279,9 +283,13 @@ def thread_user(database_name, database_user):
     print('done fetching')
     for user in json_response:
         if user['id'] not in database_user : continue
-        try: returns += update_p(0, "", database_user, database_name, user_ce_data=user)
-        except: continue
+        try: 
+            returns_local = update_p(0, "", database_user, database_name, user_ce_data=user)
+            database_user = returns_local[0]
+            returns += returns_local[1:]
+        except: 
+            continue
     
     print('done updating')
 
-    return returns
+    return [returns, database_user]

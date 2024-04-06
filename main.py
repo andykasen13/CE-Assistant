@@ -1736,13 +1736,15 @@ async def most_recent_points(interaction : discord.Interaction, user: discord.Us
 @tree.command(name="profile", description="Get general info about anyone in CE!", guild=discord.Object(id=guild_ID))
 async def profile(interaction : discord.Interaction, user : discord.Member = None):
     from Helper_Functions.site_achievements import check_site_achievements
+    # set the og id
+    og_id = interaction.user.id
 
     await interaction.response.defer()
 
     if user == None : user = interaction.user
 
     ce_id = await get_ce_id(user.id)
-    if ce_id == None : return await interaction.followup.send(f"<@{user.id}> is not registered in the CE Assistant database. Please run `/register` with the link to your CE page!")
+    if ce_id == None : return await interaction.followup.send(f"This user is not registered in the CE Assistant database. Please run `/register` with the link to your CE page!")
 
     # pull data
     user_api_data = get_api("user", ce_id)
@@ -1836,24 +1838,28 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
     crButton = discord.ui.Button(label="CR", disabled=False)
     #siteButton = discord.ui.Button(label="Site Achievements", disabled=False)
     async def mainCallback(interaction : discord.Interaction):
+        if interaction.user.id != og_id : return
         rollButton.disabled = False
         crButton.disabled = False
         mainButton.disabled = True
         #siteButton.disabled = False
         await interaction.response.edit_message(embed=main_embed, view=view)
     async def rollCallback(interaction : discord.Interaction):
+        if interaction.user.id != og_id : return
         mainButton.disabled = False
         rollButton.disabled = True
         crButton.disabled = False
         #siteButton.disabled = False
         await interaction.response.edit_message(embed=roll_embed, view=view)
     async def crCallback(interaction : discord.Interaction):
+        if interaction.user.id != og_id : return
         mainButton.disabled = False
         rollButton.disabled = False
         crButton.disabled = True
         #siteButton.disabled = False
         await interaction.response.edit_message(embed=cr_embed, view=view)
     async def siteCallback(interaction : discord.Interaction) :
+        if interaction.user.id != og_id : return
         mainButton.disabled = False
         rollButton.disabled = False
         crButton.disabled = False

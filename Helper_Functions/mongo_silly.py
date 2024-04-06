@@ -160,8 +160,18 @@ async def dump_mongo(title : _mongo_names, data) :
 
 
 # ----- get unix timestamp for x days from now -----
-def get_unix(days = 0, minutes = -1, months = -1) -> int:
-    """Returns a unix timestamp for `days` days (or `minutes` minutes, or `months` months) from the current time."""
+# NOTE: this is technically wrong. old_unix should technically
+#       start the cooldown  from the time the roll STARTS, not when it ends.
+def get_unix(days = 0, minutes = -1, months = -1, old_unix = -1) -> int:
+    """Returns a unix timestamp for `days` days (or `minutes` minutes, or `months` months) from the current time.
+    \nAdditionally, `old_unix` can be passed as a parameter to get `days` days (or `minutes` minutes, or `months` months) from that unix."""
+    # -- old unix passed --
+    if(old_unix != -1) :
+        if (minutes != -1) : return int(minutes * 60) + old_unix
+        elif (months != -1) : return (months_to_days(months))*(86400) + old_unix
+        else : return days * 86400 + old_unix
+
+    # -- old unix NOT passed --
     # return right now
     if(days == "now") : return int(time.mktime((datetime.datetime.now()).timetuple()))
     # return minutes
