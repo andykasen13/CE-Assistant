@@ -84,7 +84,7 @@ async def solo_command(interaction : discord.Interaction, event : str, reroll : 
 
     specific_user_info = userInfo[target_user]
 
-    i = random.randint(0, 100)
+    i = random.randint(0, 99)
     if i == 0 : log_channel.send("<@{}>, you have rolled a jackpot! Please see <@687876105473884174> for your reward :)".format(interaction.user.id))
 
     #  -------------------------------------------- One Hell of a Day  --------------------------------------------
