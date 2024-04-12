@@ -607,7 +607,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name, user_
                     user_dict[ce_id]['Cooldowns'][current_roll['Event Name']] = cooldown_time
                     database_user[current_roll['Partner']]['Cooldowns'][current_roll['Event Name']] = cooldown_time
                     user_dict = update_casino_score(ce_id, current_roll['Event Name'], False, user_dict)
-                    database_user = update_casino_score(current_roll['Partner'], current_roll['Event'], False, database_user)
+                    database_user = update_casino_score(current_roll['Partner'], current_roll['Event Name'], False, database_user)
                 
                 # regular roll has failed
                 else : 
