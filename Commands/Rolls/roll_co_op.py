@@ -588,6 +588,8 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         One game is rolled.
         The first to complete the game wins."""
 
+        return await interaction.followup.send("Roll under construction.... Sorry!")
+
         embed = discord.Embed(title="Winner Takes All", timestamp=datetime.datetime.now())
         embed.add_field(name="Roll Requirements", value="You and your partner must agree on a tier. A game will be rolled for both of you." 
                                                         + " The first to complete all Primary Objectives will win.")
