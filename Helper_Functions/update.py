@@ -551,7 +551,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name, user_
                 continue
 
             # let fate decide and never lucky can never fail!
-            if current_roll['Event Name'] == 'Let Fate Decide' or current_roll['Event Name'] == 'Never Lucky' : continue
+            if current_roll['Event Name'] == 'Let Fate Decide' or current_roll['Event Name'] == 'Never Lucky' or current_roll['Event Name'] == 'Destiny Alignment' : continue
 
             # two week t2 streak has failed
             elif current_roll['Event Name'] == "Two Week T2 Streak":
