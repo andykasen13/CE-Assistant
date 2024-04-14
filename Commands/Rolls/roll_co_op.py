@@ -29,14 +29,16 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
     # Grab the information for both users
     int_user_id = await get_ce_id(interaction.user.id)
-    interaction_user_data = database_user[int_user_id]
     part_user_id = await get_ce_id(partner.id)
-    target_user_data = database_user[part_user_id]
+    
 
     # Make sure both users are registered in the database,
     # and return a message if they're not
     if int_user_id == None : return await interaction.followup.send("You are not registered in the CE Assistant database.")
     if part_user_id == None : return await interaction.followup.send(f"<@{partner.id}> is not registered in the CE Assistant database.")
+
+    interaction_user_data = database_user[int_user_id]
+    target_user_data = database_user[part_user_id]
     
     # check to see if either are pending or if either are currently participating...
     if (event in database_user[int_user_id]['Pending Rolls']) :
