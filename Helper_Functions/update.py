@@ -290,7 +290,6 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name, user_
             if winner == 1 :
                 print('andy wins')
                 # update user 1 database
-                old_end_time = current_roll['End Time']
                 current_roll['End Time'] = get_unix("now")
                 user_dict[ce_id]['Completed Rolls'].append(current_roll)
                 remove_indexes.append(m_index)
@@ -300,7 +299,7 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name, user_
                     if other_roll['Event Name'] == "Winner Takes All" : 
                         other_location = index
                         break
-                end_time = get_unix(months=3, old_unix=old_end_time)
+                end_time = get_unix(months=3)
                 database_user[current_roll['Partner']]['Cooldowns']['Winner Takes All'] = end_time
 
                 # update both user's casino scores
@@ -318,12 +317,11 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name, user_
                     if other_roll['Event Name'] == "Winner Takes All" : 
                         other_location = index
                         break
-                old_end_time = database_user[current_roll['Partner']]['Current Rolls'][other_location]['End Time']
                 database_user[current_roll['Partner']]['Current Rolls'][other_location]['End Time'] = get_unix("now")
                 database_user[current_roll['Partner']]['Completed Rolls'].append(database_user[current_roll['Partner']]['Current Rolls'][other_location])
                 del database_user[current_roll['Partner']]['Current Rolls'][other_location]
                 # update user 1 database
-                user_dict[ce_id]['Cooldowns']['Winner Takes All'] = get_unix(months=3, old_unix=old_end_time)
+                user_dict[ce_id]['Cooldowns']['Winner Takes All'] = get_unix(months=3)
                 
                 # update both user's casino scores
                 user_dict = update_casino_score(ce_id, 'Winner Takes All', False, user_dict)
