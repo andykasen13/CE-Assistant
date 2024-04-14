@@ -61,6 +61,9 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
     if event in database_user[int_user_id]['Cooldowns'] : return await interaction.followup.send(f"You are on cooldown until <t:{database_user[int_user_id]["Cooldowns"][event]}>!")
     if event in database_user[part_user_id]['Cooldowns'] : return await interaction.followup.send(f"Your partner is on cooldown until <t:{database_user[part_user_id]["Cooldowns"][event]}>!")
 
+    if database_user[int_user_id]['Casino Score'] < 0 : return await interaction.followup.send("You have a negative casino score, and cannot roll co op or pvp rolls!")
+    if database_user[part_user_id]['Casino Score'] < 0 :return await interaction.followup.send("Your partner has a negative casino score, and cannot roll co op or pvp rolls!")
+
     database_user[int_user_id]['Pending Rolls'][event] = get_unix(minutes=10)
     database_user[part_user_id]['Pending Rolls'][event] = get_unix(minutes=10)
 
@@ -592,6 +595,7 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
 
         return await interaction.followup.send("Roll under construction.... Sorry!")
 
+        # create the embed
         embed = discord.Embed(title="Winner Takes All", timestamp=datetime.datetime.now())
         embed.add_field(name="Roll Requirements", value="You and your partner must agree on a tier. A game will be rolled for both of you." 
                                                         + " The first to complete all Primary Objectives will win.")
@@ -599,19 +603,20 @@ async def co_op_command(interaction : discord.Interaction, event, partner : disc
         embed.set_author(name="Challenge Enthusiasts")
         embed.set_footer(text="CE Assistant", icon_url=ce_mountain_icon)
 
+        # get the buttons and set the callbacks
         buttons = []
         i = 1
         while i < 6 :
             buttons.append(discord.ui.Button(label=f"Tier {i}"))
             view.add_item(buttons[i-1])
             i+=1
-    
         async def t1_callback(interaction) : return await soulmate_callback(interaction, "Tier 1")
         async def t2_callback(interaction) : return await soulmate_callback(interaction, "Tier 2")
         async def t3_callback(interaction) : return await soulmate_callback(interaction, "Tier 3")
         async def t4_callback(interaction) : return await soulmate_callback(interaction, "Tier 4")
         async def t5_callback(interaction) : return await soulmate_callback(interaction, "Tier 5")
 
+        # callback
         async def soulmate_callback(interaction : discord.Interaction, tier_num) :
             await interaction.response.defer()
             if interaction.user.id != interaction_user_data['Discord ID'] : return
