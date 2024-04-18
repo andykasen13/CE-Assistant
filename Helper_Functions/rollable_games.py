@@ -172,7 +172,7 @@ def get_rollable_game(avg_completion_time_limit,
             if uncleared : continue
             
             # ----- Grab the Game ID -----
-            gameID = int(database_name[returned_game]['Steam ID'])
+            gameID = int(database_name[returned_game]['Platform ID'])
 
             # ----- Grab Steam JSON file -----
             payload = {'appids': gameID, 'cc' : 'US'}
@@ -236,7 +236,7 @@ async def get_rollable_game_from_list(games, collection) :
         print(f"Seeing if {random_game_name} is rollable...")
 
         # check for price and avg completion time
-        game_id = database_name[random_game_id]['Steam ID']
+        game_id = database_name[random_game_id]['Platform ID']
         # ----- Grab Steam JSON file -----
         payload = {'appids': game_id, 'cc' : 'US'}
         response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload)

@@ -914,11 +914,10 @@ def get_game(game, big_game = ""):
     returnable = {
         'Name' : game['name'],
         "CE ID" : game['id'],
-        'Steam ID' : game['platformId'],
+        "Platform" : game['platform'],
+        'Platform ID' : game['platformId'],
         'Tier' : 'Tier ' + str(game['tier']),
         'Genre' : game['genre']['name'],
-        #'Full Completions' : game['completion']['completed'],
-        #'Total Owners' : game['completion']['total'],
         'Primary Objectives' : objectives[0],
         'Community Objectives' : objectives[1],
         'Last Updated' : objectives[2]
@@ -1057,15 +1056,15 @@ def get_by_tier(games):
     }
     
     for game in games:
-            if games[game]['Tier'] == "Tier 5":
-                tot = 0
-                for obj in games[game]['Primary Objectives']:
-                    tot += games[game]['Primary Objectives'][obj]['Point Value']
-                if tot > 1000: continue
-                elif tot > 500 : tier_based_data['Tier 6'][games[game]['Genre']].append(game)
-                else : tier_based_data[games[game]['Tier']][games[game]['Genre']].append(game)
-                continue
-            tier_based_data[games[game]['Tier']][games[game]['Genre']].append(game)
+        if games[game]['Tier'] == "Tier 5":
+            tot = 0
+            for obj in games[game]['Primary Objectives']:
+                tot += games[game]['Primary Objectives'][obj]['Point Value']
+            if tot > 1000: continue
+            elif tot > 500 : tier_based_data['Tier 6'][games[game]['Genre']].append(game)
+            else : tier_based_data[games[game]['Tier']][games[game]['Genre']].append(game)
+            continue
+        tier_based_data[games[game]['Tier']][games[game]['Genre']].append(game)
 
     return tier_based_data
 
