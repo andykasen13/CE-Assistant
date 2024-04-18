@@ -209,6 +209,7 @@ def get_ce_id_normal(discord_id : str, database_user) -> str | None :
         if database_user[user]['Discord ID'] == discord_id : return user
 
     return None
+
 # ------ get a specific api page ------
 _ce_api_types = Literal["game", "user"]
 def get_api(type : _ce_api_types, id : str) -> dict | None:
@@ -222,5 +223,6 @@ def get_api(type : _ce_api_types, id : str) -> dict | None:
         data = None
     
     return data
+
 
 # ----------------------------------------------------------------------------------------------------------------------------
