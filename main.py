@@ -1237,7 +1237,8 @@ async def initiate_master_loop(interaction : discord.Interaction) :
 
 
 @tree.command(name="force-register", description="Register a user in the CE Assistant database to unlock rolls.", guild=discord.Object(id=guild_ID))
-@app_commands
+@app_commands.describe(ce_id="the ce id")
+@app_commands.describe(user = "the user") 
 async def register(interaction : discord.Interaction, ce_id : str, user : discord.User | discord.Member) :
     await interaction.response.defer()
     #Open the user database
