@@ -111,6 +111,50 @@ async def aaaaa(interaction : discord.Interaction, item : str):
     await interaction.response.defer(ephemeral=True)
     await interaction.followup.send(f"You chose {item} (testing still in progress!)")
 
+    """
+    Information to return
+    - Category
+    - Tier
+    - Points
+    - Number of objectives
+    - Completion rates
+    - Link to CE
+    - Link to Steam
+    """
+
+    """
+    Things we'd like to see in feedback
+    - filter bs responses
+    - take getting over it, 500 clears
+    - half want to give feedback
+    - the problem with this game
+    """
+
+    # pull database name
+    database_name = await get_mongo('name')
+
+    # get the game id, throw error if not found
+    game_id = None
+    for i in database_name:
+        if database_name[i]['Name'] == item : game_id = i
+    if game_id == None : return await interaction.followup.send("A strange error has occurred. Please ping andy :(")
+    game_name = item
+    
+    # pull api page
+    api_data = get_api('game', game_id)
+
+    # set up the Embed object
+    embed = discord.Embed(
+        title=game_name,
+        color=0x000000,
+        description="",
+        timestamp=datetime.datetime.now()
+    )
+
+    embed.add_field(name="Site Status", value=f"{database_name[game_id]['Tier']}{database_name[game_id]['Genre']}"
+                    + f"\nTotal Completions: {database_name[game_id]['Total Completions']}")
+
+    
 
 
 
@@ -1192,7 +1236,156 @@ async def initiate_master_loop(interaction : discord.Interaction) :
     # return await interaction.followup.send(embed=embed)
 
 
+@tree.command(name="force-register", description="Register a user in the CE Assistant database to unlock rolls.", guild=discord.Object(id=guild_ID))
+@app_commands
+async def register(interaction : discord.Interaction, ce_id : str, user : discord.User | discord.Member) :
+    await interaction.response.defer()
+    #Open the user database
+    database_user = await get_mongo('user')
+    database_name = await get_mongo('name')
 
+    # Set up total_points to calculate rank
+    total_points = 0
+
+    # Make sure the input is a valid CE-ID
+    print(f"Input = {ce_id}")
+    if(ce_id[:20:] == "https://cedb.me/user" and len(ce_id) >= 29 and (ce_id[29] == '-')) :
+        if(ce_id[(len(ce_id)-5)::] == "games") : ce_id = ce_id[21:(len(ce_id)-6):]
+        else : ce_id = ce_id[21::]
+    elif ce_id[:22:] == "https://ce.iys.io/user" and len(ce_id) >= 31 and (ce_id[31] == '-'):
+        if(ce_id[(len(ce_id)-5)::] == "games") : ce_id = ce_id[23:(len(ce_id)-6)]
+        else : ce_id = ce_id[23::]
+    else: return await interaction.followup.send(
+        f"'{ce_id}' is not a valid user link. Please try again or contact <@413427677522034727> for assistance.")
+    print(f"Working ID = {ce_id}")
+
+    # Make sure user isn't already registered
+    for user in database_user :
+        if(database_user[user]['Discord ID'] == user.id) : return await interaction.followup.send(
+            "They are already registered in the database!")
+        elif(database_user[user]['CE ID'] == ce_id) : return await interaction.followup.send(
+            f"This CE-ID is already registered to <@{database_user[user]['Discord ID']}>, silly!")
+    
+    
+    # Grab user info from CE API
+    user_ce_data = get_api("user", ce_id)
+
+    # Set up the user's JSON file
+    user_dict = {
+        ce_id : {
+            "CE ID" : ce_id,
+            "Discord ID" : user.id,
+            "Rank" : "",
+            "Reroll Tickets" : 0,
+            "Casino Score" : 0,
+            "Bounty Points" : 0,
+            "Owned Games" : {},
+            "Cooldowns" : {},
+            "Current Rolls" : [],
+            "Completed Rolls" : [],
+            "Pending Rolls" : {}
+        }
+    }
+
+    # Go through owned games in CE JSON
+    for game in user_ce_data['userGames'] :
+        game_id = game['gameId']
+        
+        # Add the games to the local JSON
+        user_dict[ce_id]['Owned Games'][game_id] = {}
+
+    # Go through all objectives 
+    for objective in user_ce_data['userObjectives'] :
+        game_id = objective['objective']['gameId']
+        obj_id = objective['objectiveId']
+        
+        # If the objective is community, set the value to true
+        if objective['objective']['community'] : 
+            if "Community Objectives" not in user_dict[ce_id]['Owned Games'][game_id]:
+                user_dict[ce_id]['Owned Games'][game_id]['Community Objectives'] = {}
+            user_dict[ce_id]['Owned Games'][game_id]['Community Objectives'][obj_id] = True
+
+        # If the objective is primary...
+        else : 
+            # ... and there are partial points AND no one has assigned requirements...
+            if(objective['partial']) :
+                # ... set the points earned to the partial points value.
+                points = objective['objective']['pointsPartial']
+            # ... and there are no partial points, set the points earned to the total points value.
+            else : points = objective['objective']['points']
+
+            # Add the points to user's total points
+            total_points += points
+
+            # Now actually update the value in the user's dictionary.
+            if(list(user_dict[ce_id]['Owned Games'][game_id].keys()).count("Primary Objectives") == 0) :
+                user_dict[ce_id]['Owned Games'][game_id]['Primary Objectives'] = {}
+            user_dict[ce_id]['Owned Games'][game_id]['Primary Objectives'][obj_id] = points
+
+
+    # Get the user's rank
+    rank = ""
+    if total_points < 50 : rank = "E Rank"
+    elif total_points < 250 : rank = "D Rank"
+    elif total_points < 500 : rank = "C Rank"
+    elif total_points < 1000 : rank = "B Rank"
+    elif total_points < 2500 : rank = "A Rank"
+    elif total_points < 5000 : rank = "S Rank"
+    elif total_points < 7500 : rank = "SS Rank"
+    elif total_points < 10000 : rank = "SSS Rank"
+    else : rank = "EX Rank"
+
+    user_dict[ce_id]['Rank'] = rank
+
+    all_events = ["One Hell of a Day", "One Hell of a Week", "One Hell of a Month", "Two Week T2 Streak", 
+                  "Two \"Two Week T2 Streak\" Streak", "Never Lucky", "Triple Threat", "Let Fate Decide", 
+                  "Fourward Thinking", "Russian Roulette", "Destiny Alignment",
+                  "Soul Mates", "Teamwork Makes the Dream Work", "Winner Takes All", "Game Theory"]
+    all_events_final = {}
+    for e in all_events:
+        for o in database_name[ce_squared_id]['Community Objectives'] :
+            if e == database_name[ce_squared_id]['Community Objectives'][o]['Name'] : 
+                all_events_final[e] = o
+
+    # Check and see if the user has any completed rolls
+    if ce_squared_id in user_dict[ce_id]['Owned Games']:
+        x=0
+        
+        for event in all_events_final :
+            event_id = all_events_final[event]
+            if event_id in user_dict[ce_id]['Owned Games'][ce_squared_id]['Community Objectives']:
+                x=0
+                user_dict[ce_id]['Completed Rolls'].append({"Event Name" : event})
+            if(event == "Two \"Two Week T2 Streak\" Streak" 
+               and "Two \"Two Week T2 Streak\" Streak" in 
+               user_dict[ce_id]['Owned Games'][ce_squared_id]['Community Objectives']):
+                    user_dict[ce_id]['Completed Rolls'].append({"Event Name" : "Two 'Two Week T2 Streak' Streak"})
+
+    # Add the user file to the database
+    database_user.update(user_dict)
+
+    # Dump the data
+    dump = await dump_mongo("user", database_user)
+    del dump
+
+    # Create confirmation embed
+    embed = discord.Embed(
+        title="Registered!",
+        color=0x000000,
+        timestamp=datetime.datetime.now()
+    )
+    embed.add_field(name="Information", value=f"You have been registered in the CE Assistant database. Your CE-ID is {ce_id}"
+                    + f". You may now use all aspects of this bot.")
+    embed.set_author(name="Challenge Enthusiasts", url="https://example.com")
+    embed.set_footer(text="CE Assistant",
+        icon_url=final_ce_icon)
+    embed.set_thumbnail(url=user.avatar)
+
+    registered_role = discord.utils.get(interaction.guild.roles, name = "CEA Registered")
+    await user.add_roles(registered_role)
+
+    # Send a confirmation message
+    await interaction.followup.send(embed=embed)
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- #
@@ -1204,11 +1397,7 @@ async def initiate_master_loop(interaction : discord.Interaction) :
 @app_commands.describe(ce_id="Please use the link to your personal CE user page!")
 async def register(interaction : discord.Interaction, ce_id: str) :
     await interaction.response.defer(ephemeral=True) # defer the message
-    """
-    if interaction.user.id == 476213685073739798 : return await interaction.followup.send("kingconn banned lol")
-    if interaction.user.id == 73648432367013888  : return await interaction.followup.send(
-        "hey laura when you fix /api/games/full/ i'll give you access")
-    """
+
     #Open the user database
     database_user = await get_mongo('user')
     database_name = await get_mongo('name')
@@ -1838,33 +2027,37 @@ async def profile(interaction : discord.Interaction, user : discord.Member = Non
     crButton = discord.ui.Button(label="CR", disabled=False)
     #siteButton = discord.ui.Button(label="Site Achievements", disabled=False)
     async def mainCallback(interaction : discord.Interaction):
+        await interaction.response.defer()
         if interaction.user.id != og_id : return
         rollButton.disabled = False
         crButton.disabled = False
         mainButton.disabled = True
         #siteButton.disabled = False
-        await interaction.response.edit_message(embed=main_embed, view=view)
+        await interaction.followup.edit_message(embed=main_embed, view=view, message_id=interaction.message.id)
     async def rollCallback(interaction : discord.Interaction):
+        await interaction.response.defer()
         if interaction.user.id != og_id : return
         mainButton.disabled = False
         rollButton.disabled = True
         crButton.disabled = False
         #siteButton.disabled = False
-        await interaction.response.edit_message(embed=roll_embed, view=view)
+        await interaction.followup.edit_message(embed=roll_embed, view=view, message_id=interaction.message.id)
     async def crCallback(interaction : discord.Interaction):
+        await interaction.response.defer()
         if interaction.user.id != og_id : return
         mainButton.disabled = False
         rollButton.disabled = False
         crButton.disabled = True
         #siteButton.disabled = False
-        await interaction.response.edit_message(embed=cr_embed, view=view)
+        await interaction.followup.edit_message(embed=cr_embed, view=view, message_id=interaction.message.id)
     async def siteCallback(interaction : discord.Interaction) :
+        await interaction.response.defer()
         if interaction.user.id != og_id : return
         mainButton.disabled = False
         rollButton.disabled = False
         crButton.disabled = False
         #siteButton.disabled = True
-        #await interaction.response.edit_message(embed=site_achievements_embed, view=view)
+        #await interaction.followup.edit_message(embed=site_achievements_embed, view=view, message_id=interaction.message.id)
     mainButton.callback = mainCallback
     rollButton.callback = rollCallback
     crButton.callback = crCallback
