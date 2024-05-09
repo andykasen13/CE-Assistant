@@ -136,6 +136,11 @@ def get_rollable_game(avg_completion_time_limit,
                         break
                     # Next genre
                     else : random_num -= len(database_tier[tier_number][genre])
+            
+            # ----- is not steam ----
+            if database_name[returned_game]['Platform'] != "steam" :
+                "No RA games."
+                continue
 
             # ----- Check to see if it's banned -----
             returned_game_name = database_name[returned_game]['Name']
@@ -236,6 +241,8 @@ async def get_rollable_game_from_list(games, collection) :
         print(f"Seeing if {random_game_name} is rollable...")
 
         # check for price and avg completion time
+        if database_name[random_game_id]['Platform'] != "steam" :
+            continue
         game_id = database_name[random_game_id]['Platform ID']
         # ----- Grab Steam JSON file -----
         payload = {'appids': game_id, 'cc' : 'US'}

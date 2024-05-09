@@ -79,6 +79,7 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
         correct_app_id = database_name[game_id]['Platform ID']
         print(f"found {game_name} with app id {correct_app_id} in local json file :)")
     else :
+        return discord.Embed(title="Sorry! Game not found.")
         print(f"couldn't find {game_name} in local json file, searching steam :(")
         game_word_lst = game_name.split(" ")
         for name in game_word_lst:
@@ -115,54 +116,57 @@ def getEmbed(game_name, authorID, database_name) -> discord.Embed:
 
 # --- DOWNLOAD JSON FILE ---
 
-    # Open and save the JSON data
-    payload = {'appids': correct_app_id, 'cc' : 'US'}
-    try:
-        response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload) #TODO: possible error here
-        jsonData = json.loads(response.text)
-    except : return discord.Embed(title='Error fetching Steam info')
-    
-    # Save important information
-    imageLink = jsonData[correct_app_id]['data']['header_image']
-    gameDescription = str(jsonData[correct_app_id]['data']['short_description']).replace('&amp;', '&').replace('&quot;', '\"')
-    if(jsonData[correct_app_id]['data']['is_free']) : 
-        gamePrice = "Free"
-    
-    elif('price_overview' in list(jsonData[correct_app_id]['data'].keys())) :
-        gamePrice = jsonData[correct_app_id]['data']['price_overview']['final_formatted']
-    else :
-        gamePrice = "No price listed."
-    game_name = jsonData[correct_app_id]['data']['name']
-
-# --- CREATE EMBED ---
-
-    # and create the embed!
-    embed = discord.Embed(title=f"{game_name}",
-        url=f"https://store.steampowered.com/app/{correct_app_id}/",
-        description=(f"{gameDescription}"),
-        colour=0x000000,
-        timestamp=datetime.datetime.now())
-
-    embed.add_field(name="Price", value = gamePrice, inline=True)
-    if game_id != "" :
-        embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/game/{database_name[game_id]['CE ID']}/")
-    else:
-        embed.set_author(name="Challenge Enthusiasts")
-    embed.set_image(url=imageLink)
-    embed.set_thumbnail(url=ce_mountain_icon)
-    embed.set_footer(text="CE Assistant",
-        icon_url=final_ce_icon)
-    embed.add_field(name="Rolled by", value = "<@" + str(authorID) + ">", inline=True)
-    if game_id != "" :
-        for objective in database_name[game_id]['Primary Objectives'] :
-            total_points += int(database_name[game_id]['Primary Objectives'][objective]['Point Value'])
-        embed.add_field(name="CE Status", 
-                        value=icons[database_name[game_id]['Tier']] + icons[database_name[game_id]['Genre']] + f" - {total_points} Points" + icons['Points'], 
-                        inline=True)
+    if database_name[game_id]['Platform'] == "steam" :
+        # Open and save the JSON data
+        payload = {'appids': correct_app_id, 'cc' : 'US'}
         try:
-            embed.add_field(name="CE Owners", value= database_name[game_id]['Total Owners'], inline=True)
-            embed.add_field(name="CE Completions", value= database_name[game_id]['Full Completions'], inline=True)
-        except:""
-    else : embed.add_field(name="CE Status", value="Not on Challenge Enthusiasts", inline=True)
+            response = requests.get("https://store.steampowered.com/api/appdetails?", params = payload) #TODO: possible error here
+            jsonData = json.loads(response.text)
+        except : return discord.Embed(title='Error fetching Steam info')
+        
+        # Save important information
+        imageLink = jsonData[correct_app_id]['data']['header_image']
+        gameDescription = str(jsonData[correct_app_id]['data']['short_description']).replace('&amp;', '&').replace('&quot;', '\"')
+        if(jsonData[correct_app_id]['data']['is_free']) : 
+            gamePrice = "Free"
+        
+        elif('price_overview' in list(jsonData[correct_app_id]['data'].keys())) :
+            gamePrice = jsonData[correct_app_id]['data']['price_overview']['final_formatted']
+        else :
+            gamePrice = "No price listed."
+        game_name = jsonData[correct_app_id]['data']['name']
 
-    return embed
+    # --- CREATE EMBED ---
+
+        # and create the embed!
+        embed = discord.Embed(title=f"{game_name}",
+            url=f"https://store.steampowered.com/app/{correct_app_id}/",
+            description=(f"{gameDescription}"),
+            colour=0x000000,
+            timestamp=datetime.datetime.now())
+
+        embed.add_field(name="Price", value = gamePrice, inline=True)
+        if game_id != "" :
+            embed.set_author(name="Challenge Enthusiasts", url=f"https://cedb.me/game/{database_name[game_id]['CE ID']}/")
+        else:
+            embed.set_author(name="Challenge Enthusiasts")
+        embed.set_image(url=imageLink)
+        embed.set_thumbnail(url=ce_mountain_icon)
+        embed.set_footer(text="CE Assistant",
+            icon_url=final_ce_icon)
+        embed.add_field(name="Rolled by", value = "<@" + str(authorID) + ">", inline=True)
+        if game_id != "" :
+            for objective in database_name[game_id]['Primary Objectives'] :
+                total_points += int(database_name[game_id]['Primary Objectives'][objective]['Point Value'])
+            embed.add_field(name="CE Status", 
+                            value=icons[database_name[game_id]['Tier']] + icons[database_name[game_id]['Genre']] + f" - {total_points} Points" + icons['Points'], 
+                            inline=True)
+            try:
+                embed.add_field(name="CE Owners", value= database_name[game_id]['Total Owners'], inline=True)
+                embed.add_field(name="CE Completions", value= database_name[game_id]['Full Completions'], inline=True)
+            except:""
+        else : embed.add_field(name="CE Status", value="Not on Challenge Enthusiasts", inline=True)
+
+        return embed
+    else :
+        return discord.Embed(title="RetroAchievements not supported yet!")
