@@ -81,12 +81,16 @@ def update_p(user_id : int, roll_ended_name, database_user, database_name, user_
     # Go through owned games in CE JSON
     for game in user_ce_data['userGames'] :
         game_id = game['gameId']
+        if not game['game']['isFinished'] :
+            continue
         
         # Add the games to the local JSON
         user_dict[ce_id]['Owned Games'][game_id] = {}
 
     # Go through all objectives 
     for objective in user_ce_data['userObjectives'] :
+        if not objective['objective']['game']['isFinished'] : 
+            continue
         game_id = objective['objective']['gameId']
         obj_id = objective['objectiveId']
         
