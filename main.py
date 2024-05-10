@@ -1684,6 +1684,7 @@ async def fix(interaction : discord.Interaction) :
 def calculate_cr(ce_id, database_user, database_name) :
     # set up grouping
     groups = {"Action" : [], "Arcade" : [], "Bullet Hell" : [], "First-Person" : [], "Platformer" : [], "Strategy" : []}
+    print(database_name)
 
     # go through all of their games
     for game in database_user[ce_id]['Owned Games'] :
