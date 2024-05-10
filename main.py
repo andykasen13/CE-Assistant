@@ -110,7 +110,7 @@ async def aaaa_auto(interaction : discord.Interaction, current:str) -> typing.Li
 async def aaaaa(interaction : discord.Interaction, item : str):
     await interaction.response.defer(ephemeral=True)
     await interaction.followup.send(f"You chose {item} (testing still in progress!)")
-
+    return
     """
     Information to return
     - Category
