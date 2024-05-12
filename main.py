@@ -2093,6 +2093,7 @@ async def stop_scrape(interaction : discord.Interaction) :
 # ----------------------------------------------------- Operational Restart -------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------------------------------------------------------------- #
+'''
 @tree.command(name="manual-restart", description="Will restart the computer the bot is currently hosted on", guild=discord.Object(id=guild_ID))
 async def manual_restart(interaction : discord.Interaction):
     await interaction.response.send_message('rebooting...')
@@ -2103,7 +2104,7 @@ async def manual_restart(interaction : discord.Interaction):
 async def add_to_boot(interaction : discord.Interaction):
     await interaction.response.send_message('adding directories...')
     await add_to_windows_startup(__file__)
-
+'''
 
 
 
