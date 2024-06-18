@@ -40,7 +40,8 @@ Users can use `/profile`, with an optional parameter of another `discord.User`, 
 
 ### 2. Return information on any Steam game
 Users can use `/steam-game` with one parameter for the name of the game, and the bot will return information from Steam about it.
-> Insert image
+
+<img src="https://imgur.com/k6UO0aQ.png" width="450" alt="Requested Steam information on Celeste.">
 
 ### 3. Steam curator
 The [Steam curator](https://store.steampowered.com/curator/36185934/) for Challenge Enthusiasts is updated with games that are cleared and popular on the site. Any time the curator is updated, the bot will send a message.
