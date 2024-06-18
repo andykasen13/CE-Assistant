@@ -1,5 +1,9 @@
+# Wait!!
+ This version of the bot is very outdated! Please see [CE-Assistant-v2](https://github.com/andykasen13/CE-Assistant-v2) instead.
+
 # CE-Assistant (v1)
-A discord bot using `discord.py` for automation purposes for the online community [Challenge Enthusiasts](https://cedb.me). This version of the bot is very outdated. Please see [CE-Assistant-v2](https://github.com/andykasen13/CE-Assistant-v2) instead.
+
+A discord bot using `discord.py` for automation purposes for the online community [Challenge Enthusiasts](https://cedb.me). 
 
 ### Challenge Enthusiasts
 Challenge Enthusiasts is an online community made to curate and caregorize video games in a point-based system. Each game is given certain "objectives" based on tasks to be completed in games. You join the community by signing up on the [website](https://cedb.me) or joining the [Discord server](https://discord.gg/spKdVZTZ6c).
