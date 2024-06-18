@@ -38,37 +38,33 @@ Users can use `/profile`, with an optional parameter of another `discord.User`, 
 
 <img src="https://imgur.com/O85pItz.png" width="450" alt="An example of a profile embed, requested by user 'wantarou'.">
 
-### 2. Return information on any CE game
-Users can use `/ce-game` with one parameter for the name of the game, and the bot will return information from CE about it.
-> Insert image
-
-### 3. Return information on any Steam game
+### 2. Return information on any Steam game
 Users can use `/steam-game` with one parameter for the name of the game, and the bot will return information from Steam about it.
 > Insert image
 
-### 4. Steam curator
+### 3. Steam curator
 The [Steam curator](https://store.steampowered.com/curator/36185934/) for Challenge Enthusiasts is updated with games that are cleared and popular on the site. Any time the curator is updated, the bot will send a message.
 
 <img src="https://imgur.com/7LIzjYY.png" width="450" alt="A curator message showing that RefleX has been added to the curator.">
 
-### 5. Setting user color
+### 4. Setting user color
 Challenge Enthusiast users are awarded ranks based on how many points they have. The higher rank they are, the more colors they have access to within the Discord server. `/set-color` presents users with the options they have available to them and changes their colors on request.
 > INSERT IMAGE
 
-### 6. Get SteamHunters information
+### 5. Get SteamHunters information
 One Challenge Enthusiasts user, Schmole, runs a script once a month and collects information on all the games and users on Challenge Enthusiasts and dumps it on [this spreadsheet](https://docs.google.com/spreadsheets/d/1oAUw5dZdqZa1FWqrBV9MQQTr8Eq8g33zwEb49vk3hrk/edit?usp=sharing). This bot can access this spreadsheet and save specific data from it, specifically the 'Median Completion Time' from SteamHunters. So, rather than scrape the SteamHunters API every time a game is checked, the bot just accesses its local copy of this spreadsheet.
 
-### 7. Help/FAQ
+### 6. Help/FAQ
 As is standard with any Discord bot, users can use `/help` to get a menu with frequently asked questions and access to other help.
 
 ## Admin Capabilities
 Administrators in the server have access to other commands to help with the bot.
 
-### 8. Add notes
+### 7. Add notes
 Administrators have the option to add notes to any game update message, in case there's any added context needed.
 > Insert image
 
-### 9. Purge roll
+### 8. Purge roll
 In the event that something happens with a roll event, administrators can manually remove a roll from a user (without initiating a cooldown) so that they can re-roll.
 
 ## Credits
