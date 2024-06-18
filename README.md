@@ -1,116 +1,81 @@
-# CE-Assistant
-i'm gonna try and make a discord bot for challenge enthusiasts
-this is version two, using discord.py
+# Wait!!
+ This version of the bot is very outdated! Please see [CE-Assistant-v2](https://github.com/andykasen13/CE-Assistant-v2) instead.
 
-things i want to try and get working
+# CE-Assistant (v1)
 
+A discord bot using `discord.py` for automation purposes for the online community [Challenge Enthusiasts](https://cedb.me). 
 
-## rolls
-i want to be able to handle rolls of all kind - single and co-op, but co-op might be rough - and store them under the user
+### Challenge Enthusiasts
+Challenge Enthusiasts is an online community made to curate and caregorize video games in a point-based system. Each game is given certain "objectives" based on tasks to be completed in games. You join the community by signing up on the [website](https://cedb.me) or joining the [Discord server](https://discord.gg/spKdVZTZ6c).
 
-this way, you can see all the rolls you have active
+## Purpose 1: Game Updates
+This bot will send detailed updates to the [Discord server](https://discord.gg/spKdVZTZ6c) whenever a game on the site is added, updated, or removed.
 
-the issue with this is it requires access to all rollable games - and laura has built an incredible system that i have no idea how to even begin to understand
+<img src="https://imgur.com/rXGjnuc.png" width="450" alt="Screenshot of a game, Battletoads, being added to Challenge Enthusiasts.">
 
-but i will try!
+When a game is updated, the bot gives a run down of everything that was changed.
 
-the idea is that you can do `/roll` and then select the events to choose from (including monthly rolls for the 2023 event, we shall see if i can get that working)
+<img src="https://imgur.com/ME18Ja5.png" width="450" alt="Screenshot of a game, Terra Feminarum, being updated on Challenge Enthusiasts.">
 
-example: `/roll two week t2 streak`, and this should give you a random game (within the limits jarvis (rip) created), and store it under the user.
+When a game has a longer amount of objectives (seven or more), the bot will screenshot just the specific objective that was changed.
 
-and you should also be able to dm the bot and ask it which rolls you have active 
+<img src="https://imgur.com/pbDCyJ1.png" width="450" alt="Screenshot of the 'Challenge Enthusiasts' game on the Challenge Enthusiasts site, used for keeping track of individual user accomplishments, having a singular objective update.">
 
-example: `/roll my rolls`, this should output a numbered list of the rolls you have active, the start date and end date, and how much time you have left
+## Purpose 2: Casino
+This bot allows users in the [Discord server](https://discord.gg/spKdVZTZ6c) to participate in roll events. Users who participate in these will have a set number of games that fit certain parameters (difficulty, category, etc.) randomly selected for them, depending on the event. Once they complete these events (usually within a time limit, but some events go on forever), they're awarded a badge on the site, and the bot sends an update to the server.
 
-it should also dm you at certain intervals, like one week left, three days, one day.
+<img src="https://imgur.com/XNCDYDn.png" width="450" alt="Screenshot of a message showing that a user, Kyara, has completed the roll event 'One Hell of a Day'.">
 
-ideally this should link to the site page for each game and oh man it would be cool to have it send you the objectives and if you've completed the objective have it in green and otherwise keep it white
+The bot keeps track of all previously completed rolls as well, so anyone can view their previous accomplishments.
 
-obviously it should also tell you how much longer you have left for each roll
+This gets a lot trickier, as some rolls are Co-Op or PvP. You can view a spreadsheet with information on all of the roll events [here](https://docs.google.com/spreadsheets/d/1jvYRLshEu65s15NKLNmVxUeTFh-y73Ftd1Quy2uLs3M/edit?usp=sharing).
 
-idk how this would look but it should also show you the cooldowns
+## Smaller Capabilities
+While CE-Assistant has its own main purposes, it also can do a lot of smaller stuff.
 
-if somehow i become a coding god in the next month it would be great if i could get it to have a website, like a google sheet or something that just displays this all in one place so you can see other people's stats but that is quite likely not to happen. if this could automate that google sheet tho, that would be so sick
+### 1. Return user information
+Users can use `/profile`, with an optional parameter of another `discord.User`, and the bot will return information about this user.
 
-this would be the greatest thing this bot can do i think. it would take a lot of strain off of mods (rip jarvis)
+<img src="https://imgur.com/O85pItz.png" width="450" alt="An example of a profile embed, requested by user 'wantarou'.">
 
-## announcements
+### 2. Return information on any Steam game
+Users can use `/steam-game` with one parameter for the name of the game, and the bot will return information from Steam about it.
 
-i also want this bot to send whenever there is an update to the site, whether it be a game addition, game edit, or removal altogether.
+<img src="https://imgur.com/k6UO0aQ.png" width="450" alt="Requested Steam information on Celeste.">
 
-obviously mods like folkius (ily folkius) should still be able to send announcemenets whenever necessary, but this would hopefully take one step off of mods
+### 3. Steam curator
+The [Steam curator](https://store.steampowered.com/curator/36185934/) for Challenge Enthusiasts is updated with games that are cleared and popular on the site. Any time the curator is updated, the bot will send a message.
 
-## other silly little things
+<img src="https://imgur.com/7LIzjYY.png" width="450" alt="A curator message showing that RefleX has been added to the curator.">
 
-- it should store and be able to return the site image, both jpg and gif form
-- music implementation would be sick but this is not an ideal for now
-- it should be able to open and close recommendations for the first week of every month (this may not be a good idea)
-- maybe you could be able to tell it that you are looking for a partner for a co-op achievement?
-- should be able to change color to any color you've already unlocked. this is already possible manually but should be automated. should also change tier role based on current tier.
-- check on female empowerment or zookeeper status
+### 4. Setting user color
+Challenge Enthusiast users are awarded ranks based on how many points they have. The higher rank they are, the more colors they have access to within the Discord server. `/set-color` presents users with the options they have available to them and changes their colors on request.
 
-## housekeeping reminders
-- ~~reminder to myself that t0 games must have separate announcements~~
-- reminder to myself that upon booting up the bot, it should go through all of the users in the server and update their information in my `users.json` file
-- also reminder to myself to fix the price to check if it's on sale right now
-- reminder to try and incorporate buttons to ask if they want to use a reroll ticket
-- ~~once an hour, i need to parse through the website and determine if there are any new games to add to my list of rollable games - and also check to see if all info i have currently checks out, in case i need to take something off the rollable games list~~
-- ~~reminder that if someone tries to roll an event that they have running already~~ or are on cooldown for, DON'T LET THEM.
-- ~~reminder to use beautifulsoup to check steamhunters.com for eligibility!~~
-- ~~reminder to also use beautifulsoup to get the curator thing to work :)~~
-- ~~make buttons work~~
-- ~~create JSON modules for all users in server~~
-- ~~if the user does not exist, don't try and send them the `/check_rolls` or shit will error a lot~~
-- ~~decide if you want to include objectives in the initial roll message (current me thinks no but should be included in the `/check_rolls` command)~~
-- co-op rolls 😩
-- indicate if the game is on sale
-- think about switching the icon of the `/roll` command to the user's avatar
-- make sure that you don't roll the same game for any multi-game rolls
-- add error checking. this will be so so annoying but will be great for preventing the bot from just shutting down
-- ~~currently the bot keeps track of if someone has completed a game in the `users.json` file but will eventually do that on its own in an 'owned_games' section in the same file. make sure that when that happens you switch it.~~
+<img src="https://imgur.com/WGF0wQz.png" width="450" alt="Set color menu">
 
-## checking on rolls
-### if the user completes the roll:
-- user uses /update
-- runs command to go through each game in "current rolls"
-- if they are all completed, send a message saying they've completed the roll (and alert an admin)
-- and also move the roll out of "current rolls" and into "completed rolls"
-- unless of course it is fourward thinking
+### 5. Get SteamHunters information
+One Challenge Enthusiasts user, Schmole, runs a script once a month and collects information on all the games and users on Challenge Enthusiasts and dumps it on [this spreadsheet](https://docs.google.com/spreadsheets/d/1oAUw5dZdqZa1FWqrBV9MQQTr8Eq8g33zwEb49vk3hrk/edit?usp=sharing). This bot can access this spreadsheet and save specific data from it, specifically the 'Median Completion Time' from SteamHunters. So, rather than scrape the SteamHunters API every time a game is checked, the bot just accesses its local copy of this spreadsheet.
 
-### if the user fails the roll:
-- have a command that logs all times to check
-- at that designated time, if the user has not completed the roll, update their local database for them. if they've completed the game, see above. if they haven't, send a message saying they failed the roll (probably ephemeral), add the game to cooldown if necessary, and delete it from their "current rolls"
+### 6. Help/FAQ
+As is standard with any Discord bot, users can use `/help` to get a menu with frequently asked questions and access to other help.
 
-## imports
+## Admin Capabilities
+Administrators in the server have access to other commands to help with the bot.
 
-You will need to `pip install` the following:
+### 7. Add notes
+Administrators have the option to add notes to any game update message, in case there's any added context needed.
+> Insert image
 
-- `discord` (discord)
-- `selenium` (web interaction)
-- `pillow` (picture taking)
-- `requests` (steam and CE api access)
-- `bs4` (html sorting)
-- `apscheduler` (scheduling roll-ends)
-- `pymongo` and `motor` (accessing databases)
-- `chromedriver_binary` (don't ask bruh i have no idea)
-- `webdriver_manager` (sets correct webdriver for selenium)
+### 8. Purge roll
+In the event that something happens with a roll event, administrators can manually remove a roll from a user (without initiating a cooldown) so that they can re-roll.
 
-`pip install discord selenium pillow requests bs4 apscheduler pymongo motor chromedriver_binary webdriver_manager`
+## Credits
+Credits to [Andy](https://github.com/andykasen13) and [Theron](https://github.com/TheronBoozer) for being the main developers of this bot.
 
+Credits to [Folkius](https://github.com/Folkius) and Jarvis, the main administrators of Challenge Enthusiasts who helped us with direction and ideas quite a lot, and to [Laura](https://github.com/lauriys) for writing the entire backend for the site and several custom API endpoints for the bot to use.
 
-# CE-Assistant
-This discord bot, using `discord.py` and made by myself and @TheronBoozer, handles automation in the Challenge Enthusiasts Discord Server.
+Credits to [apollo](https://github.com/apollohm) and [Schmole](https://github.com/Schmoley2) for writing code intermittenly and for general inspiration.
 
-## Random Rolls
-The Challenge Enthusiasts host events that involved randomly rolling games on Steam for bonuses outside of their normal point values.
+Credits to crappy for making both the icons for Challenge Enthusiasts emojis and the icon for CE-Assistant (seen below).
 
-For example, if you roll One Hell of a Day, the bot will return an easy game - and you have 24 hours to complete it. If you succeed, you will be awarded a Community Objective on your profile.
-
-### `/solo-roll`
-`/solo-roll` takes in one parameter: the name of the event. This will return a (multi-page) embed detailing the game(s) and event you've rolled in.
-
-### `/co-op-roll`
-`/co-op-roll` takes in two parameters: the name of the event and the person you'd like 
-
-### `/check_rolls`
-`/check_rolls` takes in one parameter: a discord user. If no parameter is provided, the sender is chosen as the user. This sends back an embed detailing all current (and completed) rolls for that user.
+<img src="https://imgur.com/O9J7fg2.png" width="125" alt="The final icon used by CE-Assistant.">
