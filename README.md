@@ -50,7 +50,7 @@ The [Steam curator](https://store.steampowered.com/curator/36185934/) for Challe
 
 ### 4. Setting user color
 Challenge Enthusiast users are awarded ranks based on how many points they have. The higher rank they are, the more colors they have access to within the Discord server. `/set-color` presents users with the options they have available to them and changes their colors on request.
-> INSERT IMAGE
+<img src="https://imgur.com/WGF0wQz.png" width="450" alt="Set color menu">
 
 ### 5. Get SteamHunters information
 One Challenge Enthusiasts user, Schmole, runs a script once a month and collects information on all the games and users on Challenge Enthusiasts and dumps it on [this spreadsheet](https://docs.google.com/spreadsheets/d/1oAUw5dZdqZa1FWqrBV9MQQTr8Eq8g33zwEb49vk3hrk/edit?usp=sharing). This bot can access this spreadsheet and save specific data from it, specifically the 'Median Completion Time' from SteamHunters. So, rather than scrape the SteamHunters API every time a game is checked, the bot just accesses its local copy of this spreadsheet.
