@@ -50,6 +50,7 @@ The [Steam curator](https://store.steampowered.com/curator/36185934/) for Challe
 
 ### 4. Setting user color
 Challenge Enthusiast users are awarded ranks based on how many points they have. The higher rank they are, the more colors they have access to within the Discord server. `/set-color` presents users with the options they have available to them and changes their colors on request.
+
 <img src="https://imgur.com/WGF0wQz.png" width="450" alt="Set color menu">
 
 ### 5. Get SteamHunters information
