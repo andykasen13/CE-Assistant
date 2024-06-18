@@ -70,3 +70,14 @@ Administrators have the option to add notes to any game update message, in case 
 
 ### 9. Purge roll
 In the event that something happens with a roll event, administrators can manually remove a roll from a user (without initiating a cooldown) so that they can re-roll.
+
+## Credits
+Credits to [Andy](https://github.com/andykasen13) and [Theron](https://github.com/TheronBoozer) for being the main developers of this bot.
+
+Credits to [Folkius](https://github.com/Folkius) and Jarvis, the main administrators of Challenge Enthusiasts who helped us with direction and ideas quite a lot, and to [Laura](https://github.com/lauriys) for writing the entire backend for the site and several custom API endpoints for the bot to use.
+
+Credits to [apollo](https://github.com/apollohm) and [Schmole](https://github.com/Schmoley2) for writing code intermittenly and for general inspiration.
+
+Credits to crappy for making both the icons for Challenge Enthusiasts emojis and the icon for CE-Assistant (seen below).
+
+<img src="https://imgur.com/O9J7fg2.png" width="125" alt="The final icon used by CE-Assistant.">
